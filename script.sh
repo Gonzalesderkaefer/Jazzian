@@ -16,7 +16,12 @@ cp -r ~.config/rofi/ $HOME/.config/rofi/
 sudo cp -r etc/lightdm/ /etc/
 sudo cp -r etc/polybar/ /etc/
 
+#making rc-files executable
+chmod +x $HOME/.config/bspwm/bspwmrc
+chmod +x $HOME/.config/sxhkd/sxhkdrc
+
 #systemd
 sudo systemctl enable tlp
 sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
+sudo reboot
