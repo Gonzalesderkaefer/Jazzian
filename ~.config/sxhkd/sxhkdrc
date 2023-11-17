@@ -7,7 +7,7 @@ super + Return
 	alacritty
 
 #program launcher 
-control + @space
+alt + @space
 	rofi -show drun -config ~/.config/rofi/config2.rasi
 
 #brightness
