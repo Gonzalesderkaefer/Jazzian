@@ -16,5 +16,4 @@ sudo cp -r waybar/ /etc/xdg/
 
 #systemd
 sudo systemctl enable tlp
-sudo systemctl enable sddm
 sudo systemctl set-default graphical.target
