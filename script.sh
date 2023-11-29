@@ -4,7 +4,7 @@
 sudo apt update && sudo apt upgrade -y
 
 #installing packages
-sudo apt install bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings nitrogen rofi picom file-roller atril flatpak polybar cbatticon network-manager network-manager-gnome network-manager-openconnect-gnome network-manager-openconnect lxappearance git snapd ranger neovim xorg fonts-jetbrains-mono firefox-esr tlp alacritty brightnessctl pulsemixer
+sudo apt install bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings nitrogen rofi picom file-roller atril flatpak polybar cbatticon network-manager network-manager-gnome network-manager-openconnect-gnome network-manager-openconnect lxappearance git snapd ranger neovim xorg fonts-jetbrains-mono firefox-esr tlp alacritty brightnessctl pulsemixer xinput
 
 #copying config files
 ranger --copy-config=all
