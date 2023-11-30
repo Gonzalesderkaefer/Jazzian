@@ -3,7 +3,8 @@
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
-### Border 
+### Border
+client.focused #8e60f7 #8e60f7 #8e60f7 #ff5555 
 default_border pixel 2
 gaps inner 2
 gaps outer 2
