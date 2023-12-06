@@ -28,4 +28,5 @@ polybar &
 nm-applet &
 /lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 nitrogen --restore &
-cbatticon -i symbolic &
+gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+xinput set-prop "RAPOO Rapoo 2.4G Wireless Device" "libinput Accel Speed" -.75 || true
