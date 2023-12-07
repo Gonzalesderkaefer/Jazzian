@@ -23,7 +23,7 @@ alt + Tab
 
 #pcmanfm
 super + e
-	alacritty -e ranger
+	alacritty -e lf
 
 #Launch browser
 super + b
