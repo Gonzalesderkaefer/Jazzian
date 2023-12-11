@@ -140,6 +140,28 @@ super + 9
 super + 0
 	bspc desktop -f '0'
 
+super + shift + 1
+	bspc node -d '1'
+super + shift + 2
+	bspc node -d '2'
+super + shift + 3
+	bspc node -d '3'
+super + shift + 4
+	bspc node -d '4'
+super + shift + 5
+	bspc node -d '5'
+super + shift + 6
+	bspc node -d '6'
+super + shift + 7
+	bspc node -d '7'
+super + shift + 8
+	bspc node -d '8'
+super + shift + 9
+	bspc node -d '9'
+super + shift + 0
+	bspc node -d '0'
+
+
 
 #
 # preselect
