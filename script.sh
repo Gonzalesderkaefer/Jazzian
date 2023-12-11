@@ -8,11 +8,11 @@ sudo apt install bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-set
 
 #copying config files
 ranger --copy-config=all
-cp -r ~.config/alacritty/ $HOME/.config/alacritty/
-cp -r ~.config/bspwm $HOME/.config/bspwm/
-cp -r ~.config/sxhkd/ $HOME/.config/sxhkd/
-cp -r ~.config/picom $HOME/.config/picom/
-cp -r ~.config/rofi/ $HOME/.config/rofi/
+cp -r config/alacritty/ $HOME/.config/alacritty/
+cp -r config/bspwm $HOME/.config/bspwm/
+cp -r config/sxhkd/ $HOME/.config/sxhkd/
+cp -r config/picom $HOME/.config/picom/
+cp -r config/rofi/ $HOME/.config/rofi/
 sudo cp -r etc/lightdm/ /etc/
 sudo cp -r etc/polybar/ /etc/
 
