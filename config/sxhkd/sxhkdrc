@@ -161,7 +161,12 @@ super + shift + 9
 super + shift + 0
 	bspc node -d '0'
 
+#move focus and send to second Monitor
 
+super + r
+	bspc desktop -f 'Desktop'
+super + shift + r
+	bspc node -d 'Desktop'
 
 #
 # preselect
