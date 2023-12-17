@@ -13,6 +13,7 @@ cp -r config/bspwm $HOME/.config/bspwm/
 cp -r config/sxhkd/ $HOME/.config/sxhkd/
 cp -r config/picom $HOME/.config/picom/
 cp -r config/rofi/ $HOME/.config/rofi/
+cp -r config/polybar/ $HOME/.config/polybar/
 sudo cp -r etc/lightdm/ /etc/
 sudo cp -r etc/polybar/ /etc/
 
