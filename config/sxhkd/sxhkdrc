@@ -30,7 +30,7 @@ super + b
 	firefox 
 
 #Lock the screen
-super + l
+super + escape 
 	dm-tool lock
 
 #Volume control
@@ -93,7 +93,7 @@ super + ctrl + {m,x,y,z}
 #
 
 # focus the node in the given direction
-super + {_,shift + }{Left,Down,Up,Right}
+super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
@@ -161,12 +161,7 @@ super + shift + 9
 super + shift + 0
 	bspc node -d '0'
 
-#move focus and send to second Monitor
 
-super + r
-	bspc desktop -f 'Desktop'
-super + shift + r
-	bspc node -d 'Desktop'
 
 #
 # preselect
