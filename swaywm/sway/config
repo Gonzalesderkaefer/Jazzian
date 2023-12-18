@@ -27,7 +27,6 @@ set $menu rofi -show drun -config ~/.config/rofi/config2.rasi
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/user1/xp-bliss.jpg fill
 #
 # Example configuration:
 #
@@ -161,7 +160,9 @@ exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
     bindsym $mod+Alt+Right splith
+    bindsym $mod+Alt+l splith
     bindsym $mod+Alt+Down splitv
+    bindsym $mod+Alt+j splitv
 
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
