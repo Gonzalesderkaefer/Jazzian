@@ -30,7 +30,7 @@ super + b
 	firefox 
 
 #Lock the screen
-super + escape 
+super + Escape 
 	dm-tool lock
 
 #Volume control
