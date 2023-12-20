@@ -1,12 +1,6 @@
 #!/bin/sh
 
-LOT="$(setxkbmap -query | awk '{ print $2 }'| sed -n '4p')" 
+LOT="$(cat ~/KeyboardLayouts | rofi -dmenu)" 
 
-echo $LOT
 
-if [[ $LOT == "intl"  ]]
-then
-  setxkbmap us
-else 
-  setxkbmap us intl altgr
-fi
+setxkbmap $LOT  
