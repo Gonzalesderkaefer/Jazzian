@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #checking and applying updates
 sudo apt update && sudo apt upgrade -y
@@ -17,3 +17,10 @@ sudo cp -r waybar/ /etc/xdg/
 #systemd
 sudo systemctl enable tlp
 sudo systemctl set-default graphical.target
+
+#shell_configuration
+echo 'exec sway' >> .profile
+echo 'alias "ll"="ls -la"' >> $(echo $SHELL | awk -F '/' '{print $3}').rc
+echo 'alias "sn"="sudo nala"' >> $(echo $SHELL | awk -F '/' '{print $3}').rc
+echo 'alias "n"="nala"' >> $(echo $SHELL | awk -F '/' '{print $3}').rc
+
