@@ -1,0 +1,6 @@
+#!/bin/sh
+
+LOT="$(cat ~/KeyboardLayouts | rofi -dmenu -config ~/.config/rofi/config2.rasi)" 
+
+
+setxkbmap $LOT  
