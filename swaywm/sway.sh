@@ -8,10 +8,10 @@ sudo apt install rofi file-roller atril flatpak cbatticon network-manager networ
 
 
 #copying config files
-ranger --copy-config=all
 cp -r alacritty/ $HOME/.config/alacritty/
 cp -r rofi/ $HOME/.config/
-cp -r sway $HOME/.config/
+cp -r sway/ $HOME/.config/
+cp -r nvim/ $HOME/.config/
 sudo cp -r waybar/ /etc/xdg/
 
 #systemd
