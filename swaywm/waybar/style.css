@@ -1,6 +1,8 @@
+ 
+
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: JetbrainsMono, FontAwesome; 
+    font-family: JetbrainsMono, FontAwesome, Material Icons; 
     font-size: 15px;
 }
 
