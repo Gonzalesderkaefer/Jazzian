@@ -87,7 +87,7 @@
         "format-alt": "{:%Y-%m-%d}"
     },
     "cpu": {
-        "format": "{usage}% <span font='16'></span>",
+        "format": "<span rise='4700'>{usage}%</span> <span font='16' rise='1000'></span>",
         "tooltip": false
     },
     "memory": {
