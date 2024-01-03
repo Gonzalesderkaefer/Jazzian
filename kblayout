@@ -1,6 +1,3 @@
 #!/bin/sh
 
-LOT="$(cat ~/KeyboardLayouts | rofi -dmenu -config ~/.config/rofi/config2.rasi)" 
-
-
-setxkbmap $LOT  
+LOT="$(ls -l ~/.password-store/ | awk  '{print $9}' | rofi -dmenu -config ~/.config/rofi/config2.rasi)" 
