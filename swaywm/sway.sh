@@ -14,9 +14,7 @@ sudo apt install rofi file-roller evince flatpak cbatticon network-manager netwo
                 mkdir $HOME/.local/bin/
         fi
 
-cp powermenu $HOME/.local/bin/
-cp passman $HOME/.local/bin/
-cp passadd $HOME/.local/bin/
+cp -r $HOME/Jazzain/swaywm/bin/* $HOME/.local/bin/
 #copying config files
 cp -r alacritty/ $HOME/.config/alacritty/
 cp -r rofi/ $HOME/.config/
