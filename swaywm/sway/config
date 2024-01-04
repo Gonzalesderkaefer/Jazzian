@@ -24,7 +24,8 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu wofi --show run
+set $menu wofi --show drun
+set $dmenu wofi --show run
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
@@ -94,6 +95,7 @@ exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
 
     # Start your launcher
     bindsym Alt+space exec $menu
+    bindsym $mod+space exec $dmenu
     
     # Startmenu
     bindsym Alt+F4 exec powermenu    
