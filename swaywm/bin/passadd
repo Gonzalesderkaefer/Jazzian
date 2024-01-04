@@ -1,5 +1,5 @@
 #!/bin/sh
 
-LOT="$(wofi -dmenu )"
+LOT="$(rofi -dmenu -config .config/rofi/config2.rasi)"
 
 alacritty -e pass add $LOT  
