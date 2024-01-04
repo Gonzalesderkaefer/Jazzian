@@ -1,0 +1,5 @@
+#!/bin/sh
+
+LOT="$(ls -l ~/.password-store/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2|wofi -dmenu -config ~/.config/wofi/config)"
+
+pass $LOT | wl-copy -o

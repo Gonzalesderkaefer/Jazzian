@@ -1,0 +1,5 @@
+#!/bin/sh
+
+LOT="$(wofi -dmenu )"
+
+alacritty -e pass add $LOT  

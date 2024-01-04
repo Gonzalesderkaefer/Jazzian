@@ -1,0 +1,11 @@
+#!/bin/sh
+
+OUTPUT="$(wlr-randr | grep -o VGA-2 | sed -n 1p)"
+
+if [ -n "$OUTPUT" ]
+then
+        wlr-randr --output LVDS-2 --off
+else
+        wlr-randr --output LVDS-2 --on
+fi
+
