@@ -1,5 +1,0 @@
-#!/bin/sh
-
-LOT="$(cat ~/KeyboardLayouts | rofi -dmenu -config ~/.config/rofi/config2.rasi)" 
-
-swaymsg input "type:keyboard" xkb_variant $($LOT | awk '{print $2}') &
