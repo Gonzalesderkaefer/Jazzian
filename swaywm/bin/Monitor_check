@@ -1,11 +1,32 @@
-#!/bin/sh
+#!/bin/sh 
 
-OUTPUT="$(wlr-randr | grep -o VGA-2 | sed -n 1p)"
+OUTPUTVGA="$(wlr-randr | grep -o VGA | sed -n 1p)"
+OUTPUTHDMI="$(wlr-randr | grep -o HDMI | sed -n 1p)"
+OUTPUTDVI="$(wlr-randr | grep -o DVI | sed -n 1p)"
+OUTPUTDP="$(wlr-randr | grep -o DP | sed -n 1p)"
 
-if [ -n "$OUTPUT" ]
+
+if [ -n "$OUTPUTVGA" ] || [ -n "$OUTPUTHDMI" ] || [ -n "$OUTPUTDVI" ] || [ -n "$OUTPUTDP" ]
 then
-        wlr-randr --output LVDS-2 --off
-else
-        wlr-randr --output LVDS-2 --on
-fi
 
+        COUNT=1
+        while [ $COUNT -lt 10 ]
+        do
+        wlr-randr --output LVDS-$COUNT --off
+        wlr-randr --output eDP-$COUNT --off
+#        ((COUNT++))
+        COUNT=$((COUNT+1))
+        done
+else
+        COUNT=1
+        while [ $COUNT -lt 10 ]
+        do
+        wlr-randr --output LVDS-$COUNT --on
+        wlr-randr --output eDP-$COUNT --on
+#        ((COUNT++))
+        COUNT=$((COUNT+1))
+        done
+
+
+
+fi
