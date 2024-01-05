@@ -18,14 +18,7 @@ int main(){
 };
 
 std::string a = "";
-
-    
-
     int k;
-    
-    std::cout << "How Many characters?" << "\n";
-
-    
     std::cin >> k; 
     int i = 0;
     while (i<k)
@@ -33,8 +26,6 @@ std::string a = "";
         a = a + characters[randomNumber()];
         ++i;
     }
-    
-
     std::cout << a << "\n";
     return 0;
 }
