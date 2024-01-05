@@ -17,11 +17,20 @@ int main(){
 '.', '!', ',', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '/', '\\', '|', '[', ']', '{', '}', '<', '>', '?', ';', ':', '`', '~'
 };
 
+ 
+
 std::string a = "";
     int k;
     std::cin >> k; 
     int i = 0;
-    while (i<k)
+
+if (!std::cin) {
+    // input was not an integer
+    k = 15;
+}
+
+
+while (i<k)
     { 
         a = a + characters[randomNumber()];
         ++i;
