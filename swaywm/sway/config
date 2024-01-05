@@ -69,7 +69,7 @@ input "1133:49298:Logitech_G203_LIGHTSYNC_Gaming_Mouse" {
    }
 
 ### Wallpaper
-exec swaybg -i $HOME/Pictures/cube &
+#exec swaybg -i $HOME/Pictures/cube &
 
 
 ### Launching Programs

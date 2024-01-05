@@ -22,6 +22,8 @@ cp -r sway/ $HOME/.config/
 cp -r nvim/ $HOME/.config/
 sudo cp -r waybar/ /etc/xdg/
 
+
+
 #systemd
 sudo systemctl enable tlp
 sudo systemctl set-default graphical.target
