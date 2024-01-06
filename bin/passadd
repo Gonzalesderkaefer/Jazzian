@@ -1,0 +1,13 @@
+#!/bin/sh
+
+
+wl-copy $(rofi -dmenu -mesg "How many characters?" -p "Name" -config $HOME/.config/rofi/config2.rasi  | passgen)
+#echo $PASSWORD
+#wl-copy  $PASSWORD
+
+
+LOT="$(rofi -dmenu -mesg "What will be the name of the Password?" -p "Name" -config $HOME/.config/rofi/config2.rasi)"
+
+alacritty -e pass add $LOT && wl-copy hh
+
+#rofi -dmenu | pass add $LOT &

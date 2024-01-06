@@ -33,3 +33,5 @@ echo 'exec sway' >> .profile
 echo 'alias "ll"="ls -la"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
 echo 'alias "sn"="sudo nala"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
 echo 'alias "n"="nala"' >> HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
+echo 'alias "shutdown"="systemctl poweroff"' >> HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
+echo 'alias "reboot"="systemctl reboot"' >> HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
