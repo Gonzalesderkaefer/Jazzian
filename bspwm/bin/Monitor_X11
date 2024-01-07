@@ -1,0 +1,72 @@
+#!/bin/bash
+
+
+##Get outputs
+outputVGA=".$(xrandr | grep  VGA | awk '{print $1}')"
+outputHDMI=".$(xrandr | grep  HDMI | awk '{print $1}')"
+outputDVI=".$(xrandr | grep  DVI | awk '{print $1}')"
+outputDP=".$(xrandr | grep  DP | awk '{print $1}')"
+outputDisplayPort=".$(xrandr | grep  DisplayPort | awk '{print $1}')"
+
+##Get statuses
+outputVGAStatus=".$(xrandr | grep  VGA | awk '{print $2}')"
+outputHDMIStatus=".$(xrandr | grep  HDMI | awk '{print $2}')"
+outputDVIStatus=".$(xrandr | grep  DVI | awk '{print $2}')"
+outputDPStatus=".$(xrandr | grep  DP | awk '{print $2}')"
+outputDisplayPortStatus=".$(xrandr | grep  DisplayPort | awk '{print $2}')"
+
+##Get amount of certain output type
+outputVGAcount=$((0+$(xrandr | grep  VGA | awk '{print $1}' | wc -l)))
+outputHDMIcount=$((0+$(xrandr | grep  HDMI | awk '{print $1}' | wc -l)))
+outputDVIcount=$((0+$(xrandr | grep  DVI | awk '{print $1}' | wc -l)))
+outputDPcount=$((0+$(xrandr | grep  DP | awk '{print $1}' | wc -l)))
+outputDisplayPortcount=$((0+$(xrandr | grep  DisplayPort | awk '{print $1}' | wc -l)))
+
+##Arrays
+outputs=(
+  "$outputVGA"
+  "$outputHDMI"
+  "$outputDVI"
+  "$outputDP"
+  "$outputDisplayPort"
+)
+statuses=(
+  "$outputVGAStatus"
+  "$outputHDMIStatus"
+  "$outputDVIStatus"
+  "$outputDPStatus"
+  "$outputDisplayPortStatus"
+)
+
+lineCount=(
+ $outputVGAcount
+ $outputHDMIcount
+ $outputDVIcount
+ $outputDPcount
+ $outputDisplayPortStatus
+)
+
+n1=3
+n2=1
+echo ${statuses[$n1]}
+
+##echo "${statuses[1]}"
+#count=0
+#for output in ${outputs[@]};
+#do
+#  line=1
+#  while [ $line -le ${lineCount[$count]} ];
+#  do
+#    if [[ "${statuses[$count]} | sed -n $(echo $line)p" == ".connected" ]];
+#    then
+#      echo "$output" 
+#    fi
+#    line=$((line+1))
+#  done
+#  count=$((count+1))
+#done
+
+
+
+
+

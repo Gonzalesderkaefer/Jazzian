@@ -5,6 +5,7 @@ OUTPUTHDMI="$(xrandr | grep  HDMI | awk '{print $1}')"
 OUTPUTDVI="$(xrandr | grep  DVI | awk '{print $1}')"
 OUTPUTDP="$(xrandr | grep  DP | awk '{print $1}')"
 OUTPUTDISPLAYPORT="$(xrandr | grep  DisplayPort | awk '{print $1}')"
+
 outputs=(
   $OUTPUTVGA
   $OUTPUTHDMI
@@ -12,11 +13,6 @@ outputs=(
   $OUTPUTDP
   $OUTPUTDISPLAYPORT
 )
-
-
-
-
-
 
 #Get internal outputs
 OUTPUTLVDS="$(xrandr | grep  LVDS | awk '{print $1}')"
@@ -46,30 +42,38 @@ outputStatus=(
   $OUTPUTDISPLAYPORTSTATUS
 ) 
 
+#echo "${#outputStatus[@]}"
+#count=0
+#for stat in ${outputStatus[@]}
+#do
+#  echo $stat
+#  echo "${outputs[$count]}"
+#  count=$((count+1))
+#done
+
 for stat in ${outputStatus[@]}; 
 do
-  for outp in ${outputs[@]};
+  COUNT=1
+  outputindex=0
+  while [ $COUNT -lt 10 ]
   do
-    COUNT=1
-    while [ $COUNT -lt 10 ]
-    do
-        if [[ "$(echo $stat | sed -n $(echo $COUNT)p)" == "connected" ]]
-        then
-          echo "$(echo $OUTPUTDP | sed -n $(echo $COUNT)p)"
-          xrandr --output $(echo $outp | sed -n $(echo $COUNT)p) --primary 
-          count=1
-          for eoutp in ${internalOutputs[@]}
+      if [[ "$(echo $stat | sed -n $(echo $COUNT)p)" == "connected" ]]
+      then
+        echo "$(echo $OUTPUTDP | sed -n $(echo $COUNT)p)"
+        xrandr --output $(echo "${outputs[$outputindex]}"  | sed -n $(echo $COUNT)p) --primary 
+        count=1
+        for eoutp in ${internalOutputs[@]}
+        do
+          while [ $count -lt 10 ]
           do
-            while [ $count -lt 10 ]
-            do
-              xrandr --output $(echo $eoutp | sed -n $(echo $count)p) --off
-              count=$((count+1))
-            done
+            xrandr --output $(echo $eoutp | sed -n $(echo $count)p) --off
+            count=$((count+1))
           done
-        fi
-        
-      COUNT=$((COUNT+1))
-    done
+        done
+      fi
+      
+    COUNT=$((COUNT+1))
   done
+  outputindex=$((outputindex+1))
 done
 
