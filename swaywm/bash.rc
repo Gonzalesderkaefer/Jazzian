@@ -1,3 +1,0 @@
-alias "ll"="ls -la"
-alias "sn"="sudo nala"
-alias "n"="nala"

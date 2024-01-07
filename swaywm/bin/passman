@@ -1,5 +1,5 @@
 #!/bin/sh
 
-LOT="$(ls -l ~/.password-store/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2|rofi -dmenu -mesg "What password would you like to use?" -config $HOME/.config/rofi/config2.rasi)"
+LOT="$(ls -l $HOME.password-store/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2|rofi -dmenu -mesg "What password would you like to use?" -config $HOME/.config/rofi/config2.rasi)"
 
 pass $LOT | wl-copy -o

@@ -8,11 +8,11 @@ sudo apt install rofi file-roller evince flatpak cbatticon network-manager netwo
 
 #copying scripts to .local/bin
 
-        if [ -n "$(ls $HOME/.local/ | grep -o bin)" ] #make directory if .local/bin does not exist
-        then
-        else
-                mkdir $HOME/.local/bin/
-        fi
+if [ -n "$(ls $HOME/.local/ | grep -o bin)" ] #make directory if .local/bin does not exist
+then
+else
+        mkdir $HOME/.local/bin/
+fi
 
 cp -r $HOME/Jazzain/swaywm/bin/* $HOME/.local/bin/
 #copying config files

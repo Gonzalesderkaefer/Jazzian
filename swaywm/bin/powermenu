@@ -5,7 +5,7 @@ MENTRIES="$(echo " Poweroff
  Logout
  Suspend
  Hibernate
- Lock" | rofi -dmenu -config .config/rofi/config2.rasi)"
+ Lock" | rofi -dmenu -config $HOME/.config/rofi/config2.rasi)"
 
 MOPTIONS="$(echo $MENTRIES | awk '{print$2}' |tr '[:upper:]' '[:lower:]')"
 echo $MOPTIONS

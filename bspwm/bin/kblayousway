@@ -7,6 +7,4 @@ US(AltGr-Intl)" | rofi -dmenu -config $HOME/.config/rofi/config2.rasi)" #If you 
 MOPTIONS="$(echo $MENTRIES |tr '[:upper:]' '[:lower:]')"
 
 echo $MOPTIONS
-swaymsg input "type:keyboard" xkb_layout "$MOPTIONS"
-#setxkbmap $MOPTIONS
-
+swaymsg input "type:keyboard" xkb_layout "$MOPTIONS" 
