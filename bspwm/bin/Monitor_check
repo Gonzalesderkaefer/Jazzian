@@ -1,32 +1,57 @@
-#!/bin/sh 
+#!/bin/bash 
 
-OUTPUTVGA="$(wlr-randr | grep -o VGA | sed -n 1p)"
-OUTPUTHDMI="$(wlr-randr | grep -o HDMI | sed -n 1p)"
-OUTPUTDVI="$(wlr-randr | grep -o DVI | sed -n 1p)"
-OUTPUTDP="$(wlr-randr | grep -o DP | sed -n 1p)"
+#Get all outputs
+OUTPUTVGA="$(xrandr | grep  VGA | awk '{print $1}')"
+OUTPUTHDMI="$(xrandr | grep  HDMI | awk '{print $1}')"
+OUTPUTDVI="$(xrandr | grep  DVI | awk '{print $1}')"
+OUTPUTDP="$(xrandr | grep  DP | awk '{print $1}')"
+
+#Get whether output is connected or not
+OUTPUTVGASTATUS="$(xrandr | grep  VGA | awk '{print $2}')"
+OUTPUTHDMISTATUS="$(xrandr | grep  HDMI | awk '{print $2}')"
+OUTPUTDVISTATUS="$(xrandr | grep  DVI | awk '{print $2}')"
+OUTPUTDPSTATUS="$(xrandr | grep  DP | awk '{print $2}')"
 
 
-if [ -n "$OUTPUTVGA" ] || [ -n "$OUTPUTHDMI" ] || [ -n "$OUTPUTDVI" ] || [ -n "$OUTPUTDP" ]
-then
 
-        COUNT=1
+	COUNT=1
         while [ $COUNT -lt 10 ]
         do
-        wlr-randr --output LVDS-$COUNT --off
-        wlr-randr --output eDP-$COUNT --off
-#        ((COUNT++))
-        COUNT=$((COUNT+1))
-        done
-else
-        COUNT=1
-        while [ $COUNT -lt 10 ]
-        do
-        wlr-randr --output LVDS-$COUNT --on
-        wlr-randr --output eDP-$COUNT --on
-#        ((COUNT++))
+        
+	if [[ "$(echo $OUTPUTDPSTATUS | sed -n $(echo $COUNT)p)" == "connected" ]]
+	then
+		echo "$(echo $OUTPUTDP | sed -n $(echo $COUNT)p)"
+	fi
         COUNT=$((COUNT+1))
         done
 
 
 
-fi
+
+
+
+
+#if [ -n "$OUTPUTVGA" ] || [ -n "$OUTPUTHDMI" ] || [ -n "$OUTPUTDVI" ] || [ -n "$OUTPUTDP" ]
+#then
+#
+#        COUNT=1
+#        while [ $COUNT -lt 10 ]
+#        do
+#        xrandr --output LVDS-$COUNT --off
+#        xrandr --output eDP-$COUNT --off
+##        ((COUNT++))
+#        COUNT=$((COUNT+1))
+#        done
+#else
+#        COUNT=1
+#        while [ $COUNT -lt 10 ]
+#        do
+#        xrandr --output LVDS-$COUNT --on
+#        xrandr --output eDP-$COUNT --on
+##        ((COUNT++))
+#        COUNT=$((COUNT+1))
+#        done
+#
+#
+#
+#fi
