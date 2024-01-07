@@ -1,68 +1,75 @@
-#!/bin/bash 
-
+#!/bin/bash
 #Get outputs
 OUTPUTVGA="$(xrandr | grep  VGA | awk '{print $1}')"
 OUTPUTHDMI="$(xrandr | grep  HDMI | awk '{print $1}')"
 OUTPUTDVI="$(xrandr | grep  DVI | awk '{print $1}')"
 OUTPUTDP="$(xrandr | grep  DP | awk '{print $1}')"
+OUTPUTDISPLAYPORT="$(xrandr | grep  DisplayPort | awk '{print $1}')"
+outputs=(
+  $OUTPUTVGA
+  $OUTPUTHDMI
+  $OUTPUTDVI
+  $OUTPUTDP
+  $OUTPUTDISPLAYPORT
+)
+
+
+
+
+
 
 #Get internal outputs
 OUTPUTLVDS="$(xrandr | grep  LVDS | awk '{print $1}')"
 OUTPUTEDP="$(xrandr | grep  eDP | awk '{print $1}')"
+
+internalOutputs=(
+  $OUTPUTLVDS
+  $OUTPUTEDP
+)
+
 #Get whether output is connected or not
+
+
 OUTPUTVGASTATUS="$(xrandr | grep  VGA | awk '{print $2}')"
 OUTPUTHDMISTATUS="$(xrandr | grep  HDMI | awk '{print $2}')"
 OUTPUTDVISTATUS="$(xrandr | grep  DVI | awk '{print $2}')"
 OUTPUTDPSTATUS="$(xrandr | grep  DP | awk '{print $2}')"
+OUTPUTDISPLAYPORTSTATUS="$(xrandr | grep  DisplayPort | awk '{print $2}')"
 OUTPUTLVDSSTATUS="$(xrandr | grep  LVDS | awk '{print $2}')"
 OUTPUTEDPSTATUS="$(xrandr | grep  eDP | awk '{print $2}')"
 
+outputStatus=(
+  $OUTPUTVGASTATUS
+  $OUTPUTHDMISTATUS
+  $OUTPUTDVISTATUS
+  $OUTPUTDPSTATUS
+  $OUTPUTDISPLAYPORTSTATUS
+) 
 
-	COUNT=1
-        while [ $COUNT -lt 10 ]
-        do
+for stat in ${outputStatus[@]}; 
+do
+  for outp in ${outputs[@]};
+  do
+    COUNT=1
+    while [ $COUNT -lt 10 ]
+    do
+        if [[ "$(echo $stat | sed -n $(echo $COUNT)p)" == "connected" ]]
+        then
+          echo "$(echo $OUTPUTDP | sed -n $(echo $COUNT)p)"
+          xrandr --output $(echo $outp | sed -n $(echo $COUNT)p) --primary 
+          count=1
+          for eoutp in ${internalOutputs[@]}
+          do
+            while [ $count -lt 10 ]
+            do
+              xrandr --output $(echo $eoutp | sed -n $(echo $count)p) --off
+              count=$((count+1))
+            done
+          done
+        fi
         
-	if [[ "$(echo $OUTPUTDPSTATUS | sed -n $(echo $COUNT)p)" == "connected" ]]
-	then
-		echo "$(echo $OUTPUTDP | sed -n $(echo $COUNT)p)"
-		xrandr --output $(echo $OUTPUTDP | sed -n $(echo $COUNT)p) --primary 
-		count=1
-			 while [ $count -lt 10 ]
-			do
-				xrandr --output $(echo $OUTPUTDPSTATUS | sed -n $(echo $count)p) --off
-				count=$((count+1))
-			done
-	fi
-        COUNT=$((COUNT+1))
-        done
+      COUNT=$((COUNT+1))
+    done
+  done
+done
 
-
-
-
-
-
-
-#if [ -n "$OUTPUTVGA" ] || [ -n "$OUTPUTHDMI" ] || [ -n "$OUTPUTDVI" ] || [ -n "$OUTPUTDP" ]
-#then
-#
-#        COUNT=1
-#        while [ $COUNT -lt 10 ]
-#        do
-#        xrandr --output LVDS-$COUNT --off
-#        xrandr --output eDP-$COUNT --off
-##        ((COUNT++))
-#        COUNT=$((COUNT+1))
-#        done
-#else
-#        COUNT=1
-#        while [ $COUNT -lt 10 ]
-#        do
-#        xrandr --output LVDS-$COUNT --on
-#        xrandr --output eDP-$COUNT --on
-##        ((COUNT++))
-#        COUNT=$((COUNT+1))
-#        done
-#
-#
-#
-#fi
