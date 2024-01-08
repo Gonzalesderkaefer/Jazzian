@@ -45,30 +45,14 @@ lineCount=(
  $outputDPcount
  $outputDisplayPortStatus
 )
-
-#awk -v field="$line" '{print $field}'
-
-n1=3
-n2=1
-echo ${statuses[$n1]}
-
-##echo "${statuses[1]}"
-#count=0
-#for output in ${outputs[@]};
-#do
-#  line=1
-#  while [ $line -le ${lineCount[$count]} ];
-#  do
-#    if [[ "${statuses[$count]} | awk -v field="$line" '{print $field}'" == ".connected" ] | [ "${statuses[$count]} | awk -v field="$line" '{print $field}'" == ".connected" ]];
-#    then
-#      echo "$output" 
-#    fi
-#    line=$((line+1))
-#  done
-#  count=$((count+1))
-#done
-
-
-
-
-
+k=0
+for output in ${outputs[@]};
+do
+  i=0
+  while [ $i -lt ${lineCount[3]} ]
+  do
+    echo ${statuses[$k]} | awk -v field="$i" '{print $field}'
+    i=$((i+1))
+  done
+  k=$((k+1))
+done
