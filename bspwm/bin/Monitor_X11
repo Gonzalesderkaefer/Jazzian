@@ -2,18 +2,18 @@
 
 
 ##Get outputs
-outputVGA=".$(xrandr | grep  VGA | awk '{print $1}')"
-outputHDMI=".$(xrandr | grep  HDMI | awk '{print $1}')"
-outputDVI=".$(xrandr | grep  DVI | awk '{print $1}')"
-outputDP=".$(xrandr | grep  DP | awk '{print $1}')"
-outputDisplayPort=".$(xrandr | grep  DisplayPort | awk '{print $1}')"
+outputVGA="$(xrandr | grep  VGA | awk '{print $1}')"
+outputHDMI="$(xrandr | grep  HDMI | awk '{print $1}')"
+outputDVI="$(xrandr | grep  DVI | awk '{print $1}')"
+outputDP="$(xrandr | grep  DP | awk '{print $1}')"
+outputDisplayPort="$(xrandr | grep  DisplayPort | awk '{print $1}')"
 
 ##Get statuses
-outputVGAStatus=".$(xrandr | grep  VGA | awk '{print $2}')"
-outputHDMIStatus=".$(xrandr | grep  HDMI | awk '{print $2}')"
-outputDVIStatus=".$(xrandr | grep  DVI | awk '{print $2}')"
-outputDPStatus=".$(xrandr | grep  DP | awk '{print $2}')"
-outputDisplayPortStatus=".$(xrandr | grep  DisplayPort | awk '{print $2}')"
+outputVGAStatus="$(xrandr | grep  VGA | awk '{print $2}')"
+outputHDMIStatus="$(xrandr | grep  HDMI | awk '{print $2}')"
+outputDVIStatus="$(xrandr | grep  DVI | awk '{print $2}')"
+outputDPStatus="$(xrandr | grep  DP | awk '{print $2}')"
+outputDisplayPortStatus="$(xrandr | grep  DisplayPort | awk '{print $2}')"
 
 ##Get amount of certain output type
 outputVGAcount=$((0+$(xrandr | grep  VGA | awk '{print $1}' | wc -l)))
@@ -43,16 +43,128 @@ lineCount=(
  $outputHDMIcount
  $outputDVIcount
  $outputDPcount
- $outputDisplayPortStatus
+ $outputDisplayPortcount
 )
-k=0
-for output in ${outputs[@]};
+
+#for line in ${lineCount[@]};
+#do
+#  echo $line
+#done
+
+#i=0
+#for output in ${outputs[@]};
+#do
+#  k=1
+#  linecount=${lineCount[$k]}
+#  while [ $k -le $linecount ]
+#  do
+#    echo ${statuses[$i]} | awk -v field="$k" '{print $field}'
+#    # echo $output | awk -v field="$k" '{print $field}'
+#    k=$((k+1)) 
+#  done
+#  i=$((i+1))
+#done
+
+#i=3
+#k=1
+#lc=${lineCount[$i]}
+#while [ $k -le $lc ]
+#do
+#  echo ${statuses[$i]} | awk -v field="$k" '{print $field}'
+#  k=$((k+1)) 
+#done
+
+#i=0
+#while [ $i -le 4 ];
+#do
+#  k=1
+#  lc=${lineCount[$i]}
+#  while [ $k -le $lc ]
+#  do
+#    echo ${statuses[$i]} | awk -v field="$k" '{print $field}'
+#    k=$((k+1)) 
+#  done
+#  i=$((i+1))
+#done
+
+
+
+
+#length=${#outputs[@]}
+#echo $length
+#i=0
+#while [ $i -lt $length ];
+#do
+#  k=1
+#  lc=${lineCount[$i]}
+#  while [ $k -le $lc ]
+#  do
+#    echo ${statuses[$i]} | awk -v field="$k" '{print $field}'
+#    echo ${outputs[$i]} | awk -v field="$k" '{print $field}'
+#    k=$((k+1)) 
+#  done
+#  i=$((i+1))
+#done
+
+
+length=${#outputs[@]}
+echo $length
+i=0
+while [ $i -lt $length ];
 do
-  i=0
-  while [ $i -lt ${lineCount[3]} ]
+  k=1
+  lc=${lineCount[$i]}
+  while [ $k -le $lc ]
   do
-    echo ${statuses[$k]} | awk -v field="$i" '{print $field}'
-    i=$((i+1))
+
+    if [ "$(echo ${statuses[$i]} | awk -v field="$k" '{print $field}')" == "connected" ]
+    then
+      echo ${outputs[$i]} | awk -v field="$k" '{print $field}'
+    fi
+    k=$((k+1)) 
   done
-  k=$((k+1))
+  i=$((i+1))
 done
+
+
+
+#k=0
+#for output in ${outputs[@]};
+#do
+#  i=1
+#  linecount=${lineCount[$k]}
+#  while [ $i -lt $linecount ];
+#  do
+#    if [ "$(echo ${statuses[$k]} | awk -v field="$i" '{print $field}')" == "disconnected" ]
+#    then
+#      echo "yes"
+#      echo $output
+#    else
+#      echo "no"
+#      echo $output
+#    fi
+#    i=$((i+1))
+#  done
+#  k=$((k+1))
+#done
+
+
+
+#k=0
+#for output in ${outputs[@]};
+#do
+#  i=0
+#  while [ $i -lt ${lineCount[3]} ]
+#  do
+#    echo ${statuses[$k]} | awk -v field="$i" '{print $field}'
+#    echo $output
+#    i=$((i+1))
+#  done
+#  k=$((k+1))
+#done
+
+
+
+
+
+
