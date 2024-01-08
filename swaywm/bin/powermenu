@@ -19,7 +19,7 @@ then
 else
         if [[ "$MOPTIONS" == lock ]]
         then
-                swaylock
+                swaylock -f -c 000000
         else
                 if [[ "$MOPTIONS" == shutdown ]]
                 then
