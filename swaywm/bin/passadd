@@ -1,7 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
 
-wl-copy $(rofi -dmenu -mesg "How many characters?" -p "Name" -config $HOME/.config/rofi/config2.rasi  | passgen)
+
+Mot="$(echo "Yes
+No" | rofi -dmenu -mesg "Do you want to Generate a Password?"  -config $HOME/.config/rofi/config2.rasi)"
+
+
+if [[ "$Mot" == "Yes" ]]
+then
+ wl-copy $(rofi -dmenu -mesg "How many characters?" -p "Name" -config $HOME/.config/rofi/config2.rasi  | passgen)
+ # echo "You want a new Password"
+else
+
+fi
 #echo $PASSWORD
 #wl-copy  $PASSWORD
 
