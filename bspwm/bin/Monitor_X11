@@ -46,6 +46,8 @@ lineCount=(
  $outputDisplayPortStatus
 )
 
+#awk -v field="$line" '{print $field}'
+
 n1=3
 n2=1
 echo ${statuses[$n1]}
@@ -57,7 +59,7 @@ echo ${statuses[$n1]}
 #  line=1
 #  while [ $line -le ${lineCount[$count]} ];
 #  do
-#    if [[ "${statuses[$count]} | sed -n $(echo $line)p" == ".connected" ]];
+#    if [[ "${statuses[$count]} | awk -v field="$line" '{print $field}'" == ".connected" ] | [ "${statuses[$count]} | awk -v field="$line" '{print $field}'" == ".connected" ]];
 #    then
 #      echo "$output" 
 #    fi
