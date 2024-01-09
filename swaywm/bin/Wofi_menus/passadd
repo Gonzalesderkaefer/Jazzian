@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+Mot="$(echo "Yes
+No" | wofi --dmenu -p "Do you want to Generate a Password?")"
+
+
+if [[ "$Mot" == "Yes" ]]
+then
+  wl-copy $(echo "default is 15" | wofi --dmenu -p 'How many characters?' | passgen)
+fi
+
+
+LOT="$(echo"" | wofi --dmenu -p "What will be the name of the Password?")"
+
+alacritty -e pass add $LOT && wl-copy hh
+
+#rofi -dmenu | pass add $LOT &
