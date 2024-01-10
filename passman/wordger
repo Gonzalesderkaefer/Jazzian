@@ -15,7 +15,8 @@ help_message (){
 initialize_pwdir () {
   if [ -n "$(ls -la $HOME/ | grep -o .passwords)" ]
  then
-   printf "You have already initialized a password directory.\n If you want to reinitialize it please delete $HOME/.passwords/ THIS WILL DELETE YOUR PASSWORDS"
+   printf "You have already initialized a password directory.\nIf you want to reinitialize it please delete $HOME/.passwords/ THIS WILL DELETE YOUR PASSWORDS\n"
+   exit 1
  else
     if [ -n "$(ls -la $HOME/ | grep -o .gnupg)" ]
     then
@@ -64,7 +65,6 @@ fi
 
 
 
-
 if [[ $1 == 'add' ]]
 then
   echo "you want to add a new password"
@@ -88,11 +88,14 @@ elif [[ $1 == 'open' ]]
       open_pass $2
     else
       echo 'twas empty'
+      if [ -n "$(ls -l $HOME/.passwords/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2)" ]
+      then
+        ls -l $HOME/.passwords/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2   
+      else
+        echo "You do not have any passwords stored"
+      fi
+
     fi
 else
   help_message
 fi
-
-
-
-#echo "Your argument was: $1"
