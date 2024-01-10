@@ -69,6 +69,7 @@ if [[ $1 == 'add' ]]
 then
   echo "you want to add a new password"
   add_pass $2
+  
 elif [[ $1 == 'init' ]]
 then
   if [ -n "$2" ]
@@ -78,24 +79,25 @@ then
     printf "Please enter the email, you entered when you generated the keypair. \nIf you did not generate a gpg keypair please do so with 'gpg --full-gen-key'\n"
     echo $2         
   fi
+  
 elif [[ $1 == 'list' ]]
 then
   ls -l $HOME/.passwords/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2   
-elif [[ $1 == 'open' ]]
-  then
-    if [ -n "$2"  ]
-    then
-      open_pass $2
-    else
-      echo 'twas empty'
-      if [ -n "$(ls -l $HOME/.passwords/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2)" ]
-      then
-        ls -l $HOME/.passwords/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2   
-      else
-        echo "You do not have any passwords stored"
-      fi
 
-    fi
+elif [[ $1 == 'open' ]]
+then
+  if [ -n "$2"  ]
+  then
+    open_pass $2
+  else
+    if [ -n "$(ls -l $HOME/.passwords/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2)" ]
+    then
+      ls -l $HOME/.passwords/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2   
+    else
+      echo "You do not have any passwords stored"
+  fi
+
+fi
 else
   help_message
 fi
