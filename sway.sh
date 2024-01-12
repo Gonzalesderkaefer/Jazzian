@@ -10,16 +10,16 @@ sudo apt install rofi file-roller evince flatpak cbatticon network-manager netwo
 
 if [ -n "$(ls $HOME/.local/ | grep -o bin)" ] #make directory if .local/bin does not exist
 then
+    echo '.local/bin/ does exist' 
 else
         mkdir $HOME/.local/bin/
 fi
 
 cp -r $HOME/Jazzain/swaywm/bin/* $HOME/.local/bin/
 #copying config files
-cp -r alacritty/ $HOME/.config/alacritty/
-cp -r rofi/ $HOME/.config/
-cp -r sway/ $HOME/.config/
-cp -r nvim/ $HOME/.config/
+cp -r config/alacritty/ $HOME/.config/alacritty/
+cp -r swaywm/sway/ $HOME/.config/
+cp -r config/nvim/ $HOME/.config/
 sudo cp -r waybar/ /etc/xdg/
 
 
