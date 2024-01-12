@@ -125,7 +125,7 @@ font:
     family: Jetbrains Mono
     style: Bold Italic
 
-  size: 12
+  size: 10
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -197,7 +197,7 @@ font:
 
 
 
-rs:
+colors:
   primary:
     background: '#282a36'
     foreground: '#f8f8f2'
@@ -215,7 +215,7 @@ rs:
     focused_match:
       foreground: '#44475a'
       background: '#ffb86c'
-    bar:
+    colors.footer_bar:
       background: '#282a36'
       foreground: '#f8f8f2'
   hints:
@@ -807,9 +807,9 @@ rs:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
-  #- { key: Paste,                                       action: Paste          }
-  #- { key: Copy,                                        action: Copy           }
+key_bindings:
+  - { key: P,         mods: Control,                                  action: Paste          }
+  - { key: Y,         mods: Control,                                  action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
   #- { key: L,         mods: Control, mode: ~Vi|~Search, chars: "\x0c"          }
   #- { key: PageUp,    mods: Shift,   mode: ~Alt,        action: ScrollPageUp   }
