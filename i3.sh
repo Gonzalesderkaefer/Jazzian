@@ -20,15 +20,14 @@ fi
 
 #copying config files
 ranger --copy-config=all
-cp -r alacritty/ $HOME/.config/alacritty/
-cp -r bspwm/ $HOME/.config/bspwm/
-cp -r sxhkd/ $HOME/.config/sxhkd/
+cp -r config/alacritty/ $HOME/.config/alacritty/
+cp -r i3/ $HOME/.config/
 cp -r picom $HOME/.config/picom/
 cp -r rofi/ $HOME/.config/rofi/
 cp -r polybar/ $HOME/.config/polybar/
 cp -r bin/* $HOME/.local/bin/
-sudo cp -r lightdm/ /etc/
-sudo cp -r polybar/ /etc/
+sudo cp -r bspwm/etc/lightdm/ /etc/
+sudo cp -r bspwm/etc/polybar/ /etc/
 
 
 
