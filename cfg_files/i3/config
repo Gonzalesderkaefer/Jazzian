@@ -6,7 +6,7 @@
 #
 
 client.focused #8e60f7 #8e60f7 #8e60f7 #ff5555 
-default_border pixel 4
+default_border pixel 2
 default_floating_border pixel 0
 gaps inner 2
 gaps outer 2
@@ -17,14 +17,9 @@ gaps outer 2
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 ## Autostart bars and tray icons
-exec_always $HOME/.screenlayout/Monitor.sh
-exec --no-startup-id nm-applet
-exec_always --no-startup-id polybar &
-exec_always --no-startup-id nitrogen --restore &
-exec_always picom --config ~/.config/picom/picom.conf &
-exec_always /lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+exec_always $HOME/.config/i3/startup.sh
 
-exec_always xinput set-prop  'Microsoft Microsoft 5-Button Mouse with IntelliEye(TM)' 'libinput Accel Speed' -0.9
+################################
 
 set $mod Mod4
 
