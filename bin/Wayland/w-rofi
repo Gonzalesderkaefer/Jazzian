@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec $(wofi --show drun,dmenu)
+exec $(wofi --show drun,dmenu -p Launch)

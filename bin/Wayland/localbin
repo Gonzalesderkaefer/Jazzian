@@ -1,0 +1,5 @@
+#!/bin/sh
+
+LOT="$(ls -l $HOME/.local/bin/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2|rofi -dmenu -config .config/rofi/config2.rasi)"
+
+exec $LOT
