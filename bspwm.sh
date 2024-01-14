@@ -39,7 +39,6 @@ chmod +x $HOME/.config/sxhkd/sxhkdrc
 sudo systemctl enable tlp
 sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
-sudo reboot
 
 #Shell config
 echo 'alias "ll"="ls -la"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
