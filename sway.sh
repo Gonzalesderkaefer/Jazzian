@@ -4,23 +4,21 @@
 sudo apt update && sudo apt upgrade -y
 
 #installing packages
-sudo apt install rofi file-roller evince flatpak cbatticon network-manager network-manager-gnome network-manager-openconnect-gnome network-manager-openconnect lxappearance git snapd lf neovim fonts-jetbrains-mono firefox-esr tlp alacritty brightnessctl pulsemixer sway waybar fonts-material-design-icons-iconfont fonts-font-awesome xwayland libglib2.0-bin fonts-noto-color-emoji wlr-randr nala wl-clipboard mpv swayidle
+sudo apt install rofi file-roller evince flatpak cbatticon network-manager network-manager-gnome network-manager-openconnect-gnome network-manager-openconnect lxappearance git snapd lf neovim fonts-jetbrains-mono firefox-esr tlp alacritty brightnessctl pulsemixer sway waybar fonts-material-design-icons-iconfont fonts-font-awesome xwayland libglib2.0-bin fonts-noto-color-emoji wlr-randr nala wl-clipboard mpv swayidle &&
 
 #copying scripts to .local/bin
 
-if [ -n "$(ls $HOME/.local/ | grep -o bin)" ] #make directory if .local/bin does not exist
+if [ -z "$(ls $HOME/.local/ | grep -o bin)" ] #make directory if .local/bin does not exist
 then
-    echo '.local/bin/ does exist' 
-else
         mkdir $HOME/.local/bin/
 fi
-
-cp -r $HOME/Jazzain/swaywm/bin/* $HOME/.local/bin/
+#copying scripts to .local/bin/
+cp -r $HOME/Jazzian/bin/Wayland/* $HOME/.local/bin/
 #copying config files
-cp -r config/alacritty/ $HOME/.config/alacritty/
-cp -r swaywm/sway/ $HOME/.config/
-cp -r config/nvim/ $HOME/.config/
-sudo cp -r waybar/ /etc/xdg/
+cp -r cfg_files/alacritty/ $HOME/.config/alacritty/
+cp -r cfg_files/sway/ $HOME/.config/
+cp -r cfg_files/nvim/ $HOME/.config/
+sudo cp -r cfg_files/waybar/ /etc/xdg/
 
 
 

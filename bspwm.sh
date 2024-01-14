@@ -4,7 +4,7 @@
 sudo apt update && sudo apt upgrade -y
 
 #installing packages
-sudo apt install bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings nitrogen rofi picom file-roller evince flatpak polybar cbatticon network-manager network-manager-gnome network-manager-openconnect-gnome network-manager-openconnect lxappearance git snapd neovim xorg fonts-jetbrains-mono firefox-esr tlp alacritty brightnessctl pulsemixer xinput gnome-themes-extra arandr fonts-material-design-icons-iconfont fonts-font-awesome lf
+sudo apt install bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings nitrogen rofi picom file-roller evince flatpak polybar cbatticon network-manager network-manager-gnome network-manager-openconnect-gnome network-manager-openconnect lxappearance git snapd neovim xorg fonts-jetbrains-mono firefox-esr tlp alacritty brightnessctl pulsemixer xinput gnome-themes-extra arandr fonts-material-design-icons-iconfont fonts-font-awesome lf libglib2.0-bin
 
 #setting default applications
 xdg-mime default org.gnome.Evince.desktop application/pdf
@@ -20,15 +20,14 @@ fi
 
 #copying config files
 ranger --copy-config=all
-cp -r alacritty/ $HOME/.config/alacritty/
-cp -r bspwm/ $HOME/.config/bspwm/
-cp -r sxhkd/ $HOME/.config/sxhkd/
-cp -r picom $HOME/.config/picom/
-cp -r rofi/ $HOME/.config/rofi/
-cp -r polybar/ $HOME/.config/polybar/
-cp -r bin/* $HOME/.local/bin/
-sudo cp -r lightdm/ /etc/
-sudo cp -r polybar/ /etc/
+cp -r $HOME/Jazzian/cfg_files/alacritty/ $HOME/.config/alacritty/
+cp -r $HOME/Jazzian/cfg_files/bspwm/ $HOME/.config/
+cp -r $HOME/Jazzian/cfg_files/sxhkd/ $HOME/.config/
+cp -r $HOME/Jazzian/cfg_files/picom/ $HOME/.config/picom/
+cp -r $HOME/Jazzian/cfg_files/rofi/ $HOME/.config/rofi/
+cp -r $HOME/Jazzian/cfg_files/polybar/ $HOME/.config/polybar/
+cp -r $HOME/Jazzian/bin/* $HOME/.local/bin/
+sudo cp -r $HOME/Jazzian/etc/lightdm/ /etc/
 
 
 
