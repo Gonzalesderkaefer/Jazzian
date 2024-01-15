@@ -10,11 +10,9 @@ sudo apt install i3-wm lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings 
 xdg-mime default org.gnome.Evince.desktop application/pdf
 
 
-if [ -n "$(ls $HOME/.local/ | grep -o bin)" ]; 
+if [ -z "$(ls $HOME/.local/ | grep -o bin)" ]; 
 then
-	echo ".local/bin/ does not exist"
-else
-	mkdir $HOME/.local/bin
+	mkdir -p $HOME/.local/bin
 fi
 
 
