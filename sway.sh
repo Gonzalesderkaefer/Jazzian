@@ -10,7 +10,7 @@ sudo apt install rofi file-roller evince flatpak cbatticon network-manager netwo
 
 if [ -z "$(ls $HOME/.local/ | grep -o bin)" ] #make directory if .local/bin does not exist
 then
-        mkdir $HOME/.local/bin/
+        mkdir -p $HOME/.local/bin/
 fi
 #copying scripts to .local/bin/
 cp -r $HOME/Jazzian/bin/Wayland/* $HOME/.local/bin/
@@ -27,9 +27,9 @@ sudo systemctl enable tlp
 sudo systemctl set-default graphical.target
 
 #shell configuration
-echo 'exec sway' >> .profile
+echo 'exec sway' >> $HOME/.profile
 echo 'alias "ll"="ls -la"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
 echo 'alias "sn"="sudo nala"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
-echo 'alias "n"="nala"' >> HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
-echo 'alias "shutdown"="systemctl poweroff"' >> HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
-echo 'alias "reboot"="systemctl reboot"' >> HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
+echo 'alias "n"="nala"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
+echo 'alias "shutdown"="systemctl poweroff"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
+echo 'alias "reboot"="systemctl reboot"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
