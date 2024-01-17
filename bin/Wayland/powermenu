@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MENTRIES="$(echo " Poweroff
- Reboot
+ Reboot
  Logout
  Suspend
  Hibernate
