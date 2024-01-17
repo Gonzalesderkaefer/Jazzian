@@ -18,7 +18,7 @@ cp -r $HOME/Jazzian/bin/Wayland/* $HOME/.local/bin/
 cp -r cfg_files/alacritty/ $HOME/.config/alacritty/
 cp -r cfg_files/sway/ $HOME/.config/
 cp -r cfg_files/nvim/ $HOME/.config/
-sudo cp -r cfg_files/waybar/ /etc/xdg/
+cp -r cfg_files/waybar/ $HOME/.config/ 
 
 
 
