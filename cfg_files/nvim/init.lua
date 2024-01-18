@@ -2,6 +2,7 @@
 
 --Keybindings
 vim.cmd("map <leader>lc :!pdflatex %<CR>") --compile LaTeX
+vim.cmd("map <leader>lyc :w \\| !pdflatex %<CR>") --compile LaTeX
 vim.g.mapleader = " " -- set <leader> to space
 
 
