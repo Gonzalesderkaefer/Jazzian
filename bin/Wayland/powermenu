@@ -10,24 +10,4 @@ MENTRIES="$(echo " Poweroff
 MOPTIONS="$(echo $MENTRIES | awk '{print$2}' |tr '[:upper:]' '[:lower:]')"
 echo $MOPTIONS
 
-if [[ -n "$MOPTIONS" ]]
-then
-
-if [[ "$MOPTIONS" == logout ]]
-then 
-        swaymsg exit
-else
-        if [[ "$MOPTIONS" == lock ]]
-        then
-                swaylock -f -c 000000
-        else
-                if [[ "$MOPTIONS" == shutdown ]]
-                then
-                        shutdown now
-                else
-
-systemctl $MOPTIONS
-                fi
-        fi
-fi
-fi
+systemctl $MOPTIONS || [[ "$MOPTIONS" == "lock" ]] && swaylock -f -c 000000 
