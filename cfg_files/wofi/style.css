@@ -12,6 +12,8 @@
 }
 
 #input {
+  background: rgba(41, 46, 66, 1);
+  border: 2px solid #b072d1;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 15px;

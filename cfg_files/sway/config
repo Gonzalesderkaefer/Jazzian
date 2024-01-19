@@ -81,7 +81,7 @@ exec nm-applet
 ###Launching services
 exec /lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
 ###setting theme
-exec gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
+exec gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
 ### Key bindings
 #
