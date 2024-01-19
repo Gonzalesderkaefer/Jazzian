@@ -34,7 +34,7 @@ add_pass (){
   if [ -n "$(ls -la $HOME/ | grep -o .passwords)" ]
   then
     echo "Enter the password for $1:"
-    read password
+    read -s password
     echo "$password" >> $HOME/.passwords/$1
     email=$(cat $HOME/.passwords/.Ids)
     gpg -e -r $email $HOME/.passwords/$1 && shred -u $HOME/.passwords/$1
@@ -50,7 +50,6 @@ open_pass () {
   if [ -n "$(ls -la $HOME/ | grep -o .passwords)" ] && [ -n "$(ls -la $HOME/.passwords | grep -o $1)" ]
   then
       gpg -d -q $HOME/.passwords/$1.gpg
-      echo "Your password has been copied to your clipboard. You can paste it once"
   else
     echo "You do not have a password directory initialized"
     echo "Please do so with 'passman init'"
