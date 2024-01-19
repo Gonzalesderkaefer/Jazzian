@@ -68,8 +68,8 @@ fi
 
 if [[ $1 == 'add' ]]
 then
-  echo "you want to add a new password"
-  add_pass $2
+    echo "you want to add a new password"
+    [ -n "$2" ] && add_pass $2 || echo "Please supply a name for the password."
   
 elif [[ $1 == 'init' ]]
 then
