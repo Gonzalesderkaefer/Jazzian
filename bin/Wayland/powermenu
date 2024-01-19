@@ -5,7 +5,7 @@ MENTRIES="$(echo " Poweroff
  Logout
  Suspend
  Hibernate
- Lock" | wofi --dmenu)"
+ Lock" | wofi --dmenu -i)"
 
 MOPTIONS="$(echo $MENTRIES | awk '{print$2}' |tr '[:upper:]' '[:lower:]')"
 echo $MOPTIONS
