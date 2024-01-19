@@ -3,7 +3,7 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: JetbrainsMono, FontAwesome, Material Icons; 
-    font-size: 15px;
+    font-size: 12px;
 }
 
 window#waybar {
@@ -73,7 +73,8 @@ button:hover {
     background-color: #64727D;
     border-bottom: 3px solid #ffffff;
 }
-
+#custom-kernel,
+#custom-drivespace,
 #clock,
 #battery,
 #cpu,
@@ -113,9 +114,18 @@ button:hover {
     color: #ffffff;
 }
 
+#custom-kernel {
+    color: #ff6666;
+}
+
+#custom-drivespace {
+    color: #9a6bff
+}
+
 #battery {
     color: #ffffff;
 }
+
 
 #battery.charging, #battery.plugged {
     color: #26A65B;

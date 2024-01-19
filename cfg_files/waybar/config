@@ -11,17 +11,7 @@
     
     "sway/workspaces": {
         "disable-scroll": true,
-        "persistent_workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-	    "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-        },
-    },
+         },
 
 
 
@@ -96,7 +86,7 @@
     "custom/drivespace": {
         "interval": "once",
         "exec": "df -H | awk '/root/ {print $4}'",
-	"format":" {} "	
+	"format":" {}"	
     },
 
 
