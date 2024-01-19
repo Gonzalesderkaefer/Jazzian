@@ -1,0 +1,5 @@
+#!/bin/bash
+
+arg1="open"
+arg2="$(passman $arg1 | wofi --show dmenu -p 'Which password do you want to open?')"
+passman $arg1 $arg2 | wl-copy -o
