@@ -5,9 +5,9 @@
 help_message (){
   echo 'These are some commands to get started with passman
   add   -    adds new password entry
-  init  -    initializes password directory if not existent
   open  -    show specified password 
-  list  -    lists names of  saved passwords'
+  list  -    lists names of  saved passwords
+  init  -    initializes password directory if not existent'
   exit 0
 }
 
