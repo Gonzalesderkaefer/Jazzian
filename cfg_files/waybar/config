@@ -84,8 +84,8 @@
     },
 
     "custom/drivespace": {
-        "interval": "once",
-        "exec": "df -H | awk '/root/ {print $4}'",
+        "interval": "3600s",
+        "exec": "$HOME/.config/waybar/modules/drivespace.sh",
 	"format":" {}"	
     },
 
@@ -120,7 +120,7 @@
         "format-icons": ["", "", "", "", ""]
     },
     "battery#bat2": {
-        "bat": "BAT2"
+        "bat": "BAT0"
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
