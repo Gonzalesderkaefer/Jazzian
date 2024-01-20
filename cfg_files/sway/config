@@ -2,7 +2,7 @@
 # Default config for sway
 #
 ## include inputs
-include $HOME/.config/sway/devicespecfic/*
+include $HOME/.config/sway/devicespecific/*
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
@@ -74,7 +74,6 @@ exec swaybg -i $HOME/Pictures/cube &
 
 
 ### Launching Programs
-exec Monitor_check
 
 
 ###Launching tray elements
@@ -124,6 +123,9 @@ exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
 #
     # Move your focus around
     bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
@@ -226,9 +228,6 @@ mode "resize" {
     # down will grow the containers height
     bindsym $left resize shrink width 10px
     bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
-
     # Ditto, with arrow keys
     bindsym Left resize shrink width 10px
     bindsym Down resize grow height 10px
