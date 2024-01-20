@@ -2,7 +2,7 @@
 # Default config for sway
 #
 ## include inputs
-include $HOME/.config/sway/devicespecific/*
+#include $HOME/.config/sway/devicespecific/*
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
@@ -123,9 +123,6 @@ exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
 #
     # Move your focus around
     bindsym $mod+$left focus left
-    bindsym $mod+$down focus down
-    bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right

@@ -27,7 +27,7 @@ sudo systemctl enable tlp
 sudo systemctl set-default graphical.target
 
 #shell configuration
-echo 'exec sway' >> $HOME/.profile
+echo '[ "$(tty)" = "/dev/tty1" ] && exec sway' >> $HOME/.profile
 echo 'alias "ll"="ls -la"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
 echo 'alias "sn"="sudo nala"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
 echo 'alias "n"="nala"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
