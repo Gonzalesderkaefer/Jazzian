@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/window", "sway/mode", "sway/scratchpad", "custom/media"],
     "modules-center": [],
-    "modules-right": ["custom/drivespace","custom/kernel", "pulseaudio", "network", "cpu", "memory", "temperature", "keyboard-state", "battery", "battery#bat2", "clock", "tray"],
+    "modules-right": ["custom/drivespace","custom/kernel", "pulseaudio", "network", "cpu", "memory", "temperature", "keyboard-state", "battery", "clock", "tray"],
     
     "sway/workspaces": {
         "disable-scroll": true,
@@ -119,9 +119,9 @@
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]
     },
-    "battery#bat2": {
-        "bat": "BAT0"
-    },
+    //"battery#bat2": {
+    //    "bat": "BAT0"
+    //},
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "({signalStrength}%) ",

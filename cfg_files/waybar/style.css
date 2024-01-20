@@ -7,9 +7,9 @@
 }
 
 window#waybar {
-    background-color: rgba(26, 26, 26, 1);
-    border-bottom: 3px solid rgba(26, 26, 26, 1);
-    color: #ffffff;
+    background-color:#282A36;
+    border-bottom: 3px solid #282A36;
+    color: #C5C8C6;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -112,23 +112,28 @@ button:hover {
 
 #clock {
     color: #ffffff;
+    border-bottom: 2px solid #ffffff;
 }
 
 #custom-kernel {
     color: #ff6666;
+    border-bottom: 2px solid #ff6666;
 }
 
 #custom-drivespace {
-    color: #9a6bff
+    color: #9a6bff;
+    border-bottom: 2px solid #9a6bff;
 }
 
 #battery {
     color: #ffffff;
+    border-bottom: 2px solid #ffffff;
 }
 
 
 #battery.charging, #battery.plugged {
     color: #26A65B;
+    border-bottom: 2px solid #26A65B;
 }
 
 @keyframes blink {
@@ -154,14 +159,18 @@ label:focus {
 
 #cpu {
     color: #2ecc71;
+    border-bottom: 2px solid #2ecc71;
 }
 
 #memory {
     color: #eb65aa;
+    border-bottom: 2px solid #eb65aa;
 }
 
 #disk {
     color: #964B00;
+    border-bottom: 2px solid #964B00;
+
 }
 
 #backlight {
@@ -170,14 +179,17 @@ label:focus {
 
 #network {
     color: #6c83eb;
+    border-bottom: 2px solid #6c83eb;
 }
 
 #network.disconnected {
     background-color: #f53c3c;
+    border-bottom: 2px solid #f53c3c;
 }
 
 #pulseaudio {
     color: #987ae6;
+    border-bottom: 2px solid #987ae6;
 }
 
 #pulseaudio.muted {
@@ -210,6 +222,7 @@ label:focus {
 
 #temperature {
     color: #f0932b;
+    border-bottom: 2px solid #f0932b;
 }
 
 #temperature.critical {
@@ -217,7 +230,7 @@ label:focus {
 }
 
 #tray {
-    background-color: #1a1a1a;
+    background-color: #282A36;
 }
 
 #tray > .passive {
