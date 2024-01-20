@@ -1,12 +1,15 @@
+
 # Default config for sway
 #
+## include inputs
+include $HOME/.config/sway/devicespecfic/*
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
 ### Border
 client.focused #8e60f7 #8e60f7 #8e60f7 #ff5555 
 default_border pixel 2
-default_floating_border pixel 0
+default_floating_border pixel 1
 gaps inner 2
 gaps outer 2
 ### Variables
@@ -24,7 +27,7 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu rofi -show drun -config .config/rofi/config2.rasi
+set $menu w-rofi
 set $dmenu wofi --show drun
 ### Output configuration
 #
@@ -37,13 +40,11 @@ set $dmenu wofi --show drun
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
-#
-# Example configuration:
-#
+
 exec swayidle -w \
-        timeout 60 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-        timeout 300 'swaylock -f -c 000000' \
-        before-sleep 'swaylock -f -c 000000'
+  timeout 60 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+  timeout 300 'swaylock -f -c 000000' \
+  before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -63,13 +64,13 @@ exec swayidle -w \
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
-input "1133:49298:Logitech_G203_LIGHTSYNC_Gaming_Mouse" {
+input "1118:57:Microsoft_Microsoft_5-Button_Mouse_with_IntelliEye(TM)" {
         accel_profile flat
-        pointer_accel -0.5
+        pointer_accel -0.2
    }
 
 ### Wallpaper
-#exec swaybg -i $HOME/Pictures/cube &
+exec swaybg -i $HOME/Pictures/cube &
 
 
 ### Launching Programs
@@ -81,7 +82,7 @@ exec nm-applet
 ###Launching services
 exec /lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
 ###setting theme
-exec gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+exec gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
 exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
 ### Key bindings
 #
@@ -96,10 +97,15 @@ exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
     # Start your launcher
     bindsym Alt+space exec $menu
     bindsym $mod+d exec $dmenu
-    
+
     # Startmenu
     bindsym Alt+F4 exec powermenu    
 
+    # Scrennshot
+    bindsym Mod4+Ctrl+p  exec grimshot save window
+
+    # Change Keyboard Layout
+    bindsym $mod+space exec kblayousway
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -194,7 +200,7 @@ exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
     bindsym $mod+Shift+space floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    bindsym CTRL+space focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
@@ -243,4 +249,3 @@ bar {
 	swaybar_command waybar
 }
 
-include /etc/sway/config.d/*
