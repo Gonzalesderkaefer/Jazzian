@@ -9,4 +9,5 @@ vim.cmd("set number")
 vim.cmd("set cursorline")
 vim.cmd("hi CursorLine term=bold cterm=bold ctermbg=236")
 vim.cmd("hi CursorLineNr term=bold cterm=bold ctermbg=236")
-vim.cmd("hi StatusLine ctermbg=black ctermfg=blue")
+vim.cmd("hi StatusLine ctermbg=blue ctermfg=black")
+
