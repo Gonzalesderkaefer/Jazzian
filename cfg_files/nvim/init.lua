@@ -1,19 +1,2 @@
-
-
---Keybindings
-vim.cmd("map <leader>lc :!pdflatex %<CR>") --compile LaTeX
-vim.cmd("map <leader>lyc :w \\| !pdflatex %<CR>") --compile LaTeX
-vim.g.mapleader = " " -- set <leader> to space
-
-
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.bo.softtabstop = 4
-
-vim.cmd("set number")
-vim.cmd("set cursorline")
-vim.cmd("hi CursorLine term=bold cterm=bold ctermbg=236")
-vim.cmd("hi CursorLineNr term=bold cterm=bold ctermbg=236")
-vim.cmd("hi StatusLine ctermbg=black ctermfg=blue")
-vim.cmd("hi StatusLine ctermbg=blue ctermfg=black")
+require('settings')
+require('keybindings')
