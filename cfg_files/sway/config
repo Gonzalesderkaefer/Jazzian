@@ -70,7 +70,7 @@ input "1118:57:Microsoft_Microsoft_5-Button_Mouse_with_IntelliEye(TM)" {
    }
 
 ### Wallpaper
-exec swaybg -i $HOME/Pictures/cube &
+exec swaybg -i $HOME/Pictures/cube.jpeg &
 
 
 ### Launching Programs
@@ -80,8 +80,10 @@ exec swaybg -i $HOME/Pictures/cube &
 exec nm-applet
 ###Launching services
 exec /lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+exec dbus-update-activation-environment --systemd DISPLAY
 ###setting theme
-exec gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
+exec gsettings set org.gnome.desktop.interface gtk-theme "Arc-Dark"
+exec settings set org.gnome.desktop.interface font-name 'Jetbrains Mono'
 exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
 ### Key bindings
 #
@@ -112,6 +114,8 @@ exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
     # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
     floating_modifier $mod normal
+    bindsym  $mod+t floating toggle
+
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
