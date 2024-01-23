@@ -4,7 +4,7 @@
 sudo apt update && sudo apt upgrade -y
 
 #installing packages
-sudo apt install file-roller evince flatpak cbatticon network-manager network-manager-gnome network-manager-openconnect-gnome network-manager-openconnect lxappearance git lf neovim fonts-jetbrains-mono firefox-esr tlp alacritty brightnessctl pulsemixer sway waybar fonts-material-design-icons-iconfont fonts-font-awesome xwayland libglib2.0-bin fonts-noto-color-emoji wlr-randr nala wl-clipboard mpv swayidle papirus-icon-theme gnome-themes-extra pulseaudio &&
+sudo apt install file-roller evince flatpak cbatticon network-manager network-manager-gnome network-manager-openconnect-gnome network-manager-openconnect lxappearance git lf neovim fonts-jetbrains-mono firefox-esr tlp alacritty brightnessctl pulsemixer sway wofi waybar fonts-material-design-icons-iconfont fonts-font-awesome xwayland libglib2.0-bin fonts-noto-color-emoji wlr-randr nala wl-clipboard mpv swayidle papirus-icon-theme gnome-themes-extra pulseaudio &&
 
 #copying scripts to .local/bin
 
@@ -16,6 +16,7 @@ fi
 cp -r $HOME/Jazzian/bin/Wayland/* $HOME/.local/bin/
 #copying config files
 cp -r cfg_files/alacritty/ $HOME/.config/alacritty/
+cp -r cfg_files/wofi/ $HOME/.config/
 cp -r cfg_files/sway/ $HOME/.config/
 cp -r cfg_files/nvim/ $HOME/.config/
 cp -r cfg_files/waybar/ $HOME/.config/ 
