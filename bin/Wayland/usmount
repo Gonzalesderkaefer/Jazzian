@@ -1,0 +1,3 @@
+#!/bin/bash
+blockdevice="$(lsblk -i | grep -o sd[a-z][0-9] | wofi --dmenu -p 'Which drive would you like to mount?')"
+udisksctl mount -b /dev/$blockdevice || udisksctl unmount -b /dev/$blockdevice
