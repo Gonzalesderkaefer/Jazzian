@@ -135,6 +135,9 @@ exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
     bindsym $mod+Down focus down
     bindsym $mod+Up focus up
     bindsym $mod+Right focus right
+    # Or use Alt+Tab/Alt+Shift+Tab
+    bindsym Mod1+Shift+Tab focus left
+    bindsym Mod1+Tab focus right
 
     # Move the focused window with the same, but add Shift
     bindsym $mod+Shift+$left move left
