@@ -15,6 +15,9 @@ gaps outer 2
 ### Variables
 set $browser firefox
 
+### Floating window
+ for_window [app_id="qalculate-gtk"] floating enable
+
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 # Home row direction keys, like vim
@@ -70,7 +73,7 @@ input "1118:57:Microsoft_Microsoft_5-Button_Mouse_with_IntelliEye(TM)" {
    }
 
 ### Wallpaper
-exec swaybg -i $HOME/Pictures/cube.jpeg &
+exec swaybg -i $HOME/Pictures/cube.png&
 
 
 ### Launching Programs
@@ -182,7 +185,14 @@ exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 
-    
+#
+# Controls 
+#
+
+    bindsym XF86MonBrightnessUp exec brightnessctl -e s +30
+    bindsym XF86MonBrightnessDown exec brightnessctl -e s 30-
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 #
 # Layout stuff:
 #
