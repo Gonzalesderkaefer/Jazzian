@@ -29,10 +29,10 @@ client.unfocused        $br     $bg     $fg     $bg       $bg
 
 
 #client.focused #8e60f7 #8e60f7 #222222 #ff5555 
-#default_border pixel 2
-#default_floating_border pixel 1
-#gaps inner 2
-#gaps outer 2
+default_border pixel 2
+default_floating_border pixel 1
+gaps inner 2
+gaps outer 2
 ### Variables
 set $browser firefox
 
@@ -100,15 +100,15 @@ exec swaybg -i $HOME/Pictures/cube.png&
 ### Launching Programs
 
 
-###Launching tray elements
+### Launching tray elements
 exec nm-applet
-###Launching services
+### Launching services
 exec /lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
 exec dbus-update-activation-environment --systemd DISPLAY
-###setting theme
+### Setting theme fonts etc.
 exec gsettings set org.gnome.desktop.interface gtk-theme "Arc-Dark"
-exec settings set org.gnome.desktop.interface font-name 'Jetbrains Mono'
 exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
+exec gsettings set org.gnome.desktop.interface font-name 'Jetbrains Mono Nerd Font'
 ### Key bindings
 #
 # Basics:
@@ -214,6 +214,7 @@ exec gsettings set org.gnome.desktop.interface icon-theme "ePapirus-Dark"
     bindsym XF86MonBrightnessDown exec brightnessctl -e s 30-
     bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
     bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 #
 # Layout stuff:
 #
