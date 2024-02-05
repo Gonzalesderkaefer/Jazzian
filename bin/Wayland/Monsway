@@ -1,6 +1,6 @@
 #!/bin/sh
 
-output="$(swaymsg -t get_outputs | grep  name | tr -d ',":' | awk '{print $2}' | wofi --dmenu)"
+output="$(swaymsg -t get_outputs | grep  name | tr -d ',":' | awk '{print $2}' | wofi  -i --dmenu)"
 echo $output
 
 action="$(echo 'disable 
