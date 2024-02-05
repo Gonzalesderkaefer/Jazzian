@@ -52,7 +52,7 @@ set $term alacritty
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu w-rofi
-set $dmenu wofi --show drun
+set $dmenu wofi --show run
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
@@ -66,8 +66,8 @@ set $dmenu wofi --show drun
 ### Idle configuration
 
 exec swayidle -w \
-  timeout 60 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-  timeout 300 'swaylock -f -c 000000' \
+  timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+  timeout 600 'swaylock -f -c 000000' \
   before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
@@ -92,6 +92,12 @@ input "1118:57:Microsoft_Microsoft_5-Button_Mouse_with_IntelliEye(TM)" {
         accel_profile flat
         pointer_accel -0.2
    }
+input "type:keyboard"	{
+		xkb_layout us,us(altgr-intl)
+		xkb_variant abnt2
+                xkb_options grp:win_space_toggle
+		xkb_model abnt2
+	}
 
 ### Wallpaper
 exec swaybg -i $HOME/Pictures/cube.png&
@@ -130,7 +136,7 @@ exec gsettings set org.gnome.desktop.interface font-name 'Jetbrains Mono Nerd Fo
     bindsym Mod4+Ctrl+p  exec grimshot save window
 
     # Change Keyboard Layout
-    bindsym $mod+space exec kblayousway
+    # bindsym $mod+space exec kblayousway
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -179,6 +185,8 @@ exec gsettings set org.gnome.desktop.interface font-name 'Jetbrains Mono Nerd Fo
     # Switch to workspace
     bindsym $mod+Control+Right workspace next 
     bindsym $mod+Control+Left workspace prev	
+    bindsym $mod+Control+l workspace next 
+    bindsym $mod+Control+h workspace prev	
     bindsym $mod+1 workspace number 1
     bindsym $mod+2 workspace number 2
     bindsym $mod+3 workspace number 3
