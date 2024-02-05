@@ -104,7 +104,7 @@ exec swaybg -i $HOME/Pictures/cube.png&
 
 
 ### Launching Programs
-
+exec mako &
 
 ### Launching tray elements
 exec nm-applet
@@ -136,7 +136,7 @@ exec gsettings set org.gnome.desktop.interface font-name 'Jetbrains Mono Nerd Fo
     bindsym Mod4+Ctrl+p  exec grimshot save window
 
     # Change Keyboard Layout
-    # bindsym $mod+space exec kblayousway
+    bindsym $mod+space exec $HOME/.config/sway/scripts/kbnotify
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
