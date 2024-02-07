@@ -5,11 +5,11 @@
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/window", "sway/mode", "sway/scratchpad", "custom/media"],
+    "modules-left": ["hyprland/workspaces", "hyprland/window", "hyprland/mode", "hyprland/scratchpad", "custom/media"],
     "modules-center": [],
     "modules-right": ["custom/drivespace","custom/kernel", "pulseaudio", "network", "cpu", "memory", "temperature", "keyboard-state", "battery", "clock", "tray"],
     
-    "sway/workspaces": {
+    "hyprland/workspaces": {
         "disable-scroll": true,
          },
 
@@ -24,10 +24,10 @@
             "unlocked": ""
         }
     },
-    "sway/mode": {
+    "hyprland/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
-    "sway/scratchpad": {
+    "hyprland/scratchpad": {
         "format": "{icon} {count}",
         "show-empty": false,
         "format-icons": ["", ""],
@@ -72,6 +72,8 @@
         "spacing": 10
     },
     "clock": {
+    	"format": "{: %R   %d/%m}",
+    
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
@@ -91,7 +93,7 @@
 
 
     "cpu": {
-        "format": "<span rise='3000'>{usage}%</span> <span font='12' rise='-200'></span>",
+        "format": "{usage}% ",
         "tooltip": false
     },
     "memory": {
