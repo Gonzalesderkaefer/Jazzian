@@ -72,7 +72,7 @@ then
   
 elif [[ $1 == 'init' ]]
 then
-  if [ -n "$2" ]
+  if [ -n "$2" ] && [ -n "$(gpg --list-key | grep -w $2)" ]
   then
     initialize_pwdir && echo "$2" > $HOME/.passwords/.Ids && echo "Successfully initialized." && exit 0
   else
