@@ -17,6 +17,8 @@ cp -r cfg_files/hypr/ $HOME/.config/
 cp -r cfg_files/nvim/ $HOME/.config/
 cp -r cfg_files/waybar/ $HOME/.config/ 
 
+cat $HOME/.config/waybar/config | sed -e 's/hyprland/sway/g' > $HOME/.config/waybar/config # probably not the best way to do this.
+
 #systemd
 sudo systemctl enable tlp
 sudo systemctl set-default graphical.target
@@ -31,3 +33,6 @@ then
 	echo 'alias "shutdown"="systemctl poweroff"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
 	echo 'alias "reboot"="systemctl reboot"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
 fi
+
+
+
