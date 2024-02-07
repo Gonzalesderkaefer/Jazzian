@@ -5,11 +5,11 @@
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces", "hyprland/window", "hyprland/mode", "hyprland/scratchpad", "custom/media"],
+    "modules-left": ["sway/workspaces", "sway/window", "sway/mode", "sway/scratchpad", "custom/media"],
     "modules-center": [],
     "modules-right": ["custom/drivespace","custom/kernel", "pulseaudio", "network", "cpu", "memory", "temperature", "keyboard-state", "battery", "clock", "tray"],
     
-    "hyprland/workspaces": {
+    "sway/workspaces": {
         "disable-scroll": true,
          },
 
@@ -24,10 +24,10 @@
             "unlocked": ""
         }
     },
-    "hyprland/mode": {
+    "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
-    "hyprland/scratchpad": {
+    "sway/scratchpad": {
         "format": "{icon} {count}",
         "show-empty": false,
         "format-icons": ["", ""],
