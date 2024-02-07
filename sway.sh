@@ -20,6 +20,7 @@ cp -r cfg_files/wofi/ $HOME/.config/
 cp -r cfg_files/sway/ $HOME/.config/
 cp -r cfg_files/nvim/ $HOME/.config/
 cp -r cfg_files/waybar/ $HOME/.config/ 
+cp -r cfg_files/mako/ $HOME/.config/ 
 
 
 
