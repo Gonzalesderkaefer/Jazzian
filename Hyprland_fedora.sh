@@ -4,7 +4,7 @@ sudo dnf update &&
 sudo dnf install hyprland swaybg swayidle swaylock pinentry-gtk pinentry\
 thunar polkit-gnome nnn neovim waybar alacritty mpv firefox zathura zathura-pdf-poppler evince git pulseaudio-utils pipewire-utils file-roller\
 NetworkManager-openconnect-gnome wofi brightnessctl gsettings-desktop-schemas wl-clipboard papirus-icon-theme NetworkManager-tui eom tlp\
-libnotify mako
+libnotify mako swaybg
 
 
 ls $HOME/.local/bin || mkdir -p $HOME/.local/bin/ #make directory if .local/bin does not exist
