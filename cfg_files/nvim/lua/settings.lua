@@ -11,3 +11,8 @@ vim.cmd("hi CursorLine term=bold cterm=bold ctermbg=236")
 vim.cmd("hi CursorLineNr term=bold cterm=bold ctermbg=236")
 vim.cmd("hi StatusLine ctermbg=blue ctermfg=black")
 
+-- Autocmds --
+--
+--
+-- LaTeX
+vim.cmd("autocmd BufWritePost *.tex !pdflatex %")
