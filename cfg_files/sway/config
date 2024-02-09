@@ -12,12 +12,13 @@
 # Set colors
 set $bg #222222
 set $fg #eff1f5
+set $in	#ff5500
 set $br #8e60f7 
 set $ia #232425
 set $fib #333333
 
 # class                 border  backgr. text    indicator child_border
-client.focused          $br     $br     $fg     $bg       $br
+client.focused          $br     $br     $fg     $in       $br
 client.focused_inactive $br     $bg     $fg     $bg       $bg
 client.unfocused        $br     $bg     $fg     $bg       $bg
 #client.urgent          $br     $br     $fg     $bg       $br #currently not implemented
