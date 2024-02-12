@@ -1,7 +1,12 @@
 configuration {
-    show-icons:      true;
-    display-drun:    "";
-    disable-history: false;
+	show-icons:      true;
+	display-drun:    "";
+	disable-history: false;
+	rofi.matching: fuzzy
+	rofi.font: Ubuntu Mono derivative Powerline 16
+	rofi.modi: drun
+	rofi.hide-scrollbar: true
+	rofi.levenshtein-sort: true
 }
 
 * {

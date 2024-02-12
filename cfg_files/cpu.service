@@ -1,0 +1,10 @@
+[Unit]
+Description=Set
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/freqset.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
