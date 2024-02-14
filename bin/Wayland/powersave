@@ -1,0 +1,6 @@
+#!/bin/sh
+
+
+sudo cpupower frequency-set -g powersave -d 0.4G -u 1.0G
+echo low | sudo tee /sys/class/drm/card0/device/power_dpm_force_performance_level
+
