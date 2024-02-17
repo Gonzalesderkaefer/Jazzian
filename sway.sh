@@ -15,7 +15,7 @@ fi
 #copying scripts to .local/bin/
 cp -r $HOME/Jazzian/bin/Wayland/* $HOME/.local/bin/
 #copying config files
-cp -r cfg_files/alacritty/ $HOME/.config/alacritty/
+cp -r cfg_files/alacritty/ $HOME/.config/
 cp -r cfg_files/wofi/ $HOME/.config/
 cp -r cfg_files/sway/ $HOME/.config/
 cp -r cfg_files/nvim/ $HOME/.config/
