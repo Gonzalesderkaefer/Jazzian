@@ -1,7 +1,7 @@
 
 # Default config for sway
 #
-## include inputs
+include input
 #include $HOME/.config/sway/devicespecific/*
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
@@ -105,7 +105,7 @@ exec swaybg -i $HOME/Pictures/cube.png&
 
 
 ### Launching Programs
-exec mako &
+exec mako -c $HOME/.config/mako/mako.conf &
 
 ### Launching tray elements
 exec nm-applet
