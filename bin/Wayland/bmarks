@@ -1,0 +1,10 @@
+#!/bin/sh
+
+website="$(cat ~/.config/bookmarks | awk '{print $1}' | wofi --dmenu)"
+
+url="$(grep $website ~/.config/bookmarks | awk '{print $2}')"
+
+
+browser="google-chrome"
+
+$browser $url
