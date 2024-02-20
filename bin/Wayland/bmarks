@@ -1,10 +1,24 @@
 #!/bin/sh
 
-website="$(cat ~/.config/bookmarks | awk '{print $1}' | wofi --dmenu)"
-
-url="$(grep $website ~/.config/bookmarks | awk '{print $2}')"
 
 
-browser="google-chrome"
 
-$browser $url
+add (){
+  echo "Please enter the Name of the website"
+  read website
+  echo "Now enter the URL"
+  read url
+  echo "$website\t \t$url" >> .config/bookmarks
+  exit 0
+}
+
+
+if [ "$1" = "add" ];
+then
+	add;
+else
+	website="$(cat ~/.config/bookmarks | awk '{print $1}' | wofi --dmenu)"
+	url="$(grep $website ~/.config/bookmarks | awk '{print $2}')"
+	browser="google-chrome"
+	$browser $url
+fi
