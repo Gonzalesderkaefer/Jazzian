@@ -19,22 +19,27 @@ int main(){
 
  
 
-std::string a = "";
+    std::string a = "";
     int k;
     std::cin >> k; 
     int i = 0;
 
-if (!std::cin) {
-    // input was not an integer
-    k = 15;
-}
-
-
-while (i<k)
-    { 
-        a = a + characters[randomNumber()];
-        ++i;
+    if (!std::cin) {
+        // input was not an integer
+        k = 15;
     }
+
+
+
+    for ( int j = 0; j < k; ++j  ){
+        a = a + characters[randomNumber()];
+    }
+
+//while (i<k)
+//    { 
+//        a = a + characters[randomNumber()];
+//        ++i;
+//    }
     std::cout << a << "\n";
     return 0;
 }
