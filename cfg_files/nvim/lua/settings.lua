@@ -14,5 +14,11 @@ vim.cmd("hi StatusLine ctermbg=blue ctermfg=black")
 -- Autocmds --
 --
 --
--- LaTeX
+-- Compile LaTeX after writing
 vim.cmd("autocmd BufWritePost *.tex !pdflatex %")
+-- Compile Java after writing
+vim.cmd("autocmd BufWritePost *.java !javac %")
+-- Compile cpp after saving
+vim.cmd(" autocmd BufWritePost *.cpp !make \"$(echo \"%\" | awk -F \".\" '{print $1}')\" ")
+-- Compile c after saving
+vim.cmd(" autocmd BufWritePost *.c !make \"$(echo \"%\" | awk -F \".\" '{print $1}')\" ")
