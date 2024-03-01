@@ -19,6 +19,11 @@ vim.cmd("autocmd BufWritePost *.tex !pdflatex %")
 -- Compile Java after writing
 vim.cmd("autocmd BufWritePost *.java !javac %")
 -- Compile cpp after saving
-vim.cmd(" autocmd BufWritePost *.cpp !make \"$(echo \"%\" | awk -F \".\" '{print $1}')\" ")
+vim.cmd(" autocmd BufWritePost *.cpp !make \"$(echo \"%\" | sed -e 's/.cpp//')\" ")
 -- Compile c after saving
-vim.cmd(" autocmd BufWritePost *.c !make \"$(echo \"%\" | awk -F \".\" '{print $1}')\" ")
+vim.cmd(" autocmd BufWritePost *.c !make \"$(echo \"%\" | sed -e 's/.c//')\" ")
+
+
+--Open .tex file in Zathura upon opening
+vim.cmd(" autocmd BufReadPost *.tex !zathura \"$(echo \"%\" | sed -e 's/.tex/.pdf/')\" & ")
+
