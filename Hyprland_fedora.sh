@@ -28,7 +28,8 @@ sudo systemctl set-default graphical.target
 # bashrc
 if [ "$SHELL" = "/bin/bash" ];
 then
-	echo '[ "$(tty)" = "/dev/tty1" ] && exec Hyprland' >> $HOME/.profile
+	echo 'export WLR_NO_HARDWARE_CURSORS=1' >> $HOME/.bash_profile
+	echo '[ "$(tty)" = "/dev/tty1" ] && exec Hyprland' >> $HOME/.bash_profile
 	echo 'alias "ll"="ls -la"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
 	echo 'alias "sn"="sudo nala"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc
 	echo 'alias "n"="nala"' >> $HOME/.$(echo $SHELL | awk -F '/' '{print $3}')rc

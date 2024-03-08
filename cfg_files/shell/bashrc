@@ -11,5 +11,8 @@ export TERMINAL=alacritty
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
+export WLR_NO_HARDWARE_CURSORS=1
+
+
 ## Prompt
 PS1=' \[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] > '
