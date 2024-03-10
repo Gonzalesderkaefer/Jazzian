@@ -39,7 +39,6 @@ set $browser firefox
 
 ### Floating window
  for_window [app_id="qalculate-gtk"] floating enable
-
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 # Home row direction keys, like vim
@@ -120,6 +119,10 @@ exec gsettings set org.gnome.desktop.interface font-name 'Jetbrains Mono Nerd Fo
 #
 # Basics:
 #
+
+
+    # Lauching a Calculator
+    bindsym XF86Calculator exec qalculate-gtk
     # Start a terminal
     bindsym $mod+Return exec $term
 
