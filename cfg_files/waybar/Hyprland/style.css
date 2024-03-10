@@ -116,6 +116,10 @@ button:hover {
     background-color:#282A36;
 }
 
+#battery {
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
 
 #clock {
     color: #ffffff;

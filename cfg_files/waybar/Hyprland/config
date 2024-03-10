@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["custom/drivespace", "idle_inhibitor" ,"pulseaudio", "cpu", "memory", "temperature", "clock", "tray"],
+    "modules-right": ["custom/drivespace", "idle_inhibitor" ,"pulseaudio", "battery", "cpu", "memory", "temperature", "clock", "tray"],
 
 
     "idle_inhibitor": {
