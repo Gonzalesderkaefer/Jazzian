@@ -15,5 +15,6 @@
 #layouts[0] = "US"
 #layouts[1] = "US-Intl"
 
-
-[ "$(cat layout)" = "US" ] && echo "US-Intl" > layout || echo "US" > layout 
+#echo "${DASH_SOURCE[0]}"
+thisDir="$HOME/.config/waybar/modules"
+[ "$(cat $thisDir/layout)" = "US" ] && echo "US-Intl" > $thisDir/layout || echo "US" > $thisDir/layout 
