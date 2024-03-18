@@ -1,79 +1,30 @@
 {
     // "layer": "top", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 15, // Waybar height (to be removed for auto height)
+    "height": 35, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/window", "sway/mode", "sway/scratchpad", "custom/media"],
+    "modules-left": ["sway/workspaces","sway/window"],
     "modules-center": [],
-    "modules-right": ["custom/drivespace","custom/kernel", "pulseaudio", "network", "cpu", "memory", "temperature", "keyboard-state", "battery", "clock", "tray"],
-    
-    "sway/workspaces": {
-        "disable-scroll": true,
-         },
+    "modules-right": ["custom/keyboard","custom/home", "custom/drivespace", "idle_inhibitor" ,"pulseaudio", "battery", "cpu", "memory", "temperature", "clock", "tray"],
 
 
-
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
-    },
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
-    "sway/scratchpad": {
-        "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": ["", ""],
-        "tooltip": true,
-        "tooltip-format": "{app}: {title}"
-    },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 2,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
-    },
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": "󰅶",
+            "deactivated": "󰾪"
         }
     },
+
     "tray": {
         // "icon-size": 21,
         "spacing": 10
     },
+
     "clock": {
     	"format": "{:%d.%m   | %R }",
-    
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
@@ -87,10 +38,22 @@
 
     "custom/drivespace": {
         "interval": "3600s",
-        "exec": "$HOME/.config/waybar/modules/drivespace.sh",
-	"format":" {}"	
+        "exec": "df -H | grep -e '/$'| awk '{print $3}'",
+        "format":" {}",
     },
 
+    "custom/keyboard": {
+        "interval": "once",
+        "exec": "echo $(swaymsg -t get_inputs | grep \"xkb_active_layout_name\"| sed -n 1p | tr -d '\":(,.)' | awk '{print $2 \" \" $3}')" ,
+        "format":"{} ",
+        "signal" : 5
+    },
+    "custom/home": {
+        "interval": "3600s",
+        "exec": "df -H | grep -e '/home$'| awk '{print $3}'",
+	"format":" {}"
+    },
+ 
 
     "cpu": {
         "format": "{usage}% ",
@@ -133,6 +96,7 @@
         "format-disconnected": "Disconnected ⚡",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
+
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon} {format_source}",
@@ -152,17 +116,8 @@
         },
         "on-click": "pavucontrol"
     },
-    "custom/media": {
-        "format": "{icon} {}",
-        "return-type": "json",
-        "max-length": 40,
-        "format-icons": {
-            "spotify": "",
-            "default": "🎜"
-        },
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     }
 }
-
