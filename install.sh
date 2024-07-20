@@ -392,6 +392,7 @@ read mov_choice;
             echo -e "\033[0;32m Ok, skipping.. \033[0m ";
             echo  "Press ENTER to continue.";
             read continue;
+            continue="true";
 	    ;;
         *)
             echo -e "\033[0;32m You can just enter l,c or s. \033[0m ";
@@ -429,4 +430,3 @@ touch $HOME/.config/river/devicespecific/devicespecific;
 
 ### Creating file for bash and zsh
 touch $HOME/.devicespecific.sh;
-
