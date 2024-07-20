@@ -242,7 +242,7 @@ link_files()
     ### Copy bash config files to $HOME
     for sh_file in $HOME/Jazzian/cfg_files/shell/bash/*; do
         filename="$(echo $sh_file | grep -E -oi "[^\/]*$")"
-        ln $sh_file $HOME/.$filename;
+        ln -sf $sh_file $HOME/.$filename;
     done
 
     ### Copy zsh config files to $HOME
