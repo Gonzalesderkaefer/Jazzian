@@ -127,7 +127,7 @@ fedora_install()
      case $1 in
         'W'* | 'w'*)
             sudo dnf install i3blocks  grim tmux swaybg swayidle zsh \
-            swaylock pinentry-gtk pinentry thunar polkit-gnome nnn neovim \
+            swaylock pinentry thunar polkit-gnome nnn neovim \
             waybar alacritty mpv firefox zathura zathura-pdf-poppler evince \
             git pipewire pipewire-utils file-roller pipewire-pulseaudio \
             NetworkManager-openconnect-gnome wofi brightnessctl \
