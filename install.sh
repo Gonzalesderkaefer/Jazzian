@@ -135,7 +135,7 @@ fedora_install()
             NetworkManager-tui eom tlp libnotify mako pipewire-alsa \
             google-noto-color-emoji-fonts qalculate-gtk fzf hyprpaper \
             pipewire-jack-audio-connection-kit jetbrains-mono-fonts \
-            lxappearance papirus-icon-theme-dark
+            lxappearance papirus-icon-theme-dark network-manager-applet
 
             case $2 in 
                 "S"* | "s"*)
@@ -158,7 +158,8 @@ fedora_install()
             gsettings-desktop-schemas xclip papirus-icon-theme \
             NetworkManager-tui eom tlp libnotify dunst \
             google-noto-color-emoji-fonts qalculate-gtk fzf @base-x \
-            jetbrains-mono-fonts lxappearance papirus-icon-theme-dark
+            jetbrains-mono-fonts lxappearance papirus-icon-theme-dark \
+            network-manager-applet
 
             case $2 in 
                 "I"* | "i"*)
