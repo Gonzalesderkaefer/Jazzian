@@ -1,0 +1,22 @@
+#!/bin/sh
+
+menu="$(echo " Poweroff
+ Reboot
+󰍃 Logout
+ Suspend
+󰒲 Hibernate
+ Lock" | rofi -dmenu -i -p "")"
+
+case $menu in
+    *Poweroff*) systemctl poweroff;;
+    *Reboot*) systemctl reboot;;
+    *Logout*) i3-msg exit;;
+    *Suspend* ) systemctl suspend ;;
+    *Lock*) i3lock -f -c 000000;;
+    *Hibernate* ) systemctl hibernate;;
+esac
+
+# MOPTIONS="$(echo $MENTRIES | awk '{print$2}' |tr '[:upper:]' '[:lower:]')"
+# echo $MOPTIONS
+# 
+# systemctl $MOPTIONS || ([ "$MOPTIONS" = "lock" ] && swaylock -f -c 000000)  || ([ "$MOPTIONS" = "logout" ] && hyprctl dispatch exit)

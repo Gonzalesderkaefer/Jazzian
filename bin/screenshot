@@ -1,0 +1,4 @@
+#!/bin/sh
+
+file="$HOME/Pictures/screenshots/"$(date | sed  "s/\s/_/g")".png"
+grim $file && notify-send "saved screenshot to $file"

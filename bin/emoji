@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cat $HOME/.local/bin/all_emojis.txt | wofi --show dmenu | awk '{print $1}' | wl-copy

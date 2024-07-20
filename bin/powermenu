@@ -1,0 +1,22 @@
+#!/bin/sh
+
+menu="$(echo " Poweroff
+ Reboot
+󰍃 Logout
+ Suspend
+󰒲 Hibernate
+ Lock" | wofi --dmenu -i)"
+
+case $menu in
+    *Poweroff*) systemctl poweroff;;
+    *Reboot*) systemctl reboot;;
+    *Logout*) hyprctl dispatch exit || riverctl exit || swaymsg exit;;
+    *Suspend* ) systemctl suspend ;;
+    *Lock*) swaylock -f -c 000000;;
+    *Hibernate* ) systemctl hibernate;;
+esac
+
+# MOPTIONS="$(echo $MENTRIES | awk '{print$2}' |tr '[:upper:]' '[:lower:]')"
+# echo $MOPTIONS
+# 
+# systemctl $MOPTIONS || ([ "$MOPTIONS" = "lock" ] && swaylock -f -c 000000)  || ([ "$MOPTIONS" = "logout" ] && hyprctl dispatch exit)

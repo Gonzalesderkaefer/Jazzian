@@ -1,0 +1,5 @@
+#!/bin/sh
+
+LOT="$(ls -l ~/.password-store/ | awk  '{print $9}' | awk -F '.' '{print $1}' |tail -n +2|wofi --dmenu -p "What password would you like to use?")"
+
+pass $LOT | wl-copy -o

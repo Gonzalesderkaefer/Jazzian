@@ -1,0 +1,77 @@
+# Lines configured by zsh-newuser-install
+#
+
+# If not interactive don't do anything
+[[ "$-" != *i* ]] && return
+
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+bindkey -v
+export KEYTIMEOUT=1
+
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/user1/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+# Prompt
+PROMPT=" %F{green}% %n%f:%F{blue}%~%f > "
+
+# Source aliases
+if [ -f ~/.sh_aliases ]; then
+    source ~/.sh_aliases
+fi
+
+
+
+zle-keymap-select()
+{
+    case $KEYMAP in
+        vicmd) echo -ne '\e[3 q'
+        ;;
+        viins|main) echo -ne '\e[6 q'
+        ;;
+    esac
+}
+
+zle-line-init()
+{
+    echo -ne '\e[6 q'
+
+}
+
+zle -N zle-keymap-select
+zle -N zle-line-init
+
+
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
+
+## Extract files
+
+extract()
+{
+    case $1 in
+        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $1;;
+        *.tar.gz|*.tgz) tar xzvf $1;;
+        *.tar.xz|*.txz) tar xJvf $1;;
+        *.zip) unzip $1;;
+        *.rar) unrar x $1;;
+        *.7z) 7z x $1;;
+    esac
+}
+
+## Open files in a GUI program
+
+open()
+{
+    printf "Program (GUI): \n";
+    read prog;
+    nohup $prog $1 >/dev/null 2>&1 &
+}

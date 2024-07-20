@@ -1,0 +1,47 @@
+#!/bin/bash
+
+PIDFILE="/tmp/swayidle.pid"
+
+get_output() {
+    if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+        echo "󰾪 "
+        echo
+        echo "#ecc2fc"
+    else
+        echo "󰅶 "
+        echo
+        echo "#f56464"
+    fi
+}
+
+start_idle() {
+    swayidle -w \
+    timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+    timeout 600 'swaylock -f -c 000000' \
+    before-sleep 'swaylock -f -c 000000' &
+    echo $! > "$PIDFILE"
+    get_output
+}
+
+stop_idle() {
+    if [ -f "$PIDFILE" ]; then
+        PID="$(cat "$PIDFILE")"
+        if kill "$PID" 2>/dev/null; then
+            rm "$PIDFILE"
+        fi
+    fi
+    get_output
+}
+
+case $BLOCK_BUTTON in
+    1)
+        if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+            stop_idle
+        else
+            start_idle
+        fi
+        ;;
+    *)
+        get_output
+        ;;
+esac

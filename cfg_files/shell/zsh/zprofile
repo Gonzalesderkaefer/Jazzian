@@ -1,0 +1,18 @@
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+# env Exports
+export EDITOR=nvim
+export TERMINAL=alacritty
+export WLR_NO_HARDWARE_CURSORS=1
+
+## NNN  Configuration
+export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh'

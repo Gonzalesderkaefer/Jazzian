@@ -1,0 +1,10 @@
+
+
+[global]
+
+width = (200, 300)
+origin = bottom-center
+corner_radius = 20
+background = "#2E3440"
+frame_color = "#8E60F7"
+timeout = "1s"

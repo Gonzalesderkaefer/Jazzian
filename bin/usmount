@@ -1,0 +1,7 @@
+#!/bin/sh
+#blockdevice="$(lsblk -l -i -o name,mountpoints | grep sd[a-z][0-9] | wofi --dmenu -p 'Which drive would you like to mount?' | awk '{print $1}')"
+blockdevice="$(lsblk -lo name,mountpoints | grep "$(lsblk -lo name,tran | grep -i 'usb' | awk '{print $1}')" | wofi --dmenu)"
+echo "/dev/$blockdevice"
+(udisksctl mount -b /dev/$blockdevice && echo "device mounted" | wofi --dmenu) || (udisksctl unmount -b /dev/$blockdevice && echo "device unmounted"| wofi --dmenu)
+#(udisksctl mount -b /dev/$(blockdevice) && echo "Device mounted successfully" || udisksctl unmount -b /dev/$(blockdevice)&& echo "Device unmounted successfully") 
+#|| echo "Something went wrong" | wofi --dmenu
