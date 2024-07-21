@@ -10,13 +10,12 @@ debian_install()
 
     sudo apt update && sudo apt upgrade -y;
 
-i3
 
 case $1 in 
         'W'* | 'w'*)
             ### Installing wayland packages 
             sudo apt install grim tmux swaylock zsh file-roller evince \
-            flatpak network-manager network-manager-gnome pipewire-jack \
+            flatpak network-manager network-manager-gnome  \
             network-manager-openconnect-gnome eom network-manager-openconnect \
             lxappearance git lf neovim fonts-jetbrains-mono firefox-esr tlp \
             alacritty brightnessctl pipewire pipwire-alsa wofi pipewire-pulse \
@@ -46,7 +45,7 @@ case $1 in
             network-manager-openconnect alacritty pipewire xclip i3lock \
             fonts-jetbrains-mono papirus-icon-theme arc-theme dunst libnotify-bin \
             nnn fzf openssh-server nala xorg lxappearance xinput zathura xwallpaper \
-            pipewire-alsa pipewire-pulse pipewire-jack
+            pipewire-alsa pipewire-pulse
 
 
             case $2 in 
@@ -134,8 +133,8 @@ fedora_install()
             gsettings-desktop-schemas wl-clipboard papirus-icon-theme\
             NetworkManager-tui eom tlp libnotify mako pipewire-alsa \
             google-noto-color-emoji-fonts qalculate-gtk fzf hyprpaper \
-            pipewire-jack-audio-connection-kit jetbrains-mono-fonts \
-            lxappearance papirus-icon-theme-dark network-manager-applet
+            jetbrains-mono-fonts lxappearance papirus-icon-theme-dark \
+            network-manager-applet
 
             case $2 in 
                 "S"* | "s"*)
