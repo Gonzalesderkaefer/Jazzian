@@ -23,6 +23,10 @@ vim.cmd("set splitbelow")
 -- Exit terminal by hitting ESC twice
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>')
 
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 10
+
+
 -- Keybinds
 vim.keymap.set("n", "<C-i>", ":BufferNext<CR>")
 vim.keymap.set("n", "<C-W>", ":w | BufferClose<CR>")
