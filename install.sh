@@ -40,7 +40,7 @@ case $1 in
             ;;
         'X'* | 'x'*)
             ### Installing xorg packages 
-            sudo apt install vim picom i3blocks rofi zsh network-manager \
+            sudo apt install vim picom rofi zsh network-manager \
             network-manager-gnome network-manager-openconnect-gnome \
             network-manager-openconnect alacritty pipewire xclip i3lock \
             fonts-jetbrains-mono papirus-icon-theme arc-theme dunst libnotify-bin \
@@ -404,29 +404,29 @@ echo -e "\033[0;32m Adding Devicesepcific configs and scripts for additional con
 
 ### Creating files for i3
 mkdir -p $HOME/.config/i3/devicespecifc/;
-touch $HOME/.config/i3/devicespecifc/devicespecific;
+[ -f  $HOME/.config/i3/devicespecifc/devicespecific ] && touch $HOME/.config/i3/devicespecifc/devicespecific;
 
 ### Creating files for awesomewm
-touch $HOME/.config/awesome/devicespecific.lua;
-touch $HOME/.config/awesome/devicespecific_theme.lua;
+[ -f  $HOME/.config/awesome/devicespecific.lua ] && touch $HOME/.config/awesome/devicespecific.lua;
+[ -f  $HOME/.config/awesome/devicespecific_theme.lua ] && touch $HOME/.config/awesome/devicespecific_theme.lua;
 
 ### Creating files for BSPWM
 mkdir -p $HOME/.config/bspwm/devicespecifc/;
-touch $HOME/.config/bspwm/devicespecifc/devicespecific;
-echo '#!/bin/sh' >> $HOME/.config/bspwm/devicespecifc/devicespecific;
+[ -f $HOME/.config/bspwm/devicespecifc/devicespecific ] && ( touch $HOME/.config/bspwm/devicespecifc/devicespecific;
+echo '#!/bin/sh' >> $HOME/.config/bspwm/devicespecifc/devicespecific );
 
 ### Creating files for Hyprland
 mkdir -p $HOME/.config/hypr/devicespecific/;
-touch $HOME/.config/hypr/devicespecific/devicespecific;
+[ -f $HOME/.config/hypr/devicespecific/devicespecific ] && touch $HOME/.config/hypr/devicespecific/devicespecific;
 
 ### Creating files for sway 
 mkdir -p $HOME/.config/sway/devicespecific/;
-touch $HOME/.config/sway/devicespecific/devicespecific;
+[ -f $HOME/.config/sway/devicespecific/devicespecific ] && touch $HOME/.config/sway/devicespecific/devicespecific;
 
 ### Creating files for river 
 mkdir -p $HOME/.config/river/devicespecific/;
-touch $HOME/.config/river/devicespecific/devicespecific;
+[ -f $HOME/.config/river/devicespecific/devicespecific ] && touch $HOME/.config/river/devicespecific/devicespecific;
 
 
 ### Creating file for bash and zsh
-touch $HOME/.devicespecific.sh;
+[ -f $HOME/.devicespecific.sh ] && touch $HOME/.devicespecific.sh;
