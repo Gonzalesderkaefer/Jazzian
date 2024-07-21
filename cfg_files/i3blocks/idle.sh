@@ -1,21 +1,12 @@
 #!/bin/sh
 
-# Determinig if swayidle can run
-
-## declare "boolean"
-swayidle_runnable=true;
-
-## Test running swayidle
-swayidle timeout 10 'echo HI!!' &
-sleep 0.5s;
+# testrunning swayidle to get ist exit code 
+swayidle;
 
 
-## if it can be killed it started succesfully so it is runnable
-kill $! && swayidle_runnable=true || swayidle_runnable=false;
+# If the exit code is zero swaymsg just exited without any error
+# On X11 it would not have code 0
 
-
-
-
-if [ "$swayidle_runnable" = true ]; then
+if [ $? = 0 ]; then
     [ -n "$(pgrep swayidle)" ] && ( echo "󰾪 "; echo; echo \#ecc2fc ) || ( echo "󰅶 "; echo; echo \#f56464 )
 fi
