@@ -15,10 +15,11 @@ vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
 
 -- Enable current line highlighting
-vim.cmd("set cursorline")
+vim.opt.cursorline = true
 
--- Set split below
-vim.cmd("set splitbelow")
+-- Split down and right by default
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 -- Exit terminal by hitting ESC twice
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>')
