@@ -81,7 +81,8 @@ arch_install()
             alacritty pipewire waybar mpv gsettings-desktop-schemas network-manager-applet \
             swayidle swaylock openconnect lxappearance wl-clipboard file-roller \
             papirus-icon-theme gnome-themes-extra arc-gtk-theme ttf-jetbrains-mono \
-            ttf-jetbrains-mono-nerd gcr bash-completion zsh-completions gcc less wget;
+            ttf-jetbrains-mono-nerd gcr bash-completion zsh-completions gcc less wget \
+            pipewire-pulse pipewire-alsa wireplumber;
 
             case $2 in 
                 "S"* | "s"*)
@@ -101,7 +102,8 @@ arch_install()
             papirus-icon-theme arc-gtk-theme dunst libnotify xorg-xinit \
             nnn fzf xorg lxappearance xorg-xinput zathura zathura-pdf-poppler xwallpaper \
             webkit2gtk-4.1 ttf-jetbrains-mono ttf-jetbrains-mono-nerd gcr \
-            bash-completion zsh-completions gcc less wget;
+            bash-completion zsh-completions gcc less wget pipewire-pulse \
+            pipewire-alsa wireplumber;
 
             case $2 in 
                 "I"* | "i"*)
