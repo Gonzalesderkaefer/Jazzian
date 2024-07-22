@@ -429,4 +429,32 @@ mkdir -p $HOME/.config/river/devicespecific/;
 
 
 ### Creating file for bash and zsh
+<<<<<<< HEAD
 [ -f $HOME/.devicespecific.sh ] && touch $HOME/.devicespecific.sh;
+=======
+touch $HOME/.devicespecific.sh;
+
+#### setting up devicespecific.sh
+echo 'shell_tokill="$(echo $SHELL | grep -E -o "[^\/]*$")"' >> $HOME/.devicespecific.sh
+
+case $display_server in
+    "xorg")
+        echo '[ "$(tty)" = "/dev/tty1" ] && (startx && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+        ;;
+    "wayland")
+        case $wm_choice in 
+            "S"* | "s"*)
+                echo '[ "$(tty)" = "/dev/tty1" ] && (sway && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                ;;
+            "H"* | "h"*)
+                echo '[ "$(tty)" = "/dev/tty1" ] && (Hyprland && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                ;;
+            "R"* | "r"*)
+                echo '[ "$(tty)" = "/dev/tty1" ] && (river && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                ;;
+        esac
+
+esac
+
+
+>>>>>>> 9d79fbd (started with setup)
