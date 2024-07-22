@@ -448,18 +448,18 @@ if ! [ -f $HOME/.devicespecific.sh ]; then
 
     case $display_server in
         "xorg")
-            echo '[ "$(tty)" = "/dev/tty1" ] && (startx && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+            echo '[ "$(tty)" = "/dev/tty1" ] && (startx; pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
             ;;
         "wayland")
             case $wm_choice in 
                 "S"* | "s"*)
-                    echo '[ "$(tty)" = "/dev/tty1" ] && (sway && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                    echo '[ "$(tty)" = "/dev/tty1" ] && (sway; pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
                     ;;
                 "H"* | "h"*)
-                    echo '[ "$(tty)" = "/dev/tty1" ] && (Hyprland && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                    echo '[ "$(tty)" = "/dev/tty1" ] && (Hyprland; pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
                     ;;
                 "R"* | "r"*)
-                    echo '[ "$(tty)" = "/dev/tty1" ] && (river && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                    echo '[ "$(tty)" = "/dev/tty1" ] && (river; pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
                     ;;
             esac
 
@@ -471,4 +471,4 @@ echo -e  "\033[0;32m Everything has been installed. Please check $HOME/.devicesp
 echo -e  "\033[0;32m to make sure the correct session is started upon login.  \033[0m ";
 echo -e  "\033[0;32m If you chose xorg in the beginning, look out for startx. \033[0m ";
 echo -e  "\033[0;32m If you chose wayland in the beginning, look out for sway, river or Hyprland \033[0m ";
-echo -e  "\033[0;32m Depending on what you chose. \033[0m ";
+echo -e  "\033[0;32m Depending on what you chose. \033[0m "
