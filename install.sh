@@ -429,10 +429,7 @@ mkdir -p $HOME/.config/river/devicespecific/;
 
 
 ### Creating file for bash and zsh
-<<<<<<< HEAD
 [ -f $HOME/.devicespecific.sh ] && touch $HOME/.devicespecific.sh;
-=======
-touch $HOME/.devicespecific.sh;
 
 #### setting up devicespecific.sh
 echo 'shell_tokill="$(echo $SHELL | grep -E -o "[^\/]*$")"' >> $HOME/.devicespecific.sh
