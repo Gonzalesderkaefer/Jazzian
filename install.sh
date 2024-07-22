@@ -291,7 +291,7 @@ fi
 
 ## Ask user whether wants Xorg or Wayland
 continue="false";
-echo -e "\033[0;32m Do you want to use [W]ayland or [X]org \033[0m";
+echo -e "\033[0;32m Do you want to use [W]ayland or [X]org (Default: Xorg) \033[0m";
 
 until [ $continue = "true" ]; do
     ## Making sure the user input is valid 
@@ -306,7 +306,8 @@ until [ $continue = "true" ]; do
             continue="true";
             ;;
         *)
-            echo -e "\033[0;32m Please enter 'w' or 'x' \033[0m";
+            display_server="xorg";
+            continue="true";
             ;;
     esac
 done
@@ -321,12 +322,12 @@ until [ $continue = "true" ]; do
 echo -e "\033[0;32m What WM would you like to use? \033[0m";
     case $display_server in
         'wayland')
-            echo -e "\033[0;32m [S]way \033[0m";
+            echo -e "\033[0;32m [S]way (default) \033[0m";
             echo -e "\033[0;32m [R]iver (Only on Fedora and Arch Linux)\033[0m";
             echo -e "\033[0;32m [H]yprland (Only on Fedora and Arch Linux)\033[0m";
             ;;
         'xorg')
-            echo -e "\033[0;32m [i]3 \033[0m";
+            echo -e "\033[0;32m [i]3 (default) \033[0m";
             echo -e "\033[0;32m [A]wesomewm \033[0m";
             echo -e "\033[0;32m [B]spwm \033[0m";
             ;;
@@ -336,7 +337,6 @@ echo -e "\033[0;32m What WM would you like to use? \033[0m";
 
     case $wm_choice in
         "S"* | "s"* | "R"* | "r"* | "H"* | "h"* )
-            echo -e "\033[0;32m Nice! \033[0m";
             [ $display_server = "wayland" ] && continue="true" || 
                 echo -e "\033[0;32m You can just enter the marked letter.\033[0m";
             ;;
@@ -345,7 +345,14 @@ echo -e "\033[0;32m What WM would you like to use? \033[0m";
                 echo -e "\033[0;32m You can just enter the marked letter.\033[0m";
             ;;
         *)
-            echo -e "\033[0;32m You can just enter the marked letter.\033[0m";
+            case $display_server in
+                'wayland')
+                    wm_choice=s;
+                    ;;
+                'xorg')
+                    wm_choice=i;
+                    ;;
+            esac
             ;;
     esac
 done
@@ -376,7 +383,7 @@ esac
 continue="false";
 
 until [ $continue = "true" ]; do
-echo -e "\033[0;32m Do you want to [C]opy, [L]ink or [S]kip the files? \033[0m ";
+    echo -e "\033[0;32m Do you want to [C]opy, [L]ink or [S]kip the files? (Default Skip) \033[0m ";
 read mov_choice; 
 
     case $mov_choice in
@@ -429,29 +436,35 @@ mkdir -p $HOME/.config/river/devicespecific/;
 
 
 ### Creating file for bash and zsh
-[ -f $HOME/.devicespecific.sh ] && touch $HOME/.devicespecific.sh;
+if [ -f $HOME/.devicespecific.sh ]; then 
+    touch $HOME/.devicespecific.sh;
 
-#### setting up devicespecific.sh
-echo 'shell_tokill="$(echo $SHELL | grep -E -o "[^\/]*$")"' >> $HOME/.devicespecific.sh
+    #### setting up devicespecific.sh
+    echo 'shell_tokill="$(echo $SHELL | grep -E -o "[^\/]*$")"' >> $HOME/.devicespecific.sh
 
-case $display_server in
-    "xorg")
-        echo '[ "$(tty)" = "/dev/tty1" ] && (startx && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
-        ;;
-    "wayland")
-        case $wm_choice in 
-            "S"* | "s"*)
-                echo '[ "$(tty)" = "/dev/tty1" ] && (sway && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
-                ;;
-            "H"* | "h"*)
-                echo '[ "$(tty)" = "/dev/tty1" ] && (Hyprland && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
-                ;;
-            "R"* | "r"*)
-                echo '[ "$(tty)" = "/dev/tty1" ] && (river && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
-                ;;
-        esac
+    case $display_server in
+        "xorg")
+            echo '[ "$(tty)" = "/dev/tty1" ] && (startx && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+            ;;
+        "wayland")
+            case $wm_choice in 
+                "S"* | "s"*)
+                    echo '[ "$(tty)" = "/dev/tty1" ] && (sway && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                    ;;
+                "H"* | "h"*)
+                    echo '[ "$(tty)" = "/dev/tty1" ] && (Hyprland && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                    ;;
+                "R"* | "r"*)
+                    echo '[ "$(tty)" = "/dev/tty1" ] && (river && pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                    ;;
+            esac
 
-esac
+    esac
+fi
 
 
->>>>>>> 9d79fbd (started with setup)
+echo -e  "\033[0;32m Everything has been installed. Please check $HOME/.devicespecific \033[0m ";
+echo -e  "\033[0;32m to make sure the correct session is started upon login.  \033[0m ";
+echo -e  "\033[0;32m If you chose xorg in the beginning, look out for startx. \033[0m ";
+echo -e  "\033[0;32m If you chose wayland in the beginning, look out for sway, river or Hyprland \033[0m ";
+echo -e  "\033[0;32m Depending on what you chose. \033[0m ";
