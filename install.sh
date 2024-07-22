@@ -353,6 +353,7 @@ echo -e "\033[0;32m What WM would you like to use? \033[0m";
                     wm_choice=i;
                     ;;
             esac
+            continue="true";
             ;;
     esac
 done
@@ -402,7 +403,10 @@ read mov_choice;
             continue="true";
 	    ;;
         *)
-            echo -e "\033[0;32m You can just enter l,c or s. \033[0m ";
+            echo -e "\033[0;32m Ok, skipping.. \033[0m ";
+            echo  "Press ENTER to continue.";
+            read continue;
+            continue="true";
             ;;
     esac
 done
@@ -436,7 +440,7 @@ mkdir -p $HOME/.config/river/devicespecific/;
 
 
 ### Creating file for bash and zsh
-if [ -f $HOME/.devicespecific.sh ]; then 
+if ! [ -f $HOME/.devicespecific.sh ]; then 
     touch $HOME/.devicespecific.sh;
 
     #### setting up devicespecific.sh
