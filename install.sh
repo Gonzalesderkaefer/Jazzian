@@ -190,6 +190,7 @@ copy_files()
             "$HOME/Jazzian/cfg_files/X11" 
             "$HOME/Jazzian/cfg_files/passgen" 
             "$HOME/Jazzian/cfg_files/shell"
+            "$HOME/Jazzian/cfg_files/nnn_plugins"
             );
     
     for file in $HOME/Jazzian/cfg_files/*; do
@@ -197,6 +198,10 @@ copy_files()
             cp -r -f $file $HOME/.config/;
         fi
     done
+
+    ### Config files for nnn
+    mkdir -p $HOME/.config/nnn/
+    ln cp -r $HOME/Jazzian/cfg_files/nnn_plugins $HOME/.config/nnn/plugins
 
     for x11_file in $HOME/Jazzian/cfg_files/X11/*; do
         cp -r -f $x11_file $HOME/.config/;
@@ -230,14 +235,21 @@ link_files()
             "$HOME/Jazzian/cfg_files/X11" 
             "$HOME/Jazzian/cfg_files/passgen" 
             "$HOME/Jazzian/cfg_files/shell"
+            "$HOME/Jazzian/cfg_files/nnn_plugins"
             );
-    
+    ### Link general config files
     for file in $HOME/Jazzian/cfg_files/*; do
         if ! [[ ${illegal_files[@]} =~ $file ]]; then
             ln -sf $file $HOME/.config/;
         fi
     done
 
+    ### Config files for nnn
+    mkdir -p $HOME/.config/nnn/
+    ln -sf "$HOME/Jazzian/cfg_files/nnn_plugins" $HOME/.config/nnn/plugins
+
+
+    ### Link X11 config files
     for x11_file in $HOME/Jazzian/cfg_files/X11/*; do
         ln -sf $x11_file $HOME/.config/;
     done
