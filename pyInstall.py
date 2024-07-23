@@ -69,7 +69,27 @@ def debian_install(displayserver, windowmanager):
 
 
     elif chose_xorg:
-        print("You want to use xorg")
+
+        # Regex for i3
+        i3_regex = '^i.*|^I.*'
+        chose_i3 = re.search(i3_regex, windowmanager)
+
+        # Regex for awesome
+        awesome_regex = '^A.*|^a.*'
+        chose_awesome = re.search(awesome_regex, windowmanager)
+
+        # Regex for bspwm
+        bspwm_regex = '^B.*|^b.*'
+        chose_bspwm = re.search(hyprland_regex, windowmanager)
+
+        if chose_i3:
+            subprocess.run(["sudo", "apt", "install", "i3", "i3blocks"] + debian_xorg_packages)
+        elif chose_awesome:
+            subprocess.run(["sudo", "apt", "install", "awesome"] + debian_xorg_packages)
+        elif chose_bspwm:
+            subprocess.run(["sudo", "apt", "install", "bspwm", "polybar"] + debian_xorg_packages)
+        else:
+            subprocess.run(debian_xorg_packages)
 
 
-debian_install("wayland", "sway")
+
