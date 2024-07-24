@@ -98,7 +98,7 @@ arch_install()
             ;;
         'X'* | 'x'*)
             sudo pacman -S neovim picom i3blocks rofi zsh networkmanager \
-            alacritty pipewire xclip i3lock networkmanager-openconnect network-manager-applet\
+            alacritty pipewire xclip i3lock networkmanager-openconnect network-manager-applet \
             papirus-icon-theme arc-gtk-theme dunst libnotify xorg-xinit \
             nnn fzf xorg lxappearance xorg-xinput zathura zathura-pdf-poppler xwallpaper \
             webkit2gtk-4.1 ttf-jetbrains-mono ttf-jetbrains-mono-nerd gcr \
@@ -113,7 +113,7 @@ arch_install()
                     sudo pacman -S awesome;
                     ;;
                 "B"* | "b"*)
-                    sudo pacman -S bspwm;
+                    sudo pacman -S bspwm polybar sxhkd;
                     ;;
             esac
             ;;
@@ -133,7 +133,7 @@ fedora_install()
             waybar alacritty mpv firefox zathura zathura-pdf-poppler evince \
             git pipewire pipewire-utils file-roller pipewire-pulseaudio \
             NetworkManager-openconnect-gnome wofi brightnessctl \
-            gsettings-desktop-schemas wl-clipboard papirus-icon-theme\
+            gsettings-desktop-schemas wl-clipboard papirus-icon-theme \
             NetworkManager-tui eom tlp libnotify mako pipewire-alsa \
             google-noto-color-emoji-fonts qalculate-gtk fzf hyprpaper \
             jetbrains-mono-fonts lxappearance papirus-icon-theme-dark \
@@ -144,7 +144,7 @@ fedora_install()
                     sudo dnf install sway i3blocks swaybg;
                     ;;
                 "H"* | "h"*)
-                    sudo dnf install hyprland waybar hyprpaper;
+                    sudo dnf install hyprland waybar;
                     ;;
                 "R"* | "r"*)
                     sudo dnf install river waybar swaybg;
