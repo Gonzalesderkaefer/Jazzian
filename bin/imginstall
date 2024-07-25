@@ -1,0 +1,61 @@
+#!/bin/bash
+
+current_file="$(pwd)/$1";
+
+if ! [ -f $HOME/Applications/AppImages ]; then
+    mkdir -p $HOME/Applications/AppImages;
+fi
+
+if ! [ -f $HOME/.local/bin ]; then
+    mkdir -p $HOME/.local/bin;
+fi
+
+
+# TODO:
+#   Check if file ends with AppImage
+
+chmod +x $current_file;
+mv $current_file $HOME/Applications/AppImages/;
+
+
+echo "What do you want to this app to be called when you execute it?";
+echo "The default name is the enitre filename";
+
+read executetable_name;
+
+if [ -z $executetable_name ]; then
+    executetable_name=$1;
+    ln -s $HOME/Applications/AppImages/$1 $HOME/.local/bin/$1;
+else
+    ln -s $HOME/Applications/AppImages/$1 $HOME/.local/bin/$executetable_name;
+fi
+
+echo "You can now run $executetable_name to run the app";
+
+
+echo "Do you want to create a .desktop file";
+echo "y/N"
+
+read desktopfile_choice;
+
+case $desktopfile_choice in 
+    "Y"* | "y"*)
+        desktopfile="$executetable_name.desktop"
+
+        echo "[Desktop Entry]" >> $HOME/.local/share/applications/$desktopfile;
+        echo "Name=$executetable_name" >> $HOME/.local/share/applications/$desktopfile;
+        echo "Icon=$executetable_name" >> $HOME/.local/share/applications/$desktopfile;
+        echo "Exec=$executetable_name" >> $HOME/.local/share/applications/$desktopfile;
+        echo "Type=Application" >> $HOME/.local/share/applications/$desktopfile;
+
+
+        echo "Here is the file: "
+
+        cat $HOME/.local/share/applications/$desktopfile;
+        ;;
+        
+esac
+
+
+
+
