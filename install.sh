@@ -245,8 +245,11 @@ link_files()
     done
 
     ### Config files for nnn
-    mkdir -p $HOME/.config/nnn/
-    ln -sf "$HOME/Jazzian/cfg_files/nnn_plugins" $HOME/.config/nnn/plugins
+    mkdir -p $HOME/.config/nnn/;
+
+    if [ -z "$(ls $HOME/.config/nnn/)" ]; then
+        ln -s "$HOME/Jazzian/cfg_files/nnn_plugins" $HOME/.config/nnn/plugins;
+    fi
 
 
     ### Link X11 config files

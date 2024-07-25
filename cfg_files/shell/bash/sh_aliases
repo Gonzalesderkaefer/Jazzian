@@ -8,21 +8,21 @@ case $release in
     *"Debian"* | *"debian"* | *"DEBIAN"*) 
         ### nala
         alias "inst"="sudo nala install"
-        alias "upgr"="sudo nala upgrade"
-        alias "remo"="sudo nala remove"
-        alias "sear"="nala search"
+        alias "upgrade"="sudo nala upgrade"
+        alias "remove"="sudo nala remove"
+        alias "search"="nala search"
         ;;
     *"Fedora"* | *"fedora"* | *"FEDORA"*) 
         alias "inst"="sudo dnf install"
-        alias "upgr"="sudo dnf update"
-        alias "remo"="sudo dnf remove"
-        alias "sear"="dnf search"
+        alias "upgrade"="sudo dnf update"
+        alias "remove"="sudo dnf remove"
+        alias "search"="dnf search"
         ;;
     *"Arch Linux"* | *"arch linux"* | *"ARCH LINUX"*) 
         alias "inst"="sudo pacman -S"
-        alias "upgr"="sudo pacman -Syu"
-        alias "remo"="sudo pacman -R"
-        alias "sear"="pacman -Ss"
+        alias "upgrade"="sudo pacman -Syu"
+        alias "remove"="sudo pacman -R"
+        alias "search"="pacman -Ss"
         ;;
 esac
 
