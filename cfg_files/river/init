@@ -38,6 +38,9 @@ riverctl map normal Super Return spawn alacritty
 # Super+A to toggle waybar
 riverctl map normal Super A spawn $HOME/.config/river/killbar.sh 
 
+# Make new Window appear below currently focused window in stack
+riverctl default-attach-mode below
+
 
 # Super+Q to close the focused view
 riverctl map normal Super Q close
