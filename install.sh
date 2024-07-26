@@ -433,28 +433,28 @@ echo -e "\033[0;32m Adding Devicesepcific configs and scripts for additional con
 
 ### Creating files for i3
 mkdir -p $HOME/.config/i3/devicespecifc/;
-[ -f  $HOME/.config/i3/devicespecifc/devicespecific ] && touch $HOME/.config/i3/devicespecifc/devicespecific;
+[ -f  $HOME/.config/i3/devicespecifc/devicespecific ] || touch $HOME/.config/i3/devicespecifc/devicespecific;
 
 ### Creating files for awesomewm
-[ -f  $HOME/.config/awesome/devicespecific.lua ] && touch $HOME/.config/awesome/devicespecific.lua;
-[ -f  $HOME/.config/awesome/devicespecific_theme.lua ] && touch $HOME/.config/awesome/devicespecific_theme.lua;
+[ -f  $HOME/.config/awesome/devicespecific.lua ] || touch $HOME/.config/awesome/devicespecific.lua;
+[ -f  $HOME/.config/awesome/devicespecific_theme.lua ] || touch $HOME/.config/awesome/devicespecific_theme.lua;
 
 ### Creating files for BSPWM
 mkdir -p $HOME/.config/bspwm/devicespecifc/;
-[ -f $HOME/.config/bspwm/devicespecifc/devicespecific ] && ( touch $HOME/.config/bspwm/devicespecifc/devicespecific;
+[ -f $HOME/.config/bspwm/devicespecifc/devicespecific ] || ( touch $HOME/.config/bspwm/devicespecifc/devicespecific;
 echo '#!/bin/sh' >> $HOME/.config/bspwm/devicespecifc/devicespecific );
 
 ### Creating files for Hyprland
 mkdir -p $HOME/.config/hypr/devicespecific/;
-[ -f $HOME/.config/hypr/devicespecific/devicespecific ] && touch $HOME/.config/hypr/devicespecific/devicespecific;
+[ -f $HOME/.config/hypr/devicespecific/devicespecific ] || touch $HOME/.config/hypr/devicespecific/devicespecific;
 
 ### Creating files for sway 
 mkdir -p $HOME/.config/sway/devicespecific/;
-[ -f $HOME/.config/sway/devicespecific/devicespecific ] && touch $HOME/.config/sway/devicespecific/devicespecific;
+[ -f $HOME/.config/sway/devicespecific/devicespecific ] || touch $HOME/.config/sway/devicespecific/devicespecific;
 
 ### Creating files for river 
 mkdir -p $HOME/.config/river/devicespecific/;
-[ -f $HOME/.config/river/devicespecific/devicespecific ] && touch $HOME/.config/river/devicespecific/devicespecific;
+[ -f $HOME/.config/river/devicespecific/devicespecific ] || touch $HOME/.config/river/devicespecific/devicespecific;
 
 
 ### Creating file for bash and zsh
