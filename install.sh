@@ -463,21 +463,30 @@ if ! [ -f $HOME/.devicespecific.sh ]; then
 
     #### setting up devicespecific.sh
     echo 'shell_tokill="$(echo $SHELL | grep -E -o "[^\/]*$")"' >> $HOME/.devicespecific.sh
+    echo 'shells=$(ps | grep -E "tty1.*$shell_tokill" | awk '\''{print $1}'\'')' >> $HOME/.devicespecific.sh
+
+
+    echo 'killshells()' >> $HOME/.devicespecific.sh
+    echo '{' >> $HOME/.devicespecific.sh
+    echo '   for shell in $shells; do' >> $HOME/.devicespecific.sh
+    echo '       kill -9 $shell;' >> $HOME/.devicespecific.sh
+    echo '   done' >> $HOME/.devicespecific.sh
+    echo '}' >> $HOME/.devicespecific.sh
 
     case $display_server in
         "xorg")
-            echo '[ "$(tty)" = "/dev/tty1" ] && (startx; pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+            echo '[ "$(tty)" = "/dev/tty1" ] && (startx; killshells)' >> $HOME/.devicespecific.sh
             ;;
         "wayland")
             case $wm_choice in 
                 "S"* | "s"*)
-                    echo '[ "$(tty)" = "/dev/tty1" ] && (sway; pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                    echo '[ "$(tty)" = "/dev/tty1" ] && (sway; killshells)' >> $HOME/.devicespecific.sh
                     ;;
                 "H"* | "h"*)
-                    echo '[ "$(tty)" = "/dev/tty1" ] && (Hyprland; pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                    echo '[ "$(tty)" = "/dev/tty1" ] && (Hyprland; killshells)' >> $HOME/.devicespecific.sh
                     ;;
                 "R"* | "r"*)
-                    echo '[ "$(tty)" = "/dev/tty1" ] && (river; pkill -9 $shell_tokill)' >> $HOME/.devicespecific.sh
+                    echo '[ "$(tty)" = "/dev/tty1" ] && (river; killshells)' >> $HOME/.devicespecific.sh
                     ;;
             esac
 
@@ -486,6 +495,7 @@ fi
 
 
 echo -e  "\033[0;32m Everything has been installed. Please check $HOME/.devicespecific \033[0m ";
+echo 
 echo -e  "\033[0;32m to make sure the correct session is started upon login.  \033[0m ";
 echo -e  "\033[0;32m If you chose xorg in the beginning, look out for startx. \033[0m ";
 echo -e  "\033[0;32m If you chose wayland in the beginning, look out for sway, river or Hyprland \033[0m ";
