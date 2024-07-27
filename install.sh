@@ -493,10 +493,4 @@ if ! [ -f $HOME/.devicespecific.sh ]; then
     esac
 fi
 
-
-echo -e  "\033[0;32m Everything has been installed. Please check $HOME/.devicespecific \033[0m ";
-echo 
-echo -e  "\033[0;32m to make sure the correct session is started upon login.  \033[0m ";
-echo -e  "\033[0;32m If you chose xorg in the beginning, look out for startx. \033[0m ";
-echo -e  "\033[0;32m If you chose wayland in the beginning, look out for sway, river or Hyprland \033[0m ";
-echo -e  "\033[0;32m Depending on what you chose. \033[0m "
+echo -e  "\033[0;32m |****** Script has finished ******| \033[0m ";
