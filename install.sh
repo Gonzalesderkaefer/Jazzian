@@ -473,24 +473,59 @@ if ! [ -f $HOME/.devicespecific.sh ]; then
     echo '   done' >> $HOME/.devicespecific.sh
     echo '}' >> $HOME/.devicespecific.sh
 
-    case $display_server in
-        "xorg")
-            echo '[ "$(tty)" = "/dev/tty1" ] && (startx; killshells)' >> $HOME/.devicespecific.sh
-            ;;
-        "wayland")
-            case $wm_choice in 
-                "S"* | "s"*)
-                    echo '[ "$(tty)" = "/dev/tty1" ] && (sway; killshells)' >> $HOME/.devicespecific.sh
-                    ;;
-                "H"* | "h"*)
-                    echo '[ "$(tty)" = "/dev/tty1" ] && (Hyprland; killshells)' >> $HOME/.devicespecific.sh
-                    ;;
-                "R"* | "r"*)
-                    echo '[ "$(tty)" = "/dev/tty1" ] && (river; killshells)' >> $HOME/.devicespecific.sh
-                    ;;
-            esac
-
-    esac
+    echo '[ "$(tty)" = "/dev/tty1" ] && (startx; killshells)' >> $HOME/.devicespecific.sh
 fi
 
+if ! [ -f $HOME/.xinitrc ]; then
+    echo 'exec i3' >> .xinitrc
+fi
+
+case $display_server in 
+    "xorg")
+        sed -i "s/\&\& (.*; killshells)/\&\& (startx; killshells) /g" $HOME/.devicespecific.sh
+        case $wm_choice in
+            "i"* | "I"*)
+                sed -E -i "s/exec awesome|exec bspwm|exec i3/exec i3/g" $HOME/.xinitrc
+                ;;
+            "b"* | "B"*)
+                sed -E -i "s/exec awesome|exec bspwm|exec i3/exec bspwm/g" $HOME/.xinitrc
+                ;;
+            "a"* | "A"*)
+                sed -E -i "s/exec awesome|exec bspwm|exec i3/exec awesome/g" $HOME/.xinitrc
+                ;;
+        esac
+        ;;
+
+    "wayland")
+        case $wm_choice in
+            "r"* | "R"*)
+                sed -i "s/\&\& (.*; killshells)/\&\& (river; killshells) /g" $HOME/.devicespecific.sh
+                ;;
+            "s"* | "S"*)
+                sed -i "s/\&\& (.*; killshells)/\&\& (sway; killshells) /g" $HOME/.devicespecific.sh
+                ;;
+            "h"* | "H"*)
+                sed -i "s/\&\& (.*; killshells)/\&\& (Hyprland; killshells) /g" $HOME/.devicespecific.sh
+                ;;
+        esac
+        ;;
+esac
+        
 echo -e  "\033[0;32m |****** Script has finished ******| \033[0m ";
+
+
+
+# sed "s/\&\& (.*; killshells)/\&\& ($wm_choice; killshells) /g" .devicespecific.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
