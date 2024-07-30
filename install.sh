@@ -432,17 +432,17 @@ done
 echo -e "\033[0;32m Adding Devicesepcific configs and scripts for additional configuration from the user... \033[0m ";
 
 ### Creating files for i3
-mkdir -p $HOME/.config/i3/devicespecifc/;
-[ -f  $HOME/.config/i3/devicespecifc/devicespecific ] || touch $HOME/.config/i3/devicespecifc/devicespecific;
+mkdir -p $HOME/.config/i3/devicespecific/;
+[ -f  $HOME/.config/i3/devicespecific/devicespecific ] || touch $HOME/.config/i3/devicespecific/devicespecific;
 
 ### Creating files for awesomewm
 [ -f  $HOME/.config/awesome/devicespecific.lua ] || touch $HOME/.config/awesome/devicespecific.lua;
 [ -f  $HOME/.config/awesome/devicespecific_theme.lua ] || touch $HOME/.config/awesome/devicespecific_theme.lua;
 
 ### Creating files for BSPWM
-mkdir -p $HOME/.config/bspwm/devicespecifc/;
-[ -f $HOME/.config/bspwm/devicespecifc/devicespecific ] || ( touch $HOME/.config/bspwm/devicespecifc/devicespecific;
-echo '#!/bin/sh' >> $HOME/.config/bspwm/devicespecifc/devicespecific );
+mkdir -p $HOME/.config/bspwm/devicespecific/;
+[ -f $HOME/.config/bspwm/devicespecific/devicespecific ] || ( touch $HOME/.config/bspwm/devicespecific/devicespecific;
+echo '#!/bin/sh' >> $HOME/.config/bspwm/devicespecific/devicespecific );
 
 ### Creating files for Hyprland
 mkdir -p $HOME/.config/hypr/devicespecific/;
