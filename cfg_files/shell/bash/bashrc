@@ -77,3 +77,10 @@ open()
     read prog;
     nohup $prog $1 >/dev/null 2>&1 &
 }
+
+## devicerc
+if [ -f $HOME/.devicerc ]; then
+    source $HOME/.devicerc
+fi
+
+

@@ -457,7 +457,15 @@ mkdir -p $HOME/.config/river/devicespecific/;
 [ -f $HOME/.config/river/devicespecific/devicespecific ] || touch $HOME/.config/river/devicespecific/devicespecific;
 
 
+
 ### Creating file for bash and zsh
+#### devicerc
+if ! [ -f $HOME/.devicerc ]; then
+    touch $HOME/.devicerc
+fi
+
+
+
 if ! [ -f $HOME/.devicespecific.sh ]; then 
     touch $HOME/.devicespecific.sh;
 
