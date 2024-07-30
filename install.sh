@@ -14,8 +14,8 @@ debian_install()
 case $1 in 
         'W'* | 'w'*)
             ### Installing wayland packages 
-            sudo apt install grim tmux swaylock zsh file-roller evince \
-            flatpak network-manager network-manager-gnome  \
+            sudo apt install grim tmux swaylock zsh evince \
+            flatpak network-manager network-manager-gnome thunar file-roller  \
             network-manager-openconnect-gnome eom network-manager-openconnect \
             lxappearance git lf neovim fonts-jetbrains-mono firefox-esr tlp \
             alacritty brightnessctl pipewire pipewire-alsa wofi pipewire-pulse \
@@ -40,8 +40,8 @@ case $1 in
             ;;
         'X'* | 'x'*)
             ### Installing xorg packages 
-            sudo apt install vim picom rofi zsh network-manager \
-            network-manager-gnome network-manager-openconnect-gnome \
+            sudo apt install vim picom rofi zsh network-manager  \
+            network-manager-gnome network-manager-openconnect-gnome thunar file-roller \
             network-manager-openconnect alacritty pipewire xclip i3lock \
             fonts-jetbrains-mono papirus-icon-theme arc-theme dunst libnotify-bin \
             nnn fzf openssh-server nala xorg lxappearance xinput zathura xwallpaper \
@@ -75,7 +75,7 @@ arch_install()
 
     case $1 in 
         'W'* | 'w'*)
-            sudo pacman -S fzf grim tmux zsh nnn networkmanager \
+            sudo pacman -S fzf grim tmux zsh nnn networkmanager thunar \
             nm-connection-editor neovim wofi zathura-pdf-poppler zathura \
             evince webkit2gtk-4.1 networkmanager-openconnect firefox lf tlp \
             alacritty pipewire waybar mpv gsettings-desktop-schemas network-manager-applet \
@@ -97,9 +97,9 @@ arch_install()
             esac
             ;;
         'X'* | 'x'*)
-            sudo pacman -S neovim picom i3blocks rofi zsh networkmanager \
+            sudo pacman -S neovim picom i3blocks rofi zsh networkmanager thunar \
             alacritty pipewire xclip i3lock networkmanager-openconnect network-manager-applet \
-            papirus-icon-theme arc-gtk-theme dunst libnotify xorg-xinit \
+            papirus-icon-theme arc-gtk-theme dunst libnotify xorg-xinit file-roller \
             nnn fzf xorg lxappearance xorg-xinput zathura zathura-pdf-poppler xwallpaper \
             webkit2gtk-4.1 ttf-jetbrains-mono ttf-jetbrains-mono-nerd gcr \
             bash-completion zsh-completions gcc less wget pipewire-pulse \
@@ -477,7 +477,7 @@ if ! [ -f $HOME/.devicespecific.sh ]; then
 fi
 
 if ! [ -f $HOME/.xinitrc ]; then
-    echo 'exec i3' >> .xinitrc
+    echo 'exec i3' >> $HOME/.xinitrc
 fi
 
 case $display_server in 
