@@ -13,15 +13,17 @@ case $release in
         alias "search"="nala search"
         ;;
     *"Fedora"* | *"fedora"* | *"FEDORA"*) 
+        ### dnf
         alias "inst"="sudo dnf install"
         alias "upgrade"="sudo dnf update"
         alias "remove"="sudo dnf remove"
         alias "search"="dnf search"
         ;;
     *"Arch Linux"* | *"arch linux"* | *"ARCH LINUX"*) 
+        ### pacman
         alias "inst"="sudo pacman -S"
         alias "upgrade"="sudo pacman -Syu"
-        alias "remove"="sudo pacman -R"
+        alias "remove"="sudo pacman -Rns"
         alias "search"="pacman -Ss"
         ;;
 esac
