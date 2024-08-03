@@ -223,3 +223,24 @@ include devicespecific/devicespecific
 
 
 
+# Mini Documentation
+# 
+# Mouse settings
+# 
+# input "<swaymsg -t get_inputs Identifyer field>" {
+#     tap enabled
+#     sensitvity -0.4
+#     accel_profile flat
+# }
+
+
+
+
+    
+
+
+
+
+
+
+
