@@ -87,6 +87,15 @@ open()
     nohup $prog $1 >/dev/null 2>&1 &
 }
 
+## nf with cd 
+nfcd ()
+{
+    nf;
+    $(cat $NNN_TMPFILE | sed "s/'//g")
+    rm $NNN_TMPFILE
+}
+
+
 
 ## devicerc
 if [ -f $HOME/.devicerc ]; then

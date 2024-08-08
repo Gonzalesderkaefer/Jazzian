@@ -6,6 +6,8 @@ export MOZ_ENABLE_WAYLAND=1
 
 ## NNN  Configuration
 export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh;c:checksum.sh'
+export NNN_TMPFILE=$HOME/.lastd
+
 
 ## sway config for Nvidia cards
 
