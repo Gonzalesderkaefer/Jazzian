@@ -1,4 +1,6 @@
 *devicespecific*
 devicerc
+/cfg_files/qutebrowser/*
+!/cfg_files/qutebrowser/config.py
 .* 
 !/.gitignore

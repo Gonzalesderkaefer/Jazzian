@@ -55,6 +55,13 @@ bindkey "^X^E" edit-command-line
 
 # Highlight selection
 zstyle ':completion:*' menu select
+zmodload -i zsh/complist
+
+# Use vim keys in tab complete menu
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
 
 
 ## Extract files
