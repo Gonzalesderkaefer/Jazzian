@@ -62,7 +62,7 @@
     "custom/drivespace": {
         "interval": "3600s",
         "exec": "df -H | grep -e '/$'| awk '{print $3}'",
-        "format":" {}",
+        "format":"{}  ",
     },
 
     "custom/home": {
@@ -89,7 +89,7 @@
         "tooltip": false
     },
     "memory": {
-        "format": "{}% "
+        "format": "{}%  "
     },
     "temperature": {
         // "thermal-zone": 2,
