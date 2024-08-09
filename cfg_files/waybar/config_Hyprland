@@ -43,7 +43,7 @@
     },
 
     "clock": {
-    	"format": "{:%d.%m   | %R }",
+    	"format": "{:%d.%m   | %R  }",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
@@ -64,7 +64,7 @@
     "custom/home": {
         "interval": "3600s",
         "exec": "df -H | grep -e '/home$'| awk '{print $3}'",
-	"format":" {}"
+	"format":"{}  "
     },
 
     "custom/keyboard": {
@@ -73,15 +73,10 @@
         "format":"{}  ",
         "signal" : 5
     },
-    "custom/home": {
-        "interval": "3600s",
-        "exec": "df -H | grep -e '/home$'| awk '{print $3}'",
-	"format":" {}"
-    },
  
 
     "cpu": {
-        "format": "{usage}% ",
+        "format": "{usage}%  ",
         "tooltip": false
     },
     "memory": {
@@ -131,9 +126,9 @@
         "format-source": " {volume}% ",
         "format-source-muted": "",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
+            "headphone": " ",
+            "hands-free": " ",
+            "headset": " ",
             "phone": "",
             "portable": "",
             "car": "",

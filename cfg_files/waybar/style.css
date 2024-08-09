@@ -152,7 +152,7 @@ button:hover {
 #custom-drivespace {
     color: #fc9877;
     border-bottom: 2px solid #fc9877;
-    padding-right: 10px;
+    padding-right: 7px;
     padding-left: 10px;
 }
 
@@ -174,6 +174,13 @@ button:hover {
     color: #eed49f;
     border-bottom: 2px solid #eed49f;
     padding-right: 15px;
+}
+
+#battery.plugged {
+    color: #fff;
+    border-bottom: 2px solid #fff;
+    padding-right: 10px;
+    padding-left: 7px;
 }
 
 #battery {
@@ -214,11 +221,13 @@ button:hover {
 #pulseaudio {
     color: #987ae6;
     border-bottom: 2px solid #987ae6;
+    padding-right: 7px;
 }
 
 #pulseaudio.muted {
     background-color: #90b1b1;
     color: #2a5c45;
+    padding-right: 7px;
 }
 
 

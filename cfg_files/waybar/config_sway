@@ -43,7 +43,7 @@
     },
 
     "clock": {
-    	"format": "{:%d.%m   | %R }",
+    	"format": "{:%d.%m   | %R  }",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
@@ -61,21 +61,22 @@
         "format":"{}  ",
     },
 
+    "custom/home": {
+        "interval": "3600s",
+        "exec": "df -H | grep -e '/home$'| awk '{print $3}'",
+	"format":"{}  "
+    },
+
     "custom/keyboard": {
         "interval": "once",
         "exec": "echo $(swaymsg -t get_inputs | grep \"xkb_active_layout_name\"| sed -n 1p | tr -d '\":(,.)' | awk '{print $2 \" \" $3}')" ,
         "format":"{}  ",
         "signal" : 5
     },
-    "custom/home": {
-        "interval": "3600s",
-        "exec": "df -H | grep -e '/home$'| awk '{print $3}'",
-	"format":" {}"
-    },
  
 
     "cpu": {
-        "format": "{usage}% ",
+        "format": "{usage}%  ",
         "tooltip": false
     },
     "memory": {
@@ -118,20 +119,20 @@
 
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
+        "format": "{volume}% {icon}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
+        "format-source": " {volume}% ",
         "format-source-muted": "",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
+            "headphone": " ",
+            "hands-free": " ",
+            "headset": " ",
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": [" ", " ", " "]
         },
         "on-click": "pavucontrol"
     },
