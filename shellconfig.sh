@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 
     echo -e "\033[0;32m Do you want to [C]opy or [L]ink the files? (Default Copy) \033[0m ";
