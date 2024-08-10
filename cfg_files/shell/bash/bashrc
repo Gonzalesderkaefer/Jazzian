@@ -49,7 +49,7 @@ export WLR_NO_HARDWARE_CURSORS=1
 
 ## NNN  Configuration
 export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh'
-export NNN_TMPFILE=$HOME/.lastd
+export NNN_TMPFILE=/tmp/.lastd
 
 # Prompt
 PS1=' \[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] > '
