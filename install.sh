@@ -161,7 +161,7 @@ fedora_install()
             NetworkManager-tui eom tlp libnotify dunst \
             google-noto-color-emoji-fonts qalculate-gtk fzf @base-x \
             jetbrains-mono-fonts lxappearance papirus-icon-theme-dark \
-            network-manager-applet
+            network-manager-applet picom
 
             case $2 in 
                 "I"* | "i"*)
