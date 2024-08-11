@@ -236,6 +236,7 @@ link_files()
             "$HOME/Jazzian/cfg_files/passgen" 
             "$HOME/Jazzian/cfg_files/shell"
             "$HOME/Jazzian/cfg_files/nnn_plugins"
+            "$HOME/Jazzian/cfg_files/nvim"
             );
     ### Link general config files
     for file in $HOME/Jazzian/cfg_files/*; do
