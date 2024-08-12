@@ -1,10 +1,14 @@
 #!/bin/sh
 
+######################## Variables ########################
+backup_dir="$HOME/devicespecific_backup";
+
+
 ######################## DEFIING FUNCTIONS ########################
 
 apply_backup()
 {
-    if ! [ -f $HOME/devicesecific_backup ]; then
+    if ! [ -e $backup_dir ]; then
         echo "It seems you do not have created a backup yet."
         echo "Please create one."
         exit; 
@@ -12,67 +16,78 @@ apply_backup()
 
 
     ## i3 config 
-    cp -r $HOME/devicesecific_backup/i3devicespecific $HOME/.config/i3/devicespecific 
+    cp -r $backup_dir/i3devicespecific $HOME/.config/i3/devicespecific 
 
     ## awesome config
-    cp -r  $HOME/devicesecific_backup/devicespecific.lua $HOME/.config/awesome/devicespecific.lua
-    cp -r  $HOME/devicesecific_backup/devicespecific_theme.lua $HOME/.config/awesome/devicespecific_theme.lua
+    cp -r  $backup_dir/devicespecific.lua $HOME/.config/awesome/devicespecific.lua
+    cp -r  $backup_dir/devicespecific_theme.lua $HOME/.config/awesome/devicespecific_theme.lua
 
     ## bspwm config
-    cp -r  $HOME/devicesecific_backup/bspwmdevicespecific $HOME/.config/bspwm/devicespecific
+    cp -r  $backup_dir/bspwmdevicespecific $HOME/.config/bspwm/devicespecific
 
     ## Hyprland config
-    cp -r $HOME/devicesecific_backup/hyprdevicespecific $HOME/.config/hypr/devicespecific 
+    cp -r $backup_dir/hyprdevicespecific $HOME/.config/hypr/devicespecific 
 
     ## sway config
-    cp -r $HOME/devicesecific_backup/swaydevicespecific $HOME/.config/sway/devicespecific 
+    cp -r $backup_dir/swaydevicespecific $HOME/.config/sway/devicespecific 
 
     ## river config
-    cp -r $HOME/devicesecific_backup/riverdevicespecific $HOME/.config/river/devicespecific 
+    cp -r $backup_dir/riverdevicespecific $HOME/.config/river/devicespecific 
 
     ## profile
-    cp -r $HOME/devicesecific_backup/devicesepcific.sh $HOME/.devicespecific.sh 
+    cp -r $backup_dir/devicespecific.sh $HOME/.devicespecific.sh 
 
     ## shellrc
-    cp -r $HOME/devicesecific_backup/devicerc $HOME/.devicerc
+    cp -r $backup_dir/devicerc $HOME/.devicerc
 }
 
 create_backup()
 {
-    if ! [ -f $HOME/devicesecific_backup ]; then
-        mkdir -p $HOME/devicesecific_backup;
+
+    if [ -e $backup_dir ]; then
+        mv  "$backup_dir" "$backup_dir.tmp";
     fi
+    mkdir $backup_dir;
+
+    ## Create directory
+    mkdir -p $backup_dir;
+
     ## i3 config 
-    cp -r $HOME/.config/i3/devicespecific $HOME/devicesecific_backup/i3devicespecific
+    cp -r $HOME/.config/i3/devicespecific $backup_dir/i3devicespecific
 
     ## awesome config
-    cp -r $HOME/.config/awesome/devicespecific.lua $HOME/devicesecific_backup/devicespecific.lua
-    cp -r $HOME/.config/awesome/devicespecific_theme.lua $HOME/devicesecific_backup/devicespecific_theme.lua
+    cp -r $HOME/.config/awesome/devicespecific.lua $backup_dir/devicespecific.lua
+    cp -r $HOME/.config/awesome/devicespecific_theme.lua $backup_dir/devicespecific_theme.lua
 
     ## bspwm config
-    cp -r $HOME/.config/bspwm/devicespecific $HOME/devicesecific_backup/bspwmdevicespecific
+    cp -r $HOME/.config/bspwm/devicespecific $backup_dir/bspwmdevicespecific
 
     ## Hyprland config
-    cp -r $HOME/.config/hypr/devicespecific $HOME/devicesecific_backup/hyprdevicespecific
+    cp -r $HOME/.config/hypr/devicespecific $backup_dir/hyprdevicespecific
 
     ## sway config
-    cp -r $HOME/.config/sway/devicespecific $HOME/devicesecific_backup/swaydevicespecific
+    cp -r $HOME/.config/sway/devicespecific $backup_dir/swaydevicespecific
 
     ## river config
-    cp -r $HOME/.config/river/devicespecific $HOME/devicesecific_backup/riverdevicespecific
+    cp -r $HOME/.config/river/devicespecific $backup_dir/riverdevicespecific
 
     ## profile
-    cp -r $HOME/.devicespecific.sh $HOME/devicesecific_backup/devicesepcific.sh
+    cp -r $HOME/.devicespecific.sh $backup_dir/devicespecific.sh
 
     ## shellrc
-    cp -r $HOME/.devicerc $HOME/devicesecific_backup/devicerc
+    cp -r $HOME/.devicerc $backup_dir/devicerc
+
+
+    if [ -e "$backup_dir.tmp" ]; then
+        rm -rf "$backup_dir.tmp";
+    fi
 }
 
 
 
 
 ######################## HERE THE SCRIPT STARTS ########################
-echo "This is a backup utility for your devicesepcific configurations which are stored in $HOME/devicesecific_backup."
+echo "This is a backup utility for your devicespecific configurations which are stored in $backup_dir."
 echo
 
 
