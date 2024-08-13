@@ -39,15 +39,15 @@ echo;
 case $server_choice in
     "W"* | "w"*)
         echo -e "$start_green sway $end_green (Default)" 
-        echo -e "$start_green river $end_green" 
-        echo -e "$start_green Hyprland $end_green" 
+        echo -e "$start_green river $end_green (only Fedora and Arch Linux)" 
+        echo -e "$start_green Hyprland $end_green (only Fedora and Arch Linux)" 
         read -p "Your Choice: " wm_choice;
         case $wm_choice in 
             "S"* | "s"*)
                 echo "Windowmanager: sway" >> $config_file;
                 ;;
             "R"* | "r"*)
-                echo "Windowmanager: river" >> $config_file;
+                echo "Windowmanager: river  " >> $config_file;
                 ;;
             "H"* | "h"*)
                 echo "Windowmanager: Hyprland" >> $config_file;
@@ -97,6 +97,22 @@ case $transfer in
         echo "Transfer: skip" >> $config_file;
         ;;
 esac
+
+# Determining what distro is running
+release="$(cat /etc/os-release)";
+
+case $release in
+    *"Debian"* | *"debian"* | *"DEBIAN"*)
+        echo "Distro: debian" >> $config_file;
+        ;;
+    *"Fedora"* | *"fedora"* | *"FEDORA"*)
+        echo "Distro: fedora" >> $config_file;
+        ;;
+    *"Arch Linux"* | *"arch linux"* | *"ARCH LINUX"*)
+        echo "Distro: archlinux" >> $config_file;
+        ;;
+esac
+
 
 
 echo -e "$start_green these are your options $end_green"
