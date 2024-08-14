@@ -1,7 +1,7 @@
 #!/bin/sh
 
 BAT_PERCENTAGE="$(acpi | grep -E -o "[0-9]%|[0-9][0-9]%|[0-9][0-9][0-9]%")"
-BAT_STATUS="$(acpi | grep -E -o "Discharging|Charging")"
+BAT_STATUS="$(acpi | grep -E -o "Discharging|Charging|Not charging")"
 BAT_TIME="$(acpi | grep -E -o "[0-9][0-9]:[0-5][0-9]")"
 
 
@@ -27,6 +27,9 @@ case $BLOCK_BUTTON in
                 ;;
             "Charging")
                 echo "$BAT_PERCENTAGE  "
+                ;;
+            "Not charging")
+                echo "$BAT_PERCENTAGE  "
                 ;;
             *)
         esac
