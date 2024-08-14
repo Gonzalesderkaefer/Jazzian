@@ -170,10 +170,10 @@ arch_install()
             sleep 3;
             case $2 in 
                 "I"* | "i"*)
-                    sudo pacman -S i3 i3blocks --noconfirm >> $log_file;;
+                    sudo pacman -S i3 i3blocks --noconfirm >> $log_file;
                     ;;
                 "A"* | "a"*)
-                    sudo pacman -S awesome --noconfirm >> $log_file;;
+                    sudo pacman -S awesome --noconfirm >> $log_file;
                     ;;
                 "B"* | "b"*)
                     sudo pacman -S bspwm polybar sxhkd --noconfirm >> $log_file;
@@ -190,6 +190,22 @@ if [ -z $1 ] || [ -z $2 ]; then
     echo -e "$start_red This script expects at least two arguments $end_red";
     exit 1;
 fi
+
+case $1 in 
+    "debian")
+        debian_install $2 $3;
+        ;;
+    "fedora")
+        fedora_install $2 $3;
+        ;;
+    "archlinux")
+        arch_install $2 $3;
+        ;;
+    *)
+        echo -e "$start_red The distro this system is running on is not supported by this script.$end_red"
+        echo -e "$start_red You can inspect the script in $HOME/Jazzian/modules/pac_install and try to $end_red"
+        echo -e "$start_red install the packages manually or you can skip. $end_red"
+esac
 
     
 

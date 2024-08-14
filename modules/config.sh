@@ -114,6 +114,9 @@ case $release in
     *"Arch Linux"* | *"arch linux"* | *"ARCH LINUX"*)
         echo "Distro: archlinux" >> $config_file;
         ;;
+    *)
+        echo "Distro: other" >> $config_file;
+        ;;
 esac
 
 
