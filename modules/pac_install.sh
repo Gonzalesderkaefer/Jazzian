@@ -68,12 +68,26 @@ debian_install()
             esac
             ;;
     esac
-
-    
-
+}
 
 
-    
+fedora_install()
+{
+    echo -e "$start_green Going to upgrade this system and install predfined packages $end_green";
+    echo -e "$start_green This may take a while. Press ENTER to continue. $end_green";
+    read continue;
+    sudo dnf update -y >> $log_file;
+
+    echo -e "$start_green Update finished. Going to install general packages. $end_green";
+    sleep 3;
+    sudo dnf install tmux zsh pinentry thunar polkit-gnome nnn neovim alacritty \ 
+    mpv firefox zathura zathura-pdf-poppler evince git pipewire pipewire-utils \ 
+    file-roller pipewire-pulseaudio NetworkManager-openconnect-gnome \ 
+    gsettings-desktop-schemas papirus-icon-theme NetworkManager-tui eom tlp libnotify \ 
+    pipewire-alsa qalculate-gtk fzf jetbrains-mono-fonts papirus-icon-theme-dark \ 
+    network-manager-applet -y >> $log_file; 
+ 
+
 }
 
 
