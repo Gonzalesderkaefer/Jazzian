@@ -1,5 +1,12 @@
 #! /bin/bash
 
+
+####### SPEC #######
+# $1: Displayserver
+# $2: Windowmanager 
+
+
+
 ## checking if is run with two arguements
 if [ -z $1 ] || [ -z $2 ]; then
     echo -e "$start_red This script expects at least two arguments $end_red";
@@ -87,18 +94,3 @@ mkdir -p $HOME/.config/sway/$custom/;
 # Creating files for river 
 mkdir -p $HOME/.config/river/$custom/;
 [ -f $HOME/.config/river/$custom/$custom ] || touch $HOME/.config/river/$custom/$custom;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

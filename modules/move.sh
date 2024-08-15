@@ -1,5 +1,8 @@
 #!/bin/bash
 
+####### SPEC #######
+# $1: Transfer 
+
 # color variables
 start_green="\033[0;32m"  
 end_green="\033[0m "
@@ -112,12 +115,7 @@ case $1 in
     "link")
         link_files;
         ;;
-    *)
+    "copy")
         copy_files;
         ;;
 esac
-
-
-
-
-

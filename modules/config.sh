@@ -22,9 +22,6 @@ echo -e "$start_green [X]org $end_green (Default)";
 read -p "Your Choice: " server_choice;
 
 case $server_choice in
-    "X"* | "x"*)
-        echo "Displayserver: xorg" > $config_file;
-        ;;
     "W"* | "w"*)
         echo "Displayserver: wayland" > $config_file;
         ;;
@@ -41,14 +38,11 @@ echo;
 
 case $server_choice in
     "W"* | "w"*)
-        echo -e "$start_green sway $end_green (Default)" 
-        echo -e "$start_green river $end_green (only Fedora and Arch Linux)" 
-        echo -e "$start_green Hyprland $end_green (only Fedora and Arch Linux)" 
+        echo -e "$start_green [s]way $end_green (Default)" 
+        echo -e "$start_green [r]iver $end_green (only Fedora and Arch Linux)" 
+        echo -e "$start_green [H]yprland $end_green (only Fedora and Arch Linux)" 
         read -p "Your Choice: " wm_choice;
         case $wm_choice in 
-            "S"* | "s"*)
-                echo "Windowmanager: sway" >> $config_file;
-                ;;
             "R"* | "r"*)
                 echo "Windowmanager: river  " >> $config_file;
                 ;;
@@ -66,9 +60,6 @@ case $server_choice in
         echo -e "$start_green [a]wesome $end_green" 
         read -p "Your Choice: " wm_choice;
         case $wm_choice in 
-            "I"* | "i"*)
-                echo "Windowmanager: i3" >> $config_file;
-                ;;
             "B"* | "b"*)
                 echo "Windowmanager: bspwm" >> $config_file;
                 ;;
@@ -122,7 +113,9 @@ esac
 
 
 echo -e "$start_green these are your options $end_green"
+echo
 cat $config_file;
+echo
 echo -e "$start_green Options saved. Will move on to apply changes. $end_green";
 echo -e "$start_green Press ENTER to continue $end_green"
 read continue;

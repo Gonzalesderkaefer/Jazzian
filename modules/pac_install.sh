@@ -1,5 +1,12 @@
 #!/bin/bash
 
+####### SPEC #######
+# $1: Distro
+# $2: Displayserver
+# $3: Windowmanager 
+
+
+
 # color variables
 start_green="\033[0;32m"  
 end_green="\033[0m "
@@ -57,13 +64,13 @@ debian_install()
             sleep 3;
             case $2 in
                 "awesome")
-                    sudo apt install i3 i3blocks -y >> $log_file;
-                    ;;
-                "bspwm")
                     sudo apt install awesome -y >> $log_file;
                     ;;
-                *)
+                "bspwm")
                     sudo apt install bspwm sxhkd polybar -y >> $log_file;
+                    ;;
+                *)
+                    sudo apt install i3 i3blocks -y >> $log_file;
                     ;;
             esac
             ;;
@@ -97,14 +104,14 @@ fedora_install()
             sleep 3;
                 
             case $2 in 
-                "S"* | "s"*)
-                    sudo dnf install sway i3blocks -y >> $log_file;
-                    ;;
                 "H"* | "h"*)
                     sudo dnf install hyprland waybar -y >> $log_file;
                     ;;
                 "R"* | "r"*)
                     sudo dnf install river waybar -y >> $log_file;
+                    ;;
+                *)
+                    sudo dnf install sway i3blocks -y >> $log_file;
                     ;;
             esac
             ;;
@@ -113,14 +120,14 @@ fedora_install()
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
-                "I"* | "i"*)
-                    sudo dnf install i3 i3blocks -y >> $log_file;
-                    ;;
                 "A"* | "a"*)
                     sudo dnf install awesome -y >> $log_file;
                     ;;
                 "B"* | "b"*)
                     sudo dnf install bspwm polybar -y >> $log_file;
+                    ;;
+                *)
+                    sudo dnf install i3 i3blocks -y >> $log_file;
                     ;;
             esac
             ;;
@@ -153,14 +160,14 @@ arch_install()
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
-                "S"* | "s"*)
-                    sudo pacman -S sway i3blocks swaybg --noconfirm >> $log_file;
-                    ;;
                 "H"* | "h"*)
                     sudo pacman -S hyprland waybar hyprpaper --noconfirm >> $log_file;
                     ;;
                 "R"* | "r"*)
                     sudo pacman -S river waybar swaybg --noconfirm >> $log_file;
+                    ;;
+                *)
+                    sudo pacman -S sway i3blocks swaybg --noconfirm >> $log_file;
                     ;;
             esac
             ;;
@@ -169,14 +176,14 @@ arch_install()
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
-                "I"* | "i"*)
-                    sudo pacman -S i3 i3blocks --noconfirm >> $log_file;
-                    ;;
                 "A"* | "a"*)
                     sudo pacman -S awesome --noconfirm >> $log_file;
                     ;;
                 "B"* | "b"*)
                     sudo pacman -S bspwm polybar sxhkd --noconfirm >> $log_file;
+                    ;;
+                *)
+                    sudo pacman -S i3 i3blocks --noconfirm >> $log_file;
                     ;;
             esac
             ;;
