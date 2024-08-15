@@ -83,7 +83,7 @@ open()
 nfcd ()
 {
     nf;
-    $(cat $NNN_TMPFILE | sed "s/'//g")
+    $(cat $NNN_TMPFILE | sed -E "s/'|\"//g")
     rm $NNN_TMPFILE
 }
 
