@@ -24,8 +24,8 @@ debian_install()
     echo -e "$start_green This may take a while. Press ENTER to continue. $end_green";
     read continue;
     
-    sudo apt update >> $log_file;
-    sudo apt upgrade -y >> $log_file;
+    sudo apt update ;
+    sudo apt upgrade -y ;
     echo -e "$start_green Update finished. Going to install general packages. $end_green";
     sleep 3;
 
@@ -34,43 +34,43 @@ debian_install()
     git lf fonts-jetbrains-mono firefox-esr tlp alacritty pipewire pipewire-alsa \
     pipewire-pulse libglib2.0-bin nala mpv papirus-icon-theme gnome-themes-extra \
     arc-theme libnotify-bin acpi-support acpid acpi linux-cpupower cpufrequtils \
-    openssh-server nnn fzf zathura -y >> $log_file;
+    openssh-server nnn fzf zathura -y ;
 
     echo -e "$start_green Installed general packages. Going to install packages for $1 $end_green";
     sleep 3;
 
     case $1 in 
         "wayland")
-            sudo apt install grim swaylock wofi xwayland wlr-randr wl-clipboard swayidle \ 
-            mako-notifier -y >> $log_file;
+            sudo apt install grim swaylock wofi xwayland wlr-randr wl-clipboard swayidle \
+            mako-notifier -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in
                 "river")
-                    sudo apt install sway i3blocks -y >> $log_file;
+                    sudo apt install sway i3blocks -y ;
                     ;;
                 "Hyprland")
-                    sudo apt install sway i3blocks -y >> $log_file;
+                    sudo apt install sway i3blocks -y ;
                     ;;
                 *)
-                    sudo apt install sway i3blocks -y >> $log_file;
+                    sudo apt install sway i3blocks -y ;
                     ;;
             esac
             ;;
         *)
             sudo apt install lxappearance xrandr arandr rofi xclip i3lock picom dunst \ 
-            xinput xorg xwallpaper -y >> $log_file;
+            xinput xorg xwallpaper -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in
                 "awesome")
-                    sudo apt install awesome -y >> $log_file;
+                    sudo apt install awesome -y ;
                     ;;
                 "bspwm")
-                    sudo apt install bspwm sxhkd polybar -y >> $log_file;
+                    sudo apt install bspwm sxhkd polybar -y ;
                     ;;
                 *)
-                    sudo apt install i3 i3blocks -y >> $log_file;
+                    sudo apt install i3 i3blocks -y ;
                     ;;
             esac
             ;;
@@ -83,7 +83,7 @@ fedora_install()
     echo -e "$start_green Going to upgrade this system and install predfined packages $end_green";
     echo -e "$start_green This may take a while. Press ENTER to continue. $end_green";
     read continue;
-    sudo dnf update -y >> $log_file;
+    sudo dnf update -y ;
 
     echo -e "$start_green Update finished. Going to install general packages. $end_green";
     sleep 3;
@@ -92,42 +92,42 @@ fedora_install()
     file-roller pipewire-pulseaudio NetworkManager-openconnect-gnome \
     gsettings-desktop-schemas papirus-icon-theme NetworkManager-tui eom tlp libnotify \
     pipewire-alsa qalculate-gtk fzf jetbrains-mono-fonts papirus-icon-theme-dark \
-    network-manager-applet -y >> $log_file; 
+    network-manager-applet -y ; 
  
     echo -e "$start_green Installed general packages. Going to install packages for $1 $end_green";
     sleep 3;
 
     case $1 in
         "wayland")
-            sudo dnf install grim swaybg swayidle swaylock waybar wofi wl-clipboard -y >> $log_file;
+            sudo dnf install grim swaybg swayidle swaylock waybar wofi wl-clipboard -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
                 
             case $2 in 
                 "H"* | "h"*)
-                    sudo dnf install hyprland waybar -y >> $log_file;
+                    sudo dnf install hyprland waybar -y ;
                     ;;
                 "R"* | "r"*)
-                    sudo dnf install river waybar -y >> $log_file;
+                    sudo dnf install river waybar -y ;
                     ;;
                 *)
-                    sudo dnf install sway i3blocks -y >> $log_file;
+                    sudo dnf install sway i3blocks -y ;
                     ;;
             esac
             ;;
         *)
-            sudo dnf install xclip @base-x lxappearance nitrogen picom dunst xclip -y >> $log_file;
+            sudo dnf install xclip @base-x lxappearance nitrogen picom dunst xclip -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
                 "A"* | "a"*)
-                    sudo dnf install awesome -y >> $log_file;
+                    sudo dnf install awesome -y ;
                     ;;
                 "B"* | "b"*)
-                    sudo dnf install bspwm polybar -y >> $log_file;
+                    sudo dnf install bspwm polybar -y ;
                     ;;
                 *)
-                    sudo dnf install i3 i3blocks -y >> $log_file;
+                    sudo dnf install i3 i3blocks -y ;
                     ;;
             esac
             ;;
@@ -139,7 +139,7 @@ arch_install()
     echo -e "$start_green Going to upgrade this system and install predfined packages $end_green";
     echo -e "$start_green This may take a while. Press ENTER to continue. $end_green";
     read continue;
-    sudo pacman -Syu --noconfirm >> $log_file;
+    sudo pacman -Syu --noconfirm ;
 
     echo -e "$start_green Update finished. Going to install general packages. $end_green";
     sleep 3;
@@ -148,7 +148,7 @@ arch_install()
     firefox lf tlp alacritty pipewire mpv gsettings-desktop-schemas network-manager-applet \
     openconnect lxappearance file-roller papirus-icon-theme gnome-themes-extra arc-gtk-theme \
     ttf-jetbrains-mono-nerd gcr bash-completion zsh-completions gcc less wget pipewire-pulse \
-    pipewire-alsa wireplumber man --noconfirm >> $log_file; 
+    pipewire-alsa wireplumber man --noconfirm ; 
 
 
     echo -e "$start_green Installed general packages. Going to install packages for $1 $end_green";
@@ -156,34 +156,34 @@ arch_install()
 
     case $1 in
         "wayland")
-            sudo pacman -S grim wofi swaybg waybar swayidle swaylock wl-clipboard --noconfirm >> $log_file;
+            sudo pacman -S grim wofi swaybg waybar swayidle swaylock wl-clipboard --noconfirm ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
                 "H"* | "h"*)
-                    sudo pacman -S hyprland waybar hyprpaper --noconfirm >> $log_file;
+                    sudo pacman -S hyprland waybar hyprpaper --noconfirm ;
                     ;;
                 "R"* | "r"*)
-                    sudo pacman -S river waybar swaybg --noconfirm >> $log_file;
+                    sudo pacman -S river waybar swaybg --noconfirm ;
                     ;;
                 *)
-                    sudo pacman -S sway i3blocks swaybg --noconfirm >> $log_file;
+                    sudo pacman -S sway i3blocks swaybg --noconfirm ;
                     ;;
             esac
             ;;
         *)
-            sudo pacman -S xorg lxappearance xwallpaper picom xorg-xinput xorg-xinit xclip i3lock --noconfirm >> $log_file;
+            sudo pacman -S xorg lxappearance xwallpaper picom xorg-xinput xorg-xinit xclip i3lock --noconfirm ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
                 "A"* | "a"*)
-                    sudo pacman -S awesome --noconfirm >> $log_file;
+                    sudo pacman -S awesome --noconfirm ;
                     ;;
                 "B"* | "b"*)
-                    sudo pacman -S bspwm polybar sxhkd --noconfirm >> $log_file;
+                    sudo pacman -S bspwm polybar sxhkd --noconfirm ;
                     ;;
                 *)
-                    sudo pacman -S i3 i3blocks --noconfirm >> $log_file;
+                    sudo pacman -S i3 i3blocks --noconfirm ;
                     ;;
             esac
             ;;
