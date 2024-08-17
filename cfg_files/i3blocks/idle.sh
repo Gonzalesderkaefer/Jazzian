@@ -10,3 +10,4 @@ swayidle;
 if [ $? = 0 ]; then
     [ -n "$(pgrep swayidle)" ] && ( echo "󰾪 "; echo; echo \#ecc2fc ) || ( echo "󰅶 "; echo; echo \#f56464 )
 fi
+#ps -o command= $(pgrep swayidle)
