@@ -61,10 +61,11 @@ fi
 # configure which session needs to be started
 case $1 in
     "wayland")
-        sed -i "s/\&\& (.*; killshells)/\&\& ($2; killshells) /g" $HOME/.$custom.sh
         sed  -i "s/export WM=.*$/export WM=$2/g" $HOME/.$custom.sh
+        sed -i "s/\&\& (.*; killshells)/\&\& ($2; killshells) /g" $HOME/.$custom.sh
         ;;
     *)
+        sed  -i "s/export WM=.*$/export WM=$2/g" $HOME/.$custom.sh
         sed -i "s/\&\& (.*; killshells)/\&\& (startx; killshells) /g" $HOME/.$custom.sh;
         sed -E -i "s/exec awesome|exec bspwm|exec i3/exec $2/g" $HOME/.xinitrc;
         ;;
