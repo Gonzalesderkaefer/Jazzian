@@ -12,7 +12,7 @@ case $menu in
     *Reboot*) systemctl reboot;;
     *Logout*) hyprctl dispatch exit || riverctl exit || swaymsg exit;;
     *Suspend* ) systemctl suspend ;;
-    *Lock*) swaylock -f -c 000000;;
+    *Lock*) hyprlock || swaylock -f -c 000000;;
     *Hibernate* ) systemctl hibernate;;
 esac
 

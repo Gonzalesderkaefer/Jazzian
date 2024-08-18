@@ -92,14 +92,14 @@ fedora_install()
     file-roller pipewire-pulseaudio NetworkManager-openconnect-gnome \
     gsettings-desktop-schemas papirus-icon-theme NetworkManager-tui eom tlp libnotify \
     pipewire-alsa qalculate-gtk fzf jetbrains-mono-fonts papirus-icon-theme-dark \
-    network-manager-applet -y ; 
+    network-manager-applet -y ;
  
     echo -e "$start_green Installed general packages. Going to install packages for $1 $end_green";
     sleep 3;
 
     case $1 in
         "wayland")
-            sudo dnf install grim swaybg swayidle swaylock waybar wofi wl-clipboard -y ;
+            sudo dnf install grim swaybg swayidle hyprlock waybar wofi wl-clipboard -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
                 
@@ -139,7 +139,7 @@ arch_install()
     echo -e "$start_green Going to upgrade this system and install predfined packages $end_green";
     echo -e "$start_green This may take a while. Press ENTER to continue. $end_green";
     read continue;
-    sudo pacman -Syu --noconfirm ;
+    sudo pacman -Syu --noconfirm --needed;
 
     echo -e "$start_green Update finished. Going to install general packages. $end_green";
     sleep 3;
@@ -148,7 +148,7 @@ arch_install()
     firefox lf tlp alacritty pipewire mpv gsettings-desktop-schemas network-manager-applet \
     openconnect lxappearance file-roller papirus-icon-theme gnome-themes-extra arc-gtk-theme \
     ttf-jetbrains-mono-nerd gcr bash-completion zsh-completions gcc less wget pipewire-pulse \
-    pipewire-alsa wireplumber man --noconfirm ; 
+    pipewire-alsa wireplumber man --noconfirm --needed; 
 
 
     echo -e "$start_green Installed general packages. Going to install packages for $1 $end_green";
@@ -156,34 +156,34 @@ arch_install()
 
     case $1 in
         "wayland")
-            sudo pacman -S grim wofi swaybg waybar swayidle swaylock wl-clipboard --noconfirm ;
+            sudo pacman -S grim wofi swaybg waybar swayidle hyprlock wl-clipboard --noconfirm --needed;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
                 "H"* | "h"*)
-                    sudo pacman -S hyprland waybar hyprpaper --noconfirm ;
+                    sudo pacman -S hyprland waybar hyprpaper --noconfirm --needed;
                     ;;
                 "R"* | "r"*)
-                    sudo pacman -S river waybar swaybg --noconfirm ;
+                    sudo pacman -S river waybar swaybg --noconfirm --needed;
                     ;;
                 *)
-                    sudo pacman -S sway i3blocks swaybg --noconfirm ;
+                    sudo pacman -S sway i3blocks swaybg --noconfirm --needed;
                     ;;
             esac
             ;;
         *)
-            sudo pacman -S xorg lxappearance xwallpaper picom xorg-xinput xorg-xinit xclip i3lock --noconfirm ;
+            sudo pacman -S xorg lxappearance xwallpaper picom xorg-xinput xorg-xinit xclip i3lock --noconfirm --needed;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
                 "A"* | "a"*)
-                    sudo pacman -S awesome --noconfirm ;
+                    sudo pacman -S awesome --noconfirm --needed;
                     ;;
                 "B"* | "b"*)
-                    sudo pacman -S bspwm polybar sxhkd --noconfirm ;
+                    sudo pacman -S bspwm polybar sxhkd --noconfirm --needed;
                     ;;
                 *)
-                    sudo pacman -S i3 i3blocks --noconfirm ;
+                    sudo pacman -S i3 i3blocks --noconfirm --needed;
                     ;;
             esac
             ;;
