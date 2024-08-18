@@ -50,6 +50,7 @@ if ! [ -f $HOME/.$custom.sh ]; then
     echo '}' >> $HOME/.$custom.sh
 
     echo '[ "$(tty)" = "/dev/tty1" ] && (startx; killshells)' >> $HOME/.$custom.sh
+    echo 'export WM=i3' >> $HOME/.$custom.sh
 fi
 
 # create xinitrc file regardless of display server choice
@@ -61,6 +62,7 @@ fi
 case $1 in
     "wayland")
         sed -i "s/\&\& (.*; killshells)/\&\& ($2; killshells) /g" $HOME/.$custom.sh
+        sed  -i "s/export WM=.*$/export WM=$2/g" $HOME/.$custom.sh
         ;;
     *)
         sed -i "s/\&\& (.*; killshells)/\&\& (startx; killshells) /g" $HOME/.$custom.sh;
