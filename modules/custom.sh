@@ -6,13 +6,6 @@
 # $2: Windowmanager 
 
 
-
-## checking if is run with two arguements
-if [ -z $1 ] || [ -z $2 ]; then
-    echo -e "$start_red This script expects at least two arguments $end_red";
-    exit 1;
-fi
-
 # color variables
 start_green="\033[0;32m"  
 end_green="\033[0m "
@@ -23,6 +16,13 @@ end_red="\033[0m"
 custom=devicespecific;
 custom_theme=devicespecific_theme;
 customrc=devicerc;
+
+## checking if is run with two arguements
+if [ -z $1 ] || [ -z $2 ]; then
+    echo -e "$start_red This script expects at least two arguments $end_red";
+    exit 1;
+fi
+
 
 echo -e "$start_green Going to create $custom files for custom conifiguration $end_green";
 

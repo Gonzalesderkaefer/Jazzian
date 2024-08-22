@@ -71,3 +71,25 @@ if [ -f modules/custom.sh ];then
 else
     echo -e "$red Could not find custom script $reset"
 fi
+
+# Ask user whether to install fonts
+
+echo -e "$green Would you like to install the font? $reset";
+echo -e "$green [y/N] $reset";
+
+read -p "Your Choice: " font_choice;
+
+case $font_choice in
+    "y"* | "Y"*)
+        if [ -f modules/font_install.sh ];then
+        bash modules/font_install.sh $distro;
+        else
+            echo -e "$red Could not find font script $reset"
+        fi
+        ;;
+esac
+
+
+
+
+
