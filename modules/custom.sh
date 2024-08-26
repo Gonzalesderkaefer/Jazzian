@@ -97,3 +97,7 @@ mkdir -p $HOME/.config/sway/$custom/;
 # Creating files for river 
 mkdir -p $HOME/.config/river/$custom/;
 [ -f $HOME/.config/river/$custom/$custom ] || touch $HOME/.config/river/$custom/$custom;
+
+
+# Setting theme to Arc-Dark
+gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'

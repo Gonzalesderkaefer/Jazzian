@@ -10,7 +10,7 @@ start_red="\033[0;31m"
 end_red="\033[0m"
 
 
-## checking if is run with two arguements
+## checking if is run with proper arguements
 if [ -z $1 ]; then
     echo -e "$start_red This script expects at least two arguments $end_red";
     exit 1;
