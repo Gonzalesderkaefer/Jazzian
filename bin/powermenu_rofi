@@ -10,7 +10,7 @@ menu="$(echo " Poweroff
 case $menu in
     *Poweroff*) systemctl poweroff;;
     *Reboot*) systemctl reboot;;
-    *Logout*) i3-msg exit;;
+    *Logout*) loginctl terminate-user $USER;;
     *Suspend* ) systemctl suspend ;;
     *Lock*) i3lock -f -c 000000;;
     *Hibernate* ) systemctl hibernate;;
