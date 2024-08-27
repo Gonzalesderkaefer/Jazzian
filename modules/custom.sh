@@ -101,3 +101,6 @@ mkdir -p $HOME/.config/river/$custom/;
 
 # Setting theme to Arc-Dark
 gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
+
+# Setting gtk-font to Jetbrains Mono
+gsettings set org.gnome.desktop.interface font-name 'Jetbrains Mono'
