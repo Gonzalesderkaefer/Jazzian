@@ -15,8 +15,11 @@ vim.opt.rtp:prepend(lazypath)
 
 local opts = {} 
 
--- include custom settings
+-- include settings
 require("nvim-settings")
+
+-- include user-specific settings
+require("devicespecific")
 
 -- make lazy install stuff
 require("lazy").setup("plugins") 

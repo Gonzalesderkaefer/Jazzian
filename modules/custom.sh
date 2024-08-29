@@ -104,3 +104,9 @@ gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
 
 # Setting gtk-font to Jetbrains Mono
 gsettings set org.gnome.desktop.interface font-name 'Jetbrains Mono'
+
+
+# nvim user-specifc configuration
+if [ -f $HOME/.config/nvim/lua ]; then
+    touch $HOME/.config/nvim/lua/devicespecific.lua;
+fi
