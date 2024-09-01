@@ -16,8 +16,6 @@
 rivertile -view-padding 2 -outer-padding 2 &
 riverctl default-layout rivertile
 
-# Loading devicespecific config
-sh $HOME/.config/river/devicespecific/devicespecific
 
 # Start waybar
 waybar -c $HOME/.config/waybar/config_river &
@@ -28,12 +26,9 @@ riverctl keyboard-layout "us(altgr-intl)"
 # Start mako
 mako -c $HOME/.config/mako/mako.conf &
 
-# Set split to 50%
-riverctl send-layout-cmd rivertile "main-ratio 0.5"
 
 # Super+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 riverctl map normal Super Return spawn alacritty
-
 
 # Super+A to toggle waybar
 riverctl map normal Super A spawn $HOME/.config/river/killbar.sh 
@@ -62,6 +57,8 @@ riverctl map normal Super L focus-view right
 riverctl map normal Super H focus-view left
 riverctl map normal Super K focus-view up
 riverctl map normal Super J focus-view down
+
+riverctl map normal Super M focus-output next
 #
 # Super+Shift+J and Super+Shift+K to swap the focused view with the next/previous
 # view in the layout stack
@@ -197,3 +194,8 @@ riverctl rule-add -app-id 'float*' -title 'foo' float
 # Make all views with app-id "bar" and any title use client-side decorations
 riverctl rule-add -app-id "bar" csd
 
+# Set split to 50%
+riverctl send-layout-cmd rivertile "main-ratio 0.5"
+
+# Loading devicespecific config
+sh $HOME/.config/river/devicespecific/devicespecific
