@@ -34,6 +34,9 @@ apply_backup()
     ## river config
     cp -r $backup_dir/riverdevicespecific $HOME/.config/river/devicespecific 
 
+    ## nvim config
+    cp -r  $backup_dir/nvimdevicespecific $HOME/.config/nvim/lua/devicespecific.lua
+
     ## profile
     cp -r $backup_dir/devicespecific.sh $HOME/.devicespecific.sh 
 
@@ -70,6 +73,9 @@ create_backup()
 
     ## river config
     cp -r $HOME/.config/river/devicespecific $backup_dir/riverdevicespecific
+
+    ## nvim config 
+    cp -r $HOME/.config/nvim/lua/devicespecific.lua $backup_dir/nvimdevicespecific
 
     ## profile
     cp -r $HOME/.devicespecific.sh $backup_dir/devicespecific.sh
