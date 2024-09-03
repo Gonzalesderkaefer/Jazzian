@@ -13,7 +13,7 @@
 
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
-rivertile -view-padding 2 -outer-padding 2 &
+rivertile -view-padding 3 -outer-padding 3 -main-ratio 0.5 &
 riverctl default-layout rivertile
 
 
