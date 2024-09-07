@@ -40,9 +40,21 @@ super + shift + l
     bspc node -s east
 
 
-### Navigate one workspace to left/right 
-control + super {Left,Right}
-    bspc desktop -f {prev,next}
+### Focus next and previous monitor
+control + super + l
+    bspc monitor --focus next
+
+control + super + h
+    bspc monitor --focus prev
+
+
+### Move window to next and previous montior
+control + super + shift + l
+    bspc node -m next --follow
+
+
+control + super + shift + h
+    bspc node -m prev --follow
 
 ### focus given workspace
 super + 1
@@ -87,5 +99,10 @@ super + shift + 9
 	bspc node -d '9'
 super + shift + 0
 	bspc node -d '0'
+
+
+### Run powermenu
+alt + F4
+    powermenu_rofi
 
 
