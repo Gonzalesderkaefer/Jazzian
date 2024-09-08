@@ -87,7 +87,7 @@ fedora_install()
 
     echo -e "$start_green Update finished. Going to install general packages. $end_green";
     sleep 3;
-    sudo dnf install tmux zsh pinentry thunar polkit-gnome nnn neovim alacritty \
+    sudo dnf install rofi-wayland tmux zsh pinentry thunar polkit-gnome nnn neovim alacritty \
     mpv firefox zathura zathura-pdf-poppler evince git pipewire pipewire-utils \
     file-roller pipewire-pulseaudio NetworkManager-openconnect-gnome \
     gsettings-desktop-schemas papirus-icon-theme NetworkManager-tui eom tlp libnotify \
@@ -143,7 +143,7 @@ arch_install()
 
     echo -e "$start_green Update finished. Going to install general packages. $end_green";
     sleep 3;
-    sudo pacman -S fzf tmux zsh nnn networkmanager thunar nm-connection-editor \
+    sudo pacman -S fzf tmux zsh nnn rofi-wayland networkmanager thunar nm-connection-editor \
     neovim zathura-pdf-poppler zathura evince webkit2gtk-4.1 networkmanager-openconnect \
     firefox lf tlp alacritty pipewire mpv gsettings-desktop-schemas network-manager-applet \
     openconnect lxappearance file-roller papirus-icon-theme gnome-themes-extra arc-gtk-theme \
