@@ -1,11 +1,11 @@
 #!/bin/sh
 
-menu="$(echo " Poweroff
- Reboot
-󰍃 Logout
- Suspend
-󰒲 Hibernate
- Lock" | wofi --dmenu -i)"
+if [ $XDG_SESSION_TYPE = 'wayland' ]; then
+    menu="$(printf " Poweroff \n Reboot \n󰍃 Logout \n Suspend \n󰒲 Hibernate \n Lock" | wofi --dmenu -i)"
+else
+    menu="$(printf " Poweroff \n Reboot \n󰍃 Logout \n Suspend \n󰒲 Hibernate \n Lock" | rofi -dmenu -i -p "")"
+fi
+
 
 case $menu in
     *Poweroff*) systemctl poweroff;;
