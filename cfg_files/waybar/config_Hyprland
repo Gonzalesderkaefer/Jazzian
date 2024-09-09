@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces","hyprland/window"],
     "modules-center": [],
-    "modules-right": ["custom/keyboard","custom/home", "custom/drivespace", "idle_inhibitor" ,"pulseaudio", "battery", "cpu", "memory", "temperature", "clock", "tray"],
+    "modules-right": ["custom/keyboard","custom/home", "custom/drivespace", "idle_inhibitor" ,"pulseaudio", "battery", "cpu", "memory", "temperature", "custom/clock", "tray"],
 
 
     "idle_inhibitor": {
@@ -46,6 +46,12 @@
     	"format": "{:%d.%m   | %R  }",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
+    },
+
+    "custom/clock":{
+        "interval": "10s",
+        "exec": "date \"+ %d.%m   | %R  \"",
+        "format":"{}" 
     },
 
 

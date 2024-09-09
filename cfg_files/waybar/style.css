@@ -144,6 +144,12 @@ button:hover {
     border-bottom: 2px solid #f5d0ac;
 }
 
+
+#custom-clock {
+    color: #f5d0ac;
+    border-bottom: 2px solid #f5d0ac;
+}
+
 #custom-kernel {
     color: #ff6666;
     border-bottom: 2px solid #ff6666;
