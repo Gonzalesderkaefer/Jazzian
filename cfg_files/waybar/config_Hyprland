@@ -49,7 +49,7 @@
     },
 
     "custom/clock":{
-        "interval": "10s",
+        "interval": 5,
         "exec": "date \"+ %d.%m   | %R  \"",
         "format":"{}" 
     },
@@ -62,13 +62,13 @@
     },
 
     "custom/drivespace": {
-        "interval": "3600s",
+        "interval": "3600",
         "exec": "df -H | grep -e '/$'| awk '{print $3}'",
         "format":"{}  ",
     },
 
     "custom/home": {
-        "interval": "3600s",
+        "interval": "3600",
         "exec": "df -H | grep -e '/home$'| awk '{print $3}'",
 	"format":"{}  "
     },
