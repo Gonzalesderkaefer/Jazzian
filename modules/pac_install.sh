@@ -58,7 +58,7 @@ debian_install()
             esac
             ;;
         *)
-            sudo apt install lxappearance xrandr arandr rofi xclip i3lock picom dunst \ 
+            sudo apt install lxappearance rofi arandr rofi xclip i3lock picom dunst \
             xinput xorg xwallpaper -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
