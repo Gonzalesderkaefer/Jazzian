@@ -1,0 +1,9 @@
+auto-reload yes
+
+# Keybinds
+bind-key j down
+bind-key k up
+
+# Macros
+macro v set browser "linkhand video"; open-in-browser; set browser "firefox"
+macro l set browser "linkhand listen"; open-in-browser; set browser "firefox"
