@@ -74,7 +74,9 @@ fi
 
 # Ask user whether to install fonts
 
-echo -e "$green Would you like to install the font? $reset";
+echo -e "$green Would you like to install the Jetbrains Mono Nerd Font?  $reset";
+echo -e "$green This is needed for pretty much all configs. You can alternatively install it yourself  $reset";
+echo -e "$green from their website.  $reset";
 echo -e "$green [y/N] $reset";
 
 read -p "Your Choice: " font_choice;
