@@ -13,21 +13,23 @@ get_output()
     ([ $volume -le 35 ]  && echo  "$volume  " )
 }
 
-case $1 in
-    1)
-        wpctl set-mute @DEFAULT_SINK@ toggle
-        get_output
-        ;;
-    2) 
-        wpctl set-volume @DEFAULT_SINK@ 5%+
-        get_output
-        ;;
-    3)
-        wpctl set-volume @DEFAULT_SINK@ 5%-
-        get_output
-        ;;
-    *)
-        get_output
-        ;;
-esac
+get_output;
+
+# case $1 in
+#     1)
+#         wpctl set-mute @DEFAULT_SINK@ toggle
+#         get_output
+#         ;;
+#     2) 
+#         wpctl set-volume @DEFAULT_SINK@ 5%+
+#         get_output
+#         ;;
+#     3)
+#         wpctl set-volume @DEFAULT_SINK@ 5%-
+#         get_output
+#         ;;
+#     *)
+#         get_output
+#         ;;
+# esac
 

@@ -7,7 +7,7 @@ command=$HOME/.config/i3blocks/battery.sh
 interval=10
 
 [mem]
-command=echo "$(free -h | awk '/^Mem:/ {print $3"/"$2}')  "
+command=echo "$(free -h | awk '/^Mem:/ {print $3"/"$2}')   "
 interval=30
 color=#fc6885
 

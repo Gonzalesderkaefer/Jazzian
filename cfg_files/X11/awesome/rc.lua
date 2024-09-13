@@ -126,7 +126,11 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget({
+    wibox.widget.textclock(),
+    fg = "#2ecc71",
+    widget = wibox.container.background
+})
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -191,23 +195,152 @@ screen.connect_signal("property::geometry", set_wallpaper)
 --
 
 -- Drivespacse module (see: https://awesomewm.org/doc/api/classes/awful.widget.watch.html)
-local diskspace_module = awful.widget.watch(gears.filesystem.get_xdg_config_home().. "awesome/modules/drivespace.sh",120)
+local diskspace_module = wibox.widget({
+    awful.widget.watch(gears.filesystem.get_xdg_config_home().. "awesome/modules/drivespace.sh",120),
+    fg = '#cc5f7f',
+    widget = wibox.container.background
+})
+
+
 
 -- Memory usage module (see: https://awesomewm.org/doc/api/classes/awful.widget.watch.html)
-local memory_module = awful.widget.watch(gears.filesystem.get_xdg_config_home().. "awesome/modules/memory_module.sh",10)
+local memory_module = wibox.widget({
+    awful.widget.watch(gears.filesystem.get_xdg_config_home().. "awesome/modules/memory_module.sh",10),
+    fg     = '#fc6885',
+    widget = wibox.container.background
+})
+
+
 
 -- Audio module 
-local audio_module, audio_timer = awful.widget.watch(gears.filesystem.get_xdg_config_home().. "awesome/modules/speaker.sh",10)
-audio_module:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.spawn.with_shell(gears.filesystem.get_xdg_config_home().. "awesome/modules/speaker.sh 1")
-                                                audio_timer:emit_signal("timeout") end),
-                           awful.button({ }, 4, function () awful.spawn.with_shell(gears.filesystem.get_xdg_config_home().. "awesome/modules/speaker.sh 2")
-                                                audio_timer:emit_signal("timeout") end),
-                           awful.button({ }, 5, function () awful.spawn.with_shell(gears.filesystem.get_xdg_config_home().. "awesome/modules/speaker.sh 3")
-                                                audio_timer:emit_signal("timeout") end)))
+local audio_widget_color = "#987ae6"
 
+
+audio_module, audio_timer = awful.widget.watch(gears.filesystem.get_xdg_config_home().. "awesome/modules/speaker.sh",10, function (widget,stdout)
+
+    widget:set_markup('<span foreground="'.. audio_widget_color ..'">' .. stdout .. '</span>')
+end)
+
+
+local update_color = function (new_color)
+    audio_widget_color = new_color
+end
+
+
+audio_module:buttons(gears.table.join(
+                            awful.button({ }, 1, function()
+                                                     awful.spawn.with_shell(gears.filesystem.get_xdg_config_home().. "awesome/modules/speaker.sh 1")
+                                                     audio_timer:emit_signal("timeout")
+                                                 end),
+                            awful.button({ }, 4, function()
+                                                     awful.spawn.with_shell(gears.filesystem.get_xdg_config_home().. "awesome/modules/speaker.sh 2")
+                                                     audio_timer:emit_signal("timeout")
+                                                 end),
+                            awful.button({ }, 5, function()
+                                                     awful.spawn.with_shell(gears.filesystem.get_xdg_config_home().. "awesome/modules/speaker.sh 3")
+                                                     audio_timer:emit_signal("timeout")
+                                                 end)))
+
+-- audio_module:set_bg("ff5555")
 -- Seperator (see https://awesomewm.org/doc/api/classes/wibox.widget.textbox.html)
-local seperator = wibox.widget.textbox(" | ")
+
+
+
+-- Audio  Module --
+
+--local audioOutput = " "
+--local getAudioLevel = function ()
+--    local handle = io.popen("$HOME/.config/awesome/modules/speaker.sh")
+--    if handle ~= nil then
+--        audioOutput = handle:read('*a') handle:close()
+--    end
+--end
+--getAudioLevel()
+--local audlevel = wibox.widget{
+--    markup = '<span color="#987ae6">' .. audioOutput .. '</span>',
+--    align  = 'center',
+--    valign = 'center',
+--    widget = wibox.widget.textbox
+--}
+--
+--
+
+
+
+local audio_widget = wibox.widget{
+    markup = "",
+    align  = 'center',
+    valign = 'center',
+    widget = wibox.widget.textbox
+}
+
+
+local get_output = function ()
+    local mutedhandle = io.popen("wpctl get-volume @DEFAULT_SINK@ | grep -o \"MUTED\"","r")
+    local volumehandle = io.popen("wpctl get-volume @DEFAULT_SINK@ | tr -d \"[a-zA-z] \\. :\"")
+
+
+    local ismuted = ""
+    if mutedhandle ~= nil then
+        ismuted = mutedhandle:read('*a') mutedhandle:close()
+    end
+
+    local volume = ""
+    if volumehandle ~= nil then
+        volume  = volumehandle:read('*a') volumehandle:close()
+    end
+    local isitmuted = string.sub(ismuted,0,string.len(ismuted)-1)
+
+    if isitmuted == 'MUTED' then
+        audio_widget.markup =  "<span color='#ff6666'> 󰝟 </span>"
+    else
+        local value =  string.sub(volume,0,string.len(volume) - 1)
+        local numval = tonumber(value)
+        if numval >= 100 then
+            audio_widget.markup =  value .. "  "
+        elseif numval < 100 and numval >= 65 then
+            audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
+        elseif numval < 65 and numval >= 35 then
+            audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
+        elseif numval < 35 then
+            audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
+        end
+    end
+end
+get_output()
+audio_widget:buttons(gears.table.join(
+                            awful.button({ }, 1, function()
+                                                    awful.spawn.with_shell("wpctl set-mute @DEFAULT_SINK@ toggle")
+                                                    get_output()
+                                                    audio_widget:emit_signal("widget::redraw_needed")
+                                                    get_output()
+                                                    audio_widget:emit_signal("widget::redraw_needed")
+                                                 end),
+                            awful.button({ }, 4, function()
+                                                    awful.spawn.with_shell("wpctl set-volume @DEFAULT_SINK@ 5%+")
+                                                    get_output()
+                                                    audio_widget:emit_signal("widget::redraw_needed")
+                                                    get_output()
+                                                    audio_widget:emit_signal("widget::redraw_needed")
+                                                 end),
+                            awful.button({ }, 5, function()
+                                                    awful.spawn.with_shell("wpctl set-volume @DEFAULT_SINK@ 5%-")
+                                                    get_output()
+                                                    audio_widget:emit_signal("widget::redraw_needed")
+                                                    get_output()
+                                                    audio_widget:emit_signal("widget::redraw_needed")
+                                                 end)))
+
+
+
+
+local seperator = wibox.widget{
+    markup = ' | ',
+    align  = 'center',
+    valign = 'center',
+    widget = wibox.widget.textbox
+}
+
 
 
 -- This is just a Test to make these widgets clickable
@@ -272,7 +405,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             seperator,
-            audio_module,
+            audio_widget,
             seperator,
             memory_module,
             seperator,
