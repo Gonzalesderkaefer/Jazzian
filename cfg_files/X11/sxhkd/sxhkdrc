@@ -4,7 +4,7 @@
 
 ### Terminal Emulator
 super + Return
-    alacritty
+    kitty
 
 ### Launch Menu
 alt + @space
