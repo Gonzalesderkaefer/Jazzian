@@ -49,7 +49,7 @@ set $right l
 set $mod Mod4
 
 ### Setting preffered Terminal Emulator
-set $term alacritty 
+set $term myterm 
 
 ### Setting the run menu
 set $menu w-rofi

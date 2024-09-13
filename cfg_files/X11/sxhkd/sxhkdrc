@@ -4,7 +4,7 @@
 
 ### Terminal Emulator
 super + Return
-    alacritty
+    myterm
 
 ### Launch Menu
 alt + @space
