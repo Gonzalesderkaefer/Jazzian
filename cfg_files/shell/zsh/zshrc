@@ -95,6 +95,12 @@ nfcd ()
     rm $NNN_TMPFILE
 }
 
+revert ()
+{
+    commit=$(git log --oneline | fzf | awk '{print $1}');
+    echo $commit;
+    git revert $commit
+}
 
 
 ## devicerc

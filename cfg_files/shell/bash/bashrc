@@ -87,6 +87,15 @@ nfcd ()
     rm $NNN_TMPFILE
 }
 
+revert ()
+{
+    commit=$(git log --oneline | fzf | awk '{print $1}');
+    echo $commit;
+}
+
+
+
+
 ## devicerc
 if [ -f $HOME/.devicerc ]; then
     source $HOME/.devicerc
