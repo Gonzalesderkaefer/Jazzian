@@ -31,7 +31,7 @@ debian_install()
 
     sudo apt install tmux zsh evince flatpak network-manager network-manager-gnome \
     thunar file-roller network-manager-openconnect-gnome eom network-manager-openconnect \
-    git lf fonts-jetbrains-mono firefox-esr tlp pipewire pipewire-alsa \
+    git lf fonts-jetbrains-mono firefox-esr tlp alacritty pipewire pipewire-alsa \
     pipewire-pulse libglib2.0-bin nala mpv papirus-icon-theme gnome-themes-extra \
     arc-theme libnotify-bin acpi-support acpid acpi linux-cpupower cpufrequtils \
     openssh-server nnn fzf zathura -y ;
@@ -41,7 +41,7 @@ debian_install()
 
     case $1 in 
         "wayland")
-            sudo apt install grim swaylock wofi xwayland wlr-randr alacritty wl-clipboard swayidle \
+            sudo apt install grim swaylock wofi xwayland wlr-randr wl-clipboard swayidle \
             mako-notifier -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
@@ -58,7 +58,7 @@ debian_install()
             esac
             ;;
         *)
-            sudo apt install lxappearance rofi arandr rofi xclip i3lock picom kitty dunst \
+            sudo apt install lxappearance rofi arandr rofi xclip i3lock picom dunst \
             xinput xorg xwallpaper -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
@@ -87,7 +87,7 @@ fedora_install()
 
     echo -e "$start_green Update finished. Going to install general packages. $end_green";
     sleep 3;
-    sudo dnf install rofi-wayland tmux zsh pinentry thunar polkit-gnome nnn neovim \
+    sudo dnf install rofi-wayland tmux zsh pinentry thunar polkit-gnome nnn neovim alacritty \
     mpv firefox zathura zathura-pdf-poppler evince git pipewire pipewire-utils \
     file-roller pipewire-pulseaudio NetworkManager-openconnect-gnome \
     gsettings-desktop-schemas papirus-icon-theme NetworkManager-tui eom tlp libnotify \
@@ -99,7 +99,7 @@ fedora_install()
 
     case $1 in
         "wayland")
-            sudo dnf install grim swaybg swayidle hyprlock waybar wofi wl-clipboard alacritty -y ;
+            sudo dnf install grim swaybg swayidle hyprlock waybar wofi wl-clipboard -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
                 
@@ -116,7 +116,7 @@ fedora_install()
             esac
             ;;
         *)
-            sudo dnf install xclip @base-x lxappearance nitrogen picom dunst xclip kitty -y ;
+            sudo dnf install xclip @base-x lxappearance nitrogen picom dunst xclip -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
@@ -145,7 +145,7 @@ arch_install()
     sleep 3;
     sudo pacman -S fzf tmux zsh nnn rofi-wayland networkmanager thunar nm-connection-editor \
     neovim zathura-pdf-poppler zathura evince webkit2gtk-4.1 networkmanager-openconnect \
-    firefox lf tlp pipewire mpv gsettings-desktop-schemas network-manager-applet \
+    firefox lf tlp alacritty pipewire mpv gsettings-desktop-schemas network-manager-applet \
     openconnect lxappearance file-roller papirus-icon-theme gnome-themes-extra arc-gtk-theme \
     ttf-jetbrains-mono-nerd gcr bash-completion zsh-completions gcc less wget pipewire-pulse \
     pipewire-alsa wireplumber man --noconfirm --needed; 
@@ -156,7 +156,7 @@ arch_install()
 
     case $1 in
         "wayland")
-            sudo pacman -S grim wofi swaybg waybar swayidle hyprlock wl-clipboard alacritty --noconfirm --needed;
+            sudo pacman -S grim wofi swaybg waybar swayidle hyprlock wl-clipboard --noconfirm --needed;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
@@ -172,7 +172,7 @@ arch_install()
             esac
             ;;
         *)
-            sudo pacman -S xorg lxappearance xwallpaper picom xorg-xinput xorg-xinit xclip kitty i3lock --noconfirm --needed;
+            sudo pacman -S xorg lxappearance xwallpaper picom xorg-xinput xorg-xinit xclip i3lock --noconfirm --needed;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
