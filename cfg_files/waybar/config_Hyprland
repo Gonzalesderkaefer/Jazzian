@@ -62,13 +62,13 @@
     },
 
     "custom/drivespace": {
-        "interval": "3600",
+        "interval": 3600,
         "exec": "df -H | grep -e '/$'| awk '{print $3}'",
         "format":"{}  ",
     },
 
     "custom/home": {
-        "interval": "3600",
+        "interval": 3600,
         "exec": "df -H | grep -e '/home$'| awk '{print $3}'",
 	"format":"{}  "
     },
