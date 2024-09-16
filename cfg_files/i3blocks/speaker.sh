@@ -6,7 +6,7 @@ get_output()
 {
     ismuted="$(wpctl get-volume @DEFAULT_SINK@ | grep -o "MUTED")";
     volume="$(wpctl get-volume @DEFAULT_SINK@ | tr -d "[a-zA-z] \. :")";
-    ([ "$(wpctl get-volume @DEFAULT_SINK@ | grep -o "MUTED")" = "MUTED" ] && echo "    󰝟 ") ||
+    ([ "$(wpctl get-volume @DEFAULT_SINK@ | grep -o "MUTED")" = "MUTED" ] && echo "  󰝟   ") ||
     ([ $volume -ge 100 ]  && echo  "$volume  " )||
     ([ $volume -le 100 ] && [ $volume -ge 65 ] && echo  "$volume  " )||
     ([ $volume -le 65 ] && [ $volume -ge 35 ] && echo  "$volume  " )||
