@@ -44,7 +44,7 @@ riverctl map normal Super Q close
 riverctl map normal Super+Shift E exit
 
 # Alt+Space to run w-rofi
-riverctl map normal Alt Space spawn w-rofi 
+riverctl map normal Alt Space spawn rofi -show drun
 
 # Alt+F4 to run powermenu
 riverctl map normal Alt F4 spawn powermenu
