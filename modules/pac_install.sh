@@ -145,7 +145,7 @@ arch_install()
     sleep 3;
     sudo pacman -S fzf tmux zsh nnn rofi-wayland networkmanager thunar nm-connection-editor \
     neovim zathura-pdf-poppler zathura evince webkit2gtk-4.1 networkmanager-openconnect \
-    firefox lf tlp alacritty pipewire mpv gsettings-desktop-schemas network-manager-applet \
+    firefox lf tlp alacritty pipewire mpv gsettings-desktop-schemas eom network-manager-applet \
     openconnect lxappearance file-roller papirus-icon-theme gnome-themes-extra arc-gtk-theme \
     ttf-jetbrains-mono-nerd gcr bash-completion zsh-completions gcc less wget pipewire-pulse \
     pipewire-alsa wireplumber man --noconfirm --needed; 
