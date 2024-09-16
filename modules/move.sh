@@ -22,6 +22,8 @@ copy_files()
         "$HOME/Jazzian/cfg_files/passgen" 
         "$HOME/Jazzian/cfg_files/shell"
         "$HOME/Jazzian/cfg_files/nnn_plugins"
+        "$HOME/Jazzian/cfg_files/vim"
+
         );
 
     # Copy generic config and wayland-stuff configs 
@@ -52,6 +54,9 @@ copy_files()
         filename="$(echo $sh_file | grep -E -oi "[^\/]*$")"
         cp $sh_file $HOME/.$filename;
     done
+    
+    # Linking vim config
+    cp $HOME/Jazzian/cfg_files/vim/vimrc $HOME/.vimrc;
 
     echo -e "$start_green copying scripts from $HOME/Jazzian/bin to $HOME/.local/bin $end_green";
     # Copying scripts 
@@ -74,6 +79,7 @@ link_files()
             "$HOME/Jazzian/cfg_files/shell"
             "$HOME/Jazzian/cfg_files/nnn_plugins"
             "$HOME/Jazzian/cfg_files/nvim"
+            "$HOME/Jazzian/cfg_files/vim"
             );
 
     # Link general config files
@@ -83,7 +89,7 @@ link_files()
         fi
     done
 
-    # config files for 
+    # config files for nnn
     if ! [ -d $HOME/.config/nnn/plugins ];then
         ln -s "$HOME/Jazzian/cfg_files/nnn_plugins" $HOME/.config/nnn/plugins;
     fi
@@ -109,6 +115,9 @@ link_files()
     for script in $HOME/Jazzian/bin/*; do
         ln -sf $script $HOME/.local/bin/;
     done
+
+    # Linking vim config
+    ln -sf $HOME/Jazzian/cfg_files/vim/vimrc $HOME/.vimrc;
 }
 
 case $1 in 
