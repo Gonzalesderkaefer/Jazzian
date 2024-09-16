@@ -110,3 +110,11 @@ gsettings set org.gnome.desktop.interface font-name 'Jetbrains Mono'
 if [ -f $HOME/.config/nvim/lua ]; then
     touch $HOME/.config/nvim/lua/devicespecific.lua;
 fi
+
+# vim user-specific configuration
+if ! [ -f $HOME/.config/vim/$custom ]; then
+    mkdir $HOME/.config/vim;
+    touch $HOME/.config/vim/$custom;
+fi
+
+
