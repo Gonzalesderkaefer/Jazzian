@@ -186,7 +186,7 @@ bindsym XF86MonBrightnessUp exec brightnessctl -e s +30
 bindsym XF86MonBrightnessDown exec brightnessctl -e s 30-
 bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_SINK@ 5%- && pkill -RTMIN+3 i3blocks
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_SINK@ 5%+ && pkill -RTMIN+3 i3blocks
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+3 i3blocks
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+3 i3blocks
 
 ### Change Keyboard Layout
 bindsym $mod+space exec $HOME/.config/sway/scripts/kbnotify
