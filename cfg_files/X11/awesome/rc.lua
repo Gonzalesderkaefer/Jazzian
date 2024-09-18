@@ -338,6 +338,18 @@ local seperator = wibox.widget{
     widget = wibox.widget.textbox
 }
 
+local incr_vol = function ()
+    os.execute("wpctl set-volume @DEFAULT_SINK@ 5%+")
+    get_output()
+    audio_widget:emit_signal("widget::redraw_needed")
+end
+
+local decr_vol = function ()
+    os.execute("wpctl set-volume @DEFAULT_SINK@ 5%-")
+    get_output()
+    audio_widget:emit_signal("widget::redraw_needed")
+end
+
 
 
 -- This is just a Test to make these widgets clickable
@@ -422,7 +434,6 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -562,6 +573,8 @@ globalkeys = gears.table.join(
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
+    awful.key ({}, "XF86AudioRaiseVolume", function() incr_vol()end ),
+    awful.key ({}, "XF86AudioLowerVolume", function() decr_vol()end ),
 
     awful.key({ modkey, "Control" }, "n",
               function ()
