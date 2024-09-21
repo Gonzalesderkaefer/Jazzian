@@ -12,4 +12,5 @@ config.set("colors.webpage.preferred_color_scheme", "dark")
 
 
 #custom keybinds
-config.bind('M', 'hint links spawn mpv {hint-url}')
+config.bind('M', 'hint links spawn linkhand video {hint-url}')
+config.bind('L', 'hint links spawn linkhand listen {hint-url}')
