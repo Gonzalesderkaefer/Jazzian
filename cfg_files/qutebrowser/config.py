@@ -9,3 +9,7 @@ c.url.default_page = 'https://google.com'
 c.url.start_pages = 'https://google.com'
 
 config.set("colors.webpage.preferred_color_scheme", "dark")
+
+
+#custom keybinds
+config.bind('M', 'hint links spawn mpv {hint-url}')
