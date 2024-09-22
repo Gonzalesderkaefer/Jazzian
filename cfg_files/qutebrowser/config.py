@@ -8,7 +8,7 @@ c.url.searchengines = {
 c.url.default_page = 'https://google.com' 
 c.url.start_pages = 'https://google.com'
 
-config.set("colors.webpage.preferred_color_scheme", "dark")
+# config.set("colors.webpage.preferred_color_scheme", "dark")
 
 
 #custom keybinds

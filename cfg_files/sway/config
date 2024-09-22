@@ -25,8 +25,8 @@ client.unfocused        $br     $bg     $fg     $bg       $bg
 ### Borders and gaps
 default_border pixel 2
 default_floating_border pixel 1
-gaps inner 2
-gaps outer 2
+gaps inner 4
+gaps outer 4
 
 ### Configuring titlebar in tabbed mode
 font 'Jetbrains Mono Nerd Font ExtraBold' 10
