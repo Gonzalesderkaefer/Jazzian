@@ -80,6 +80,7 @@ link_files()
             "$HOME/Jazzian/cfg_files/nnn_plugins"
             "$HOME/Jazzian/cfg_files/nvim"
             "$HOME/Jazzian/cfg_files/vim"
+            "$HOME/Jazzian/cfg_files/qutebrowser"
             );
 
     # Link general config files
@@ -92,6 +93,11 @@ link_files()
     # config files for nnn
     if ! [ -d $HOME/.config/nnn/plugins ];then
         ln -s "$HOME/Jazzian/cfg_files/nnn_plugins" $HOME/.config/nnn/plugins;
+    fi
+
+    # copying qutebrowser config
+    if ! [ -d $HOME/.config/qutebrowser ]; then
+        cp -r $HOME/Jazzian/cfg_files/qutebrowser $HOME/.config/;
     fi
 
     # Link X11 config files
