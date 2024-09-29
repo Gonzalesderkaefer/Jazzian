@@ -11,6 +11,11 @@ command=echo "$(free -h | awk '/^Mem:/ {print $3"/"$2}')   "
 interval=30
 color=#fc6885
 
+# [cpu]
+# command=$HOME/.config/i3blocks/cpu.sh
+# interval=1
+# color=#fc6885
+
 [idleinhibit]
 command=$HOME/.config/i3blocks/idle.sh
 interval=once

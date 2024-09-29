@@ -32,3 +32,4 @@ if [ -f "$HOME/.devicespecific.sh" ]; then
     sh "$HOME/.devicespecific.sh"
 fi
 
+. "$HOME/.cargo/env"

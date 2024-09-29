@@ -100,5 +100,3 @@ revert ()
 if [ -f $HOME/.devicerc ]; then
     source $HOME/.devicerc
 fi
-
-
