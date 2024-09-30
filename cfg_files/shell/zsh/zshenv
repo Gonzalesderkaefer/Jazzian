@@ -14,4 +14,4 @@ export NNN_TMPFILE=/tmp/.lastd
 # export WLR_RENDERER=vulkan
 # export WLR_NO_HARDWARE_CURSORS=1
 # export XWAYLAND_NO_GLAMOR=1
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
