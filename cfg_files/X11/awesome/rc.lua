@@ -280,13 +280,19 @@ local get_output = function ()
     local ismuted = ""
     if mutedhandle ~= nil then
         ismuted = mutedhandle:read('*a') mutedhandle:close()
+    else
+        audio_widget.markup = "??%  "
+        return
     end
-
     local volume = ""
     if volumehandle ~= nil then
         volume  = volumehandle:read('*a') volumehandle:close()
+    else
+        audio_widget.markup = "??%  "
+        return
     end
-    local isitmuted = string.sub(ismuted,0,string.len(ismuted)-1)
+    local isitmuted = ""
+    isitmuted = string.sub(ismuted,0,string.len(ismuted)-1)
 
     if isitmuted == 'MUTED' then
         audio_widget.markup =  "<span color='#ff6666'> 󰝟 </span>"
