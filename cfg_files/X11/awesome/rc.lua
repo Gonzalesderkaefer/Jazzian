@@ -297,7 +297,8 @@ local get_output = function ()
     if isitmuted == 'MUTED' then
         audio_widget.markup =  "<span color='#ff6666'> 󰝟 </span>"
     else
-        local value =  string.sub(volume,0,string.len(volume) - 1)
+        local value =  "-1"
+        value = string.sub(volume,0,string.len(volume) - 1)
         local numval = tonumber(value)
         if numval >= 100 then
             audio_widget.markup =  value .. "  "
