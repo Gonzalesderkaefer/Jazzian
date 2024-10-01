@@ -77,6 +77,8 @@ exec picom
 ### Launching Tray elements
 exec nm-applet
 
+### Load Xresources file
+exec xrdb $HOME/.Xresources
 
 ## Keybindings 
 

@@ -27,6 +27,7 @@ export MOZ_ENABLE_WAYLAND=1
 ## NNN  Configuration
 export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh;c:checksum.sh'
 
+
 ## Startup
 if [ -f "$HOME/.devicespecific.sh" ]; then
     sh "$HOME/.devicespecific.sh"
