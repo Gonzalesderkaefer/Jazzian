@@ -31,7 +31,7 @@ nm-applet &
 
 
 # Super+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
-riverctl map normal Super Return spawn myterm
+riverctl map normal Super Return spawn alacritty
 
 # Super+A to toggle waybar
 riverctl map normal Super A spawn $HOME/.config/river/killbar.sh 

@@ -38,7 +38,7 @@ import subprocess
 
 
 mod = "mod4"
-terminal = "myterm"
+terminal = "alacritty"
 
 
 
