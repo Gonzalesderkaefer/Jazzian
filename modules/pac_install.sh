@@ -59,7 +59,7 @@ debian_install()
             ;;
         *)
             sudo apt install lxappearance rofi arandr rofi xclip i3lock picom dunst \
-            xinput xorg xwallpaper -y ;
+            xinput xorg xwallpaper rxvt-unicode -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in
@@ -116,7 +116,7 @@ fedora_install()
             esac
             ;;
         *)
-            sudo dnf install xclip @base-x lxappearance nitrogen picom dunst xclip -y ;
+            sudo dnf install xclip @base-x lxappearance nitrogen picom dunst xclip i3lock rxvt-unicode -y ;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 
@@ -172,7 +172,7 @@ arch_install()
             esac
             ;;
         *)
-            sudo pacman -S xorg lxappearance xwallpaper picom xorg-xinput xorg-xinit xclip i3lock --noconfirm --needed;
+            sudo pacman -S xorg lxappearance xwallpaper picom xorg-xinput xorg-xinit xclip i3lock rxvt-unicode --noconfirm --needed;
             echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
             sleep 3;
             case $2 in 

@@ -134,3 +134,42 @@ case $1 in
         copy_files;
         ;;
 esac
+
+
+## Write .Xresources file
+echo 
+'
+URxvt*letterSpace: 0
+URxvt*font: xft:JetBrainsMono Nerd Font Mono:style=Regular:pixelsize=15:antialias=true:hinting=true
+
+URxvt.background: #303446
+URxvt.foreground: #c6d0f5
+URxvt.scrollBar: false
+
+
+URxvt.geometry: 400x400
+
+urxvt*color0:   #51577d
+urxvt*color1:   #e78284
+urxvt*color2:   #a6d189
+urxvt*color3:   #e5c890
+urxvt*color4:   #8caaee
+urxvt*color5:   #f4b8e4
+urxvt*color6:   #81c8be
+urxvt*color7:   #303446
+
+
+urxvt*color8:#626881
+urxvt*color9:#e78284
+urxvt*color10:#a6d189
+urxvt*color11:#e5c890
+urxvt*color12:#8caaee
+urxvt*color13:#f4b8e4
+urxvt*color14:#81c8be
+urxvt*color15:#a5adce
+' >> $HOME/.Xresources
+
+
+
+
+

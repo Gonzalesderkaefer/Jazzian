@@ -4,7 +4,7 @@
 
 ### Terminal Emulator
 super + Return
-    alacritty
+    urxvt
 
 ### Launch Menu
 alt + @space
