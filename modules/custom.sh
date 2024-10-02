@@ -167,5 +167,7 @@ case $XDG_SESSION_TYPE in
 esac
 ' > $HOME/.local/bin/myterm
 
+chmod +x $HOME/.local/bin/myterm
+
 
 
