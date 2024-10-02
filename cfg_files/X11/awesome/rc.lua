@@ -300,14 +300,16 @@ local get_output = function ()
         local value =  "-1"
         value = string.sub(volume,0,string.len(volume) - 1)
         local numval = tonumber(value)
-        if numval >= 100 then
-            audio_widget.markup =  value .. "  "
-        elseif numval < 100 and numval >= 65 then
-            audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
-        elseif numval < 65 and numval >= 35 then
-            audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
-        elseif numval < 35 then
-            audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
+        if numval~= nil then
+            if numval >= 100 then
+                audio_widget.markup =  value .. "  "
+            elseif numval < 100 and numval >= 65 then
+                audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
+            elseif numval < 65 and numval >= 35 then
+                audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
+            elseif numval < 35 then
+                audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
+            end
         end
     end
 end
