@@ -129,6 +129,8 @@ echo 'URxvt.background: #303446' >> $HOME/.Xresources
 echo 'URxvt.foreground: #c6d0f5' >> $HOME/.Xresources
 echo 'URxvt.scrollBar: false' >> $HOME/.Xresources
 echo 'URxvt.geometry: 400x400' >> $HOME/.Xresources
+
+echo '! Colors'
 echo 'urxvt*color0:   #51577d' >> $HOME/.Xresources
 echo 'urxvt*color1:   #e78284' >> $HOME/.Xresources
 echo 'urxvt*color2:   #a6d189' >> $HOME/.Xresources
@@ -145,5 +147,6 @@ echo 'urxvt*color12:#8caaee' >> $HOME/.Xresources
 echo 'urxvt*color13:#f4b8e4' >> $HOME/.Xresources
 echo 'urxvt*color14:#81c8be' >> $HOME/.Xresources
 echo 'urxvt*color15:#a5adce' >> $HOME/.Xresources
-
-
+echo '! Rebinding copy and paste'
+echo 'URxvt.keysym.Shift-Control-V: eval:paste_clipboard' >> $HOME/.Xresources
+echo 'URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard' >> $HOME/.Xresources
