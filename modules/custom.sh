@@ -110,3 +110,40 @@ gsettings set org.gnome.desktop.interface font-name 'Jetbrains Mono'
 if [ -f $HOME/.config/nvim/lua ]; then
     touch $HOME/.config/nvim/lua/devicespecific.lua;
 fi
+
+
+if [ -f $HOME/.config/nvim/lua ]; then
+    touch $HOME/.config/nvim/lua/devicespecific.lua;
+fi
+
+if [ -f $HOME/.config/vim/devicespecific ]; then
+    touch $HOME/.config/vim/devicespecific;
+fi
+
+
+
+## Write .Xresources file
+echo 'URxvt*letterSpace: 0' >> $HOME/.Xresources
+echo 'URxvt*font: xft:JetBrainsMono Nerd Font Mono:style=Regular:pixelsize=15:antialias=true:hinting=true' >> $HOME/.Xresources
+echo 'URxvt.background: #303446' >> $HOME/.Xresources
+echo 'URxvt.foreground: #c6d0f5' >> $HOME/.Xresources
+echo 'URxvt.scrollBar: false' >> $HOME/.Xresources
+echo 'URxvt.geometry: 400x400' >> $HOME/.Xresources
+echo 'urxvt*color0:   #51577d' >> $HOME/.Xresources
+echo 'urxvt*color1:   #e78284' >> $HOME/.Xresources
+echo 'urxvt*color2:   #a6d189' >> $HOME/.Xresources
+echo 'urxvt*color3:   #e5c890' >> $HOME/.Xresources
+echo 'urxvt*color4:   #8caaee' >> $HOME/.Xresources
+echo 'urxvt*color5:   #f4b8e4' >> $HOME/.Xresources
+echo 'urxvt*color6:   #81c8be' >> $HOME/.Xresources
+echo 'urxvt*color7:   #303446' >> $HOME/.Xresources
+echo 'urxvt*color8:#626881' >> $HOME/.Xresources
+echo 'urxvt*color9:#e78284' >> $HOME/.Xresources
+echo 'urxvt*color10:#a6d189' >> $HOME/.Xresources
+echo 'urxvt*color11:#e5c890' >> $HOME/.Xresources
+echo 'urxvt*color12:#8caaee' >> $HOME/.Xresources
+echo 'urxvt*color13:#f4b8e4' >> $HOME/.Xresources
+echo 'urxvt*color14:#81c8be' >> $HOME/.Xresources
+echo 'urxvt*color15:#a5adce' >> $HOME/.Xresources
+
+
