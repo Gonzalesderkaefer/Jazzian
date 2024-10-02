@@ -4,6 +4,7 @@ devicerc
 !/cfg_files/qutebrowser/config.py
 *__pycache__*
 newsboat*
+*myterm*
 *!newsboat/config
 .* 
 *!/.gitignore

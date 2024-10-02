@@ -1,52 +1,42 @@
-#/bin/sh
+#!/bin/bash
 
-jiffs1=$(cat /proc/stat | grep -E  "^cpu \s*" | sed 's/cpu//g');
-total1=0;
-work1=0
-index1=0
-for i in $jiffs1; do
-    #echo $i;
-    if [ $index1 -lt 3 ]; then
-        work1=$(($work1 + $i));
-    fi
-    total1=$(($total1 + $i));
-    index1=$(($index1+1));
+#      user    nice   system  idle      iowait irq   softirq  steal  guest  guest_nice
+# cpu  74608   2520   24433   1117073   6176   4054  0        0      0      0
 
-done
-# echo "Total is: $total1";
-# echo "Work is: $work1";
-# echo "Length is: $index1";
+# PrevIdle = previdle + previowait
+# Idle = idle + iowait  
+# IDLE=${CPU[1]}
+# 
+# PrevNonIdle = prevuser + prevnice + prevsystem + previrq + prevsoftirq + prevsteal
+# NonIdle = user + nice + system + irq + softirq + steal
+# 
+# PrevTotal = PrevIdle + PrevNonIdle
+# Total = Idle + NonIdle
+# 
+# # differentiate: actual value minus the previous one
+# totald = Total - PrevTotal
+# idled = Idle - PrevIdle
+# 
+# CPU_Percentage = (totald - idled)/totald
 
+PRE_CPU=(`cat /proc/stat | grep '^cpu'`);
+unset PRE_CPU[0];
 
-sleep 0.1;
+let PRE_IDLE=$((${PRE_CPU[4]}+${PRE_CPU[5]}));
+let PRE_NON_IDLE=$((${PRE_CPU[1]}+${PRE_CPU[2]}+${PRE_CPU[3]}+${PRE_CPU[6]}+${PRE_CPU[7]}+${PRE_CPU[8]}));
+let PRE_TOTAL=$(($PRE_IDLE+$PRE_NON_IDLE));
 
+sleep 1;
 
-jiffs2=$(cat /proc/stat | grep -E  "^cpu \s*" | sed 's/cpu//g');
-total2=0;
-work2=0
-index2=0
-for j in $jiffs2; do
-    #echo $i;
-    if [ $index2 -lt 3 ]; then
-        work2=$(($work2 + $j));
-    fi
-    total2=$(($total2 + $j));
-    index2=$(($index2+1));
+CUR_CPU=(`cat /proc/stat | grep '^cpu'`);
+unset CUR_CPU[0];
 
-done
+let CUR_IDLE=$((${CUR_CPU[4]}+${CUR_CPU[5]}));
+let CUR_NON_IDLE=$((${CUR_CPU[1]}+${CUR_CPU[2]}+${CUR_CPU[3]}+${CUR_CPU[6]}+${CUR_CPU[7]}+${CUR_CPU[8]}));
+let CUR_TOTAL=$(($CUR_IDLE+$CUR_NON_IDLE));
 
-# echo "Total is: $total2";
-# echo "Work is: $work2";
-# echo "Length is: $index2";
+let IDLE_DIFF=$(($CUR_IDLE-$PRE_IDLE));
+let TOTAL_DIFF=$(($CUR_TOTAL-$PRE_TOTAL));
 
-
-wop=$(($work2 - $work1));
-top=$(($total2 - $total1));
-
-# echo "work_p : $wop";
-# echo "tot_p : $top";
-
-usage=$(($wop/$top));
-percentage=$(echo "scale=2; $wop/$top*100" | bc -l);
-echo "$percentage%  "
+echo "($TOTAL_DIFF-$IDLE_DIFF)*100/$TOTAL_DIFF" | bc; 
 

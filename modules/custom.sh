@@ -150,3 +150,22 @@ echo 'urxvt*color15:#a5adce' >> $HOME/.Xresources
 echo '! Rebinding copy and paste'
 echo 'URxvt.keysym.Shift-Control-V: eval:paste_clipboard' >> $HOME/.Xresources
 echo 'URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard' >> $HOME/.Xresources
+
+
+
+# write myterm file
+printf '
+#!/bin/dash
+
+case $XDG_SESSION_TYPE in
+    "wayland")
+        alacritty -o font.size=12
+        ;;
+    *)
+        alacritty -o font.size=12
+        ;;
+esac
+' > $HOME/.local/bin/myterm
+
+
+
