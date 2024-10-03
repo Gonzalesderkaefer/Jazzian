@@ -4,7 +4,7 @@
 
 ### Terminal Emulator
 super + Return
-    urxvt
+    myterm
 
 ### Launch Menu
 alt + @space

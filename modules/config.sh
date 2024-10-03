@@ -1,16 +1,18 @@
 #!/bin/bash
 
 # color variables
-start_green="\033[0;32m"  
-end_green="\033[0m "
-start_red="\033[0;31m"
-end_red="\033[0m"
+start_green="\033[0;32m";
+end_green="\033[0m ";
+start_red="\033[0;31m";
+end_red="\033[0m";
 
 
 # create config file
-config_file="$HOME/Jazzian/modules/devicespecific.conf"
+config_file="$HOME/Jazzian/modules/devicespecific.conf";
 if ! [ -f $config_file ]; then
     touch $config_file;
+else
+    rm $config_file;
 fi
 
 # Ask for display server

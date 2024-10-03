@@ -44,7 +44,7 @@ fi
 
 # env Exports
 export EDITOR=nvim
-export TERMINAL=alacritty
+export TERMINAL=myterm
 export WLR_NO_HARDWARE_CURSORS=1
 
 ## NNN  Configuration

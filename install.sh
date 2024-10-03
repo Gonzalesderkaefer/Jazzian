@@ -38,10 +38,22 @@ fi
 
 # configfile location
 config_file=$HOME/Jazzian/modules/devicespecific.conf
+renew_config="";
+
 
 # run config script if config file does not exist
 if ! [ -f $config_file ] && [ -f modules/config.sh ]; then
     bash $HOME/Jazzian/modules/config.sh
+fi
+
+
+# Ask user whether to renew config
+if [ -f $config_file ] && [ -f modules/config.sh ]; then
+    echo -e -n  "$green Would you like to rerun the configuration? [y/N]: $reset";
+    read renew_config;
+    if [ $renew_config="Y" ] || [ $renew_config="y" ]; then
+        bash $HOME/Jazzian/modules/config.sh
+    fi
 fi
 
 # read config file and create variables
