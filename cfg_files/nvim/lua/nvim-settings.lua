@@ -1,7 +1,7 @@
 --Setting tab to 4 spaces
-vim.opt.tabstop = 4
+vim.opt.tabstop = 8
 vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
+vim.opt.expandtab = false
 vim.bo.softtabstop = 4
 
 -- Setting space to leader

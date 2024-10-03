@@ -18,8 +18,16 @@ local opts = {}
 -- include settings
 require("nvim-settings")
 
+-- function to check if file exists
+local file_exists = function (name)
+    local f = io.open(name,"r")
+    return f ~= nil and io.close(name)
+end
+
 -- include user-specific settings
-require("devicespecific")
+if file_exists("$HOME/.config/nvim/lua/devicespecific.lua") then
+    require("devicespecific")
+end
 
 -- make lazy install stuff
 require("lazy").setup("plugins") 
