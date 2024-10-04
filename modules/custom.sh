@@ -154,18 +154,20 @@ echo 'URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard' >> $HOME/.Xreso
 
 
 # write myterm file
-printf '
-#!/bin/dash
+if ! [ -f $HOME/.local/bin/myterm ]; then
+    printf '
+    #!/bin/dash
 
-case $XDG_SESSION_TYPE in
-    "wayland")
-        alacritty -o font.size=12
-        ;;
-    *)
-        alacritty -o font.size=12
-        ;;
-esac
-' > $HOME/.local/bin/myterm
+    case $XDG_SESSION_TYPE in
+        "wayland")
+            alacritty -o font.size=12
+            ;;
+        *)
+            alacritty -o font.size=12
+            ;;
+    esac
+    ' > $HOME/.local/bin/myterm
+fi
 
 chmod +x $HOME/.local/bin/myterm
 
