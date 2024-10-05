@@ -11,8 +11,8 @@ case $menu in
     *Poweroff*) systemctl poweroff;;
     *Reboot*) systemctl reboot;;
     *Logout*) loginctl terminate-user $USER;;
-    *Suspend* ) systemctl suspend ;;
-    *Lock*) hyprlock || swaylock -f -c 000000;;
+    *Suspend* ) lock & (sleep 1 && systemctl suspend);;
+    *Lock*) lock;;
     *Hibernate* ) systemctl hibernate;;
 esac
 
