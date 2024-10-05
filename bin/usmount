@@ -7,7 +7,7 @@ if [ $XDG_SESSION_TYPE = 'wayland' ]; then
 else
     blockdevice="$(lsblk -lo name,mountpoints | grep "$(lsblk -lo name,tran | grep -i 'usb' | awk '{print $1}')" | rofi -dmenu -i -p "")"
     echo "/dev/$blockdevice"
-    (udisksctl mount -b /dev/$blockdevice && echo "device mounted" | wofi --dmenu) || (udisksctl unmount -b /dev/$blockdevice && echo "device unmounted"| rofi -dmenu -i -p "")
+    (udisksctl mount -b /dev/$blockdevice && echo "device mounted" | rofi --dmenu) || (udisksctl unmount -b /dev/$blockdevice && echo "device unmounted"| rofi -dmenu -i -p "")
 fi
 
 #(udisksctl mount -b /dev/$(blockdevice) && echo "Device mounted successfully" || udisksctl unmount -b /dev/$(blockdevice)&& echo "Device unmounted successfully") 
