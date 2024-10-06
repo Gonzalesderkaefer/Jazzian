@@ -8,6 +8,7 @@ red="\033[0;31m"
 reset="\033[0m"
 
 
+
 ## Determining if BASH is actually used
 shell="$(ps $$)"
 
