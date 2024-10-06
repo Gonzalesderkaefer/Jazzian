@@ -55,8 +55,10 @@ copy_files()
         cp $sh_file $HOME/.$filename;
     done
     
-    # Linking vim config
-    cp $HOME/Jazzian/cfg_files/vim/vimrc $HOME/.vimrc;
+    # Copying vim config
+    if ! [ -d $HOME/.vim ]; then
+        cp -r $HOME/Jazzian/cfg_files/vim $HOME/.vim;
+    fi
 
     echo -e "$start_green copying scripts from $HOME/Jazzian/bin to $HOME/.local/bin $end_green";
     # Copying scripts 
@@ -123,7 +125,7 @@ link_files()
     done
 
     # Linking vim config
-    ln -sf $HOME/Jazzian/cfg_files/vim/vimrc $HOME/.vimrc;
+    ln -s $HOME/Jazzian/cfg_files/vim $HOME/.vim
 }
 
 case $1 in 

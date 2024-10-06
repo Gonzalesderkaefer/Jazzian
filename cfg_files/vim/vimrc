@@ -56,11 +56,11 @@ nmap <c-l> :wincmd l<CR>
 
 " source user-specific config
 
-if !empty(glob("$HOME/.config/vim/devicespecific"))
-    source $HOME/.config/vim/devicespecific
+if !empty(glob("$HOME/.vim/devicespecific"))
+    source $HOME/.vim/devicespecific
 endif
 
 " Enable OS-Clipboard
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 
 
