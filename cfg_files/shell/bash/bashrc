@@ -41,11 +41,11 @@ fi
 
 
 
-
 # env Exports
 export EDITOR=nvim
 export TERMINAL=myterm
 export WLR_NO_HARDWARE_CURSORS=1
+
 
 ## NNN  Configuration
 export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh'
