@@ -1,4 +1,8 @@
 
+-- Include general settings
+require("mycfg.remap")
+require("mycfg.settings")
+require("mycfg.lazy")
 
 -- function to check if file exists
 local file_exists = function (name)
@@ -11,7 +15,3 @@ if file_exists(os.getenv("HOME") .. "/.config/nvim/lua/mycfg/devicespecific.lua"
     require("mycfg.devicespecific")
 end
 
--- Include general settings
-require("mycfg.remap")
-require("mycfg.lazy")
-require("mycfg.settings")
