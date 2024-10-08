@@ -14,6 +14,13 @@ printmenu() {
 # Get USB devices
 blockdevices=$(lsblk -l -p -o name,size,tran | grep usb | awk '{print $1"\t\t\t"$2}');
 
+if [ -z $blockdevices ]; then
+    printmenu "No USB devices found";
+    exit 1;
+fi
+
+
+
 # Get USB get device from user
 selected_device=$(echo $(printmenu "$blockdevices") | awk '{print $1}');
 
