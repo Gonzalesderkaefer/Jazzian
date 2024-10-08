@@ -1,14 +1,36 @@
 #!/bin/sh
-#blockdevice="$(lsblk -l -i -o name,mountpoints | grep sd[a-z][0-9] | wofi --dmenu -p 'Which drive would you like to mount?' | awk '{print $1}')"
-if [ $XDG_SESSION_TYPE = 'wayland' ]; then
-    blockdevice="$(lsblk -lo name,mountpoints | grep "$(lsblk -lo name,tran | grep -i 'usb' | awk '{print $1}')" | wofi --dmenu)"
-    echo "/dev/$blockdevice"
-    (udisksctl mount -b /dev/$blockdevice && echo "device mounted" | wofi --dmenu) || (udisksctl unmount -b /dev/$blockdevice && echo "device unmounted"| wofi --dmenu)
-else
-    blockdevice="$(lsblk -lo name,mountpoints | grep "$(lsblk -lo name,tran | grep -i 'usb' | awk '{print $1}')" | rofi -dmenu -i -p "")"
-    echo "/dev/$blockdevice"
-    (udisksctl mount -b /dev/$blockdevice && echo "device mounted" | rofi --dmenu) || (udisksctl unmount -b /dev/$blockdevice && echo "device unmounted"| rofi -dmenu -i -p "")
-fi
 
-#(udisksctl mount -b /dev/$(blockdevice) && echo "Device mounted successfully" || udisksctl unmount -b /dev/$(blockdevice)&& echo "Device unmounted successfully") 
-#|| echo "Something went wrong" | wofi --dmenu
+
+printmenu() {
+    if [ $XDG_SESSION_TYPE = 'wayland' ]; then
+        echo "$1" | wofi -dmenu;
+    else
+        echo "$1" | rofi -dmenu -p ""
+    fi
+}
+
+
+
+# Get USB devices
+blockdevices=$(lsblk -l -p -o name,size,tran | grep usb | awk '{print $1"\t\t\t"$2}');
+
+# Get USB get device from user
+selected_device=$(echo $(printmenu "$blockdevices") | awk '{print $1}');
+
+# Get Partitions
+partitions=$(lsblk -l -n -o name,size,mountpoint,type $selected_device | grep part | awk '{print $1"\t\t\t"$2"\t\t\t"$3}');
+
+# Get Partiton from user
+selected_part=$(echo $(printmenu "$partitions") | awk '{print $1}');
+ 
+# Mount partition with udiskctl
+if udisksctl mount -b /dev/$selected_part; then
+    printmenu "Device /dev/$selected_part mounted";
+
+elif udisksctl unmount -b /dev/$selected_part; then
+    printmenu "Device /dev/$selected_part unmounted";
+
+else
+    printmenu "Something went wrong";
+
+fi

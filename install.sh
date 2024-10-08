@@ -52,9 +52,11 @@ fi
 if [ -f $config_file ] && [ -f modules/config.sh ]; then
     echo -e -n  "$green Would you like to rerun the configuration? [y/N]: $reset";
     read renew_config;
-    if [ $renew_config="Y" ] || [ $renew_config="y" ]; then
-        bash $HOME/Jazzian/modules/config.sh
-    fi
+    case $renew_config in
+        "y" | "Y")
+            bash $HOME/Jazzian/modules/config.sh
+            ;;
+    esac
 fi
 
 # read config file and create variables
