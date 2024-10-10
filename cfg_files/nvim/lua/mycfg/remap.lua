@@ -1,5 +1,4 @@
 
-
 -- Setting leader to space
 vim.g.mapleader = " ";
 
@@ -21,28 +20,34 @@ vim.keymap.set("n", "<leader>pv", "<CMD>Oil<CR>")
 vim.keymap.set("n", "<F12>", ":20 split | terminal<CR>")
 
 -- Clear search
-vim.keymap.set("n", "<leader>nh<CR>", ":nohlsearch")
+vim.keymap.set("n", "<leader>nh", ":nohlsearch<CR>")
 
 
 -- Window navigation
-vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
-vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
-vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
-vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
+vim.keymap.set("n", "<c-k>", "<CMD>wincmd k<CR>")
+vim.keymap.set("n", "<c-j>", "<CMD>wincmd j<CR>")
+vim.keymap.set("n", "<c-h>", "<CMD>wincmd h<CR>")
+vim.keymap.set("n", "<c-l>", "<CMD>wincmd l<CR>")
+
+-- Window navigation (insert mode)
+vim.keymap.set("i", "<c-k>", "<CMD>wincmd k<CR>")
+vim.keymap.set("i", "<c-j>", "<CMD>wincmd j<CR>")
+vim.keymap.set("i", "<c-h>", "<CMD>wincmd h<CR>")
+vim.keymap.set("i", "<c-l>", "<CMD>wincmd l<CR>")
+
 
 -- Splits
-vim.keymap.set("n", "<leader>sv", "<C-w>v")
-vim.keymap.set("n", "<leader>sh", "<C-w>h")
+vim.keymap.set("n", "<leader>sv", "<CMD>vnew<CR>")
+vim.keymap.set("n", "<leader>sh", "<CMD>new<CR>")
 vim.keymap.set("n", "<leader>se", "<C-w>=")
-vim.keymap.set("n", "<leader>sx", ":close<CR>")
+vim.keymap.set("n", "<leader>sx", "<CMD>close<CR>")
 
 
 -- Buffer navigation
-vim.keymap.set("n", "<leader>bn", ":bn<CR>")
-vim.keymap.set("n", "<leader>bp", ":bprevious<CR>")
-vim.keymap.set("n", "<leader>bd", ":bdelete<CR>")
-vim.keymap.set("n", "<leader>bf", ":enew<CR>")
-vim.keymap.set("n", "<leader>bdd", ":bdelete!<CR>")
+vim.keymap.set("n", "<C-Tab>", "<CMD>bn<CR>")
+vim.keymap.set("n", "<C-S-Tab>", "<CMD>bprevious<CR>")
+vim.keymap.set("n", "<C-q>", "<CMD>bdelete<CR>")
+vim.keymap.set("n", "<C-t>", "<CMD>enew | Oil<CR>")
 
 
 
