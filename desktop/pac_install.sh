@@ -1,12 +1,5 @@
 #!/bin/bash
 
-####### SPEC #######
-# $1: Distro
-# $2: Displayserver
-# $3: Windowmanager 
-
-
-
 # color variables
 start_green="\033[0;32m"  
 end_green="\033[0m "
@@ -70,21 +63,19 @@ arch_install()
     zsh-completions gcc less wget man --noconfirm --needed; 
 }
 
-# Checking if script is run with arguments
-if [ -z $1 ] || [ -z $2 ]; then
-    echo -e "$start_red This script expects at least two arguments $end_red";
-    exit 1;
-fi
 
-case $1 in 
-    "debian")
-        debian_install $2 $3;
+# Determining what distro is running 
+release="$(cat /etc/os-release)";
+
+case $release in
+    *"Debian"* | *"debian"* | *"DEBIAN"*) 
+        debian_install;
         ;;
-    "fedora")
-        fedora_install $2 $3;
+    *"Fedora"* | *"fedora"* | *"FEDORA"*) 
+        fedora_install;
         ;;
-    "archlinux")
-        arch_install $2 $3;
+    *"Arch Linux"* | *"arch linux"* | *"ARCH LINUX"*) 
+        arch_install;
         ;;
     *)
         echo -e "$start_red The distro this system is running on is not supported by this script.$end_red"
@@ -92,7 +83,8 @@ case $1 in
         echo -e "$start_red install the packages manually or you can skip. $end_red"
 esac
 
-    
+sh $HOME/Jazzian/desktop/move.sh;    
+sh $HOME/Jazzian/desktop/custom.sh;    
 
 
 
