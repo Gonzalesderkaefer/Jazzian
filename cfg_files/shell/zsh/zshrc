@@ -19,7 +19,7 @@ compinit
 # End of lines added by compinstall
 
 # Prompt
-PROMPT=" %F{green}% %n%f:%F{blue}%~%f > "
+PROMPT="[%F{green}% %B%n%b%f@%F{red}%m%f]:%F{blue}%~%f > "
 
 # Source aliases
 if [ -f ~/.sh_aliases ]; then
