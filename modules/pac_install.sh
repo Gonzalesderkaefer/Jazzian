@@ -92,7 +92,7 @@ fedora_install()
     file-roller pipewire-pulseaudio NetworkManager-openconnect-gnome \
     gsettings-desktop-schemas papirus-icon-theme NetworkManager-tui eom tlp libnotify \
     pipewire-alsa qalculate-gtk fzf jetbrains-mono-fonts papirus-icon-theme-dark \
-    network-manager-applet -y ;
+    network-manager-applet arc-theme -y ;
  
     echo -e "$start_green Installed general packages. Going to install packages for $1 $end_green";
     sleep 3;
