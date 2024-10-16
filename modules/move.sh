@@ -130,7 +130,9 @@ link_files()
     done
 
     # Linking vim config
-    ln -s $HOME/Jazzian/cfg_files/vim $HOME/.vim
+    if ! [ -e $HOME/.vim ]; then
+        ln -s $HOME/Jazzian/cfg_files/vim $HOME/.vim
+    fi
 }
 
 case $1 in 
