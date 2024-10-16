@@ -93,7 +93,13 @@ link_files()
     done
 
     # config files for nnn
-    if ! [ -d $HOME/.config/nnn/plugins/ ] && mkdir -p $HOME/.config/nnn/plugins
+    [ -d $HOME/.config/nnn/plugins/ ] || mkdir -p $HOME/.config/nnn/plugins
+
+    for plugin in $HOME/Jazzian/cfg_files/nnn_plugins/*; do 
+        ln -sf $plugin $HOME/.config/nnn/plugins/
+    done
+        
+
     ln -s "$HOME/Jazzian/cfg_files/nnn_plugins/*" $HOME/.config/nnn/plugins/;
 
     # copying qutebrowser config
