@@ -860,4 +860,4 @@ awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("xrdb $HOME/.Xresources")
 
 -- Devicespecific
-require("devicespecific")
+require("devicespecific.devicespecific")

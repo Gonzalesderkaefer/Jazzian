@@ -1,115 +1,79 @@
 #!/bin/sh
 
-######################## Variables ########################
-backup_dir="$HOME/devicespecific_backup";
+# Constants
+BACKUP_DIR="$HOME/custom_backups";
+CUSTOM="devicespecific";
+CUSTOM_THEME="devicespecific_theme";
 
 
-######################## DEFIING FUNCTIONS ########################
-
-apply_backup()
-{
-    if ! [ -e $backup_dir ]; then
-        echo "It seems you do not have created a backup yet."
-        echo "Please create one."
-        exit; 
-    fi
 
 
-    ## i3 config 
-    cp -r -T $backup_dir/i3devicespecific $HOME/.config/i3/devicespecific 
+create() {
+    # Create BACKUP_DIR if not existing
+    [ -d $BACKUP_DIR ] || mkdir $BACKUP_DIR;
 
-    ## awesome config
-    cp -r  $backup_dir/devicespecific.lua $HOME/.config/awesome/devicespecific.lua
-    cp -r  $backup_dir/devicespecific_theme.lua $HOME/.config/awesome/devicespecific_theme.lua
+    # i3 backup
+    [ -d $BACKUP_DIR/i3 ] || mkdir $BACKUP_DIR/i3;
+    [ -d $HOME/.config/i3/$CUSTOM ] && cp -r $HOME/.config/i3/$CUSTOM/* $BACKUP_DIR/i3/;
 
-    ## bspwm config
-    cp -r -T $backup_dir/bspwmdevicespecific $HOME/.config/bspwm/devicespecific
+    # awesomewm backup
+    [ -d $BACKUP_DIR/awesome ] || mkdir $BACKUP_DIR/awesome;
+    [ -d $HOME/.config/awesome/$CUSTOM ] && cp -r $HOME/.config/awesome/$CUSTOM/* $BACKUP_DIR/awesome/
 
-    ## Hyprland config
-    cp -r -T $backup_dir/hyprdevicespecific $HOME/.config/hypr/devicespecific 
+    # bspwm backup
+    [ -d $BACKUP_DIR/bspwm ] || mkdir $BACKUP_DIR/bspwm;
+    [ -d $HOME/.config/bspwm/$CUSTOM ] && cp $HOME/.config/bspwm/$CUSTOM/* $BACKUP_DIR/bspwm/
 
-    ## sway config
-    cp -r -T $backup_dir/swaydevicespecific $HOME/.config/sway/devicespecific 
+    # Hyprland backup
+    [ -d $BACKUP_DIR/hypr ] || mkdir $BACKUP_DIR/hypr;
+    [ -d $HOME/.config/hypr/$CUSTOM ] && cp $HOME/.config/hypr/$CUSTOM/* $BACKUP_DIR/hypr/
 
-    ## river config
-    cp -r -T $backup_dir/riverdevicespecific $HOME/.config/river/devicespecific 
+    # sway backup
+    [ -d $BACKUP_DIR/sway ] || mkdir $BACKUP_DIR/sway;
+    [ -d $HOME/.config/sway/$CUSTOM ] && cp $HOME/.config/sway/$CUSTOM/* $BACKUP_DIR/sway/
 
-    ## nvim config
-    cp -r  $backup_dir/nvimdevicespecific $HOME/.config/nvim/lua/devicespecific.lua
+    # river backup
+    [ -d $BACKUP_DIR/river ] || mkdir $BACKUP_DIR/river;
+    [ -d $HOME/.config/sway/$CUSTOM ] && cp $HOME/.config/sway/$CUSTOM/* $BACKUP_DIR/river/
 
-    ## profile
-    cp -r $backup_dir/devicespecific.sh $HOME/.devicespecific.sh 
-
-    ## shellrc
-    cp -r $backup_dir/devicerc $HOME/.devicerc
+    # nvim backup
+    [ -d $BACKUP_DIR/nvim ] || mkdir $BACKUP_DIR/nvim;
+    [ -f $HOME/.config/nvim/lua/mycfg/$CUSTOM.lua ] && cp $HOME/.config/nvim/lua/mycfg/$CUSTOM.lua $BACKUP_DIR/nvim/
+    
+    # vim backup
+    [ -d $BACKUP_DIR/vim ] || mkdir $BACKUP_DIR/vim;
+    [ -f $HOME/.vim/$CUSTOM ] &&  cp $HOME/.vim/$CUSTOM $BACKUP_DIR/vim
 }
 
-create_backup()
-{
+apply() {
+    
+    # i3 backup
+    cp -r $BACKUP_DIR/i3/* $HOME/.config/i3/devicespecific/
 
-    if [ -e $backup_dir ]; then
-        mv  "$backup_dir" "$backup_dir.tmp";
-    fi
-    mkdir $backup_dir;
+    # awesomewm backup
+    cp -r $BACKUP_DIR/awesome/* $HOME/.config/awesome/devicespecific/
 
-    ## Create directory
-    mkdir -p $backup_dir;
+    # bspwm backup
+    cp -r $BACKUP_DIR/bspwm/* $HOME/.config/bspwm/devicespecific/
 
-    ## i3 config 
-    cp -r -T $HOME/.config/i3/devicespecific $backup_dir/i3devicespecific
+    # Hyprland backup
+    cp -r $BACKUP_DIR/hypr/* $HOME/.config/hypr/devicespecific/
 
-    ## awesome config
-    cp -r $HOME/.config/awesome/devicespecific.lua $backup_dir/devicespecific.lua
-    cp -r $HOME/.config/awesome/devicespecific_theme.lua $backup_dir/devicespecific_theme.lua
+    # sway backup
+    cp -r $BACKUP_DIR/sway/* $HOME/.config/sway/devicespecific/
 
-    ## bspwm config
-    cp -r -T $HOME/.config/bspwm/devicespecific $backup_dir/bspwmdevicespecific
+    # river backup
+    cp -r $BACKUP_DIR/river/* $HOME/.config/river/devicespecific/
 
-    ## Hyprland config
-    cp -r -T $HOME/.config/hypr/devicespecific $backup_dir/hyprdevicespecific
-
-    ## sway config
-    cp -r -T $HOME/.config/sway/devicespecific $backup_dir/swaydevicespecific
-
-    ## river config
-    cp -r -T $HOME/.config/river/devicespecific $backup_dir/riverdevicespecific
-
-    ## nvim config 
-    cp -r $HOME/.config/nvim/lua/devicespecific.lua $backup_dir/nvimdevicespecific
-
-    ## profile
-    cp -r $HOME/.devicespecific.sh $backup_dir/devicespecific.sh
-
-    ## shellrc
-    cp -r $HOME/.devicerc $backup_dir/devicerc
+    # nvim backup
+    cp -r $BACKUP_DIR/nvim/* $HOME/.config/nvim/lua/mycfg/
+    
+    # vim backup
+    cp -r $BACKUP_DIR/vim/* $HOME/.vim/
 
 
-    if [ -e "$backup_dir.tmp" ]; then
-        rm -rf "$backup_dir.tmp";
-    fi
 }
 
 
 
-
-######################## HERE THE SCRIPT STARTS ########################
-echo "This is a backup utility for your devicespecific configurations which are stored in $backup_dir."
-echo
-
-
-echo "Do you want to create a backup or apply it?";
-echo;
-echo "[A]pply (only if you already created one!)";
-echo "[C]reate (default)";
-
-read argument;
-
-case $argument in 
-    "a"* | "A"* )
-        apply_backup;
-        ;;
-    "c"* | "C"* )
-        create_backup;
-        ;;
-esac
-
+create
