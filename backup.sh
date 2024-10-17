@@ -70,10 +70,29 @@ apply() {
     
     # vim backup
     cp -r $BACKUP_DIR/vim/* $HOME/.vim/
-
-
 }
 
 
+if ! [ -d $BACKUP_DIR ]; then
+    echo "Creating Backup.."
+    create
+    exit
+fi
 
-create
+echo "Would you like to create a Backup or restore one?"
+echo "[B]ackup"
+echo "[R]estore"
+
+read backup_choice
+
+case $backup_choice in 
+    "r"* | "R"*)
+        apply ;;
+    "b"* | "B"*)
+        create ;;
+        *)
+            echo "Invalid choice. Terminating.." ;;
+esac
+
+
+
