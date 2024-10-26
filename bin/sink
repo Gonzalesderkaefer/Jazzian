@@ -17,7 +17,7 @@ while [ $sinks -lt $sources ]; do
     sinks=$(($sinks + 1));
 done
 if [ $XDG_SESSION_TYPE = 'wayland' ]; then
-    default_sink="$(sed -E "s/^\s*\*\s*|^\s*//g" $sinkfile | wofi --dmenu)";
+    default_sink="$(sed -E "s/^\s*\*\s*|^\s*//g" $sinkfile | wofi -i --dmenu)";
 else
     default_sink="$(sed -E "s/^\s*\*\s*|^\s*//g" $sinkfile | rofi -dmenu -i -p "")";
 fi
