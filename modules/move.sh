@@ -100,7 +100,7 @@ link_files()
     done
         
 
-    ln -s "$HOME/Jazzian/cfg_files/nnn_plugins/*" $HOME/.config/nnn/plugins/;
+    ln -s $HOME/Jazzian/cfg_files/nnn_plugins/* $HOME/.config/nnn/plugins/;
 
     # copying qutebrowser config
     if ! [ -d $HOME/.config/qutebrowser ]; then
