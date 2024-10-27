@@ -42,10 +42,6 @@ config_file=$HOME/Jazzian/modules/devicespecific.conf
 renew_config="";
 
 
-# run config script if config file does not exist
-if ! [ -f $config_file ] && [ -f modules/config.sh ]; then
-    bash $HOME/Jazzian/modules/config.sh
-fi
 
 
 # Ask user whether to renew config
@@ -57,6 +53,10 @@ if [ -f $config_file ] && [ -f modules/config.sh ]; then
             bash $HOME/Jazzian/modules/config.sh
             ;;
     esac
+
+else 
+    # run config script if config file does not exist
+    [ -f modules/config.sh ] && bash $HOME/Jazzian/modules/config.sh
 fi
 
 # read config file and create variables
@@ -86,27 +86,3 @@ if [ -f modules/custom.sh ];then
 else
     echo -e "$red Could not find custom script $reset"
 fi
-
-# Ask user whether to install fonts
-
-echo -e "$green Would you like to install the Jetbrains Mono Nerd Font?  $reset";
-echo -e "$green This is needed for pretty much all configs. You can alternatively install it yourself  $reset";
-echo -e "$green from their website.  $reset";
-echo -e "$green [y/N] $reset";
-
-read -p "Your Choice: " font_choice;
-
-case $font_choice in
-    "y"* | "Y"*)
-        if [ -f modules/font_install.sh ];then
-        bash modules/font_install.sh $distro;
-        else
-            echo -e "$red Could not find font script $reset"
-        fi
-        ;;
-esac
-
-
-
-
-
