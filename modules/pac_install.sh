@@ -16,6 +16,14 @@ end_red="\033[0m"
 # logfile variable
 log_file=$HOME/Jazzian/devicespecific.log
 
+# predfined packages
+if [ -f $HOME/Jazzian/modules/packages.sh ]; then
+    source $HOME/Jazzian/modules/packages.sh; 
+else
+    exit 1;
+fi
+
+
 ############################## DEFINING FUNCTIONS ##############################
 
 debian_install()
@@ -29,48 +37,30 @@ debian_install()
     echo -e "$start_green Update finished. Going to install general packages. $end_green";
     sleep 3;
 
-    sudo apt install tmux zsh evince flatpak network-manager network-manager-gnome \
-    thunar file-roller network-manager-openconnect-gnome eom network-manager-openconnect \
-    git lf fonts-jetbrains-mono firefox-esr tlp alacritty pipewire pipewire-alsa \
-    pipewire-pulse libglib2.0-bin nala mpv papirus-icon-theme gnome-themes-extra \
-    arc-theme libnotify-bin acpi-support acpid acpi linux-cpupower cpufrequtils \
-    openssh-server nnn fzf zathura -y ;
-
-    echo -e "$start_green Installed general packages. Going to install packages for $1 $end_green";
-    sleep 3;
-
     case $1 in 
         "wayland")
-            sudo apt install grim swaylock wofi xwayland wlr-randr wl-clipboard swayidle \
-            mako-notifier -y ;
-            echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
-            sleep 3;
             case $2 in
                 "river")
-                    sudo apt install sway i3blocks -y ;
+                    sudo apt install $debian_base $debian_wayland $debian_river -y ;
                     ;;
                 "Hyprland")
-                    sudo apt install sway i3blocks -y ;
+                    sudo apt install $debian_base $debian_wayland $debian_hypr -y ;
                     ;;
                 *)
-                    sudo apt install sway i3blocks -y ;
+                    sudo apt install $debian_base $debian_wayland $debian_sway -y ;
                     ;;
             esac
             ;;
         *)
-            sudo apt install lxappearance rofi arandr rofi xclip i3lock picom dunst \
-            xinput xorg xwallpaper rxvt-unicode -y ;
-            echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
-            sleep 3;
             case $2 in
                 "awesome")
-                    sudo apt install awesome -y ;
+                    sudo apt install $debian_base $debian_xorg $debian_awesome -y ;
                     ;;
                 "bspwm")
-                    sudo apt install bspwm sxhkd polybar -y ;
+                    sudo apt install $debian_base $debian_xorg $debian_bspwm -y ;
                     ;;
                 *)
-                    sudo apt install i3 i3blocks -y ;
+                    sudo apt install $debian_base $debian_xorg $debian_i3 -y ;
                     ;;
             esac
             ;;
@@ -87,47 +77,30 @@ fedora_install()
 
     echo -e "$start_green Update finished. Going to install general packages. $end_green";
     sleep 3;
-    sudo dnf install rofi-wayland tmux zsh pinentry thunar polkit-gnome nnn neovim alacritty \
-    mpv firefox zathura zathura-pdf-poppler evince git pipewire pipewire-utils \
-    file-roller pipewire-pulseaudio NetworkManager-openconnect-gnome \
-    gsettings-desktop-schemas papirus-icon-theme NetworkManager-tui eom tlp libnotify \
-    pipewire-alsa qalculate-gtk fzf jetbrains-mono-fonts papirus-icon-theme-dark \
-    network-manager-applet arc-theme -y ;
- 
-    echo -e "$start_green Installed general packages. Going to install packages for $1 $end_green";
-    sleep 3;
-
     case $1 in
         "wayland")
-            sudo dnf install grim swaybg swayidle hyprlock waybar wofi wl-clipboard -y ;
-            echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
-            sleep 3;
-                
             case $2 in 
                 "H"* | "h"*)
-                    sudo dnf install hyprland waybar -y ;
+                    sudo dnf install $fedora_base $fedora_wayland $fedora_hypr -y ;
                     ;;
                 "R"* | "r"*)
-                    sudo dnf install river waybar -y ;
+                    sudo dnf install $fedora_base $fedora_wayland $fedora_river -y ;
                     ;;
                 *)
-                    sudo dnf install sway i3blocks -y ;
+                    sudo dnf install $fedora_base $fedora_wayland $fedora_sway -y ;
                     ;;
             esac
             ;;
         *)
-            sudo dnf install xclip @base-x lxappearance nitrogen picom dunst xclip i3lock rxvt-unicode -y ;
-            echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
-            sleep 3;
             case $2 in 
                 "A"* | "a"*)
-                    sudo dnf install awesome -y ;
+                    sudo dnf install $fedora_base $fedora_xorg $fedora_awesome -y ;
                     ;;
                 "B"* | "b"*)
-                    sudo dnf install bspwm polybar -y ;
+                    sudo dnf install $fedora_base $fedora_xorg $fedora_bspwm -y ;
                     ;;
                 *)
-                    sudo dnf install i3 i3blocks -y ;
+                    sudo dnf install $fedora_base $fedora_xorg $fedora_i3 -y ;
                     ;;
             esac
             ;;
@@ -143,47 +116,30 @@ arch_install()
 
     echo -e "$start_green Update finished. Going to install general packages. $end_green";
     sleep 3;
-    sudo pacman -S fzf tmux zsh nnn rofi-wayland networkmanager thunar nm-connection-editor \
-    neovim zathura-pdf-poppler zathura evince webkit2gtk-4.1 networkmanager-openconnect \
-    firefox lf tlp alacritty pipewire mpv gsettings-desktop-schemas eom network-manager-applet \
-    openconnect lxappearance file-roller papirus-icon-theme gnome-themes-extra arc-gtk-theme \
-    ttf-jetbrains-mono-nerd ttf-jetbrains-mono gcr bash-completion zsh-completions gcc less wget pipewire-pulse \
-    pipewire-alsa wireplumber man --noconfirm --needed; 
-
-
-    echo -e "$start_green Installed general packages. Going to install packages for $1 $end_green";
-    sleep 3;
-
     case $1 in
         "wayland")
-            sudo pacman -S grim wofi swaybg waybar swayidle hyprlock wl-clipboard --noconfirm --needed;
-            echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
-            sleep 3;
             case $2 in 
                 "H"* | "h"*)
-                    sudo pacman -S hyprland waybar hyprpaper --noconfirm --needed;
+                    sudo pacman -S $arch_base $arch_wayland $arch_hypr --noconfirm --needed;
                     ;;
                 "R"* | "r"*)
-                    sudo pacman -S river waybar swaybg --noconfirm --needed;
+                    sudo pacman -S $arch_base $arch_wayland $arch_river --noconfirm --needed;
                     ;;
                 *)
-                    sudo pacman -S sway i3blocks swaybg --noconfirm --needed;
+                    sudo pacman -S $arch_base $arch_wayland $arch_sway --noconfirm --needed;
                     ;;
             esac
             ;;
         *)
-            sudo pacman -S xorg lxappearance xwallpaper picom xorg-xinput xorg-xinit xclip i3lock rxvt-unicode --noconfirm --needed;
-            echo -e "$start_green Installed packages for $1. Going to install packages for your window manager  $end_green";
-            sleep 3;
             case $2 in 
                 "A"* | "a"*)
-                    sudo pacman -S awesome --noconfirm --needed;
+                    sudo pacman -S $arch_base $arch_xorg $arch_awesome --noconfirm --needed;
                     ;;
                 "B"* | "b"*)
-                    sudo pacman -S bspwm polybar sxhkd --noconfirm --needed;
+                    sudo pacman -S $arch_base $arch_xorg $arch_bspwm --noconfirm --needed;
                     ;;
                 *)
-                    sudo pacman -S i3 i3blocks --noconfirm --needed;
+                    sudo pacman -S $arch_base $arch_xorg $arch_i3 --noconfirm --needed;
                     ;;
             esac
             ;;

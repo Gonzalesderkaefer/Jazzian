@@ -77,7 +77,7 @@ mkdir -p $HOME/.config/i3/$custom
 [ -f $HOME/.config/i3/$custom/$custom ] || touch $HOME/.config/i3/$custom/$custom;
 
 # Creating files for awesomewm
-[ -d $HOME/.config/awesome/$custom] || mkdir $HOME/.config/awesome/$custom;
+[ -d $HOME/.config/awesome/$custom ] || mkdir $HOME/.config/awesome/$custom;
 [ -f $HOME/.config/awesome/$custom/$custom_theme.lua ] || touch $HOME/.config/awesome/$custom/$custom_theme.lua;
 [ -f $HOME/.config/awesome/$custom/$custom.lua ] || touch $HOME/.config/awesome/$custom/$custom.lua;
 
