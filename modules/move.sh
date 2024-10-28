@@ -44,15 +44,16 @@ copy_files()
     done
 
     # Copy bash config files to $HOME
-    for sh_file in $HOME/Jazzian/cfg_files/shell/bash/*; do
-        filename="$(echo $sh_file | grep -E -oi "[^\/]*$*$")"
-        cp -f $sh_file $HOME/.$filename;
+    bash_path=$HOME/Jazzian/cfg_files/shell/bash
+    for sh_file in $(ls $bash_path); do
+        cp "$bash_path/$sh_file" "$HOME/.$sh_file";
     done
 
+
     # Copy zsh config files to $HOME
-    for sh_file in $HOME/Jazzian/cfg_files/shell/zsh/*; do
-        filename="$(echo $sh_file | grep -E -oi "[^\/]*$")"
-        cp $sh_file $HOME/.$filename;
+    zsh_path=$HOME/Jazzian/cfg_files/shell/zsh
+    for sh_file in $(ls $zsh_path); do
+        cp "$zsh_path/$sh_file" "$HOME/.$sh_file";
     done
     
     # Copying vim config
@@ -112,16 +113,17 @@ link_files()
         ln -sf $x11_file $HOME/.config/;
     done
 
-    # Copy bash config files to $HOME
-    for sh_file in $HOME/Jazzian/cfg_files/shell/bash/*; do
-        filename="$(echo $sh_file | grep -E -oi "[^\/]*$")"
-        ln -sf $sh_file $HOME/.$filename;
+    # Link bash config files to $HOME
+    bash_path=$HOME/Jazzian/cfg_files/shell/bash
+    for sh_file in $(ls $bash_path); do
+        ln -s "$bash_path/$sh_file" "$HOME/.$sh_file";
     done
 
-    # Copy zsh config files to $HOME
-    for sh_file in $HOME/Jazzian/cfg_files/shell/zsh/*; do
-        filename="$(echo $sh_file | grep -E -oi "[^\/]*$")"
-        ln -sf $sh_file $HOME/.$filename;
+
+    # Link zsh config files to $HOME
+    zsh_path=$HOME/Jazzian/cfg_files/shell/zsh
+    for sh_file in $(ls $zsh_path); do
+        ln -s "$zsh_path/$sh_file" "$HOME/.$sh_file";
     done
 
     # Linking scripts 
