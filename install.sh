@@ -86,3 +86,21 @@ if [ -f modules/custom.sh ];then
 else
     echo -e "$red Could not find custom script $reset"
 fi
+
+
+if [ -f modules/font_install.sh ]; then
+    echo -e -n "$green Would you like to install Jetbrains Mono Nerd Font? [y/N]: $reset";
+    read instfont;
+    case $instfont in
+	"Y" | "y")
+	    bash $HOME/Jazzian/modules/font_install.sh $distro;
+	    ;;
+    esac
+fi
+
+
+
+
+
+
+
