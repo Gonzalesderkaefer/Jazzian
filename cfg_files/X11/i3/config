@@ -77,6 +77,9 @@ exec picom
 ### Launching Tray elements
 exec nm-applet
 
+### Launching x11 Startup
+exec x11startup
+
 ### Load Xresources file
 exec xrdb $HOME/.Xresources
 

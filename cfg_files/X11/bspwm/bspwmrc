@@ -27,4 +27,5 @@ xrdb $HOME/.Xresources
 
 picom --config ~/.config/picom/picom.conf &
 polybar &
+x11startup &
 sh $HOME/.config/bspwm/devicespecific/devicespecific

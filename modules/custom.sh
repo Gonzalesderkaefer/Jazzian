@@ -100,6 +100,13 @@ mkdir -p $HOME/.config/river/$custom/;
 [ -f $HOME/.config/river/$custom/$custom ] || touch $HOME/.config/river/$custom/$custom;
 
 
+# Creating startup script for x11
+if ! [ -f $HOME/.local/bin/x11startup ]; then
+    touch $HOME/.local/bin/x11startup;
+    chmod +x $HOME/.local/bin/x11startup;
+fi
+
+
 # Setting theme to Arc-Dark
 gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
 

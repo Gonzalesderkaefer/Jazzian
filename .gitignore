@@ -1,5 +1,6 @@
 *devicespecific*
 devicerc
+x11startup
 /cfg_files/qutebrowser/*
 !/cfg_files/qutebrowser/config.py
 *__pycache__*
