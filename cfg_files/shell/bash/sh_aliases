@@ -41,8 +41,8 @@ alias "lla"="ls -la"
 
 
 ## Editor
-alias "v"="nvim"
-alias "vv"="nvim ."
+command -v nvim && alias "v"="nvim" || alias "v"="vim"
+command -v nvim && alias "vv"="nvim ." || alias "vv"="vim ."
 
 
 ## other aliases
