@@ -1,5 +1,6 @@
 #!/bin/bash
 
+(command -v curl) || (sudo apt install curl || sudo dnf install curl || sudo pacman -S curl);
 
 curl -OL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz
 
