@@ -25,7 +25,7 @@ debian_i3='i3 i3blocks'
 
 
 ## Fedora_Packages
-fedora_base='rofi-wayland tmux zsh pinentry thunar polkit-gnome nnn neovim alacritty
+fedora_base='rofi-wayland tmux zsh pinentry thunar mate-polkit nnn neovim alacritty
     mpv firefox zathura zathura-pdf-poppler evince git pipewire pipewire-utils
     file-roller pipewire-pulseaudio NetworkManager-openconnect-gnome
     gsettings-desktop-schemas papirus-icon-theme NetworkManager-tui eom tlp libnotify
