@@ -41,7 +41,7 @@ fedora_river='river waybar'
 
 fedora_sway='sway i3blocks'
 
-fedora_xorg='xclip @base-x lxappearance nitrogen picom dunst xclip i3lock rxvt-unicode'
+fedora_xorg='xclip @base-x lxappearance xinput arandr nitrogen picom dunst xclip i3lock rxvt-unicode'
 
 fedora_awesome='awesome'
 

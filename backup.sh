@@ -9,7 +9,7 @@ CUSTOM_THEME="devicespecific_theme";
 
 
 create() {
-    # Create BACKUP_DIR if not existing
+    # Create BACKUP_DIR if not exists
     [ -d $BACKUP_DIR ] || mkdir $BACKUP_DIR;
 
     # i3 backup
@@ -43,6 +43,9 @@ create() {
     # vim backup
     [ -d $BACKUP_DIR/vim ] || mkdir $BACKUP_DIR/vim;
     [ -f $HOME/.vim/$CUSTOM ] &&  cp $HOME/.vim/$CUSTOM $BACKUP_DIR/vim
+
+    # x11startup backup
+    [ -f $HOME/.local/bin/x11startup ] && cp $HOME/.local/bin/x11startup $BACKUP_DIR/
 }
 
 apply() {
@@ -70,6 +73,9 @@ apply() {
     
     # vim backup
     cp -r $BACKUP_DIR/vim/* $HOME/.vim/
+
+    # x11startup backup
+    cp $BACKUP_DIR/x11startup $HOME/.local/bin/
 }
 
 

@@ -27,7 +27,7 @@ gaps inner 2
 gaps outer 2
 
 ### Configuring titlebar in tabbed mode
-font pango:Jetbrains Mono 10
+font pango:Jetbrains Mono Nerd Font 10
 
 
 
