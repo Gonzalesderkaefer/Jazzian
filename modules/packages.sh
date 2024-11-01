@@ -45,7 +45,7 @@ fedora_xorg='xclip @base-x lxappearance xinput arandr nitrogen picom dunst xclip
 
 fedora_awesome='awesome'
 
-fedora_bspwm='bspwm polybar'
+fedora_bspwm='bspwm polybar sxhkd'
 
 fedora_i3='i3 i3blocks'
 
