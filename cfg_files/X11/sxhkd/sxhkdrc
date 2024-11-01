@@ -106,3 +106,34 @@ alt + F4
     powermenu_rofi
 
 
+# Media keys
+
+## Play-Pause
+XF86AudioPlay
+    playerctl play-pause
+
+## Brightness
+
+### Up
+XF86MonBrightnessUp  
+    brightnessctl -e s +30
+
+### Down
+XF86MonBrightnessDown 
+    brightnessctl -e s 30-
+
+## Volume
+
+### Up
+XF86AudioRaiseVolume 
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+### Down
+XF86AudioLowerVolume 
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+### Mute
+XF86AudioMute 
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+
