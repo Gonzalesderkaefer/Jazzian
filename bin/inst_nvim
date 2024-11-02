@@ -15,4 +15,6 @@ tar xzvf $1 nvim-linux64.tar.gz -C $HOME/Applications/other/
 
 rm nvim-linux64.tar.gz;
 
-ln -s $HOME/Applications/other/nvim-linux64/bin/nvim $HOME/.local/bin/nvim
+if ! [ -f $HOME/.local/bin/nvim ]; then
+    ln -s $HOME/Applications/other/nvim-linux64/bin/nvim $HOME/.local/bin/nvim
+fi
