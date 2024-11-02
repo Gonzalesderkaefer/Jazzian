@@ -359,6 +359,11 @@ local decr_vol = function ()
     audio_widget:emit_signal("widget::redraw_needed")
 end
 
+local mute_vol = function ()
+    os.execute("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    get_output()
+    audio_widget:emit_signal("widget::redraw_needed")
+end
 
 
 -- This is just a Test to make these widgets clickable
@@ -584,6 +589,8 @@ globalkeys = gears.table.join(
               {description = "select previous", group = "layout"}),
     awful.key ({}, "XF86AudioRaiseVolume", function() incr_vol()end ),
     awful.key ({}, "XF86AudioLowerVolume", function() decr_vol()end ),
+    awful.key ({}, "XF86AudioMute", function() mute_vol() end ),
+    awful.key ({}, "XF86AudioPlay", function() awful.spawn.with_shell('playerctl play-pause')end ),
 
     awful.key({ modkey, "Control" }, "n",
               function ()
