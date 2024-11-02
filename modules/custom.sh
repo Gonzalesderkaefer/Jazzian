@@ -49,8 +49,8 @@ if ! [ -f $HOME/.$custom.sh ]; then
     echo '   done' >> $HOME/.$custom.sh
     echo '}' >> $HOME/.$custom.sh
 
-    echo '[ "$(tty)" = "/dev/tty1" ] && (startx; killshells)' >> $HOME/.$custom.sh
     echo 'export WM=i3' >> $HOME/.$custom.sh
+    echo '[ "$(tty)" = "/dev/tty1" ] && (startx; killshells)' >> $HOME/.$custom.sh
 fi
 
 # create xinitrc file regardless of display server choice
