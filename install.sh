@@ -88,7 +88,7 @@ else
 fi
 
 
-if [ -f modules/font_install.sh ]; then
+if [ -f modules/font_install.sh ] && ! [ $distro = "archlinux" ]; then
     echo -e -n "$green Would you like to install Jetbrains Mono Nerd Font? [y/N]: $reset";
     read instfont;
     case $instfont in
