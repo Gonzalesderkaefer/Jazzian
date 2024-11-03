@@ -15,7 +15,7 @@ alt + @space
 
 ### Close window
 super + q
-    bspc node -k
+    bspc node -c
 
 ## Navigation and focus
 
