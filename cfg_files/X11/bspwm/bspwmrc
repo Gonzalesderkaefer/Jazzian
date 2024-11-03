@@ -26,5 +26,7 @@ bspc config presel_feedback_color "#6272a4"
 
 picom --config ~/.config/picom/picom.conf &
 polybar &
+xrdb ~/.Xresources &
+xsetroot -cursor_name left_ptr &
 x11startup && sleep 1;
 sh $HOME/.config/bspwm/devicespecific/devicespecific
