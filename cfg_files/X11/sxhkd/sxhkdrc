@@ -7,8 +7,9 @@ super + Return
     myterm
 
 ### Launch Menu
-alt + @space
-    rofi -show drun -config $HOME/.config/rofi/config.rasi
+#alt + @space
+#    rofi -show drun -config $HOME/.config/rofi/config.rasi
+
 super + d
     rofi -show drun -config $HOME/.config/rofi/config.rasi
 

@@ -211,8 +211,8 @@ bindsym $mod+Return exec $term
 bindsym Alt+F4 exec powermenu
 
 #### Start a Launcher
-bindsym Alt+space exec w-rofi
-bindsym $mod+d exec w-rofi
+# bindsym Alt+space exec $menu
+bindsym $mod+d exec $menu
 
 #### Start a browser
 bindsym $mod+b exec firefox -p
