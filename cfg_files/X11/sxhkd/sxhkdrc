@@ -9,6 +9,8 @@ super + Return
 ### Launch Menu
 alt + @space
     rofi -show drun -config $HOME/.config/rofi/config.rasi
+super + d
+    rofi -show drun -config $HOME/.config/rofi/config.rasi
 
 
 # Bspwm Hotkeys

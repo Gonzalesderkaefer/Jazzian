@@ -607,6 +607,8 @@ globalkeys = gears.table.join(
     -- Prompt
     awful.key({ "Mod1" },            "space",     function () awful.spawn("rofi -show drun") end,
               {description = "Rofi in Drun mode", group = "launcher"}),
+    awful.key({ modkey },            "d",     function () awful.spawn("rofi -show drun") end,
+              {description = "Rofi in Drun mode", group = "launcher"}),
     -- Powermenu
     awful.key({ "Mod1" },            "F4",     function () awful.spawn("powermenu_rofi") end,
               {description = "Rofi in Drun mode", group = "launcher"}),
