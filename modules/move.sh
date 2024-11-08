@@ -116,14 +116,14 @@ link_files()
     # Link bash config files to $HOME
     bash_path=$HOME/Jazzian/cfg_files/shell/bash
     for sh_file in $(ls $bash_path); do
-        ln -s "$bash_path/$sh_file" "$HOME/.$sh_file";
+        ln -sf "$bash_path/$sh_file" "$HOME/.$sh_file";
     done
 
 
     # Link zsh config files to $HOME
     zsh_path=$HOME/Jazzian/cfg_files/shell/zsh
     for sh_file in $(ls $zsh_path); do
-        ln -s "$zsh_path/$sh_file" "$HOME/.$sh_file";
+        ln -sf "$zsh_path/$sh_file" "$HOME/.$sh_file";
     done
 
     # Linking scripts 
@@ -133,7 +133,7 @@ link_files()
 
     # Linking vim config
     if ! [ -e $HOME/.vim ]; then
-        ln -s $HOME/Jazzian/cfg_files/vim $HOME/.vim
+        ln -sf $HOME/Jazzian/cfg_files/vim $HOME/.vim
     fi
 }
 
