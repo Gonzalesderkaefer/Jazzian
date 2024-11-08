@@ -19,7 +19,6 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 ## env exports
-export EDITOR=nvim
 export TERMINAL=alacritty
 export WLR_NO_HARDWARE_CURSORS=1
 export MOZ_ENABLE_WAYLAND=1
@@ -27,6 +26,8 @@ export MOZ_ENABLE_WAYLAND=1
 ## NNN  Configuration
 export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh;c:checksum.sh'
 
+## Set EDITOR
+(command -v nvim > /dev/null) && export EDITOR=nvim || export EDITOR=vim
 
 ## Startup
 if [ -f "$HOME/.devicespecific.sh" ]; then

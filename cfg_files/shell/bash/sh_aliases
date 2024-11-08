@@ -41,8 +41,9 @@ alias "lla"="ls -la"
 
 
 ## Editor
-(command -v nvim > /dev/null) && alias "v"="nvim" || alias "v"="vim"
-(command -v nvim > /dev/null) && alias "vv"="nvim ." || alias "vv"="vim ."
+alias v=$EDITOR
+# (command -v nvim > /dev/null) && alias "v"="nvim" || alias "v"="vim"
+# (command -v nvim > /dev/null) && alias "vv"="nvim ." || alias "vv"="vim ."
 
 
 ## other aliases
@@ -60,3 +61,7 @@ alias "gps"="git push origin main"
 alias "gpl"="git pull origin main"
 alias "gl"="git log"
 alias "glo"="git log --oneline"
+alias "gb"="git branch"
+alias "gco"="git checkout"
+
+
