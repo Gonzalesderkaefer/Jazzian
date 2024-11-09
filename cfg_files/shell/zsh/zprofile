@@ -16,7 +16,15 @@ export WLR_NO_HARDWARE_CURSORS=1
 export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh'
 
 ## Set EDITOR
-(command -v nvim > /dev/null) && export EDITOR=nvim || export EDITOR=vim
+# (command -v nvim > /dev/null) && export EDITOR=nvim || export EDITOR=vim
+
+
+if command -v nvim; then
+    export EDITOR=nvim; 
+else
+    export EDITOR=vim; 
+fi
+
 
 # Startup
  if [ -f "$HOME/.devicespecific.sh" ]; then
