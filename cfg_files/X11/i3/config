@@ -191,6 +191,9 @@ bindsym $mod+d exec $menu
 #### Start a browser
 bindsym $mod+b exec firefox -p
 
+#### Take a screenshot 
+bindsym $mod+p screenshot
+
 
 
 

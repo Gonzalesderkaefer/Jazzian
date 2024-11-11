@@ -108,6 +108,10 @@ super + shift + 0
 alt + F4
     powermenu_rofi
 
+### Take screenshot
+super + p
+    screenshot
+
 
 # Media keys
 
