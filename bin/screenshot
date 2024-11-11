@@ -1,4 +1,14 @@
 #!/bin/sh
 
 file="$HOME/Pictures/screenshots/"$(date | sed  "s/\s/_/g")".png"
-grim $file && notify-send "saved screenshot to $file"
+
+
+
+case $XDG_SESSION_TYPE in
+    "wayland")
+	grim $file && notify-send "saved screenshot to $file"
+        ;;
+    *)
+	maim $file && notify-send "saved screenshot to $file"
+        ;;
+esac
