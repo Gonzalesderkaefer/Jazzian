@@ -13,6 +13,8 @@ super + Return
 super + d
     rofi -show drun -config $HOME/.config/rofi/config.rasi
 
+super + Escape
+    lock
 
 # Bspwm Hotkeys
 

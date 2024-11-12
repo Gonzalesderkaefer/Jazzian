@@ -182,7 +182,10 @@ bindsym XF86Calculator exec qalculate-gtk
 bindsym $mod+Return exec $term
 
 #### Start a Powermenu
-bindsym Mod1+F4 exec powermenu_rofi
+bindsym Mod1+F4 exec powermenu
+
+#### Lock Screen
+bindsym $mod+Escape exec lock
 
 #### Start a Launcher
 # bindsym Mod4+space exec $menu
