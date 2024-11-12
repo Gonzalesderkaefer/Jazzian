@@ -83,6 +83,9 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
 }
+
+
+
 -- }}}
 
 -- {{{ Menu
@@ -198,6 +201,16 @@ local diskspace_module = wibox.widget({
     widget = wibox.container.background
 })
 
+-- Janky workaround to get tabbed
+local toggle_max = function()
+    local cur_screen = awful.screen.focused()
+    local layout = awful.layout.get(cur_screen)
+    if layout == awful.layout.suit.max then
+        awful.layout.set(awful.layout.suit.spiral.dwindle)
+    else
+        awful.layout.set(awful.layout.suit.max)
+    end
+end
 
 
 -- Memory usage module (see: https://awesomewm.org/doc/api/classes/awful.widget.watch.html)
@@ -520,9 +533,9 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
---    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
---              {description = "show main menu", group = "awesome"}),
---
+    awful.key({ modkey,           }, "w", function ()  toggle_max() end,
+              {description = "show main menu", group = "awesome"}),
+
     -- Layout manipulation
     awful.key({modkey, "Shift"}, "h", function ()
         awful.client.swap.global_bydirection("left")
