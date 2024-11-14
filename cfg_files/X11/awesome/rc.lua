@@ -315,7 +315,7 @@ local get_output = function ()
         local numval = tonumber(value)
         if numval~= nil then
             if numval >= 100 then
-                audio_widget.markup =  value .. "  "
+                audio_widget.markup =  "<span color='#987ae6'>" .. value .. "  "
             elseif numval < 100 and numval >= 65 then
                 audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
             elseif numval < 65 and numval >= 35 then
