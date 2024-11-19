@@ -82,7 +82,7 @@ fi
 
 # Create user-specific configs
 if [ -f modules/custom.sh ];then
-    bash modules/custom.sh $displayserver $windowmanager $distro;
+    bash modules/custom.sh $displayserver $windowmanager;
 else
     echo -e "$red Could not find custom script $reset"
 fi

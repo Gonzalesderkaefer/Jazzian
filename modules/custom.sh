@@ -4,7 +4,6 @@
 ####### SPEC #######
 # $1: Displayserver
 # $2: Windowmanager 
-# $3: Distro
 
 
 # color variables
@@ -19,7 +18,7 @@ custom_theme=devicespecific_theme;
 customrc=devicerc;
 
 ## checking if is run with two arguements
-if [ -z $1 ] || [ -z $2 ] || [ -z $3 ]; then
+if [ -z $1 ] || [ -z $2 ]; then
     echo -e "$start_red This script expects at least two arguments $end_red";
     exit 1;
 fi
