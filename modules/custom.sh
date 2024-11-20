@@ -4,6 +4,7 @@
 ####### SPEC #######
 # $1: Displayserver
 # $2: Windowmanager 
+# $3: Distro 
 
 
 # color variables
@@ -18,8 +19,8 @@ custom_theme=devicespecific_theme;
 customrc=devicerc;
 
 ## checking if is run with two arguements
-if [ -z $1 ] || [ -z $2 ]; then
-    echo -e "$start_red This script expects at least two arguments $end_red";
+if [ -z $1 ] || [ -z $2 ] || [ -z $3 ]; then
+    echo -e "$start_red This script expects at least three arguments $end_red";
     exit 1;
 fi
 
@@ -68,6 +69,36 @@ case $1 in
         sed  -i "s/export WM=.*$/export WM=$2/g" $HOME/.$custom.sh
         sed -i "s/\&\& (.*; killshells)/\&\& (startx; killshells) /g" $HOME/.$custom.sh;
         sed -E -i "s/exec awesome|exec bspwm|exec i3/exec $2/g" $HOME/.xinitrc;
+        ;;
+esac
+
+# configure Menu
+case $3 in
+    "debian")
+        echo '#!/usr/bin/sh' > $HOME/.local/bin/mdmenu
+        echo 'if [ $XDG_SESSION_TYPE = "wayland" ]; then ' >> $HOME/.local/bin/mdmenu
+        echo '    wofi_dmenu;' >> $HOME/.local/bin/mdmenu
+        echo 'else' >> $HOME/.local/bin/mdmenu
+        echo '    rofi_dmenu;' >> $HOME/.local/bin/mdmenu
+        echo 'fi' >> $HOME/.local/bin/mdmenu
+        chmod +x $HOME/.local/bin/mdmenu
+
+        echo '#!/usr/bin/sh' > $HOME/.local/bin/mdrun
+        echo 'if [ $XDG_SESSION_TYPE = "wayland" ]; then ' >> $HOME/.local/bin/mdrun
+        echo '    wofi_app;' >> $HOME/.local/bin/mdrun
+        echo 'else' >> $HOME/.local/bin/mdrun
+        echo '    rofi_app;' >> $HOME/.local/bin/mdrun
+        echo 'fi' >> $HOME/.local/bin/mdrun
+        chmod +x $HOME/.local/bin/mdrun
+        ;;
+    *)
+        echo '#!/usr/bin/sh' > $HOME/.local/bin/mdmenu
+        echo 'rofi_dmenu;' >> $HOME/.local/bin/mdmenu
+        chmod +x $HOME/.local/bin/mdmenu
+
+        echo '#!/usr/bin/sh' > $HOME/.local/bin/mdrun
+        echo 'rofi_app;' >> $HOME/.local/bin/mdrun
+        chmod +x $HOME/.local/bin/mdrun
         ;;
 esac
 
