@@ -33,6 +33,7 @@ configuration {
     border-radius:    6;
     border-color:     @bordercolor;
     padding:          10;
+    width:	      30%;
 }
 #mainbox {
     border:  0;
