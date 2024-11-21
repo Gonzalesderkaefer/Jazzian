@@ -52,7 +52,7 @@ set $mod Mod4
 set $term myterm 
 
 ### Setting the run menu
-set $menu w-rofi
+set $menu wdrun
 
 
 ## Idle configuration
