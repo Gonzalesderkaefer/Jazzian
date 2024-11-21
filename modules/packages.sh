@@ -57,7 +57,7 @@ arch_base='fzf tmux zsh nnn rofi-wayland networkmanager thunar nm-connection-edi
     firefox lf tlp alacritty pipewire mpv gsettings-desktop-schemas eom network-manager-applet
     openconnect lxappearance file-roller papirus-icon-theme gnome-themes-extra arc-gtk-theme
     ttf-jetbrains-mono-nerd ttf-jetbrains-mono gcr bash-completion zsh-completions gcc less wget pipewire-pulse
-    pipewire-alsa wireplumber'
+    pipewire-alsa wireplumber cpupower git'
 
 
 arch_wayland='grim wofi swaybg waybar swayidle hyprlock wl-clipboard'
