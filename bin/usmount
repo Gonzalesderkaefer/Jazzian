@@ -2,11 +2,7 @@
 
 
 printmenu() {
-    if [ $XDG_SESSION_TYPE = 'wayland' ]; then
-        echo "$1" | wofi -dmenu;
-    else
-        echo "$1" | rofi -dmenu -p ""
-    fi
+    echo "$1" | mdmenu;
 }
 
 

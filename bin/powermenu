@@ -1,10 +1,6 @@
 #!/bin/sh
 
-if [ $XDG_SESSION_TYPE = 'wayland' ]; then
-    menu="$(printf " Poweroff \n Reboot \n󰍃 Logout \n Suspend \n󰒲 Hibernate \n Lock" | wofi --dmenu -i)"
-else
-    menu="$(printf " Poweroff \n Reboot \n󰍃 Logout \n Suspend \n󰒲 Hibernate \n Lock" | rofi -dmenu -i -p "")"
-fi
+menu="$(printf " Poweroff \n Reboot \n󰍃 Logout \n Suspend \n󰒲 Hibernate \n Lock" | mdmenu)"
 
 
 case $menu in

@@ -16,11 +16,7 @@ while [ $sinks -lt $sources ]; do
     echo "$line" >> $sinkfile;
     sinks=$(($sinks + 1));
 done
-if [ $XDG_SESSION_TYPE = 'wayland' ]; then
-    default_sink="$(sed -E "s/^\s*\*\s*|^\s*//g" $sinkfile | wofi -i --dmenu)";
-else
-    default_sink="$(sed -E "s/^\s*\*\s*|^\s*//g" $sinkfile | rofi -dmenu -i -p "")";
-fi
+default_sink="$(sed -E "s/^\s*\*\s*|^\s*//g" $sinkfile | mdmenu)";
 
 default_sink_id=$(echo "$default_sink" | awk '{print $1}');
 wpctl set-default $default_sink_id;
