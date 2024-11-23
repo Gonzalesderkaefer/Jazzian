@@ -277,56 +277,53 @@ audio_module:buttons(gears.table.join(
 
 
 
+
+local getvolume = function ()
+    local volumehandle = io.popen("wpctl get-volume @DEFAULT_SINK@ | tr -d \"[a-zA-z] \\. :\"")
+    local mutehandle = io.popen("wpctl get-volume @DEFAULT_SINK@ | grep -o \"MUTED\"")
+    if volumehandle == nil or mutehandle == nil then
+        return "??"
+    end
+    local volume = tonumber(volumehandle:read("*a"))
+    local muted = string.find(mutehandle:read("*a"), "MUTED")
+
+
+
+
+
+    if volumehandle == nil or mutehandle == nil then
+	return "??"
+    end
+    if muted then
+        return  "<span color='#ff6666'> 󰝟 </span>"
+    end
+     if volume > 100 then
+         return "<span color='#ff6666'>" .. volume .. "  </span>"
+     elseif volume <= 100 and volume >= 65 then
+         return  "<span color='#987ae6'>"  .. volume .. "  </span>"
+     elseif volume < 65 and volume >= 35 then
+         return  "<span color='#987ae6'>"  .. volume .. "  </span>"
+     elseif volume < 35 then
+         return "<span color='#987ae6'>"  .. volume .. "  </span>"
+     end
+    volumehandle:close()
+    mutehandle:close()
+end
+
+
+
 local audio_widget = wibox.widget{
     markup = "",
     align  = 'center',
     valign = 'center',
     widget = wibox.widget.textbox
 }
-
-
-local get_output = function ()
-    local mutedhandle = io.popen("wpctl get-volume @DEFAULT_SINK@ | grep -o \"MUTED\"","r")
-    local volumehandle = io.popen("wpctl get-volume @DEFAULT_SINK@ | tr -d \"[a-zA-z] \\. :\"")
-
-
-    local ismuted = ""
-    if mutedhandle ~= nil then
-        ismuted = mutedhandle:read('*a') mutedhandle:close()
-    else
-        audio_widget.markup = "??%  "
-        return
-    end
-    local volume = ""
-    if volumehandle ~= nil then
-        volume  = volumehandle:read('*a') volumehandle:close()
-    else
-        audio_widget.markup = "??%  "
-        return
-    end
-    local isitmuted = ""
-    isitmuted = string.sub(ismuted,0,string.len(ismuted)-1)
-
-    if isitmuted == 'MUTED' then
-        audio_widget.markup =  "<span color='#ff6666'> 󰝟 </span>"
-    else
-        local value =  "-1"
-        value = string.sub(volume,0,string.len(volume) - 1)
-        local numval = tonumber(value)
-        if numval~= nil then
-            if numval > 100 then
-                audio_widget.markup = "<span color='#ff6666'>" .. value .. "  </span>"
-            elseif numval <= 100 and numval >= 65 then
-                audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
-            elseif numval < 65 and numval >= 35 then
-                audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
-            elseif numval < 35 then
-                audio_widget.markup =  "<span color='#987ae6'>"  .. value .. "  </span>"
-            end
-        end
-    end
+local get_output = function()
+    audio_widget.markup = getvolume()
 end
 get_output()
+
+
 audio_widget:buttons(gears.table.join(
                             awful.button({ }, 1, function()
                                                     awful.spawn.with_shell("wpctl set-mute @DEFAULT_SINK@ toggle")
@@ -627,7 +624,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey },            "d",     function () awful.spawn("rofi -show drun") end,
               {description = "Rofi in Drun mode", group = "launcher"}),
     -- Powermenu
-    awful.key({ "Mod1" },            "F4",     function () awful.spawn("powermenu_rofi") end,
+    awful.key({ "Mod1" },            "F4",     function () awful.spawn("powermenu") end,
               {description = "Rofi in Drun mode", group = "launcher"}),
 
     awful.key({ modkey }, "x",
@@ -882,7 +879,6 @@ end)
  client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
  client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
 
 -- Autostart
 awful.spawn.with_shell("picom")
