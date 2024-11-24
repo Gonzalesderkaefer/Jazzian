@@ -1,0 +1,11 @@
+#!/usr/bin/sh
+
+selection="$HOME/.password-store";
+
+while [ -d $selection ]; do
+    selection="$selection/$(ls $selection | mdmenu)";
+done
+
+tool=$(echo $selection | sed "s/^.*\.password-store\/\(.*\)\.gpg/\1/g")
+
+pass show -c $tool
