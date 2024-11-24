@@ -289,9 +289,7 @@ local getvolume = function ()
 
 
 
-
-
-    if volumehandle == nil or mutehandle == nil then
+    if volume == nil then
 	return "??"
     end
     if muted then
