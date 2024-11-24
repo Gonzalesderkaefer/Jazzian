@@ -4,6 +4,10 @@ selection="$HOME/.password-store";
 
 while [ -d $selection ]; do
     selection="$selection/$(ls $selection | mdmenu)";
+    exit=$?
+    if [ $exit -eq 1 ]; then
+        exit 1;
+    fi
 done
 
 tool=$(echo $selection | sed "s/^.*\.password-store\/\(.*\)\.gpg/\1/g")
