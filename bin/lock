@@ -3,7 +3,7 @@
 
 case $XDG_SESSION_TYPE in
     "wayland")
-	hyprlock || swaylock -f -c 000000;;
+	hyprlock || swaylock -f -c 1e1e2e;;
     *)
-	i3lock -f -c 000000;;
+	i3lock -f -c 1e1e2e;;
 esac
