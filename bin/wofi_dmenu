@@ -1,2 +1,2 @@
 #!/usr/bin/sh
-rofi -show -dmenu -p ""
+wofi --show dmenu -p ""
