@@ -1,2 +1,2 @@
 #!/usr/bin/sh
-rofi -show -dmenu -p ""
+rofi -show -dmenu -p -i""
