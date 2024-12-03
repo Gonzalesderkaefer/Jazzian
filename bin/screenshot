@@ -2,7 +2,9 @@
 
 file="$HOME/Pictures/screenshots/"$(date | sed  "s/\s/_/g")".png"
 
-
+if ! [ -d $HOME/Pictures/screenshots ]; then
+    mkdir -p $HOME/Pictures/screenshots;
+fi
 
 case $XDG_SESSION_TYPE in
     "wayland")

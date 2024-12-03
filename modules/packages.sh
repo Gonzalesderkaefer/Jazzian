@@ -33,7 +33,7 @@ fedora_base='rofi-wayland tmux zsh pinentry thunar mate-polkit nnn neovim alacri
     network-manager-applet arc-theme'
 
 
-fedora_wayland='grim swaybg swayidle waybar wofi wl-clipboard swaylock'
+fedora_wayland='grim swaybg swayidle waybar wofi wl-clipboard swaylock mako'
 
 fedora_hypr='hyprland waybar'
 
@@ -60,7 +60,7 @@ arch_base='fzf tmux zsh nnn rofi-wayland networkmanager thunar nm-connection-edi
     pipewire-alsa wireplumber cpupower git'
 
 
-arch_wayland='grim wofi swaybg waybar swayidle swaylock wl-clipboard'
+arch_wayland='grim wofi swaybg waybar swayidle swaylock wl-clipboard mako'
 
 arch_hypr='hyprland waybar hyprpaper'
 
