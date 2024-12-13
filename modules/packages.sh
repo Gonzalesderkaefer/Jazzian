@@ -1,6 +1,6 @@
 
 ## Debian_Packages
-debian_base='tmux zsh evince flatpak network-manager network-manager-gnome
+debian_base='tmux vifm zsh evince flatpak network-manager network-manager-gnome
     thunar file-roller network-manager-openconnect-gnome eom network-manager-openconnect
     git lf fonts-jetbrains-mono firefox-esr tlp alacritty pipewire pipewire-alsa
     pipewire-pulse libglib2.0-bin nala mpv papirus-icon-theme gnome-themes-extra
@@ -25,7 +25,7 @@ debian_i3='i3 i3blocks'
 
 
 ## Fedora_Packages
-fedora_base='rofi-wayland tmux zsh pinentry thunar mate-polkit nnn neovim alacritty
+fedora_base='rofi-wayland vifm tmux zsh pinentry thunar mate-polkit nnn neovim alacritty
     mpv firefox zathura zathura-pdf-poppler evince git pipewire pipewire-utils
     file-roller pipewire-pulseaudio NetworkManager-openconnect-gnome
     gsettings-desktop-schemas papirus-icon-theme NetworkManager-tui eom tlp libnotify
@@ -52,7 +52,7 @@ fedora_i3='i3 i3blocks'
 
 ## Arch_Packages
 
-arch_base='fzf tmux zsh nnn rofi-wayland networkmanager thunar nm-connection-editor
+arch_base='fzf tmux zsh vifm nnn rofi-wayland networkmanager thunar nm-connection-editor
     neovim zathura-pdf-poppler zathura evince webkit2gtk-4.1 networkmanager-openconnect
     firefox lf tlp alacritty pipewire mpv gsettings-desktop-schemas eom network-manager-applet
     openconnect lxappearance file-roller papirus-icon-theme gnome-themes-extra arc-gtk-theme

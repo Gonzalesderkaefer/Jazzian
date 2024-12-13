@@ -23,6 +23,7 @@ copy_files()
         "$HOME/Jazzian/cfg_files/shell"
         "$HOME/Jazzian/cfg_files/nnn_plugins"
         "$HOME/Jazzian/cfg_files/vim"
+        "$HOME/Jazzian/cfg_files/vifm"
 
         );
 
