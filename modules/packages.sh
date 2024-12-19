@@ -15,7 +15,7 @@ debian_sway='sway i3blocks'
 
 debian_hypr='sway i3blocks'
 
-debian_xorg='lxappearance maim rofi arandr rofi xclip i3lock picom dunst xinput xorg xwallpaper rxvt-unicode'
+debian_xorg='lxappearance maim rofi arandr rofi xclip i3lock picom dunst xinput xorg xwallpaper rxvt-unicode nitrogen'
 
 debian_awesome='awesome'
 
@@ -41,7 +41,7 @@ fedora_river='river waybar'
 
 fedora_sway='sway i3blocks'
 
-fedora_xorg='xclip @base-x maim lxappearance xinput arandr nitrogen picom dunst xclip i3lock rxvt-unicode'
+fedora_xorg='xclip @base-x maim lxappearance xinput arandr nitrogen picom dunst xclip i3lock rxvt-unicode nitrogen'
 
 fedora_awesome='awesome'
 
@@ -68,7 +68,7 @@ arch_sway='sway i3blocks swaybg'
 
 arch_river='waybar river swaybg'
 
-arch_xorg='xorg lxappearance xwallpaper maim picom xorg-xinput xorg-xinit xclip i3lock rxvt-unicode'
+arch_xorg='xorg lxappearance xwallpaper maim picom xorg-xinput xorg-xinit xclip i3lock rxvt-unicode nitrogen'
 
 arch_awesome='awesome'
 
