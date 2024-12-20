@@ -17,7 +17,12 @@ vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>")
 vim.keymap.set("n", "<leader>pv", "<CMD>Oil<CR>")
 
 -- Launch Terminal 
-vim.keymap.set("n", "<F12>", ":20 split | terminal<CR>")
+vim.keymap.set("n", "<F12>", function ()
+    vim.cmd.vnew()
+    vim.cmd.term()
+    vim.cmd.wincmd("J")
+    vim.api.nvim_win_set_height(0,20)
+end)
 
 -- Clear search
 vim.keymap.set("n", "<leader>nh", ":nohlsearch<CR>")
