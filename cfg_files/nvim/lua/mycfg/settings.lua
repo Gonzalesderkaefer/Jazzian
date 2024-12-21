@@ -1,29 +1,30 @@
+local v = vim
+
 --Setting tab to 4 spaces
-vim.opt.tabstop = 8
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = false
-vim.bo.softtabstop = 4
+v.opt.tabstop = 8
+v.opt.shiftwidth = 4
+v.opt.expandtab = false
+v.bo.softtabstop = 4
 
 -- Enable relative Numberlines
-vim.opt.relativenumber = true
+v.opt.relativenumber = true
 
 -- Keep signcolumn on by default
-vim.opt.signcolumn = "yes"
+v.opt.signcolumn = "yes"
 
 -- Enable current line highlighting
-vim.opt.cursorline = true
+v.opt.cursorline = true
 
 -- Split down and right by default
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+v.opt.splitright = true
+v.opt.splitbelow = true
 
 -- Exit terminal by hitting ESC twice
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>')
+v.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>')
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+v.opt.scrolloff = 10
 
 
 -- Binding y to yank into +
-vim.cmd("set clipboard+=unnamedplus")
-
+v.cmd("set clipboard+=unnamedplus")
