@@ -21,7 +21,7 @@ case $shell in
         ;;
     *)
         echo -e "$red Please run this script using bash or zsh (bash install.sh or zsh install.sh) $reset";
-        exit;
+        exit 1;
 esac
 
 
@@ -32,16 +32,25 @@ if [ "$(pwd)" != "$HOME/Jazzian" ]; then
     echo  
     echo -e "$red Please make sure the 'Jazzian' directory is in $HOME $reset";
     echo -e "$red And make sure the script is run from within 'Jazzian' $reset";
-    exit;
+    exit 1;
 fi
 
 
 
 # configfile location
-config_file=$HOME/Jazzian/modules/devicespecific.conf
+config_file=$HOME/Jazzian/modules/devicespecific.json
+# Variable for renew decision
 renew_config="";
 
 
+# Determining whether JQ is installed
+if [ -z $(which jq) ]; then
+    echo -e "$green Installing jq ... $end_green";
+    ((sudo apt install -y jq) || (sudo pacman --noconfirm -S jq) || (sudo dnf install -y jq)) 2> /dev/null;
+    echo -e "$green Done. $end_green";
+else
+    echo -e "$green jq is already installed. $end_green";
+fi
 
 
 # Ask user whether to renew config
@@ -56,14 +65,14 @@ if [ -f $config_file ] && [ -f modules/config.sh ]; then
 
 else 
     # run config script if config file does not exist
-    [ -f modules/config.sh ] && bash $HOME/Jazzian/modules/config.sh
+    [ -f modules/config.sh ] && bash $HOME/Jazzian/modules/config.sh || exit 1;
 fi
 
 # read config file and create variables
-displayserver=$(grep -E  "Displayserver: " $config_file | awk '{print $2}');
-windowmanager=$(grep -E  "Windowmanager: " $config_file | awk '{print $2}');
-transfer=$(grep -E  "Transfer: " $config_file | awk '{print $2}');
-distro=$(grep -E  "Distro: " $config_file | awk '{print $2}');
+displayserver=$(jq -r '.Displayserver' $config_file);
+windowmanager=$(jq -r '.Windowmanager' $config_file);
+transfer=$(jq -r '.Transfer' $config_file);
+distro=$(jq -r '.Distro' $config_file);
 
 # Run package installer
 if [ -f modules/pac_install.sh ];then

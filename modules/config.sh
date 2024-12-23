@@ -8,12 +8,15 @@ end_red="\033[0m";
 
 
 # create config file
-config_file="$HOME/Jazzian/modules/devicespecific.conf";
+config_file="$HOME/Jazzian/modules/devicespecific.json";
 if ! [ -f $config_file ]; then
     touch $config_file;
 else
     rm $config_file;
 fi
+
+# Opening brace for json object
+echo "{" > $config_file;
 
 # Ask for display server
 echo -e "$start_green What display server would you like to use? $end_green";
@@ -25,10 +28,10 @@ read -p "Your Choice: " server_choice;
 
 case $server_choice in
     "W"* | "w"*)
-        echo "Displayserver: wayland" > $config_file;
+        echo "    \"Displayserver\": \"wayland\"," >> $config_file;
         ;;
     *)
-        echo "Displayserver: xorg" > $config_file;
+        echo "    \"Displayserver\": \"xorg\"," >> $config_file;
         ;;
 esac
 
@@ -46,13 +49,13 @@ case $server_choice in
         read -p "Your Choice: " wm_choice;
         case $wm_choice in 
             "R"* | "r"*)
-                echo "Windowmanager: river  " >> $config_file;
+                echo "    \"Windowmanager\": \"river\"," >> $config_file;
                 ;;
             "H"* | "h"*)
-                echo "Windowmanager: Hyprland" >> $config_file;
+                echo "    \"Windowmanager\": \"Hyprland\"," >> $config_file;
                 ;;
             *)
-                echo "Windowmanager: sway" >> $config_file;
+                echo "    \"Windowmanager\": \"sway\"," >> $config_file;
                 ;;
         esac
         ;;
@@ -63,13 +66,13 @@ case $server_choice in
         read -p "Your Choice: " wm_choice;
         case $wm_choice in 
             "B"* | "b"*)
-                echo "Windowmanager: bspwm" >> $config_file;
+                echo "    \"Windowmanager\": \"bspwm\"," >> $config_file;
                 ;;
             "A"* | "a"*)
-                echo "Windowmanager: awesome" >> $config_file;
+                echo "    \"Windowmanager\": \"awesome\"," >> $config_file;
                 ;;
             *)
-                echo "Windowmanager: i3" >> $config_file;
+                echo "    \"Windowmanager\": \"i3\"," >> $config_file;
                 ;;
         esac
 
@@ -84,13 +87,13 @@ read -p "Your Choice: " transfer;
 
 case $transfer in
     "l"* | "L"*)
-        echo "Transfer: link" >> $config_file;
+        echo "    \"Transfer\": \"link\"," >> $config_file;
         ;;
     "c"* | "C"*)
-        echo "Transfer: copy" >> $config_file;
+        echo "    \"Transfer\": \"copy\"," >> $config_file;
         ;;
     *)
-        echo "Transfer: skip" >> $config_file;
+        echo "    \"Transfer\": \"skip\"," >> $config_file;
         ;;
 esac
 
@@ -99,20 +102,21 @@ release="$(cat /etc/os-release)";
 
 case $release in
     *"Debian"* | *"debian"* | *"DEBIAN"*)
-        echo "Distro: debian" >> $config_file;
+        echo "    \"Distro\": debian" >> $config_file;
         ;;
     *"Fedora"* | *"fedora"* | *"FEDORA"*)
-        echo "Distro: fedora" >> $config_file;
+        echo "    \"Distro\": \"fedora\"" >> $config_file;
         ;;
     *"Arch Linux"* | *"arch linux"* | *"ARCH LINUX"*)
-        echo "Distro: archlinux" >> $config_file;
+        echo "    \"Distro\": \"archlinux\"" >> $config_file;
         ;;
     *)
-        echo "Distro: other" >> $config_file;
+        echo "    \"Distro\": \"other\"" >> $config_file;
         ;;
 esac
 
-
+# Closing brace for json object
+echo "}" >> $config_file;
 
 echo -e "$start_green these are your options $end_green"
 echo
