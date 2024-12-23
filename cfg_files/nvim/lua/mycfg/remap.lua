@@ -42,8 +42,8 @@ v.keymap.set("n", "<leader>sx", v.cmd.close)
 
 
 -- Buffer navigation
-v.keymap.set("n", "<leader>bn", v.cmd.bn)
-v.keymap.set("n", "<leader>bp", v.cmd.bprevious)
+v.keymap.set("n", "<leader>nn", v.cmd.bn)
+v.keymap.set("n", "<leader>NN", v.cmd.bprevious)
 v.keymap.set("n", "<C-q>", v.cmd.bdelete)
 v.keymap.set("n", "<C-t>", function () v.cmd.Telescope("find_files") end)
 

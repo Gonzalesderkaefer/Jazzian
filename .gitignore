@@ -7,5 +7,6 @@ x11startup
 newsboat*
 *myterm*
 *!newsboat/config
+*vifminfo.json*
 .* 
 *!/.gitignore
