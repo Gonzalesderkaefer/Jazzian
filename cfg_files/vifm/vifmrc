@@ -12,10 +12,10 @@
 " Command used to edit files in various contexts.  The default is vim.
 " If you would like to use another vi clone such as Elvis or Vile
 " you will need to change this setting.
-if executable('vim')
-    set vicmd=vim
-elseif executable('nvim')
+if executable('nvim')
     set vicmd=nvim
+elseif executable('vim')
+    set vicmd=vim
 elseif executable('elvis')
     set vicmd=elvis\ -G\ termcap
 elseif executable('vile')
@@ -31,6 +31,8 @@ endif
 " doesn't support progress measuring.
 set syscalls
 
+
+
 " Trash Directory
 " The default is to move files that are deleted with dd or :d to
 " the trash directory.  If you change this you will not be able to move
@@ -38,6 +40,12 @@ set syscalls
 " I recommend not changing this until you are familiar with vifm.
 " This probably shouldn't be an option.
 set trash
+set trashdir="~/.local/share/vifm/Trash"
+
+" enable miller columns
+set millerview
+set milleroptions=lsize:1,csize:4,rsize:3,rpreview:all
+only
 
 " What should be saved automatically on restarting vifm.  Drop "savedirs"
 " value if you don't want vifm to remember last visited directories for you.
@@ -91,7 +99,7 @@ set nohlsearch
 set incsearch
 
 " Try to leave some space from cursor to upper/lower border in lists
-set scrolloff=4
+set scrolloff=10
 
 " Don't do too many requests to slow file systems
 if !has('win')
@@ -102,7 +110,7 @@ endif
 set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
 
 " List of color schemes to try (picks the first one supported by the terminal)
-colorscheme Default-256 Default
+colorscheme dracula
 
 " ------------------------------------------------------------------------------
 " Bookmarks
