@@ -26,7 +26,8 @@ if [ -f ~/.sh_aliases ]; then
     source ~/.sh_aliases
 fi
 
-
+# CTRL-R to resource ~/.zshrc
+bindkey -s "^R" 'source ~/.zshrc^M';
 
 zle-keymap-select()
 {
