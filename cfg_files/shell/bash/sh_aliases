@@ -36,6 +36,7 @@ alias "reboot"="systemctl reboot"
 ## Files
 alias ls="ls --color=auto"
 alias "nf"="nnn -d"
+alias "vf"="vifm ."
 alias "ll"="ls -l"
 alias "lla"="ls -la"
 
