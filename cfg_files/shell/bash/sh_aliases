@@ -34,7 +34,7 @@ alias "shutdown"="systemctl poweroff"
 alias "reboot"="systemctl reboot"
 
 ## Files
-alias ls="ls --color=auto"
+alias "ls"="ls --color=auto"
 alias "nf"="nnn -d"
 alias "vf"="vifm ."
 alias "ll"="ls -l"
@@ -42,13 +42,14 @@ alias "lla"="ls -la"
 
 
 ## Editor
-alias v=$EDITOR
+alias "v"="$EDITOR"
+alias "vv"="$EDITOR ."
 # (command -v nvim > /dev/null) && alias "v"="nvim" || alias "v"="vim"
 # (command -v nvim > /dev/null) && alias "vv"="nvim ." || alias "vv"="vim ."
 
 
 ## other aliases
-alias grep="grep --color=auto" 
+alias "grep"="grep --color=auto" 
 alias "s"="sudo"
 alias ":wq"="exit"
 alias ":q"="exit"
