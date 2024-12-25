@@ -19,6 +19,12 @@ compinit
 # End of lines added by compinstall
 
 
+# Define colors 
+red="\033[0;31m"
+green="\033[0;32m"
+blue="\033[0;34m"
+reset="\033[0m"
+
 
 # Get Current git branch
 function git_branch() {
@@ -27,14 +33,19 @@ function git_branch() {
     if [[ $branch == "" ]]; then
         :
     else
-        echo " ($branch) ";
+        echo "($branch) ";
     fi
 }
+
+precmd(){
+    print "$blue$(pwd | sed "s/^\/home\/$USER/~/g")$reset" 
+}
+
 
 
 # Prompt
 setopt prompt_subst
-PROMPT="[%F{green}% %B%n%b%f@%F{red}%m%f]:%F{blue}%~%f$(git_branch)> "
+PROMPT="[%F{green}% %B%n%b%f@%F{red}%m%f]:$(git_branch)> "
 
 # Source aliases
 if [ -f ~/.sh_aliases ]; then
@@ -48,14 +59,14 @@ zle-keymap-select()
 {
     if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]] ; then
         echo -ne '\e[1 q'
-	PROMPT="[%F{green}% %B%n%b%f@%F{red}%m%f]   :%F{blue}%~%f$(git_branch)> "
+	PROMPT="   [%F{green}% %B%n%b%f@%F{red}%m%f]:$(git_branch)> "
 	zle reset-prompt
     elif [[ ${KEYMAP} == main ]] ||
          [[ ${KEYMAP} == viins ]] ||
          [[ ${KEYMAP} = '' ]] ||
          [[ $1 = 'beam' ]]; then
         echo -ne '\e[1 q'
-	PROMPT="[%F{green}% %B%n%b%f@%F{red}%m%f]%F{green}[I]%f:%F{blue}%~%f$(git_branch)> "
+	PROMPT="%F{green}[I]%f[%F{green}% %B%n%b%f@%F{red}%m%f]%F{green}%f:$(git_branch)> "
 	zle reset-prompt
     fi
 }
@@ -63,7 +74,7 @@ zle-keymap-select()
 zle-line-init()
 {
     echo -ne '\e[1 q'
-    PROMPT="[%F{green}% %B%n%b%f@%F{red}%m%f]%F{green}[I]%f:%F{blue}%~%f$(git_branch)> "
+    PROMPT="%F{green}[I]%f[%F{green}% %B%n%b%f@%F{red}%m%f]:$(git_branch)> "
     zle reset-prompt
 }
 
