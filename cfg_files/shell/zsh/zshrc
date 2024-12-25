@@ -25,6 +25,10 @@ green="\033[0;32m"
 blue="\033[0;34m"
 reset="\033[0m"
 
+# Bold and normal
+bold=$(tput bold)
+normal=$(tput sgr0)
+
 
 # Get Current git branch
 function git_branch() {
@@ -38,7 +42,7 @@ function git_branch() {
 }
 
 precmd(){
-    print "$blue$(pwd | sed "s/^\/home\/$USER/~/g")$reset" 
+    print "$blue$bold$(pwd | sed "s/^\/home\/$USER/~/g")$normal$reset"
 }
 
 
