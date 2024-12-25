@@ -27,13 +27,6 @@ end)
 v.keymap.set("n", "<leader>nh", v.cmd.nohlsearch)
 
 
--- Window navigation
-v.keymap.set("n", "<c-k>", "<C-W>k")
-v.keymap.set("n", "<c-j>", "<C-W>j")
-v.keymap.set("n", "<c-h>", "<C-W>h")
-v.keymap.set("n", "<c-l>", "<C-W>l")
-
-
 -- Splits
 v.keymap.set("n", "<leader>sv", v.cmd.vnew)
 v.keymap.set("n", "<leader>sh", v.cmd.new)
