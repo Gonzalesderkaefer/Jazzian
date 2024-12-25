@@ -42,7 +42,7 @@ function git_branch() {
 }
 
 precmd(){
-    print "$blue$bold$(pwd | sed "s/^\/home\/$USER/~/g")$normal$reset"
+    print "[$bold$green$USER$reset@$red$HOST$reset$normal]$(git_branch)"
 }
 
 
@@ -63,14 +63,14 @@ zle-keymap-select()
 {
     if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]] ; then
         echo -ne '\e[1 q'
-	PROMPT="   [%F{green}% %B%n%b%f@%F{red}%m%f]:$(git_branch)> "
+	PROMPT="   [%F{blue}%~%f] > "
 	zle reset-prompt
     elif [[ ${KEYMAP} == main ]] ||
          [[ ${KEYMAP} == viins ]] ||
          [[ ${KEYMAP} = '' ]] ||
          [[ $1 = 'beam' ]]; then
         echo -ne '\e[1 q'
-	PROMPT="%F{green}[I]%f[%F{green}% %B%n%b%f@%F{red}%m%f]%F{green}%f:$(git_branch)> "
+	PROMPT="%F{green}[I]%f[%F{blue}%~%f] > "
 	zle reset-prompt
     fi
 }
@@ -78,7 +78,7 @@ zle-keymap-select()
 zle-line-init()
 {
     echo -ne '\e[1 q'
-    PROMPT="%F{green}[I]%f[%F{green}% %B%n%b%f@%F{red}%m%f]:$(git_branch)> "
+    PROMPT="%F{green}[I]%f[%F{blue}%~%f] > "
     zle reset-prompt
 }
 
