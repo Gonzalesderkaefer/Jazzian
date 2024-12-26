@@ -42,3 +42,8 @@ v.keymap.set("n", "<C-t>", function () v.cmd.Telescope("find_files") end)
 
 -- Pasting without losing initially yanked string
 v.keymap.set("x", "<leader>p", "\"_dP")
+
+
+-- Move in diagnostics
+v.keymap.set("n", "<leader>dn", v.diagnostic.goto_next)
+v.keymap.set("n", "<leader>dn", v.diagnostic.goto_prev)
