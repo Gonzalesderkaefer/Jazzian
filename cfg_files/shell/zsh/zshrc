@@ -58,7 +58,6 @@ fi
 
 # CTRL-R to resource ~/.zshrc
 bindkey -s "^R" 'source ~/.zshrc^M';
-bindkey -s "^W" 'tmux^M';
 
 
 zle-keymap-select()
@@ -147,8 +146,4 @@ revert ()
 ## devicerc
 if [ -f $HOME/.devicerc ]; then
     source $HOME/.devicerc
-fi
-
-if [ -z $TMUX ]; then
-    tmux
 fi
