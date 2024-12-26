@@ -46,4 +46,5 @@ v.keymap.set("x", "<leader>p", "\"_dP")
 
 -- Move in diagnostics
 v.keymap.set("n", "<leader>dn", v.diagnostic.goto_next)
+v.keymap.set("n", "<leader>dm", v.diagnostic.open_float)
 v.keymap.set("n", "<leader>dn", v.diagnostic.goto_prev)
