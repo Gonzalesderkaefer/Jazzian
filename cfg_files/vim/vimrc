@@ -60,9 +60,9 @@ nmap <c-l> :wincmd l<CR>
 nmap <leader>ff :Explore <CR>
 
 "" Buffer Navigation
-nmap <C-Tab> :Explore <CR>
-nmap <C-S-Tab> :bprevious<CR>
-nmap <C-q> :bdelete<CR>
+nmap <leader>nn :bnext <CR>
+nmap <leader>NN :bprevious <CR>
+nmap <leader>qq :bdelete<CR>
 nmap <leader>bb :buffers<CR>
 
 

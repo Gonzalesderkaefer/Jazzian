@@ -37,8 +37,7 @@ v.keymap.set("n", "<leader>sx", v.cmd.close)
 -- Buffer navigation
 v.keymap.set("n", "<leader>nn", v.cmd.bn)
 v.keymap.set("n", "<leader>NN", v.cmd.bprevious)
-v.keymap.set("n", "<C-q>", v.cmd.bdelete)
-v.keymap.set("n", "<C-t>", function () v.cmd.Telescope("find_files") end)
+v.keymap.set("n", "<leader>qq", v.cmd.bdelete)
 
 -- Pasting without losing initially yanked string
 v.keymap.set("x", "<leader>p", "\"_dP")
@@ -48,3 +47,6 @@ v.keymap.set("x", "<leader>p", "\"_dP")
 v.keymap.set("n", "<leader>dn", v.diagnostic.goto_next)
 v.keymap.set("n", "<leader>dm", v.diagnostic.open_float)
 v.keymap.set("n", "<leader>dn", v.diagnostic.goto_prev)
+
+-- LSP Keybinds
+v.keymap.set("n", "<leader>rn", v.lsp.buf.rename)
