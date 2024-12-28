@@ -40,6 +40,8 @@ alias "vf"="vifm ."
 alias "ll"="ls -l"
 alias "lla"="ls -la"
 
+# Process management
+alias "fgs"="fg %"
 
 ## Editor
 alias "v"="$EDITOR"
