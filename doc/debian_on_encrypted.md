@@ -2,6 +2,7 @@
 
 This guide is uses the information from the following resources:  
 - [Installing Debian on Existing Encrypted LVM](https://www.blakecarpenter.dev/installing-debian-on-existing-encrypted-lvm)
+
 - [Debian 12 Bookworm Installation w/BTRFS/XFCE/TIMESHIFT & GRUB-BTRFS](https://youtu.be/9htEaXAXfdg?si=gc4US12XcwKzdGGt)
 
 ## Prerequisites
