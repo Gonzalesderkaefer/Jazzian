@@ -42,7 +42,7 @@ function git_branch() {
 }
 
 precmd(){
-    # print "[$bold$green$USER$reset@$red$HOST$reset$normal]$(git_branch)"
+    PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %F{cyan}$(git_branch)%f${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
 }
 
 
