@@ -3,6 +3,15 @@
 -- Here is the original: https://github.com/nvim-lua/kickstart.nvim
 --]]
 
+-- This function checks if a file exists
+-- @param name File name to check
+function file_exsits(name)
+  local file = io.open(name,"r")
+  return file ~= nil and io.close(file)
+end
+
+
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -92,6 +101,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 
 require("remap")
+
+if file_exsits(os.getenv("HOME") .. "/.config/nvim/lua/devicespecific.lua") then
+  require("devicespecific")
+end
+
 
 
 

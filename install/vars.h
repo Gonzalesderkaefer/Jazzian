@@ -28,6 +28,6 @@ typedef enum TRANSFER {
 typedef struct setup_config {
   DISPLAYSERVER display_manager;
   WINDOWMANAGER window_manager;
-  DISTRO distro ;
+  DISTRO distro;
   TRANSFER file_transfer;
 } config;
