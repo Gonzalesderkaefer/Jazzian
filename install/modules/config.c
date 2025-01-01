@@ -1,8 +1,6 @@
 /* Libraries */
 #include <regex.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
 
 /* Other files */
 #include "vars.h"
@@ -167,24 +165,4 @@ config get_config() {
   this_config.file_transfer = get_transfer();
   while ((c = getchar()) != '\n' && c != EOF);
   return this_config;
-}
-
-
-void install_packages() {
-  //pid_t id = fork();
-  //char *packs[] = { "sudo", "dnf", "install","neovim", (char *)0};
-  //execvp("sudo", packs);
-
-}
-
-
-
-
-
-
-int main() {
-  //config this_config = get_config();
-  char *packs[] = { "sudo", "dnf", "install","neovim", (char *)0};
-  execvp("sudo", packs);
-  printf("Done!\n");
 }
