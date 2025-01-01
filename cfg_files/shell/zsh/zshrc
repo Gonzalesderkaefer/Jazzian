@@ -111,6 +111,10 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 
 
+# Nvim as manpager
+export MANPAGER='nvim +Man!'
+
+
 ## Extract files
 
 extract()

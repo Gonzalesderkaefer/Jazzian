@@ -67,42 +67,107 @@ enum WINDOWMANAGER get_window_manager(enum DISPLAYSERVER display_server) {
 }
 
 enum DISTRO get_distro() {
-  FILE *fd = fopen("/etc/os-release", "r");
-  if (!fd) {
+  FILE *file = fopen("/etc/os-release", "r");
+  if (!file) {
     fprintf(stderr, "Could not open release file");
     return UNKNOWN;
   }
+  /* Determine size of file */
+  fseek(file, 0,SEEK_END);
+  int length = ftell(file);
+  /* Set file pointer to the beginning */
+  fseek(file,0,SEEK_SET);
+
+  /* Read the file */
+  char release[length + 1];
+  int i = 0;
+  char curr;
+  while ((curr = fgetc(file)) != EOF){
+    release[i] = curr;
+    ++i;
+  }
+
+  fclose(file);
+
+
+  /* Constructing regexes */
+  regex_t arch;
+  regmatch_t arch_pmatch[5];
+  regex_t debian;
+  regmatch_t debian_pmatch[5];
+  regex_t fedora;
+  regmatch_t fedora_pmatch[5];
+
+  regcomp(&arch, "ARCH LINUX|Arch Linux|arch linux", REG_EXTENDED);
+  regcomp(&debian, "DEBIAN|Debian|debian", REG_EXTENDED);
+  regcomp(&fedora, "FEDORA|Fedora|fedora", REG_EXTENDED);
+
+  int archStat = regexec(&arch,release,arch.re_nsub+1,arch_pmatch,REG_NOTEOL);
+  int debStat = regexec(&debian,release,debian.re_nsub+1,arch_pmatch,REG_NOTEOL);
+  int fedStat = regexec(&fedora,release,fedora.re_nsub+1,fedora_pmatch,REG_NOTEOL);
+
+  regfree(&arch);
+  regfree(&debian);
+  regfree(&fedora);
+
+  if (archStat == 0) {
+    printf("\033[0;32mFound Arch Linux\033[0m\n");
+    return ARCH;
+  }
+  if (debStat == 0) {
+    printf("\033[0;32mFound Debian\033[0m\n");
+    return DEBIAN;
+  }
+  if (fedStat == 0) {
+    printf("\033[0;32mFound Fedora\033[0m\n");
+    return FEDORA;
+  }
+  return UNKNOWN;
 }
 
-int main() {
-  config this_config;
+enum TRANSFER get_transfer() {
+  /* Ask user */
+  printf("\033[1;35mChoose method of transfer\033[0m\n");
+  printf("\033[0;32mDo [N]othing (default)\033[0m\n");
+  printf("\033[0;32m[l]ink \033[0m\n");
+  printf("\033[0;32m[c]opy \033[0m\n");
+  printf("Your Choice: ");
+  /* Get users choice */
+  char choice = getchar();
+  /* Check user choice and return */
+  if (choice == 'l' || choice == 'L') {
+    return LINK;
+  } else if (choice == 'c' || choice == 'C') {
+    return COPY;
+  } else {
+    return NOTHING;
+  }
+
+}
+
+
+config get_config() {
+  /* Buff char for flushing */
+  int c;
+  /* Config struct */
+  static config this_config;
   /* get display manager from user */
   this_config.display_manager = get_display_server();
   /* getchar won't work otherwise */
-  int c;
   while ((c = getchar()) != '\n' && c != EOF);
   /* get window manager */
   this_config.window_manager = get_window_manager(this_config.display_manager);
+  /* getchar won't work otherwise */
+  while ((c = getchar()) != '\n' && c != EOF);
+  /* Get Distro */
+  this_config.distro = get_distro();
+  /* Get Transfer type */
+  this_config.file_transfer = get_transfer();
+  while ((c = getchar()) != '\n' && c != EOF);
+  return this_config;
+}
 
 
-
-
-
-
-  regex_t new_regex;
-  regmatch_t pmatch;
-
-  regcomp(&new_regex, "Debian|debian|DEBIAN",REG_EXTENDED);
-  int result = regexec(&new_regex, "debian LInux",new_regex.re_nsub, &pmatch, REG_NOTEOL);
-  printf("%d\n",result);
-  regfree(&new_regex);
-
-
-
-
-
-
-
-
-
+int main() {
+  config this_config = get_config();
 }
