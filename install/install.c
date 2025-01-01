@@ -80,8 +80,7 @@ int main() {
   this_config.display_manager = get_display_server();
   /* getchar won't work otherwise */
   int c;
-  while ((c = getchar()) != '\n' && c != EOF)
-    ;
+  while ((c = getchar()) != '\n' && c != EOF);
   /* get window manager */
   this_config.window_manager = get_window_manager(this_config.display_manager);
 
@@ -94,7 +93,7 @@ int main() {
   regmatch_t pmatch;
 
   regcomp(&new_regex, "Debian|debian|DEBIAN",REG_EXTENDED);
-  int result = regexec(&new_regex, "Debain LInux",new_regex.re_nsub, &pmatch, REG_NOTEOL);
+  int result = regexec(&new_regex, "debian LInux",new_regex.re_nsub, &pmatch, REG_NOTEOL);
   printf("%d\n",result);
   regfree(&new_regex);
 

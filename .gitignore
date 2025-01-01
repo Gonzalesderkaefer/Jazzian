@@ -1,12 +1,21 @@
+# Devicespecific stuff
 *devicespecific*
 devicerc
 x11startup
+*myterm*
+*vifminfo.json*
+
+# Anything in qutebrowser except config
 /cfg_files/qutebrowser/*
 !/cfg_files/qutebrowser/config.py
+
+# I don't know what this is
 *__pycache__*
+
+# Anything in newsboat except config
 newsboat*
-*myterm*
 *!newsboat/config
-*vifminfo.json*
-.* 
+
+# All hidden files except gitignore
+.*
 *!/.gitignore
