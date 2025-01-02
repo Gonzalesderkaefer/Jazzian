@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
 /* Other files */
 #include "vars.h"
@@ -172,8 +173,30 @@ config get_config() {
 
 void install_packages() {
   //pid_t id = fork();
-  //char *packs[] = { "sudo", "dnf", "install","neovim", (char *)0};
-  //execvp("sudo", packs);
+  int fds[2];
+  if (pipe(fds) == -1) {
+    fprintf(stderr, "Failed to get pipes");
+    return;
+  }
+
+  pid_t my_pid; 
+  int status;
+
+  switch (my_pid = fork()) {
+    case -1: 
+      fprintf(stderr,"Failed to fork");
+      return;
+    case 0: /* Child Process */
+      waitpid(getpid(),&status,0);
+      dup2(fds[0],STDIN_FILENO);
+      char *packs[] = { "sudo", "pacman", "-S","neovim", (char *)0};
+      execvp("sudo", packs);
+  }
+
+
+
+
+  printf("Done!\n");
 
 }
 
@@ -183,8 +206,4 @@ void install_packages() {
 
 
 int main() {
-  //config this_config = get_config();
-  char *packs[] = { "sudo", "dnf", "install","neovim", (char *)0};
-  execvp("sudo", packs);
-  printf("Done!\n");
 }
