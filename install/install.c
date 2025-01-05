@@ -6,13 +6,10 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <stdbool.h>
 
 /* Other files */
 #include "vars.h"
-
-/* Defs */
-#define true 1
-#define false 0
 
 
 
@@ -188,19 +185,19 @@ int install_packages(config *config) {
   */
 
   // Filename components
-  char *distro;
+  char *rel_distro;
   char *display_server;
   char *window_manager;
 
   switch (config->distro) {
     case DEBIAN:
-      distro = "packages/debian/";
+      rel_distro = "/Jazzian/install/packages/debian/";
       break;
     case FEDORA:
-      distro = "packages/fedora/";
+      rel_distro = "/Jazzian/install/packages/fedora/";
       break;
     case ARCH:
-      distro = "packages/arch/";
+      rel_distro = "/Jazzian/install/packages/arch/";
       break;
     case UNKNOWN:
       return -1;
@@ -236,9 +233,9 @@ int install_packages(config *config) {
   }
 
   // store the file name sizes
-  size_t base_name_len = strlen(distro) + strlen("base.txt") + 1;
-  size_t ds_name_len = strlen(distro) + strlen(display_server) + strlen("base.txt") + 1;
-  size_t wm_name_len = strlen(distro) + strlen(display_server) + strlen(window_manager) + 1;
+  size_t base_name_len = strlen(getenv("HOME")) + strlen(rel_distro) + strlen("base.txt") + 1;
+  size_t ds_name_len = strlen(getenv("HOME")) + strlen(rel_distro) + strlen(display_server) + strlen("base.txt") + 1;
+  size_t wm_name_len = strlen(getenv("HOME")) + strlen(rel_distro) + strlen(display_server) + strlen(window_manager) + 1;
 
   // 'allocate' space
   char base_file_name[base_name_len];
@@ -258,17 +255,20 @@ int install_packages(config *config) {
 
 
   // Build base filename
-  strncat(base_file_name, distro, strlen(distro));
+  strncat(base_file_name, getenv("HOME"), strlen(getenv("HOME")));
+  strncat(base_file_name, rel_distro, strlen(rel_distro));
   strncat(base_file_name, "base.txt", strlen("base.txt"));
 
   // display server filename
-  strncat(display_serv_file_name, distro, strlen(distro));
+  strncat(display_serv_file_name, getenv("HOME"), strlen(getenv("HOME")));
+  strncat(display_serv_file_name, rel_distro, strlen(rel_distro));
   strncat(display_serv_file_name, display_server, strlen(display_server));
   strncat(display_serv_file_name, "base.txt", strlen("base.txt"));
 
 
   // windowmanager filename
-  strncat(wm_file_name, distro, strlen(distro));
+  strncat(wm_file_name, getenv("HOME"), strlen(getenv("HOME")));
+  strncat(wm_file_name, rel_distro, strlen(rel_distro));
   strncat(wm_file_name, display_server, strlen(display_server));
   strncat(wm_file_name, window_manager, strlen(window_manager));
 
