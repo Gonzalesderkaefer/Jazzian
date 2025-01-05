@@ -157,7 +157,7 @@ enum TRANSFER get_transfer() {
 }
 
 
-config get_config() {
+config *get_config() {
   /* Buff char for flushing */
   int c;
   /* Config struct */
@@ -175,12 +175,108 @@ config get_config() {
   /* Get Transfer type */
   this_config.file_transfer = get_transfer();
   while ((c = getchar()) != '\n' && c != EOF);
-  return this_config;
+  return &this_config;
 }
 
 
-int install_packages() {
+int install_packages(config *config) {
+  // File pointers
+  /*
+  FILE *stdpkg;
+  FILE *displservpkg;
+  FILE *wmpkg;
+  */
 
+  // Filename components
+  char *distro;
+  char *display_server;
+  char *window_manager;
+
+  switch (config->distro) {
+    case DEBIAN:
+      distro = "packages/debian/";
+      break;
+    case FEDORA:
+      distro = "packages/fedora/";
+      break;
+    case ARCH:
+      distro = "packages/arch/";
+      break;
+    case UNKNOWN:
+      return -1;
+  }
+  switch (config->display_manager) {
+    case WAYLAND:
+      display_server = "wayland/";
+      break;
+    case XORG:
+      display_server = "xorg/";
+      break;
+  }
+
+  switch (config->window_manager) {
+    case I3:
+      window_manager = "bspwm.txt";
+      break;
+    case AWESOME:
+      window_manager = "awesome.txt";
+      break;
+    case BSPWM:
+      window_manager = "bspwm.txt";
+      break;
+    case SWAY:
+      window_manager = "sway.txt";
+      break;
+    case HYPRLAND:
+      window_manager = "hypr.txt";
+      break;
+    case RIVER:
+      window_manager = "river.txt";
+      break;
+  }
+
+  // store the file name sizes
+  size_t base_name_len = strlen(distro) + strlen("base.txt") + 1;
+  size_t ds_name_len = strlen(distro) + strlen(display_server) + strlen("base.txt") + 1;
+  size_t wm_name_len = strlen(distro) + strlen(display_server) + strlen(window_manager) + 1;
+
+  // 'allocate' space
+  char base_file_name[base_name_len];
+  char display_serv_file_name[ds_name_len];
+  char wm_file_name[wm_name_len];
+
+  // Overwrite all the space with NULL
+  for (int i = 0; i < base_name_len; ++i) {
+    base_file_name[i] = '\0';
+  }
+  for (int i = 0; i < ds_name_len; ++i) {
+    display_serv_file_name[i] = '\0';
+  }
+  for (int i = 0; i < ds_name_len; ++i) {
+    wm_file_name[i] = '\0';
+  }
+
+
+  // Build base filename
+  strncat(base_file_name, distro, strlen(distro));
+  strncat(base_file_name, "base.txt", strlen("base.txt"));
+
+  // display server filename
+  strncat(display_serv_file_name, distro, strlen(distro));
+  strncat(display_serv_file_name, display_server, strlen(display_server));
+  strncat(display_serv_file_name, "base.txt", strlen("base.txt"));
+
+
+  // windowmanager filename
+  strncat(wm_file_name, distro, strlen(distro));
+  strncat(wm_file_name, display_server, strlen(display_server));
+  strncat(wm_file_name, window_manager, strlen(window_manager));
+
+  printf("base file name is: %s\n",base_file_name);
+  printf("display server file name is: %s\n",display_serv_file_name);
+  printf("window manager file name is: %s\n",wm_file_name);
+
+  /*
   char message[] = "Davey How you doin";
   char delim[] = " ";
   char *token;
@@ -209,7 +305,6 @@ int install_packages() {
 
 
 
-    /* Fork proc */
     pid_t pid = fork();
 
     switch (pid) {
@@ -228,6 +323,8 @@ int install_packages() {
             wait(NULL);
             break;
     }
+  */
+  return 0;
 
 }
 
@@ -237,4 +334,8 @@ int install_packages() {
 
 
 int main() {
+  config *mycfg = get_config();
+  install_packages(mycfg);
+
+
 }
