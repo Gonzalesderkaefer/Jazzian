@@ -1,12 +1,20 @@
 /* Libraries */
 #include <regex.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 
 /* Other files */
 #include "vars.h"
+
+/* Defs */
+#define true 1
+#define false 0
+
+
 
 enum DISPLAYSERVER get_display_server() {
   /* Ask user */
@@ -171,32 +179,55 @@ config get_config() {
 }
 
 
-void install_packages() {
-  //pid_t id = fork();
-  int fds[2];
-  if (pipe(fds) == -1) {
-    fprintf(stderr, "Failed to get pipes");
-    return;
+int install_packages() {
+
+  char message[] = "Davey How you doin";
+  char delim[] = " ";
+  char *token;
+  char **saveptr;
+  token = strtok(message, delim);
+  char **tokens = (char **)malloc(sizeof(char *));
+  tokens[0] = token;
+  int tok_count = 1;
+
+  while (true) {
+    token = strtok(NULL, delim);
+    if (token == NULL) {
+      break;
+    }
+    tokens = (char **)realloc(tokens, sizeof(char *) * (tok_count + 1));
+    tokens[tok_count] = token;
+    tok_count+=1;
   }
 
-  pid_t my_pid; 
-  int status;
-
-  switch (my_pid = fork()) {
-    case -1: 
-      fprintf(stderr,"Failed to fork");
-      return;
-    case 0: /* Child Process */
-      waitpid(getpid(),&status,0);
-      dup2(fds[0],STDIN_FILENO);
-      char *packs[] = { "sudo", "pacman", "-S","neovim", (char *)0};
-      execvp("sudo", packs);
+  for (int i = 0; i < tok_count; ++i) {
+    printf("%s\n",tokens[i]);
   }
 
 
+  free(tokens);
 
 
-  printf("Done!\n");
+
+    /* Fork proc */
+    pid_t pid = fork();
+
+    switch (pid) {
+        case 0:
+            printf("hello from subproc\n");
+            char *args[] = {"sudo", "dnf install vim"};
+            execvp("sudo", args);
+            break;
+        case -1:
+            fprintf(stderr, "fork failed\n");
+            return -1;
+            break;
+        default:
+            printf("hello from parent\n");
+            char *message = "password\n";
+            wait(NULL);
+            break;
+    }
 
 }
 
