@@ -1,0 +1,1 @@
+xorg lxappearance xwallpaper maim picom xorg-xinput xorg-xinit xclip i3lock rxvt-unicode nitrogen

@@ -1,0 +1,1 @@
+lxappearance maim rofi arandr rofi xclip i3lock picom dunst xinput xorg xwallpaper rxvt-unicode nitrogen
