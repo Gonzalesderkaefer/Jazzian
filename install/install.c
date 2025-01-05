@@ -177,13 +177,6 @@ config *get_config() {
 
 
 int install_packages(config *config) {
-  // File pointers
-  /*
-  FILE *stdpkg;
-  FILE *displservpkg;
-  FILE *wmpkg;
-  */
-
   // Filename components
   char *rel_distro;
   char *display_server;
@@ -275,6 +268,25 @@ int install_packages(config *config) {
   printf("base file name is: %s\n",base_file_name);
   printf("display server file name is: %s\n",display_serv_file_name);
   printf("window manager file name is: %s\n",wm_file_name);
+
+  // File pointers
+  FILE *stdpkg = fopen(base_file_name, "r");
+  if (!stdpkg) {
+    fprintf(stderr,"Could not open base packages\n"); 
+    return -1;
+  }
+  FILE *displservpkg = fopen(display_serv_file_name, "r");
+  if (!displservpkg) {
+    fprintf(stderr,"Could not open displayserver packages\n"); 
+    return -1;
+  }
+  FILE *wmpkg = fopen(wm_file_name, "r");
+  if (!wmpkg) {
+    fprintf(stderr,"Could not open windowmanager packages\n"); 
+    return -1;
+  }
+
+
 
   /*
   char message[] = "Davey How you doin";
