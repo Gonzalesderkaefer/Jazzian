@@ -9,7 +9,7 @@
 #include <stdbool.h>
 
 /* Other files */
-#include "vars.h"
+#include "def.h"
 
 
 
@@ -235,7 +235,7 @@ int install_packages(config *config) {
   char display_serv_file_name[ds_name_len];
   char wm_file_name[wm_name_len];
 
-  // Overwrite all the space with NULL
+  // Overwrite all the space with NUL
   for (int i = 0; i < base_name_len; ++i) {
     base_file_name[i] = '\0';
   }
@@ -252,14 +252,14 @@ int install_packages(config *config) {
   strncat(base_file_name, rel_distro, strlen(rel_distro));
   strncat(base_file_name, "base.txt", strlen("base.txt"));
 
-  // display server filename
+  // Build display server filename
   strncat(display_serv_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(display_serv_file_name, rel_distro, strlen(rel_distro));
   strncat(display_serv_file_name, display_server, strlen(display_server));
   strncat(display_serv_file_name, "base.txt", strlen("base.txt"));
 
 
-  // windowmanager filename
+  // Build windowmanager filename
   strncat(wm_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(wm_file_name, rel_distro, strlen(rel_distro));
   strncat(wm_file_name, display_server, strlen(display_server));
@@ -275,8 +275,8 @@ int install_packages(config *config) {
     fprintf(stderr,"Could not open base packages\n"); 
     return -1;
   }
-  FILE *displservpkg = fopen(display_serv_file_name, "r");
-  if (!displservpkg) {
+  FILE *dsppkg = fopen(display_serv_file_name, "r");
+  if (!dsppkg) {
     fprintf(stderr,"Could not open displayserver packages\n"); 
     return -1;
   }
@@ -286,6 +286,23 @@ int install_packages(config *config) {
     return -1;
   }
 
+  // Determine sizes
+  fseek(stdpkg, 0, SEEK_END);
+  int std_strlen = ftell(stdpkg) + 2; // 2 cuz space has to be at end
+  fseek(stdpkg, 0, SEEK_SET); // Reset file pointer
+
+  fseek(dsppkg, 0, SEEK_END);
+  int dsp_strlen = ftell(dsppkg) + 2; // 2 cuz space has to be at end
+  fseek(dsppkg, 0, SEEK_SET); // Reset file pointer
+
+  fseek(wmpkg, 0, SEEK_END);
+  int wm_strlen = ftell(dsppkg) + 2; // 2 cuz space has to be at end
+  fseek(wmpkg, 0, SEEK_SET); // Reset file pointer
+
+  // Create Buffers
+  char stdpkg_string[std_strlen];
+  char wmpkg_string[std_strlen];
+  char dsppkg_string[std_strlen];
 
 
   /*
