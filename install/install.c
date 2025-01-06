@@ -258,7 +258,6 @@ int install_packages(config *config) {
   strncat(display_serv_file_name, display_server, strlen(display_server));
   strncat(display_serv_file_name, "base.txt", strlen("base.txt"));
 
-
   // Build windowmanager filename
   strncat(wm_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(wm_file_name, rel_distro, strlen(rel_distro));
@@ -296,13 +295,42 @@ int install_packages(config *config) {
   fseek(dsppkg, 0, SEEK_SET); // Reset file pointer
 
   fseek(wmpkg, 0, SEEK_END);
-  int wm_strlen = ftell(dsppkg) + 2; // 2 cuz space has to be at end
+  int wm_strlen = ftell(wmpkg) + 2; // 2 cuz space has to be at end
   fseek(wmpkg, 0, SEEK_SET); // Reset file pointer
 
   // Create Buffers
   char stdpkg_string[std_strlen];
-  char wmpkg_string[std_strlen];
-  char dsppkg_string[std_strlen];
+  char curr;
+  for (int i = 0; i < std_strlen; ++i) {
+    stdpkg_string[i] = '\0';
+  }
+  for (int i = 0; (curr = fgetc(stdpkg)) != EOF; ++i) {
+    stdpkg_string[i] = curr;
+  }
+  printf("Standard packages:\n\n%s\n",stdpkg_string);
+
+  char dsppkg_string[dsp_strlen];
+  for (int i = 0; i < dsp_strlen; ++i) {
+    dsppkg_string[i] = '\0';
+  }
+  for (int i = 0; (curr = fgetc(dsppkg)) != EOF; ++i) {
+    dsppkg_string[i] = curr;
+  }
+  printf("Displaymanager packages:\n\n%s\n",dsppkg_string);
+
+  char wmpkg_string[wm_strlen];
+  for (int i = 0; i < wm_strlen; ++i) {
+    wmpkg_string[i] = '\0';
+  }
+  for (int i = 0; (curr = fgetc(wmpkg)) != EOF; ++i) {
+    wmpkg_string[i] = curr;
+  }
+  printf("Windowmanager packages:\n\n%s\n",wmpkg_string);
+
+  fclose(stdpkg);
+  fclose(dsppkg);
+  fclose(wmpkg);
+
 
 
   /*
