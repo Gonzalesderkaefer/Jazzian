@@ -1,17 +1,15 @@
 /* Libraries */
 #include <regex.h>
-#include <stdlib.h>
+#include <stdbool.h>
 #include <stdio.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <stdbool.h>
+#include <unistd.h>
 
 /* Other files */
 #include "def.h"
-
-
 
 enum DISPLAYSERVER get_display_server() {
   /* Ask user */
@@ -81,22 +79,21 @@ enum DISTRO get_distro() {
     return UNKNOWN;
   }
   /* Determine size of file */
-  fseek(file, 0,SEEK_END);
+  fseek(file, 0, SEEK_END);
   int length = ftell(file);
   /* Set file pointer to the beginning */
-  fseek(file,0,SEEK_SET);
+  fseek(file, 0, SEEK_SET);
 
   /* Read the file */
   char release[length + 1];
   int i = 0;
   char curr;
-  while ((curr = fgetc(file)) != EOF){
+  while ((curr = fgetc(file)) != EOF) {
     release[i] = curr;
     ++i;
   }
 
   fclose(file);
-
 
   /* Constructing regexes */
   regex_t arch;
@@ -110,9 +107,12 @@ enum DISTRO get_distro() {
   regcomp(&debian, "DEBIAN|Debian|debian", REG_EXTENDED);
   regcomp(&fedora, "FEDORA|Fedora|fedora", REG_EXTENDED);
 
-  int archStat = regexec(&arch,release,arch.re_nsub+1,arch_pmatch,REG_NOTEOL);
-  int debStat = regexec(&debian,release,debian.re_nsub+1,arch_pmatch,REG_NOTEOL);
-  int fedStat = regexec(&fedora,release,fedora.re_nsub+1,fedora_pmatch,REG_NOTEOL);
+  int archStat =
+      regexec(&arch, release, arch.re_nsub + 1, arch_pmatch, REG_NOTEOL);
+  int debStat =
+      regexec(&debian, release, debian.re_nsub + 1, arch_pmatch, REG_NOTEOL);
+  int fedStat =
+      regexec(&fedora, release, fedora.re_nsub + 1, fedora_pmatch, REG_NOTEOL);
 
   regfree(&arch);
   regfree(&debian);
@@ -150,9 +150,7 @@ enum TRANSFER get_transfer() {
   } else {
     return NOTHING;
   }
-
 }
-
 
 config *get_config() {
   /* Buff char for flushing */
@@ -162,19 +160,21 @@ config *get_config() {
   /* get display manager from user */
   this_config.display_manager = get_display_server();
   /* getchar won't work otherwise */
-  while ((c = getchar()) != '\n' && c != EOF);
+  while ((c = getchar()) != '\n' && c != EOF)
+    ;
   /* get window manager */
   this_config.window_manager = get_window_manager(this_config.display_manager);
   /* getchar won't work otherwise */
-  while ((c = getchar()) != '\n' && c != EOF);
+  while ((c = getchar()) != '\n' && c != EOF)
+    ;
   /* Get Distro */
   this_config.distro = get_distro();
   /* Get Transfer type */
   this_config.file_transfer = get_transfer();
-  while ((c = getchar()) != '\n' && c != EOF);
+  while ((c = getchar()) != '\n' && c != EOF)
+    ;
   return &this_config;
 }
-
 
 int install_packages(config *config) {
   // Filename components
@@ -183,52 +183,55 @@ int install_packages(config *config) {
   char *window_manager;
 
   switch (config->distro) {
-    case DEBIAN:
-      rel_distro = "/Jazzian/install/packages/debian/";
-      break;
-    case FEDORA:
-      rel_distro = "/Jazzian/install/packages/fedora/";
-      break;
-    case ARCH:
-      rel_distro = "/Jazzian/install/packages/arch/";
-      break;
-    case UNKNOWN:
-      return -1;
+  case DEBIAN:
+    rel_distro = "/Jazzian/install/packages/debian/";
+    break;
+  case FEDORA:
+    rel_distro = "/Jazzian/install/packages/fedora/";
+    break;
+  case ARCH:
+    rel_distro = "/Jazzian/install/packages/arch/";
+    break;
+  case UNKNOWN:
+    return -1;
   }
   switch (config->display_manager) {
-    case WAYLAND:
-      display_server = "wayland/";
-      break;
-    case XORG:
-      display_server = "xorg/";
-      break;
+  case WAYLAND:
+    display_server = "wayland/";
+    break;
+  case XORG:
+    display_server = "xorg/";
+    break;
   }
 
   switch (config->window_manager) {
-    case I3:
-      window_manager = "bspwm.txt";
-      break;
-    case AWESOME:
-      window_manager = "awesome.txt";
-      break;
-    case BSPWM:
-      window_manager = "bspwm.txt";
-      break;
-    case SWAY:
-      window_manager = "sway.txt";
-      break;
-    case HYPRLAND:
-      window_manager = "hypr.txt";
-      break;
-    case RIVER:
-      window_manager = "river.txt";
-      break;
+  case I3:
+    window_manager = "bspwm.txt";
+    break;
+  case AWESOME:
+    window_manager = "awesome.txt";
+    break;
+  case BSPWM:
+    window_manager = "bspwm.txt";
+    break;
+  case SWAY:
+    window_manager = "sway.txt";
+    break;
+  case HYPRLAND:
+    window_manager = "hypr.txt";
+    break;
+  case RIVER:
+    window_manager = "river.txt";
+    break;
   }
 
   // store the file name sizes
-  size_t base_name_len = strlen(getenv("HOME")) + strlen(rel_distro) + strlen("base.txt") + 1;
-  size_t ds_name_len = strlen(getenv("HOME")) + strlen(rel_distro) + strlen(display_server) + strlen("base.txt") + 1;
-  size_t wm_name_len = strlen(getenv("HOME")) + strlen(rel_distro) + strlen(display_server) + strlen(window_manager) + 1;
+  size_t base_name_len =
+      strlen(getenv("HOME")) + strlen(rel_distro) + strlen("base.txt") + 1;
+  size_t ds_name_len = strlen(getenv("HOME")) + strlen(rel_distro) +
+                       strlen(display_server) + strlen("base.txt") + 1;
+  size_t wm_name_len = strlen(getenv("HOME")) + strlen(rel_distro) +
+                       strlen(display_server) + strlen(window_manager) + 1;
 
   // 'allocate' space
   char base_file_name[base_name_len];
@@ -245,7 +248,6 @@ int install_packages(config *config) {
   for (int i = 0; i < ds_name_len; ++i) {
     wm_file_name[i] = '\0';
   }
-
 
   // Build base filename
   strncat(base_file_name, getenv("HOME"), strlen(getenv("HOME")));
@@ -264,39 +266,39 @@ int install_packages(config *config) {
   strncat(wm_file_name, display_server, strlen(display_server));
   strncat(wm_file_name, window_manager, strlen(window_manager));
 
-  printf("base file name is: %s\n",base_file_name);
-  printf("display server file name is: %s\n",display_serv_file_name);
-  printf("window manager file name is: %s\n",wm_file_name);
+  printf("base file name is: %s\n", base_file_name);
+  printf("display server file name is: %s\n", display_serv_file_name);
+  printf("window manager file name is: %s\n", wm_file_name);
 
   // File pointers
   FILE *stdpkg = fopen(base_file_name, "r");
   if (!stdpkg) {
-    fprintf(stderr,"Could not open base packages\n"); 
+    fprintf(stderr, "Could not open base packages\n");
     return -1;
   }
   FILE *dsppkg = fopen(display_serv_file_name, "r");
   if (!dsppkg) {
-    fprintf(stderr,"Could not open displayserver packages\n"); 
+    fprintf(stderr, "Could not open displayserver packages\n");
     return -1;
   }
   FILE *wmpkg = fopen(wm_file_name, "r");
   if (!wmpkg) {
-    fprintf(stderr,"Could not open windowmanager packages\n"); 
+    fprintf(stderr, "Could not open windowmanager packages\n");
     return -1;
   }
 
   // Determine sizes
   fseek(stdpkg, 0, SEEK_END);
   int std_strlen = ftell(stdpkg) + 2; // 2 cuz space has to be at end
-  fseek(stdpkg, 0, SEEK_SET); // Reset file pointer
+  fseek(stdpkg, 0, SEEK_SET);         // Reset file pointer
 
   fseek(dsppkg, 0, SEEK_END);
   int dsp_strlen = ftell(dsppkg) + 2; // 2 cuz space has to be at end
-  fseek(dsppkg, 0, SEEK_SET); // Reset file pointer
+  fseek(dsppkg, 0, SEEK_SET);         // Reset file pointer
 
   fseek(wmpkg, 0, SEEK_END);
   int wm_strlen = ftell(wmpkg) + 2; // 2 cuz space has to be at end
-  fseek(wmpkg, 0, SEEK_SET); // Reset file pointer
+  fseek(wmpkg, 0, SEEK_SET);        // Reset file pointer
 
   // Create Buffers
   char stdpkg_string[std_strlen];
@@ -307,7 +309,7 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(stdpkg)) != EOF; ++i) {
     stdpkg_string[i] = curr;
   }
-  printf("Standard packages:\n\n%s\n",stdpkg_string);
+  printf("Standard packages:\n\n%s\n", stdpkg_string);
 
   char dsppkg_string[dsp_strlen];
   for (int i = 0; i < dsp_strlen; ++i) {
@@ -316,7 +318,7 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(dsppkg)) != EOF; ++i) {
     dsppkg_string[i] = curr;
   }
-  printf("Displaymanager packages:\n\n%s\n",dsppkg_string);
+  printf("Displaymanager packages:\n\n%s\n", dsppkg_string);
 
   char wmpkg_string[wm_strlen];
   for (int i = 0; i < wm_strlen; ++i) {
@@ -325,24 +327,34 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(wmpkg)) != EOF; ++i) {
     wmpkg_string[i] = curr;
   }
-  printf("Windowmanager packages:\n\n%s\n",wmpkg_string);
+  printf("Windowmanager packages:\n\n%s\n", wmpkg_string);
 
   fclose(stdpkg);
   fclose(dsppkg);
   fclose(wmpkg);
 
+  // Tokenize
+  char delim[] = " "; // delimitter
+  // Tokenize std packages
+  char *stdtoken = strtok(stdpkg_string, delim);
+  char **stdtokens = malloc(sizeof(char *));
+  stdtokens[0] = stdtoken;
+  int stdtok_count = 1;
+  while ((stdtoken = strtok(NULL, delim)) != NULL) {
+    stdtokens = realloc(stdtokens, sizeof(char *) * (stdtok_count + 1));
+    if (stdtokens == NULL) {
+      fprintf(stderr, "Reallocation Error\n");
+      return -1;
+    }
+    stdtokens[stdtok_count++] = stdtoken;
+  }
+  for (int i = 0; i < stdtok_count; ++i) {
+    printf("%s\n",stdtokens[i]);
+  }
 
+  free(stdtokens);
 
   /*
-  char message[] = "Davey How you doin";
-  char delim[] = " ";
-  char *token;
-  char **saveptr;
-  token = strtok(message, delim);
-  char **tokens = (char **)malloc(sizeof(char *));
-  tokens[0] = token;
-  int tok_count = 1;
-
   while (true) {
     token = strtok(NULL, delim);
     if (token == NULL) {
@@ -382,17 +394,9 @@ int install_packages(config *config) {
     }
   */
   return 0;
-
 }
-
-
-
-
-
 
 int main() {
   config *mycfg = get_config();
   install_packages(mycfg);
-
-
 }
