@@ -42,7 +42,7 @@ function git_branch() {
 }
 
 precmd(){
-    PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %F{cyan}$(git_branch)%f${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
+    PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
 }
 
 
@@ -52,7 +52,7 @@ setopt prompt_subst
 newline=$'\n'
 workingdir=$'\W';
 # PROMPT="[%F{green}% %B%n%b%f@%F{red}%m%f]:$(git_branch)> "
-PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %F{cyan}$(git_branch)%f${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
+PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
 
 
 # Source aliases
@@ -69,7 +69,7 @@ zle-keymap-select()
     if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]] ; then
         echo -ne '\e[1 q'
 	# PROMPT="   [%F{blue}%~%f] > "
-        PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %F{cyan}$(git_branch)%f${newline}%F{green}%F{blue}[N]%f%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
+        PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}%F{blue}[N]%f%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
 	zle reset-prompt
     elif [[ ${KEYMAP} == main ]] ||
          [[ ${KEYMAP} == viins ]] ||
@@ -77,7 +77,7 @@ zle-keymap-select()
          [[ $1 = 'beam' ]]; then
         echo -ne '\e[1 q'
 	# PROMPT="%F{green}[I]%f[%F{blue}%~%f] > "
-        PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %F{cyan}$(git_branch)%f${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
+        PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
 	zle reset-prompt
     fi
 }
@@ -87,7 +87,7 @@ zle-line-init()
     echo -ne '\e[1 q'
     # PROMPT="%F{green}[I]%f[%F{blue}%~%f] > "
     zle reset-prompt
-    PS1='[%F{green}% $USER%f@%F{red}% $HOST%f]%F{cyan}$(git_branch)%f${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
+    PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
 }
 
 zle -N zle-keymap-select
