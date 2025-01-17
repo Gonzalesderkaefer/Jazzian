@@ -102,7 +102,7 @@ release="$(cat /etc/os-release)";
 
 case $release in
     *"Debian"* | *"debian"* | *"DEBIAN"*)
-        echo "    \"Distro\": debian" >> $config_file;
+        echo "    \"Distro\": \"debian\"" >> $config_file;
         ;;
     *"Fedora"* | *"fedora"* | *"FEDORA"*)
         echo "    \"Distro\": \"fedora\"" >> $config_file;
