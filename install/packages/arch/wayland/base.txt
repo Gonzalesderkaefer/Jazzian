@@ -1,0 +1,1 @@
+grim wofi swaybg waybar swayidle swaylock wl-clipboard mako slurp

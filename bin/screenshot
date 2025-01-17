@@ -8,7 +8,14 @@ fi
 
 case $XDG_SESSION_TYPE in
     "wayland")
-	grim $file && notify-send "saved screenshot to $file"
+        case $1 in
+            "select")
+                grim -g "$(slurp)" $file && notify-send "saved screenshot to $file"
+                ;;
+            *)
+                grim $file && notify-send "saved screenshot to $file"
+                ;;
+        esac
         ;;
     *)
 	maim $file && notify-send "saved screenshot to $file"

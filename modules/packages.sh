@@ -7,7 +7,7 @@ debian_base='tmux vifm zsh evince flatpak network-manager network-manager-gnome
     arc-theme libnotify-bin acpi-support acpid acpi linux-cpupower cpufrequtils
     openssh-server nnn fzf zathura'
 
-debian_wayland='grim swaylock wofi xwayland wlr-randr wl-clipboard swayidle mako-notifier'
+debian_wayland='grim swaylock wofi xwayland wlr-randr wl-clipboard swayidle mako-notifier slurp'
 
 debian_river='sway i3blocks'
 
@@ -33,7 +33,7 @@ fedora_base='rofi-wayland vifm tmux zsh pinentry thunar mate-polkit nnn neovim a
     network-manager-applet arc-theme'
 
 
-fedora_wayland='grim swaybg swayidle waybar wofi wl-clipboard swaylock mako'
+fedora_wayland='grim swaybg swayidle waybar wofi wl-clipboard swaylock mako slurp'
 
 fedora_hypr='hyprland waybar'
 
@@ -60,7 +60,7 @@ arch_base='fzf tmux zsh vifm nnn rofi-wayland networkmanager thunar nm-connectio
     pipewire-alsa wireplumber cpupower git'
 
 
-arch_wayland='grim wofi swaybg waybar swayidle swaylock wl-clipboard mako'
+arch_wayland='grim wofi swaybg waybar swayidle swaylock wl-clipboard mako slurp'
 
 arch_hypr='hyprland waybar hyprpaper'
 
