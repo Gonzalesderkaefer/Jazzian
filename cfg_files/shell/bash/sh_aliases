@@ -59,6 +59,7 @@ alias "clr"="clear"
 
 
 ## git alaiases
+alias "gts"="git status"
 alias "ga"="git add ."
 alias "gc"="git commit" 
 alias "gps"="git push origin main"
