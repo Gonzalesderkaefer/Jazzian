@@ -1,4 +1,4 @@
-/* Libraries */
+// Libraries
 #include <regex.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -8,16 +8,16 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-/* Other files */
+// Other files
 #include "def.h"
 
 enum DISPLAYSERVER get_display_server() {
-  /* Ask user */
+  // Ask user
   printf("\033[1;35mChoose a Displayserver\033[0m\n");
   printf("\033[0;32m[x]org (default)\033[0m\n");
   printf("\033[0;32m[w]ayland \033[0m\n");
   printf("Your Choice: ");
-  /* Get users choice */
+  // Get users choice
   char choice = getchar();
 
   if (choice == 'w' || choice == 'W')
@@ -27,7 +27,7 @@ enum DISPLAYSERVER get_display_server() {
 }
 
 enum WINDOWMANAGER get_window_manager(enum DISPLAYSERVER display_server) {
-  /* Ask user */
+  // Ask user
   printf("\033[1;35mChoose a Windowmanager\033[0m\n");
   char choice;
   switch (display_server) {
@@ -37,10 +37,10 @@ enum WINDOWMANAGER get_window_manager(enum DISPLAYSERVER display_server) {
     printf("\033[0;32m[b]spwm \033[0m\n");
     printf("Your Choice: ");
 
-    /* Get users choice */
+    // Get users choice
     choice = getchar();
 
-    /* Check user choice and return */
+    // Check user choice and return
     if (choice == 'b' || choice == 'B') {
       return BSPWM;
     } else if (choice == 'a' || choice == 'A') {
@@ -56,10 +56,10 @@ enum WINDOWMANAGER get_window_manager(enum DISPLAYSERVER display_server) {
     printf("\033[0;32m[r]iver \033[0m\n");
     printf("Your Choice: ");
 
-    /* Get users choice */
+    // Get users choice
     choice = getchar();
 
-    /* Check user choice and return */
+    // Check user choice and return
     if (choice == 'h' || choice == 'H') {
       return HYPRLAND;
     } else if (choice == 'r' || choice == 'R') {
@@ -78,13 +78,13 @@ enum DISTRO get_distro() {
     fprintf(stderr, "Could not open release file");
     return UNKNOWN;
   }
-  /* Determine size of file */
+  // Determine size of file
   fseek(file, 0, SEEK_END);
   int length = ftell(file);
-  /* Set file pointer to the beginning */
+  // Set file pointer to the beginning
   fseek(file, 0, SEEK_SET);
 
-  /* Read the file */
+  // Read the file
   char release[length + 1];
   int i = 0;
   char curr;
@@ -95,7 +95,7 @@ enum DISTRO get_distro() {
 
   fclose(file);
 
-  /* Constructing regexes */
+  // Constructing regexes
   regex_t arch;
   regmatch_t arch_pmatch[5];
   regex_t debian;
@@ -134,15 +134,15 @@ enum DISTRO get_distro() {
 }
 
 enum TRANSFER get_transfer() {
-  /* Ask user */
+  // Ask user
   printf("\033[1;35mChoose method of transfer\033[0m\n");
   printf("\033[0;32mDo [N]othing (default)\033[0m\n");
   printf("\033[0;32m[l]ink \033[0m\n");
   printf("\033[0;32m[c]opy \033[0m\n");
   printf("Your Choice: ");
-  /* Get users choice */
+  // Get users choice
   char choice = getchar();
-  /* Check user choice and return */
+  // Check user choice and return
   if (choice == 'l' || choice == 'L') {
     return LINK;
   } else if (choice == 'c' || choice == 'C') {
@@ -153,23 +153,23 @@ enum TRANSFER get_transfer() {
 }
 
 config *get_config() {
-  /* Buff char for flushing */
+  // Buff char for flushing
   int c;
   /* Config struct */
   static config this_config;
-  /* get display manager from user */
+  // get display manager from user
   this_config.display_manager = get_display_server();
-  /* getchar won't work otherwise */
+  // getchar won't work otherwise
   while ((c = getchar()) != '\n' && c != EOF)
     ;
-  /* get window manager */
+  // get window manager
   this_config.window_manager = get_window_manager(this_config.display_manager);
   /* getchar won't work otherwise */
   while ((c = getchar()) != '\n' && c != EOF)
     ;
-  /* Get Distro */
+  // Get Distro
   this_config.distro = get_distro();
-  /* Get Transfer type */
+  // Get Transfer type 
   this_config.file_transfer = get_transfer();
   while ((c = getchar()) != '\n' && c != EOF)
     ;
@@ -335,6 +335,7 @@ int install_packages(config *config) {
 
   // Tokenize
   char delim[] = " "; // delimitter
+
   // Tokenize std packages
   char *stdtoken = strtok(stdpkg_string, delim);
   char **stdtokens = malloc(sizeof(char *));
@@ -352,6 +353,59 @@ int install_packages(config *config) {
     printf("%s\n",stdtokens[i]);
   }
 
+
+  // Tokenize displayserver packages
+  char *dsptoken = strtok(dsppkg_string, delim);
+  char **dsptokens = malloc(sizeof(char *));
+  dsptokens[0] = dsptoken;
+  int dsptok_count = 1;
+  while ((dsptoken = strtok(NULL, delim)) != NULL) {
+    dsptokens = realloc(dsptokens, sizeof(char *) * (dsptok_count + 1));
+    if (dsptokens == NULL) {
+      fprintf(stderr, "Reallocation Error\n");
+      return -1;
+    }
+    dsptokens[dsptok_count++] = dsptoken;
+  }
+  for (int i = 0; i < dsptok_count; ++i) {
+    printf("%s\n",dsptokens[i]);
+  }
+
+
+
+  // Tokenize wm packages
+  char *wmtoken = strtok(wmpkg_string, delim);
+  char **wmtokens = malloc(sizeof(char *));
+  wmtokens[0] = wmtoken;
+  int wmtok_count = 1;
+  while ((wmtoken = strtok(NULL, delim)) != NULL) {
+    wmtokens = realloc(wmtokens, sizeof(char *) * (wmtok_count + 1));
+    if (wmtokens == NULL) {
+      fprintf(stderr, "Reallocation Error\n");
+      return -1;
+    }
+    wmtokens[wmtok_count++] = wmtoken;
+  }
+  for (int i = 0; i < wmtok_count; ++i) {
+    printf("%s\n",wmtokens[i]);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  free(wmtokens);
+  free(dsptokens);
   free(stdtokens);
 
   /*
