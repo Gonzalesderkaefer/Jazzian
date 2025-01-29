@@ -387,7 +387,7 @@ int install_packages(config *config) {
     wmtokens[wmtok_count++] = wmtoken;
   }
 
-  char *args[wmtok_count + dsptok_count + stdtok_count + 3 + 1];
+  char *args[wmtok_count + dsptok_count + stdtok_count + 3 + 20];
   int i = 0;
   for (; i < 3; ++i) {
     args[i] = inst_cmd[i];
@@ -406,6 +406,7 @@ int install_packages(config *config) {
     args[i] = wmtokens[i-3-stdtok_count-dsptok_count];
     ulong size = strlen(args[i]);
     args[i][size - 1] = args[i][size - 1] == '\n' ? '\0' : args[i][size - 1];
+
   }
   /*
   */
@@ -415,7 +416,8 @@ int install_packages(config *config) {
   free(stdtokens);
 
   for (int j = 0; j < i; ++j) {
-    printf("%s\n", args[j]);
+    printf("%s, length: %lu\n", args[j], strlen(args[j]));
+
   }
 
 
