@@ -1,5 +1,7 @@
 // Libraries
+#include <errno.h>
 #include <regex.h>
+#include <dirent.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -276,10 +278,6 @@ int install_packages(config *config) {
   strncat(wm_file_name, display_server, strlen(display_server));
   strncat(wm_file_name, window_manager, strlen(window_manager));
 
-  // printf("base file name is: %s\n", base_file_name);
-  // printf("display server file name is: %s\n", display_serv_file_name);
-  // printf("window manager file name is: %s\n", wm_file_name);
-
   // File pointers
   FILE *stdpkg = fopen(base_file_name, "r");
   if (!stdpkg) {
@@ -319,7 +317,6 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(stdpkg)) != EOF; ++i) {
     stdpkg_string[i] = curr;
   }
-  // printf("Standard packages:\n\n%s\n", stdpkg_string);
 
   char dsppkg_string[dsp_strlen];
   for (int i = 0; i < dsp_strlen; ++i) {
@@ -328,7 +325,6 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(dsppkg)) != EOF; ++i) {
     dsppkg_string[i] = curr;
   }
-  // printf("Displaymanager packages:\n\n%s\n", dsppkg_string);
 
   char wmpkg_string[wm_strlen];
   for (int i = 0; i < wm_strlen; ++i) {
@@ -437,56 +433,55 @@ int install_packages(config *config) {
     wait(NULL);
     break;
   }
-
-  /*
-  while (true) {
-    token = strtok(NULL, delim);
-    if (token == NULL) {
-      break;
-    }
-    tokens = (char **)realloc(tokens, sizeof(char *) * (tok_count + 1));
-    tokens[tok_count] = token;
-    tok_count+=1;
-  }
-
-  for (int i = 0; i < tok_count; ++i) {
-    printf("%s\n",tokens[i]);
-  }
-
-
-  free(tokens);
-
-
-
-    pid_t pid = fork();
-
-    switch (pid) {
-        case 0:
-            printf("hello from subproc\n");
-            char *args[] = {"sudo", "dnf install vim"};
-            execvp("sudo", args);
-            break;
-        case -1:
-            fprintf(stderr, "fork failed\n");
-            return -1;
-            break;
-        default:
-            printf("hello from parent\n");
-            char *message = "password\n";
-            wait(NULL);
-            break;
-    }
-  */
   return 0;
 }
 
-int main() {
-  // config *mycfg = get_config();
-  // install_packages(mycfg);
 
+void link_cfgs() {
+  // Get home path
+  char *home;
+  if (!(home = getenv("HOME"))) return;
+  // Build root of config
+  char cfg_dir[strlen("/Jazzian/cfg_files/") + strlen(home) + 1];
+  for(int i = 0; i < strlen("/Jazzian/cfg_files/") + strlen(home) + 1; ++i) cfg_dir[i] = '\0';
+  strcat(cfg_dir, home);
+  strcat(cfg_dir, "/Jazzian/cfg_files/");
+  printf("%s\n", cfg_dir);
+
+  // Build config paths
+  char **cfgs = malloc(sizeof(char *));
+  int path_cnt = 1;
+
+  DIR *dir;
+  dir = opendir(cfg_dir);
+  struct dirent *d;
+  while ((d = readdir(dir))) {
+    // Build file name
+
+
+
+    // Reallocate
+    cfgs = realloc(cfgs, sizeof(char *) * (path_cnt + 1));
+    if (!cfgs){
+      fprintf(stderr, "Reallcoation error\n");
+      return;
+    }
+    path_cnt++;
+  }
+
+  for (int i = 0; i < path_cnt-1; ++i) printf("%s\n", cfgs[i]);
+
+
+
+  free(cfgs);
+}
+
+
+
+int main() {
   config conf = {.distro = DEBIAN,
                  .file_transfer = LINK,
                  .window_manager = AWESOME,
                  .display_manager = XORG};
-  install_packages(&conf);
+  link_cfgs();
 }
