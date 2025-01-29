@@ -169,7 +169,7 @@ config *get_config() {
     ;
   // Get Distro
   this_config.distro = get_distro();
-  // Get Transfer type 
+  // Get Transfer type
   this_config.file_transfer = get_transfer();
   while ((c = getchar()) != '\n' && c != EOF)
     ;
@@ -181,16 +181,26 @@ int install_packages(config *config) {
   char *rel_distro;
   char *display_server;
   char *window_manager;
+  char *inst_cmd[3];
 
   switch (config->distro) {
   case DEBIAN:
     rel_distro = "/Jazzian/install/packages/debian/";
+    inst_cmd[0] = "sudo";
+    inst_cmd[1] = "apt";
+    inst_cmd[2] = "install";
     break;
   case FEDORA:
     rel_distro = "/Jazzian/install/packages/fedora/";
+    inst_cmd[0] = "sudo";
+    inst_cmd[1] = "dnf";
+    inst_cmd[2] = "install";
     break;
   case ARCH:
     rel_distro = "/Jazzian/install/packages/arch/";
+    inst_cmd[0] = "sudo";
+    inst_cmd[1] = "pacman";
+    inst_cmd[2] = "-S";
     break;
   case UNKNOWN:
     return -1;
@@ -266,9 +276,9 @@ int install_packages(config *config) {
   strncat(wm_file_name, display_server, strlen(display_server));
   strncat(wm_file_name, window_manager, strlen(window_manager));
 
-  printf("base file name is: %s\n", base_file_name);
-  printf("display server file name is: %s\n", display_serv_file_name);
-  printf("window manager file name is: %s\n", wm_file_name);
+  // printf("base file name is: %s\n", base_file_name);
+  // printf("display server file name is: %s\n", display_serv_file_name);
+  // printf("window manager file name is: %s\n", wm_file_name);
 
   // File pointers
   FILE *stdpkg = fopen(base_file_name, "r");
@@ -309,7 +319,7 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(stdpkg)) != EOF; ++i) {
     stdpkg_string[i] = curr;
   }
-  printf("Standard packages:\n\n%s\n", stdpkg_string);
+  // printf("Standard packages:\n\n%s\n", stdpkg_string);
 
   char dsppkg_string[dsp_strlen];
   for (int i = 0; i < dsp_strlen; ++i) {
@@ -318,7 +328,7 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(dsppkg)) != EOF; ++i) {
     dsppkg_string[i] = curr;
   }
-  printf("Displaymanager packages:\n\n%s\n", dsppkg_string);
+  // printf("Displaymanager packages:\n\n%s\n", dsppkg_string);
 
   char wmpkg_string[wm_strlen];
   for (int i = 0; i < wm_strlen; ++i) {
@@ -327,7 +337,6 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(wmpkg)) != EOF; ++i) {
     wmpkg_string[i] = curr;
   }
-  printf("Windowmanager packages:\n\n%s\n", wmpkg_string);
 
   fclose(stdpkg);
   fclose(dsppkg);
@@ -349,10 +358,6 @@ int install_packages(config *config) {
     }
     stdtokens[stdtok_count++] = stdtoken;
   }
-  for (int i = 0; i < stdtok_count; ++i) {
-    printf("%s\n",stdtokens[i]);
-  }
-
 
   // Tokenize displayserver packages
   char *dsptoken = strtok(dsppkg_string, delim);
@@ -367,11 +372,6 @@ int install_packages(config *config) {
     }
     dsptokens[dsptok_count++] = dsptoken;
   }
-  for (int i = 0; i < dsptok_count; ++i) {
-    printf("%s\n",dsptokens[i]);
-  }
-
-
 
   // Tokenize wm packages
   char *wmtoken = strtok(wmpkg_string, delim);
@@ -386,27 +386,55 @@ int install_packages(config *config) {
     }
     wmtokens[wmtok_count++] = wmtoken;
   }
-  for (int i = 0; i < wmtok_count; ++i) {
-    printf("%s\n",wmtokens[i]);
+
+  char *args[wmtok_count + dsptok_count + stdtok_count + 3 + 1];
+  int i = 0;
+  for (; i < 3; ++i) {
+    args[i] = inst_cmd[i];
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  for (; i < 3 + stdtok_count; ++i) {
+    args[i] = stdtokens[i - 3];
+    ulong size = strlen(args[i]);
+    args[i][size - 1] = args[i][size - 1] == '\n' ? '\0' : args[i][size - 1];
+  }
+  for (; i < 3+stdtok_count+dsptok_count; ++i) {
+    args[i] = dsptokens[i-3-stdtok_count];
+    ulong size = strlen(args[i]);
+    args[i][size - 1] = args[i][size - 1] == '\n' ? '\0' : args[i][size - 1];
+  }
+  for (; i < 3+stdtok_count+dsptok_count+wmtok_count; ++i) {
+    args[i] = wmtokens[i-3-stdtok_count-dsptok_count];
+    ulong size = strlen(args[i]);
+    args[i][size - 1] = args[i][size - 1] == '\n' ? '\0' : args[i][size - 1];
+  }
+  /*
+  */
 
   free(wmtokens);
   free(dsptokens);
   free(stdtokens);
+
+  for (int j = 0; j < i; ++j) {
+    printf("%s\n", args[j]);
+  }
+
+
+
+  pid_t pid = fork();
+
+  switch (pid) {
+  case 0:
+    printf("hello from subproc\n");
+    execvp("sudo", args);
+    break;
+  case -1:
+    fprintf(stderr, "fork failed\n");
+    return -1;
+    break;
+  default:
+    wait(NULL);
+    break;
+  }
 
   /*
   while (true) {
@@ -451,6 +479,12 @@ int install_packages(config *config) {
 }
 
 int main() {
-  config *mycfg = get_config();
-  install_packages(mycfg);
+  // config *mycfg = get_config();
+  // install_packages(mycfg);
+
+  config conf = {.distro = DEBIAN,
+                 .file_transfer = LINK,
+                 .window_manager = AWESOME,
+                 .display_manager = XORG};
+  install_packages(&conf);
 }
