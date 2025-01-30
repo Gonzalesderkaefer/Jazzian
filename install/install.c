@@ -1,7 +1,7 @@
 // Libraries
+#include <dirent.h>
 #include <errno.h>
 #include <regex.h>
-#include <dirent.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -264,13 +264,13 @@ int install_packages(config *config) {
   // Build base filename
   strncat(base_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(base_file_name, rel_distro, strlen(rel_distro));
-  strncat(base_file_name, "base.txt", strlen("base.txt"));
+  strcat(base_file_name, "base.txt");
 
   // Build display server filename
   strncat(display_serv_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(display_serv_file_name, rel_distro, strlen(rel_distro));
   strncat(display_serv_file_name, display_server, strlen(display_server));
-  strncat(display_serv_file_name, "base.txt", strlen("base.txt"));
+  strcat(display_serv_file_name, "base.txt");
 
   // Build windowmanager filename
   strncat(wm_file_name, getenv("HOME"), strlen(getenv("HOME")));
@@ -393,19 +393,18 @@ int install_packages(config *config) {
     ulong size = strlen(args[i]);
     args[i][size - 1] = args[i][size - 1] == '\n' ? '\0' : args[i][size - 1];
   }
-  for (; i < 3+stdtok_count+dsptok_count; ++i) {
-    args[i] = dsptokens[i-3-stdtok_count];
+  for (; i < 3 + stdtok_count + dsptok_count; ++i) {
+    args[i] = dsptokens[i - 3 - stdtok_count];
     ulong size = strlen(args[i]);
     args[i][size - 1] = args[i][size - 1] == '\n' ? '\0' : args[i][size - 1];
   }
-  for (; i < 3+stdtok_count+dsptok_count+wmtok_count; ++i) {
-    args[i] = wmtokens[i-3-stdtok_count-dsptok_count];
+  for (; i < 3 + stdtok_count + dsptok_count + wmtok_count; ++i) {
+    args[i] = wmtokens[i - 3 - stdtok_count - dsptok_count];
     ulong size = strlen(args[i]);
     args[i][size - 1] = args[i][size - 1] == '\n' ? '\0' : args[i][size - 1];
-
   }
   /*
-  */
+   */
 
   free(wmtokens);
   free(dsptokens);
@@ -413,10 +412,7 @@ int install_packages(config *config) {
 
   for (int j = 0; j < i; ++j) {
     printf("%s, length: %lu\n", args[j], strlen(args[j]));
-
   }
-
-
 
   pid_t pid = fork();
 
@@ -437,13 +433,34 @@ int install_packages(config *config) {
 }
 
 
+
+void my_link(char *from, char *to_dir) {
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void link_cfgs() {
   // Get home path
   char *home;
-  if (!(home = getenv("HOME"))) return;
+  if (!(home = getenv("HOME")))
+    return;
   // Build root of config
   char cfg_dir[strlen("/Jazzian/cfg_files/") + strlen(home) + 1];
-  for(int i = 0; i < strlen("/Jazzian/cfg_files/") + strlen(home) + 1; ++i) cfg_dir[i] = '\0';
+  for (int i = 0; i < strlen("/Jazzian/cfg_files/") + strlen(home) + 1; ++i)
+    cfg_dir[i] = '\0';
   strcat(cfg_dir, home);
   strcat(cfg_dir, "/Jazzian/cfg_files/");
   printf("%s\n", cfg_dir);
@@ -457,24 +474,62 @@ void link_cfgs() {
   struct dirent *d;
   while ((d = readdir(dir))) {
     // Build file name
+    char *dirname = (char *)calloc(strlen(cfg_dir) + strlen(d->d_name) + 1, sizeof(char));
+    sprintf(dirname, "%s%s", cfg_dir, d->d_name);
 
+    // assign memory to array
+    cfgs[path_cnt - 1] = dirname;
 
 
     // Reallocate
     cfgs = realloc(cfgs, sizeof(char *) * (path_cnt + 1));
-    if (!cfgs){
+    if (!cfgs) {
       fprintf(stderr, "Reallcoation error\n");
       return;
     }
     path_cnt++;
   }
-
-  for (int i = 0; i < path_cnt-1; ++i) printf("%s\n", cfgs[i]);
-
+  
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // free individual elements
+  for(int i = 0; i < path_cnt - 1; ++i) {
+    printf("%d: Will free: %s\n", i, cfgs[i]);
+    free(cfgs[i]);
+  }
+
+  closedir(dir);
   free(cfgs);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -483,5 +538,14 @@ int main() {
                  .file_transfer = LINK,
                  .window_manager = AWESOME,
                  .display_manager = XORG};
-  link_cfgs();
+  //link_cfgs();
+  //
+
+
+
+
+
+
+
+
 }
