@@ -432,120 +432,60 @@ int install_packages(config *config) {
   return 0;
 }
 
-
-
-void my_link(char *from, char *to_dir) {
-  
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void my_link(char *from, char *to_dir) {}
 
 void link_cfgs() {
   // Get home path
   char *home;
   if (!(home = getenv("HOME")))
     return;
-  // Build root of config
+  // Build src root
   char cfg_dir[strlen("/Jazzian/cfg_files/") + strlen(home) + 1];
   for (int i = 0; i < strlen("/Jazzian/cfg_files/") + strlen(home) + 1; ++i)
     cfg_dir[i] = '\0';
   strcat(cfg_dir, home);
   strcat(cfg_dir, "/Jazzian/cfg_files/");
-  printf("%s\n", cfg_dir);
+  ulong cfglen = strlen(cfg_dir);
 
-  // Build config paths
-  char **cfgs = malloc(sizeof(char *));
-  int path_cnt = 1;
+  // Build target root
+  char target_dir[strlen("/.config/") + strlen(home) + 1];
+  for (int i = 0; i < strlen("/.config/") + strlen(home) + 1; ++i)
+    target_dir[i] = '\0';
+  strcat(target_dir, home);
+  strcat(target_dir, "/.config/");
+  ulong tarlen = strlen(target_dir);
 
+  // Do not link these directories
+  char *illegal_dirs[8] = {".",     "..",          "X11", "passgen",
+                           "shell", "nnn_plugins", "vim", "vifm"};
+
+  // link basic configs
   DIR *dir;
   dir = opendir(cfg_dir);
   struct dirent *d;
   while ((d = readdir(dir))) {
-    // Build file name
-    char *dirname = (char *)calloc(strlen(cfg_dir) + strlen(d->d_name) + 1, sizeof(char));
-    sprintf(dirname, "%s%s", cfg_dir, d->d_name);
+    ulong dlen = strlen(d->d_name);
+    char src [cfglen + dlen];
+    char dest [tarlen + dlen];
 
-    // assign memory to array
-    cfgs[path_cnt - 1] = dirname;
-
-
-    // Reallocate
-    cfgs = realloc(cfgs, sizeof(char *) * (path_cnt + 1));
-    if (!cfgs) {
-      fprintf(stderr, "Reallcoation error\n");
-      return;
+    sprintf(src, "%s%s", cfg_dir, d->d_name);
+    sprintf(dest, "%s%s", target_dir, d->d_name);
+    for (int i = 0; i < 8; ++i) {
+      if (!strcmp(d->d_name, illegal_dirs[i]))
+        goto loopend;
     }
-    path_cnt++;
-  }
-  
+    symlink(src,dest);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // free individual elements
-  for(int i = 0; i < path_cnt - 1; ++i) {
-    printf("%d: Will free: %s\n", i, cfgs[i]);
-    free(cfgs[i]);
+  loopend:;
   }
 
   closedir(dir);
-  free(cfgs);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 int main() {
   config conf = {.distro = DEBIAN,
                  .file_transfer = LINK,
                  .window_manager = AWESOME,
                  .display_manager = XORG};
-  //link_cfgs();
-  //
-
-
-
-
-
-
-
-
+  link_cfgs();
 }
