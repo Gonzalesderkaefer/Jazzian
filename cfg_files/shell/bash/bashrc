@@ -94,17 +94,7 @@ revert ()
 }
 
 
-
-
 ## devicerc
 if [ -f $HOME/.devicerc ]; then
     source $HOME/.devicerc
 fi
-
-
-
-if [ -z $TMUX ]; then
-    tmux
-fi
-
-
