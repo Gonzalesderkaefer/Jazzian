@@ -1,4 +1,6 @@
-/* Libraries */
+// Libraries
+#include <dirent.h>
+#include <errno.h>
 #include <regex.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -8,16 +10,16 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-/* Other files */
+// Other files
 #include "def.h"
 
 enum DISPLAYSERVER get_display_server() {
-  /* Ask user */
+  // Ask user
   printf("\033[1;35mChoose a Displayserver\033[0m\n");
   printf("\033[0;32m[x]org (default)\033[0m\n");
   printf("\033[0;32m[w]ayland \033[0m\n");
   printf("Your Choice: ");
-  /* Get users choice */
+  // Get users choice
   char choice = getchar();
 
   if (choice == 'w' || choice == 'W')
@@ -27,7 +29,7 @@ enum DISPLAYSERVER get_display_server() {
 }
 
 enum WINDOWMANAGER get_window_manager(enum DISPLAYSERVER display_server) {
-  /* Ask user */
+  // Ask user
   printf("\033[1;35mChoose a Windowmanager\033[0m\n");
   char choice;
   switch (display_server) {
@@ -37,10 +39,10 @@ enum WINDOWMANAGER get_window_manager(enum DISPLAYSERVER display_server) {
     printf("\033[0;32m[b]spwm \033[0m\n");
     printf("Your Choice: ");
 
-    /* Get users choice */
+    // Get users choice
     choice = getchar();
 
-    /* Check user choice and return */
+    // Check user choice and return
     if (choice == 'b' || choice == 'B') {
       return BSPWM;
     } else if (choice == 'a' || choice == 'A') {
@@ -56,10 +58,10 @@ enum WINDOWMANAGER get_window_manager(enum DISPLAYSERVER display_server) {
     printf("\033[0;32m[r]iver \033[0m\n");
     printf("Your Choice: ");
 
-    /* Get users choice */
+    // Get users choice
     choice = getchar();
 
-    /* Check user choice and return */
+    // Check user choice and return
     if (choice == 'h' || choice == 'H') {
       return HYPRLAND;
     } else if (choice == 'r' || choice == 'R') {
@@ -78,13 +80,13 @@ enum DISTRO get_distro() {
     fprintf(stderr, "Could not open release file");
     return UNKNOWN;
   }
-  /* Determine size of file */
+  // Determine size of file
   fseek(file, 0, SEEK_END);
   int length = ftell(file);
-  /* Set file pointer to the beginning */
+  // Set file pointer to the beginning
   fseek(file, 0, SEEK_SET);
 
-  /* Read the file */
+  // Read the file
   char release[length + 1];
   int i = 0;
   char curr;
@@ -95,7 +97,7 @@ enum DISTRO get_distro() {
 
   fclose(file);
 
-  /* Constructing regexes */
+  // Constructing regexes
   regex_t arch;
   regmatch_t arch_pmatch[5];
   regex_t debian;
@@ -134,15 +136,15 @@ enum DISTRO get_distro() {
 }
 
 enum TRANSFER get_transfer() {
-  /* Ask user */
+  // Ask user
   printf("\033[1;35mChoose method of transfer\033[0m\n");
   printf("\033[0;32mDo [N]othing (default)\033[0m\n");
   printf("\033[0;32m[l]ink \033[0m\n");
   printf("\033[0;32m[c]opy \033[0m\n");
   printf("Your Choice: ");
-  /* Get users choice */
+  // Get users choice
   char choice = getchar();
-  /* Check user choice and return */
+  // Check user choice and return
   if (choice == 'l' || choice == 'L') {
     return LINK;
   } else if (choice == 'c' || choice == 'C') {
@@ -153,23 +155,23 @@ enum TRANSFER get_transfer() {
 }
 
 config *get_config() {
-  /* Buff char for flushing */
+  // Buff char for flushing
   int c;
   /* Config struct */
   static config this_config;
-  /* get display manager from user */
+  // get display manager from user
   this_config.display_manager = get_display_server();
-  /* getchar won't work otherwise */
+  // getchar won't work otherwise
   while ((c = getchar()) != '\n' && c != EOF)
     ;
-  /* get window manager */
+  // get window manager
   this_config.window_manager = get_window_manager(this_config.display_manager);
   /* getchar won't work otherwise */
   while ((c = getchar()) != '\n' && c != EOF)
     ;
-  /* Get Distro */
+  // Get Distro
   this_config.distro = get_distro();
-  /* Get Transfer type */
+  // Get Transfer type
   this_config.file_transfer = get_transfer();
   while ((c = getchar()) != '\n' && c != EOF)
     ;
@@ -181,16 +183,26 @@ int install_packages(config *config) {
   char *rel_distro;
   char *display_server;
   char *window_manager;
+  char *inst_cmd[3];
 
   switch (config->distro) {
   case DEBIAN:
     rel_distro = "/Jazzian/install/packages/debian/";
+    inst_cmd[0] = "sudo";
+    inst_cmd[1] = "apt";
+    inst_cmd[2] = "install";
     break;
   case FEDORA:
     rel_distro = "/Jazzian/install/packages/fedora/";
+    inst_cmd[0] = "sudo";
+    inst_cmd[1] = "dnf";
+    inst_cmd[2] = "install";
     break;
   case ARCH:
     rel_distro = "/Jazzian/install/packages/arch/";
+    inst_cmd[0] = "sudo";
+    inst_cmd[1] = "pacman";
+    inst_cmd[2] = "-S";
     break;
   case UNKNOWN:
     return -1;
@@ -252,23 +264,19 @@ int install_packages(config *config) {
   // Build base filename
   strncat(base_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(base_file_name, rel_distro, strlen(rel_distro));
-  strncat(base_file_name, "base.txt", strlen("base.txt"));
+  strcat(base_file_name, "base.txt");
 
   // Build display server filename
   strncat(display_serv_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(display_serv_file_name, rel_distro, strlen(rel_distro));
   strncat(display_serv_file_name, display_server, strlen(display_server));
-  strncat(display_serv_file_name, "base.txt", strlen("base.txt"));
+  strcat(display_serv_file_name, "base.txt");
 
   // Build windowmanager filename
   strncat(wm_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(wm_file_name, rel_distro, strlen(rel_distro));
   strncat(wm_file_name, display_server, strlen(display_server));
   strncat(wm_file_name, window_manager, strlen(window_manager));
-
-  printf("base file name is: %s\n", base_file_name);
-  printf("display server file name is: %s\n", display_serv_file_name);
-  printf("window manager file name is: %s\n", wm_file_name);
 
   // File pointers
   FILE *stdpkg = fopen(base_file_name, "r");
@@ -309,7 +317,6 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(stdpkg)) != EOF; ++i) {
     stdpkg_string[i] = curr;
   }
-  printf("Standard packages:\n\n%s\n", stdpkg_string);
 
   char dsppkg_string[dsp_strlen];
   for (int i = 0; i < dsp_strlen; ++i) {
@@ -318,7 +325,6 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(dsppkg)) != EOF; ++i) {
     dsppkg_string[i] = curr;
   }
-  printf("Displaymanager packages:\n\n%s\n", dsppkg_string);
 
   char wmpkg_string[wm_strlen];
   for (int i = 0; i < wm_strlen; ++i) {
@@ -327,7 +333,6 @@ int install_packages(config *config) {
   for (int i = 0; (curr = fgetc(wmpkg)) != EOF; ++i) {
     wmpkg_string[i] = curr;
   }
-  printf("Windowmanager packages:\n\n%s\n", wmpkg_string);
 
   fclose(stdpkg);
   fclose(dsppkg);
@@ -335,6 +340,7 @@ int install_packages(config *config) {
 
   // Tokenize
   char delim[] = " "; // delimitter
+
   // Tokenize std packages
   char *stdtoken = strtok(stdpkg_string, delim);
   char **stdtokens = malloc(sizeof(char *));
@@ -348,55 +354,138 @@ int install_packages(config *config) {
     }
     stdtokens[stdtok_count++] = stdtoken;
   }
-  for (int i = 0; i < stdtok_count; ++i) {
-    printf("%s\n",stdtokens[i]);
+
+  // Tokenize displayserver packages
+  char *dsptoken = strtok(dsppkg_string, delim);
+  char **dsptokens = malloc(sizeof(char *));
+  dsptokens[0] = dsptoken;
+  int dsptok_count = 1;
+  while ((dsptoken = strtok(NULL, delim)) != NULL) {
+    dsptokens = realloc(dsptokens, sizeof(char *) * (dsptok_count + 1));
+    if (dsptokens == NULL) {
+      fprintf(stderr, "Reallocation Error\n");
+      return -1;
+    }
+    dsptokens[dsptok_count++] = dsptoken;
   }
 
+  // Tokenize wm packages
+  char *wmtoken = strtok(wmpkg_string, delim);
+  char **wmtokens = malloc(sizeof(char *));
+  wmtokens[0] = wmtoken;
+  int wmtok_count = 1;
+  while ((wmtoken = strtok(NULL, delim)) != NULL) {
+    wmtokens = realloc(wmtokens, sizeof(char *) * (wmtok_count + 1));
+    if (wmtokens == NULL) {
+      fprintf(stderr, "Reallocation Error\n");
+      return -1;
+    }
+    wmtokens[wmtok_count++] = wmtoken;
+  }
+
+  char *args[wmtok_count + dsptok_count + stdtok_count + 3 + 20];
+  int i = 0;
+  for (; i < 3; ++i) {
+    args[i] = inst_cmd[i];
+  }
+  for (; i < 3 + stdtok_count; ++i) {
+    args[i] = stdtokens[i - 3];
+    ulong size = strlen(args[i]);
+    args[i][size - 1] = args[i][size - 1] == '\n' ? '\0' : args[i][size - 1];
+  }
+  for (; i < 3 + stdtok_count + dsptok_count; ++i) {
+    args[i] = dsptokens[i - 3 - stdtok_count];
+    ulong size = strlen(args[i]);
+    args[i][size - 1] = args[i][size - 1] == '\n' ? '\0' : args[i][size - 1];
+  }
+  for (; i < 3 + stdtok_count + dsptok_count + wmtok_count; ++i) {
+    args[i] = wmtokens[i - 3 - stdtok_count - dsptok_count];
+    ulong size = strlen(args[i]);
+    args[i][size - 1] = args[i][size - 1] == '\n' ? '\0' : args[i][size - 1];
+  }
+  /*
+   */
+
+  free(wmtokens);
+  free(dsptokens);
   free(stdtokens);
 
-  /*
-  while (true) {
-    token = strtok(NULL, delim);
-    if (token == NULL) {
-      break;
-    }
-    tokens = (char **)realloc(tokens, sizeof(char *) * (tok_count + 1));
-    tokens[tok_count] = token;
-    tok_count+=1;
+  for (int j = 0; j < i; ++j) {
+    printf("%s, length: %lu\n", args[j], strlen(args[j]));
   }
 
-  for (int i = 0; i < tok_count; ++i) {
-    printf("%s\n",tokens[i]);
+  pid_t pid = fork();
+
+  switch (pid) {
+  case 0:
+    printf("hello from subproc\n");
+    execvp("sudo", args);
+    break;
+  case -1:
+    fprintf(stderr, "fork failed\n");
+    return -1;
+    break;
+  default:
+    wait(NULL);
+    break;
   }
-
-
-  free(tokens);
-
-
-
-    pid_t pid = fork();
-
-    switch (pid) {
-        case 0:
-            printf("hello from subproc\n");
-            char *args[] = {"sudo", "dnf install vim"};
-            execvp("sudo", args);
-            break;
-        case -1:
-            fprintf(stderr, "fork failed\n");
-            return -1;
-            break;
-        default:
-            printf("hello from parent\n");
-            char *message = "password\n";
-            wait(NULL);
-            break;
-    }
-  */
   return 0;
 }
 
+void my_link(char *from, char *to_dir) {}
+
+void link_cfgs() {
+  // Get home path
+  char *home;
+  if (!(home = getenv("HOME")))
+    return;
+  // Build src root
+  char cfg_dir[strlen("/Jazzian/cfg_files/") + strlen(home) + 1];
+  for (int i = 0; i < strlen("/Jazzian/cfg_files/") + strlen(home) + 1; ++i)
+    cfg_dir[i] = '\0';
+  strcat(cfg_dir, home);
+  strcat(cfg_dir, "/Jazzian/cfg_files/");
+  ulong cfglen = strlen(cfg_dir);
+
+  // Build target root
+  char target_dir[strlen("/.config/") + strlen(home) + 1];
+  for (int i = 0; i < strlen("/.config/") + strlen(home) + 1; ++i)
+    target_dir[i] = '\0';
+  strcat(target_dir, home);
+  strcat(target_dir, "/.config/");
+  ulong tarlen = strlen(target_dir);
+
+  // Do not link these directories
+  char *illegal_dirs[8] = {".",     "..",          "X11", "passgen",
+                           "shell", "nnn_plugins", "vim", "vifm"};
+
+  // link basic configs
+  DIR *dir;
+  dir = opendir(cfg_dir);
+  struct dirent *d;
+  while ((d = readdir(dir))) {
+    ulong dlen = strlen(d->d_name);
+    char src [cfglen + dlen];
+    char dest [tarlen + dlen];
+
+    sprintf(src, "%s%s", cfg_dir, d->d_name);
+    sprintf(dest, "%s%s", target_dir, d->d_name);
+    for (int i = 0; i < 8; ++i) {
+      if (!strcmp(d->d_name, illegal_dirs[i]))
+        goto loopend;
+    }
+    symlink(src,dest);
+
+  loopend:;
+  }
+
+  closedir(dir);
+}
+
 int main() {
-  config *mycfg = get_config();
-  install_packages(mycfg);
+  config conf = {.distro = DEBIAN,
+                 .file_transfer = LINK,
+                 .window_manager = AWESOME,
+                 .display_manager = XORG};
+  link_cfgs();
 }

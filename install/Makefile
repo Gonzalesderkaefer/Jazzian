@@ -9,3 +9,7 @@ run:
 	gcc -o $(bindir)/$(bin) $(src)
 	./$(bindir)/$(bin)
 
+val:
+	[ -d $(bindir) ] || mkdir $(bindir)
+	gcc -o $(bindir)/$(bin) $(src)
+	valgrind ./$(bindir)/$(bin)
