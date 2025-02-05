@@ -133,7 +133,7 @@ extract()
 
 open()
 {
-    printf "Program (GUI): \n";
+    printf "Program (GUI): ";
     read prog;
     nohup $prog $1 >/dev/null 2>&1 &
 }
