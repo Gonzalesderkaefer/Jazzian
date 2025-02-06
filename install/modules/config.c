@@ -3,9 +3,9 @@
 #include <stdio.h>
 
 /* Other files */
-#include "vars.h"
+#include "../def.h"
 
-enum DISPLAYSERVER get_display_server() {
+enum DISPLAYSERVER _get_display_server() {
   /* Ask user */
   printf("\033[1;35mChoose a Displayserver\033[0m\n");
   printf("\033[0;32m[x]org (default)\033[0m\n");
@@ -20,7 +20,7 @@ enum DISPLAYSERVER get_display_server() {
   return XORG;
 }
 
-enum WINDOWMANAGER get_window_manager(enum DISPLAYSERVER display_server) {
+enum WINDOWMANAGER _get_window_manager(enum DISPLAYSERVER display_server) {
   /* Ask user */
   printf("\033[1;35mChoose a Windowmanager\033[0m\n");
   char choice;
@@ -66,7 +66,7 @@ enum WINDOWMANAGER get_window_manager(enum DISPLAYSERVER display_server) {
   }
 }
 
-enum DISTRO get_distro() {
+enum DISTRO _get_distro() {
   FILE *file = fopen("/etc/os-release", "r");
   if (!file) {
     fprintf(stderr, "Could not open release file");
@@ -125,7 +125,7 @@ enum DISTRO get_distro() {
   return UNKNOWN;
 }
 
-enum TRANSFER get_transfer() {
+enum TRANSFER _get_transfer() {
   /* Ask user */
   printf("\033[1;35mChoose method of transfer\033[0m\n");
   printf("\033[0;32mDo [N]othing (default)\033[0m\n");
@@ -145,24 +145,29 @@ enum TRANSFER get_transfer() {
 
 }
 
-
-config get_config() {
+config *get_config() {
   /* Buff char for flushing */
   int c;
   /* Config struct */
   static config this_config;
   /* get display manager from user */
-  this_config.display_manager = get_display_server();
+  this_config.display_manager = _get_display_server();
+
   /* getchar won't work otherwise */
   while ((c = getchar()) != '\n' && c != EOF);
+ 
   /* get window manager */
-  this_config.window_manager = get_window_manager(this_config.display_manager);
+  this_config.window_manager = _get_window_manager(this_config.display_manager);
+ 
   /* getchar won't work otherwise */
   while ((c = getchar()) != '\n' && c != EOF);
+
   /* Get Distro */
-  this_config.distro = get_distro();
+  this_config.distro = _get_distro();
+ 
   /* Get Transfer type */
-  this_config.file_transfer = get_transfer();
+  this_config.file_transfer = _get_transfer();
   while ((c = getchar()) != '\n' && c != EOF);
-  return this_config;
+
+  return &this_config;
 }

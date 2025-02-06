@@ -1,7 +1,9 @@
-typedef enum DISPLAYSERVER { XORG, WAYLAND } DISPLAYSERVER;
+// Display server
+typedef enum DISPLAYSERVER { XORG = 0, WAYLAND } DISPLAYSERVER;
 
+// Windowmanager
 typedef enum WINDOWMANAGER {
-  I3,
+  I3 = 0,
   AWESOME,
   BSPWM,
   SWAY,
@@ -9,10 +11,13 @@ typedef enum WINDOWMANAGER {
   RIVER
 } WINDOWMANAGER;
 
-typedef enum DISTRO { DEBIAN, FEDORA, ARCH, UNKNOWN } DISTRO;
+// Distro
+typedef enum DISTRO { DEBIAN = 0, FEDORA, ARCH, UNKNOWN } DISTRO;
 
-typedef enum TRANSFER { NOTHING, LINK, COPY } TRANSFER;
+// Type of transfer
+typedef enum TRANSFER { NOTHING = 0, LINK, COPY } TRANSFER;
 
+// Config
 typedef struct setup_config {
   DISPLAYSERVER display_manager;
   WINDOWMANAGER window_manager;
