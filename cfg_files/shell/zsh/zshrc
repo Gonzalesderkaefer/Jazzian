@@ -146,6 +146,17 @@ nfcd ()
     rm $NNN_TMPFILE
 }
 
+vicd()
+{
+    local dst="$(command vifm --choose-dir - "$@")"
+    if [ -z "$dst" ]; then
+        echo 'Directory picking cancelled/failed'
+        return 1
+    fi
+    cd "$dst"
+}
+
+
 revert ()
 {
     commit=$(git log --oneline | fzf | awk '{print $1}');
