@@ -24,6 +24,7 @@ copy_files()
         "$HOME/Jazzian/cfg_files/nnn_plugins"
         "$HOME/Jazzian/cfg_files/vim"
         "$HOME/Jazzian/cfg_files/vifm"
+        "$HOME/Jazzian/cfg_files/code"
 
         );
 
@@ -85,6 +86,7 @@ link_files()
             "$HOME/Jazzian/cfg_files/nvim"
             "$HOME/Jazzian/cfg_files/vim"
             "$HOME/Jazzian/cfg_files/qutebrowser"
+            "$HOME/Jazzian/cfg_files/code"
             );
 
     # Link general config files
