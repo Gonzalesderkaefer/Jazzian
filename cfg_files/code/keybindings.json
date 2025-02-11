@@ -1,0 +1,18 @@
+// Place your key bindings in this file to override the defaults
+[
+{
+    "key": "d m",
+    "command": "editor.action.showHover",
+    "when": "editorTextFocus"
+},
+{
+  "key": "g d",
+  "command": "editor.action.revealDefinition",
+  "when": "editorHasDefinitionProvider && editorTextFocus"
+},
+{
+  "key": "g r",
+  "command": "editor.action.goToReferences",
+  "when": "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+},
+]
