@@ -1,8 +1,8 @@
 // Other files
-#include "../def.h"
+#include <stdio.h>
 
 // Debian standard packages
-static const char *debstd[] = {
+static const char *debian_base[] = {
   "tmux",
   "vifm",
   "zsh",
@@ -44,7 +44,7 @@ static const char *debstd[] = {
 };
 
 // Debian xorg packages
-static const char *debxorg[] = {
+static const char *debian_xorg[] = {
   "lxappearance",
   "maim",
   "rofi",
@@ -63,14 +63,14 @@ static const char *debxorg[] = {
 };
 
 // Debian i3 packages
-static const char *debi3[] = {
+static const char *debian_i3[] = {
   "i3",
   "i3blocks",
   NULL
 };
 
 // Debian bspwm packages
-static const char *debbspwm[] = {
+static const char *debian_bspwm[] = {
   "bspwm",
   "sxhkd",
   "polybar",
@@ -78,7 +78,7 @@ static const char *debbspwm[] = {
 };
 
 // Debian awesome packages
-static const char *debawesome[] = {
+static const char *debian_awesome[] = {
   "awesome",
   NULL
 };
@@ -86,7 +86,7 @@ static const char *debawesome[] = {
 
 
 // Debian wayland packages
-static const char *debwlnd[] = {
+static const char *debian_wayland[] = {
   "grim",
   "swaylock",
   "wofi",
@@ -100,28 +100,28 @@ static const char *debwlnd[] = {
 };
 
 // Debian sway packages
-static const char *debsway[] = {
+static const char *debian_sway[] = {
   "sway",
   "i3block",
   NULL
 };
 
 // Debian hyprland packages
-static const char *debhypr[] = {
+static const char *debian_hypr[] = {
   "sway",
   "i3block",
   NULL
 };
 
 // Debian river packages
-static const char *debriver[] = {
+static const char *debian_river[] = {
   "sway",
   "i3block",
   NULL
 };
 
 // Fedora standard packages
-static const char *fedstd[] = {
+static const char *fedora_base[] = {
   "rofi-wayland",
   "vifm",
   "tmux",
@@ -236,7 +236,7 @@ static const char *fedora_sway[] = {
 };
 
 // Arch linux standard packages
-static const char *archstd[] = {
+static const char *arch_base[] = {
   "fzf",
   "tmux",
   "zsh",
@@ -360,12 +360,8 @@ static const char *arch_river[] = {
 };
 
 
-int lst_len(const void **lst) {
+int lst_len(const char **lst) {
   int len = 0;
   for (; lst[len] != NULL; ++len); 
   return len;
-}
-
-int main(){
-  printf("%d\n",lst_len((const void **)arch_wayland));
 }

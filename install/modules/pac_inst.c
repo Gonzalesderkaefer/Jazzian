@@ -3,6 +3,89 @@
 
 
 
+int inst_pac(config *config) {
+  // array names
+  const char **base;
+  const char **dsp_server;
+  const char **wm;
+  char *inst_cmd[3];
+
+  switch (config->distro) {
+    case DEBIAN:
+      inst_cmd[0] = "sudo";
+      inst_cmd[1] = "apt";
+      inst_cmd[2] = "install";
+      base = debian_base;
+
+      if (config->display_manager == WAYLAND) {
+        dsp_server = debian_wayland;
+        switch(config->window_manager) {
+          case HYPRLAND:
+            wm = debian_hypr;
+            break;
+          case SWAY:
+            wm = debian_sway;
+            break;
+          case RIVER:
+            wm = debian_river;
+            break;
+          default: 
+            wm = debian_sway;
+            break;
+        }
+      } else {
+        dsp_server = debian_xorg;
+        switch(config->window_manager) {
+          case BSPWM:
+            wm = debian_bspwm;
+            break;
+          case AWESOME:
+            wm = debian_awesome;
+            break;
+          case I3:
+            wm = debian_i3;
+            break;
+          default: 
+            wm = debian_i3;
+            break;
+        }
+      }
+
+      break;
+    case FEDORA:
+      inst_cmd[0] = "sudo";
+      inst_cmd[1] = "dnf";
+      inst_cmd[2] = "install";
+      base = fedora_base;
+      break;
+    case ARCH:
+      inst_cmd[0] = "sudo";
+      inst_cmd[1] = "pacman";
+      inst_cmd[2] = "-S";
+      base = arch_base;
+      break;
+    case UNKNOWN:
+      return -1;
+  }
+
+  return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int install_packages(config *config) {
   // Filename components
   char *rel_distro;
