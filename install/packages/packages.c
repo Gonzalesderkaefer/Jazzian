@@ -1,3 +1,6 @@
+// Other files
+#include "../def.h"
+
 // Debian standard packages
 static const char *debstd[] = {
   "tmux",
@@ -36,9 +39,11 @@ static const char *debstd[] = {
   "openssh-server",
   "nnn",
   "fzf",
-  "zathura"
+  "zathura",
+  NULL
 };
 
+// Debian xorg packages
 static const char *debxorg[] = {
   "lxappearance",
   "maim",
@@ -53,26 +58,34 @@ static const char *debxorg[] = {
   "xorg",
   "xwallpaper",
   "rxvt-unicode",
-  "nitrogen"
+  "nitrogen",
+  NULL
 };
 
+// Debian i3 packages
 static const char *debi3[] = {
   "i3",
-  "i3blocks"
+  "i3blocks",
+  NULL
 };
 
+// Debian bspwm packages
 static const char *debbspwm[] = {
   "bspwm",
   "sxhkd",
-  "polybar"
+  "polybar",
+  NULL
 };
 
+// Debian awesome packages
 static const char *debawesome[] = {
   "awesome",
+  NULL
 };
 
 
 
+// Debian wayland packages
 static const char *debwlnd[] = {
   "grim",
   "swaylock",
@@ -82,12 +95,29 @@ static const char *debwlnd[] = {
   "wl-clipboard",
   "swayidle",
   "mako-notifier",
-  "slurp"
+  "slurp",
+  NULL
 };
 
+// Debian sway packages
 static const char *debsway[] = {
   "sway",
-  "i3block"
+  "i3block",
+  NULL
+};
+
+// Debian hyprland packages
+static const char *debhypr[] = {
+  "sway",
+  "i3block",
+  NULL
+};
+
+// Debian river packages
+static const char *debriver[] = {
+  "sway",
+  "i3block",
+  NULL
 };
 
 // Fedora standard packages
@@ -125,10 +155,85 @@ static const char *fedstd[] = {
   "jetbrains-mono-fonts",
   "papirus-icon-theme-dark",
   "network-manager-applet",
-  "arc-theme"
+  "arc-theme",
+  NULL
 
 };
 
+// Fedora xorg packages
+static const char *fedora_xorg[] = {
+  "xclip",
+  "@base-x",
+  "maim",
+  "lxappearance",
+  "xinput",
+  "arandr",
+  "nitrogen",
+  "picom",
+  "dunst",
+  "xclip",
+  "i3lock",
+  "rxvt-unicode",
+  "nitrogen",
+  NULL
+};
+
+// Fedora awesome packages
+static const char *fedora_awesome[] = {
+  "awesome",
+  NULL
+};
+
+// Fedora bspwm packages
+static const char *fedora_bspwm[] = {
+  "bspwm",
+  "polybar",
+  "sxhkd",
+  NULL
+};
+
+// Fedora i3 packages
+static const char *fedora_i3[] = {
+  "i3",
+  "i3blocks",
+  NULL
+};
+
+// Fedora wayland packages
+static const char *fedora_wayland[] = {
+  "grim",
+  "swaybg",
+  "swayidle",
+  "waybar",
+  "wofi",
+  "wl-clipboard",
+  "swaylock",
+  "mako",
+  "slurp",
+  NULL
+};
+
+
+// Fedora hyprland packages
+static const char *fedora_hypr[] = {
+  "hyprland",
+  "waybar",
+  NULL
+};
+
+// Fedora river packages
+static const char *fedora_river[] = {
+  "river",
+  "waybar",
+  NULL
+};
+
+// Fedora sway packages
+static const char *fedora_sway[] = {
+  "sway",
+  "i3blocks",
+  NULL
+};
 
 // Arch linux standard packages
 static const char *archstd[] = {
@@ -174,6 +279,93 @@ static const char *archstd[] = {
   "pipewire-alsa",
   "wireplumber",
   "cpupower",
-  "git"
+  "git",
+  NULL
 };
 
+// Arch xorg packages
+static const char *arch_xorg[] = {
+  "xorg",
+  "lxappearance",
+  "xwallpaper",
+  "maim",
+  "picom",
+  "xorg-xinput",
+  "xorg-xinit",
+  "xclip",
+  "i3lock",
+  "rxvt-unicode",
+  "nitrogen",
+  NULL
+};
+
+// Arch awesome packages
+static const char *arch_awesome[] = {
+  "awesome",
+  NULL
+};
+
+// Arch bspwm packages
+static const char *arch_bspwm[] = {
+  "bspwm",
+  "polybar",
+  "sxhkd",
+  NULL
+};
+
+// Arch i3 packages
+static const char *arch_i3[] = {
+  "i3blocks",
+  "i3",
+  NULL
+};
+
+
+// Arch wayland packages
+static const char *arch_wayland[] = {
+  "grim",
+  "wofi",
+  "swaybg",
+  "waybar",
+  "swayidle",
+  "swaylock",
+  "wl-clipboard",
+  "mako",
+  "slurp",
+  NULL
+};
+
+// Arch hyprland packages
+static const char *arch_hypr[] = {
+  "hyprland",
+  "waybar",
+  "hyprpaper",
+  NULL
+};
+
+// Arch sway packages
+static const char *arch_sway[] = {
+  "sway",
+  "i3blocks",
+  "swaybg",
+  NULL
+};
+
+// Arch river packages
+static const char *arch_river[] = {
+  "waybar",
+  "river",
+  "swaybg",
+  NULL
+};
+
+
+int lst_len(const void **lst) {
+  int len = 0;
+  for (; lst[len] != NULL; ++len); 
+  return len;
+}
+
+int main(){
+  printf("%d\n",lst_len((const void **)arch_wayland));
+}

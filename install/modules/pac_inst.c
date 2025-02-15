@@ -1,8 +1,10 @@
-/* Other files */
-#include "../def/def.h"
+// Other files
+#include "../def.h"
 
-int install(config *config) {
-/* Filename components */
+
+
+int install_packages(config *config) {
+  // Filename components
   char *rel_distro;
   char *display_server;
   char *window_manager;
@@ -60,7 +62,7 @@ int install(config *config) {
     break;
   }
 
-  /* store the file name sizes */
+  // store the file name sizes
   size_t base_name_len =
       strlen(getenv("HOME")) + strlen(rel_distro) + strlen("base.txt") + 1;
   size_t ds_name_len = strlen(getenv("HOME")) + strlen(rel_distro) +
@@ -68,12 +70,12 @@ int install(config *config) {
   size_t wm_name_len = strlen(getenv("HOME")) + strlen(rel_distro) +
                        strlen(display_server) + strlen(window_manager) + 1;
 
-  /* 'allocate' space */
+  // 'allocate' space
   char base_file_name[base_name_len];
   char display_serv_file_name[ds_name_len];
   char wm_file_name[wm_name_len];
 
-  /* Overwrite all the space with NUL */
+  // Overwrite all the space with NUL
   for (int i = 0; i < base_name_len; ++i) {
     base_file_name[i] = '\0';
   }
@@ -84,24 +86,24 @@ int install(config *config) {
     wm_file_name[i] = '\0';
   }
 
-  /* Build base filename */
+  // Build base filename
   strncat(base_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(base_file_name, rel_distro, strlen(rel_distro));
   strcat(base_file_name, "base.txt");
 
-  /* Build display server filename */
+  // Build display server filename
   strncat(display_serv_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(display_serv_file_name, rel_distro, strlen(rel_distro));
   strncat(display_serv_file_name, display_server, strlen(display_server));
   strcat(display_serv_file_name, "base.txt");
 
-  /* Build windowmanager filename */
+  // Build windowmanager filename
   strncat(wm_file_name, getenv("HOME"), strlen(getenv("HOME")));
   strncat(wm_file_name, rel_distro, strlen(rel_distro));
   strncat(wm_file_name, display_server, strlen(display_server));
   strncat(wm_file_name, window_manager, strlen(window_manager));
 
-  /* File pointers */
+  // File pointers
   FILE *stdpkg = fopen(base_file_name, "r");
   if (!stdpkg) {
     fprintf(stderr, "Could not open base packages\n");
@@ -118,7 +120,7 @@ int install(config *config) {
     return -1;
   }
 
-  /* Determine sizes */
+  // Determine sizes
   fseek(stdpkg, 0, SEEK_END);
   int std_strlen = ftell(stdpkg) + 2; // 2 cuz space has to be at end
   fseek(stdpkg, 0, SEEK_SET);         // Reset file pointer
@@ -131,7 +133,7 @@ int install(config *config) {
   int wm_strlen = ftell(wmpkg) + 2; // 2 cuz space has to be at end
   fseek(wmpkg, 0, SEEK_SET);        // Reset file pointer
 
-  /* Create Buffers */
+  // Create Buffers
   char stdpkg_string[std_strlen];
   char curr;
   for (int i = 0; i < std_strlen; ++i) {
@@ -161,10 +163,10 @@ int install(config *config) {
   fclose(dsppkg);
   fclose(wmpkg);
 
-  /* Tokenize */
+  // Tokenize
   char delim[] = " "; // delimitter
 
-  /* Tokenize std packages */
+  // Tokenize std packages
   char *stdtoken = strtok(stdpkg_string, delim);
   char **stdtokens = malloc(sizeof(char *));
   stdtokens[0] = stdtoken;
@@ -178,7 +180,7 @@ int install(config *config) {
     stdtokens[stdtok_count++] = stdtoken;
   }
 
-  /* Tokenize displayserver packages */
+  // Tokenize displayserver packages
   char *dsptoken = strtok(dsppkg_string, delim);
   char **dsptokens = malloc(sizeof(char *));
   dsptokens[0] = dsptoken;
@@ -192,7 +194,7 @@ int install(config *config) {
     dsptokens[dsptok_count++] = dsptoken;
   }
 
-  /* Tokenize wm packages */
+  // Tokenize wm packages
   char *wmtoken = strtok(wmpkg_string, delim);
   char **wmtokens = malloc(sizeof(char *));
   wmtokens[0] = wmtoken;
