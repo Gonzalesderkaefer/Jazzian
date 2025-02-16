@@ -1,11 +1,12 @@
 // Other files
 #include "../def.h"
 #include <dirent.h>
+#include <stdio.h>
 
 
 
 
-int link_dir(char *src_dir, char *dest_dir, char **ill_cfg){
+int link_dir(char *src_dir, char *dest_dir, char **ill_cfg, bool hide){
   DIR *directory = opendir(src_dir);
   struct dirent *cfg_content;
   while ((cfg_content = readdir(directory)) != NULL) {
@@ -14,7 +15,10 @@ int link_dir(char *src_dir, char *dest_dir, char **ill_cfg){
       if (!strcmp(ill_cfg[i], cfg_content->d_name)) 
         goto contcfg;
     }
-    printf("linking %s/%s to %s/%s\n",src_dir, cfg_content->d_name, dest_dir, cfg_content->d_name);
+    if (hide)
+      printf("linking %s/%s to %s/.%s\n",src_dir, cfg_content->d_name, dest_dir, cfg_content->d_name);
+    else
+      printf("linking %s/%s to %s/%s\n",src_dir, cfg_content->d_name, dest_dir, cfg_content->d_name);
 
   contcfg:
     continue;
@@ -42,6 +46,13 @@ int link_cfg() {
   char binsrc[binsrc_len];
   strcpy(binsrc,getenv("HOME"));
   strcat(binsrc,"/Jazzian/bin");
+
+
+  // Define script directory
+  int shell_len = strlen(getenv("HOME")) + strlen("/Jazzian/cfg_files/shell") + 1;
+  char shellsrc[shell_len];
+  strcpy(shellsrc,getenv("HOME"));
+  strcat(shellsrc,"/Jazzian/cfg_files/shell");
 
 
   // Define config dest directory
@@ -80,6 +91,8 @@ int link_cfg() {
   if (errno == EEXIST)
     fprintf(stderr,"%s already exists\n", localbin);
 
+  putc('\n',stdout);
+  putc('\n',stdout);
 
   // Dirs to not move
   char *ill_cfg[] = {
@@ -95,6 +108,28 @@ int link_cfg() {
     "code",
     NULL
   };
+
+  // Link general files
+  link_dir(cfg_src, cfg_dest, ill_cfg, false);
+  putc('\n',stdout);
+  putc('\n',stdout);
+
+  // Link scripts
+  link_dir(binsrc, localbin, ill_cfg, false);
+  putc('\n',stdout);
+  putc('\n',stdout);
+
+  // Link scripts
+  link_dir(shellsrc, getenv("HOME"), ill_cfg, true);
+  putc('\n',stdout);
+  putc('\n',stdout);
+
+
+
+
+
+
+
   return 0;
 }
 
