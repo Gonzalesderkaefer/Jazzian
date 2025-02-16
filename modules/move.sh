@@ -46,18 +46,13 @@ copy_files()
     done
 
     # Copy bash config files to $HOME
-    bash_path=$HOME/Jazzian/cfg_files/shell/bash
-    for sh_file in $(ls $bash_path); do
-        cp "$bash_path/$sh_file" "$HOME/.$sh_file";
+    shell_path=$HOME/Jazzian/cfg_files/shell/bash
+    for sh_file in $(ls $shell_path); do
+        cp "$shell_path/$sh_file" "$HOME/.$sh_file";
     done
 
 
-    # Copy zsh config files to $HOME
-    zsh_path=$HOME/Jazzian/cfg_files/shell/zsh
-    for sh_file in $(ls $zsh_path); do
-        cp "$zsh_path/$sh_file" "$HOME/.$sh_file";
-    done
-    
+
     # Copying vim config
     if ! [ -d $HOME/.vim ]; then
         cp -r $HOME/Jazzian/cfg_files/vim $HOME/.vim;
@@ -117,17 +112,12 @@ link_files()
     done
 
     # Link bash config files to $HOME
-    bash_path=$HOME/Jazzian/cfg_files/shell/bash
-    for sh_file in $(ls $bash_path); do
-        ln -sf "$bash_path/$sh_file" "$HOME/.$sh_file";
+    shell_path=$HOME/Jazzian/cfg_files/shell/bash
+    for sh_file in $(ls $shell_path); do
+        ln -sf "$shell_path/$sh_file" "$HOME/.$sh_file";
     done
 
 
-    # Link zsh config files to $HOME
-    zsh_path=$HOME/Jazzian/cfg_files/shell/zsh
-    for sh_file in $(ls $zsh_path); do
-        ln -sf "$zsh_path/$sh_file" "$HOME/.$sh_file";
-    done
 
     # Linking scripts 
     for script in $HOME/Jazzian/bin/*; do

@@ -1,0 +1,37 @@
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
+fi
+
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+## env exports
+export TERMINAL=alacritty
+export WLR_NO_HARDWARE_CURSORS=1
+export MOZ_ENABLE_WAYLAND=1
+
+## NNN  Configuration
+export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh;c:checksum.sh'
+
+## Set EDITOR
+(command -v nvim > /dev/null) && export EDITOR=nvim || export EDITOR=vim
+
+## Startup
+if [ -f "$HOME/.devicespecific.sh" ]; then
+    sh "$HOME/.devicespecific.sh"
+fi
+
+#. "$HOME/.cargo/env"
