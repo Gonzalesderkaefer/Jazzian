@@ -1,11 +1,12 @@
 // Other files
 #include "../def.h"
+#include <dirent.h>
 
 
 
 
-int link_dir(DIR *directory, char *src_dir, char *dest_dir, char **ill_cfg){
-
+int link_dir(char *src_dir, char *dest_dir, char **ill_cfg){
+  DIR *directory = opendir(src_dir);
   struct dirent *cfg_content;
   while ((cfg_content = readdir(directory)) != NULL) {
     // Check if dir name is in ill_cfg
@@ -18,6 +19,7 @@ int link_dir(DIR *directory, char *src_dir, char *dest_dir, char **ill_cfg){
   contcfg:
     continue;
   }
+  closedir(directory);
   return 0;
 }
 
@@ -37,26 +39,28 @@ int link_cfg() {
 
   // Define script directory
   int binsrc_len = strlen(getenv("HOME")) + strlen("/Jazzian/bin") + 1;
-  char binsrc[cfg_src_len];
+  char binsrc[binsrc_len];
   strcpy(binsrc,getenv("HOME"));
   strcat(binsrc,"/Jazzian/bin");
 
+
   // Define config dest directory
   int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config") + 1;
-  char cfg_dest[cfg_src_len];
+  char cfg_dest[cfg_dest_len];
   strcpy(cfg_dest,getenv("HOME"));
   strcat(cfg_dest,"/.config");
 
+
   // Define local dest directory
   int local_len = strlen(getenv("HOME")) + strlen("/.local") + 1;
-  char local[cfg_src_len];
+  char local[local_len];
   strcpy(local,getenv("HOME"));
   strcat(local,"/.local");
 
 
   // Define local_bin dest directory
   int localbin_len = strlen(getenv("HOME")) + strlen("/.local/bin") + 1;
-  char localbin[cfg_src_len];
+  char localbin[localbin_len];
   strcpy(localbin,getenv("HOME"));
   strcat(localbin,"/.local/bin");
 
@@ -91,49 +95,6 @@ int link_cfg() {
     "code",
     NULL
   };
-
-
-
-
-  // Link general config files
-  DIR *cfg_files = opendir(cfg_src);
-  /*
-  struct dirent *cfg_content;
-  while ((cfg_content = readdir(cfg_files)) != NULL) {
-    // Check if dir name is in ill_cfg
-    for(int i = 0; ill_cfg[i] != NULL; ++i){
-      if (!strcmp(ill_cfg[i], cfg_content->d_name)) 
-        goto contcfg;
-    }
-    printf("linking %s/%s to %s/%s\n",cfg_src, cfg_content->d_name, cfg_dest, cfg_content->d_name);
-
-  contcfg:
-    continue;
-
-  }
-  */
-
-  link_dir(cfg_files, cfg_src, cfg_dest, ill_cfg);
-  closedir(cfg_files);
-
-  // Link scripts
-  DIR *scripts = opendir(binsrc);
-  /*
-  struct dirent *script;
-  while ((script = readdir(scripts)) != NULL) {
-    // Check if dir name is in ill_cfg
-    for(int i = 0; ill_cfg[i] != NULL; ++i){
-      if (!strcmp(ill_cfg[i], script->d_name)) 
-        goto contscript;
-    }
-    printf("linking %s/%s to %s/%s\n",binsrc, script->d_name, localbin, script->d_name);
-
-  contscript:
-    continue;
-  }
-  */
-  link_dir(scripts, binsrc, localbin, ill_cfg);
-  closedir(scripts);
   return 0;
 }
 
