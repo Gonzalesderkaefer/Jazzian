@@ -40,10 +40,7 @@ copy_files()
     cp -r $HOME/Jazzian/cfg_files/nnn_plugins $HOME/.config/nnn/plugins
 
 
-    # X11 config files
-    for x11_file in $HOME/Jazzian/cfg_files/X11/*; do
-        cp -r -f $x11_file $HOME/.config/;
-    done
+    # X11 config files for x11_file in $HOME/Jazzian/cfg_files/X11/*; do cp -r -f $x11_file $HOME/.config/; done
 
     # Copy bash config files to $HOME
     shell_path=$HOME/Jazzian/cfg_files/shell
@@ -106,10 +103,7 @@ link_files()
         cp -r $HOME/Jazzian/cfg_files/qutebrowser $HOME/.config/;
     fi
 
-    # Link X11 config files
-    for x11_file in $HOME/Jazzian/cfg_files/X11/*; do
-        ln -sf $x11_file $HOME/.config/;
-    done
+    # Link X11 config files for x11_file in $HOME/Jazzian/cfg_files/X11/*; do ln -sf $x11_file $HOME/.config/; done
 
     # Link bash config files to $HOME
     shell_path=$HOME/Jazzian/cfg_files/shell
