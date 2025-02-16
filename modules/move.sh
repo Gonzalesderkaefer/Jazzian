@@ -46,7 +46,7 @@ copy_files()
     done
 
     # Copy bash config files to $HOME
-    shell_path=$HOME/Jazzian/cfg_files/shell/bash
+    shell_path=$HOME/Jazzian/cfg_files/shell
     for sh_file in $(ls $shell_path); do
         cp "$shell_path/$sh_file" "$HOME/.$sh_file";
     done
@@ -112,7 +112,7 @@ link_files()
     done
 
     # Link bash config files to $HOME
-    shell_path=$HOME/Jazzian/cfg_files/shell/bash
+    shell_path=$HOME/Jazzian/cfg_files/shell
     for sh_file in $(ls $shell_path); do
         ln -sf "$shell_path/$sh_file" "$HOME/.$sh_file";
     done
