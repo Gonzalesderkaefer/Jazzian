@@ -1,6 +1,32 @@
 // Other files
 #include "../def.h"
 
+
+
+
+int link_dir(DIR *directory, char *src_dir, char *dest_dir, char **ill_cfg){
+
+  struct dirent *cfg_content;
+  while ((cfg_content = readdir(directory)) != NULL) {
+    // Check if dir name is in ill_cfg
+    for(int i = 0; ill_cfg[i] != NULL; ++i){
+      if (!strcmp(ill_cfg[i], cfg_content->d_name)) 
+        goto contcfg;
+    }
+    printf("linking %s/%s to %s/%s\n",src_dir, cfg_content->d_name, dest_dir, cfg_content->d_name);
+
+  contcfg:
+    continue;
+  }
+  return 0;
+}
+
+
+
+
+
+
+
 int link_cfg() {
   // Define config src directory
   int cfg_src_len = strlen(getenv("HOME")) + strlen("/Jazzian/cfg_files") + 1;
@@ -71,6 +97,7 @@ int link_cfg() {
 
   // Link general config files
   DIR *cfg_files = opendir(cfg_src);
+  /*
   struct dirent *cfg_content;
   while ((cfg_content = readdir(cfg_files)) != NULL) {
     // Check if dir name is in ill_cfg
@@ -82,11 +109,16 @@ int link_cfg() {
 
   contcfg:
     continue;
+
   }
+  */
+
+  link_dir(cfg_files, cfg_src, cfg_dest, ill_cfg);
   closedir(cfg_files);
 
   // Link scripts
   DIR *scripts = opendir(binsrc);
+  /*
   struct dirent *script;
   while ((script = readdir(scripts)) != NULL) {
     // Check if dir name is in ill_cfg
@@ -99,15 +131,15 @@ int link_cfg() {
   contscript:
     continue;
   }
+  */
+  link_dir(scripts, binsrc, localbin, ill_cfg);
   closedir(scripts);
-
-
-
-
-
-
   return 0;
 }
+
+
+
+
 
 
 
