@@ -1,6 +1,3 @@
-
-
-
 # Determining what distro is running 
 release="$(cat /etc/os-release)";
 
@@ -35,7 +32,7 @@ alias "reboot"="systemctl reboot"
 
 ## Files
 alias "ls"="ls --color=auto"
-alias "nf"="nnn -d"
+alias "nf"="vicd ."
 alias "vf"="vicd ."
 alias "ll"="ls -l"
 alias "lla"="ls -la"
