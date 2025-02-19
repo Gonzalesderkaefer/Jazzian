@@ -149,6 +149,7 @@ command! make !!make %a
 command! mkcd :mkdir %a | cd %a
 command! vgrep vim "+grep %a"
 command! reload :write | restart full
+command! D :mkdir %a | cd %a
 
 " ------------------------------------------------------------------------------
 " File types association
@@ -449,6 +450,10 @@ filextype */
 
 " Start shell in current directory
 nnoremap s :shell<cr>
+
+" Rename all files in CWD
+nmap R ggvGcw
+
 
 " Display sorting dialog
 nnoremap S :sort<cr>
