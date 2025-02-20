@@ -1,0 +1,1 @@
+/home/user1/Jazzian/cfg_files/nnn_plugins/openinterm.sh
