@@ -1,18 +1,42 @@
 // Other files
 #include "../def.h"
-#include <dirent.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 
+int copy_file(char *src_file, char *dest_file) {
+  // Open source file for reading
+  FILE *srcfp = fopen(src_file, "r");
+  fseek(srcfp,0, SEEK_END);
 
-int copy_dir(char *src_dir, char *dest_parent) {
+  // Get size
+  int file_size = ftell(srcfp);
+  fseek(srcfp,0, SEEK_SET);
+
+  // Data buffer
+  char data[file_size + 3];
+
+  // Read data into buffer
+  fread(data, sizeof(char), file_size, srcfp);
+
+  // Open file for writing
+  FILE *destfp = fopen(dest_file, "w");
+  fwrite(data, sizeof(char), file_size, destfp);
+
+  fclose(srcfp);
+  return 0;
+}
+
+
+int copy_dir(char *src_dir, char *dest_parent, char **ill_cfg, bool hide) {
   DIR *directory = opendir(src_dir);
   struct dirent *cfg_content;
-  while ((cfg_content = readdir(directory)) != NULL) {
-    if (!strcmp(cfg_content->d_name, ".") || !strcmp(cfg_content->d_name, "..")) continue;
+outside : while ((cfg_content = readdir(directory)) != NULL) {
+    // Check if dir name is in ill_cfg
+    for(int i = 0; ill_cfg[i] != NULL; ++i){
+      if (!strcmp(ill_cfg[i], cfg_content->d_name)) 
+        goto outside;
+    }
+
+
     // Define full path of file in directory
     char src[strlen(src_dir) + strlen(cfg_content->d_name) + 2];
     strcpy(src, src_dir);
@@ -20,10 +44,16 @@ int copy_dir(char *src_dir, char *dest_parent) {
     strcat(src, cfg_content->d_name);
 
     // Define full path of dest file
-    char dest[strlen(dest_parent) + strlen(cfg_content->d_name) + 2];
-    strcpy(dest, dest_parent);
-    strcat(dest, "/");
-    strcat(dest, cfg_content->d_name);
+    char dest[strlen(dest_parent) + strlen(cfg_content->d_name) + 3];
+    if (hide) {
+      strcpy(dest, dest_parent);
+      strcat(dest, "/.");
+      strcat(dest, cfg_content->d_name);
+    } else {
+      strcpy(dest, dest_parent);
+      strcat(dest, "/");
+      strcat(dest, cfg_content->d_name);
+    }
 
     // Get Stat of current file
     struct stat path_stat;
@@ -34,9 +64,9 @@ int copy_dir(char *src_dir, char *dest_parent) {
     if (S_ISDIR(path_stat.st_mode)) {
       mkdir(dest, path_stat.st_mode);
       printf("Created new Dir in %s\n", dest);
-      copy_dir(src, dest);
+      copy_dir(src, dest, ill_cfg, false);
     } else {
-      printf("Copy %s to \t\t\t\t %s\n", src, dest);
+      printf("Copy %s to %s\n", src, dest);
     }
   }
   closedir(directory);
@@ -95,7 +125,7 @@ outside : while ((cfg_content = readdir(directory)) != NULL) {
 
 
 
-int link_cfg() {
+int move_cfg(TRANSFER mode_of_transfer) {
   // Define config src directory
   int cfg_src_len = strlen(getenv("HOME")) + strlen("/Jazzian/cfg_files") + 1;
   char cfg_src[cfg_src_len];
@@ -169,36 +199,47 @@ int link_cfg() {
     NULL
   };
 
-  // Link general files
-  link_dir(cfg_src, cfg_dest, ill_cfg, false);
-  putc('\n',stdout);
-  putc('\n',stdout);
+  switch (mode_of_transfer) {
+    case LINK:
 
-  // Link scripts
-  link_dir(binsrc, localbin, ill_cfg, false);
-  putc('\n',stdout);
-  putc('\n',stdout);
+      // Link general files
+      link_dir(cfg_src, cfg_dest, ill_cfg, false);
+      putc('\n',stdout);
+      putc('\n',stdout);
 
-  // Link shell configs
-  link_dir(shellsrc, getenv("HOME"), ill_cfg, true);
-  putc('\n',stdout);
-  putc('\n',stdout);
+      // Link scripts
+      link_dir(binsrc, localbin, ill_cfg, false);
+      putc('\n',stdout);
+      putc('\n',stdout);
 
+      // Link shell configs
+      link_dir(shellsrc, getenv("HOME"), ill_cfg, true);
+      putc('\n',stdout);
+      putc('\n',stdout);
 
+      break;
 
+    case COPY:
 
+      // Copy general files
+      copy_dir(cfg_src, cfg_dest, ill_cfg, false);
+      putc('\n',stdout);
+      putc('\n',stdout);
 
+      // Copy scripts
+      copy_dir(binsrc, localbin, ill_cfg, false);
+      putc('\n',stdout);
+      putc('\n',stdout);
 
+      // Copy shell configs
+      copy_dir(shellsrc, getenv("HOME"), ill_cfg, true);
+      putc('\n',stdout);
+      putc('\n',stdout);
 
+      break;
+
+    default:
+      printf("Not Moving anything\n");
+  }
   return 0;
-}
-
-
-
-
-
-
-
-int main() {
-  link_cfg();
 }
