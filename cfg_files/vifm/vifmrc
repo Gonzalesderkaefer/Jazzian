@@ -149,6 +149,7 @@ command! make !!make %a
 command! mkcd :mkdir %a | cd %a
 command! vgrep vim "+grep %a"
 command! reload :write | restart full
+command! mh :echo %l
 command! D :mkdir %a | cd %a
 
 " ------------------------------------------------------------------------------

@@ -141,7 +141,7 @@ open()
 ## nf with cd 
 nfcd ()
 {
-    nf;
+    nnn -d;
     $(cat $NNN_TMPFILE | sed -E "s/'|\"//g")
     rm $NNN_TMPFILE
 }
@@ -169,3 +169,5 @@ revert ()
 if [ -f $HOME/.devicerc ]; then
     source $HOME/.devicerc
 fi
+
+[ -f "/home/user1/.ghcup/env" ] && . "/home/user1/.ghcup/env" # ghcup-env
