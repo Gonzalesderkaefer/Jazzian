@@ -6,7 +6,7 @@ echo $2
 f=$2/$1
 
 
-echo "Please enter the checksum: "
+echo -n "Please enter the checksum: "
 read checksum
 
 
