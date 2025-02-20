@@ -8,6 +8,40 @@
 
 
 
+int copy_dir(char *src_dir, char *dest_parent) {
+  DIR *directory = opendir(src_dir);
+  struct dirent *cfg_content;
+  while ((cfg_content = readdir(directory)) != NULL) {
+    if (!strcmp(cfg_content->d_name, ".") || !strcmp(cfg_content->d_name, "..")) continue;
+    // Define full path of file in directory
+    char src[strlen(src_dir) + strlen(cfg_content->d_name) + 2];
+    strcpy(src, src_dir);
+    strcat(src, "/");
+    strcat(src, cfg_content->d_name);
+
+    // Define full path of dest file
+    char dest[strlen(dest_parent) + strlen(cfg_content->d_name) + 2];
+    strcpy(dest, dest_parent);
+    strcat(dest, "/");
+    strcat(dest, cfg_content->d_name);
+
+    // Get Stat of current file
+    struct stat path_stat;
+    lstat(src, &path_stat);
+
+
+    // Check whether file is directory
+    if (S_ISDIR(path_stat.st_mode)) {
+      mkdir(dest, path_stat.st_mode);
+      printf("Created new Dir in %s\n", dest);
+      copy_dir(src, dest);
+    } else {
+      printf("Copy %s to \t\t\t\t %s\n", src, dest);
+    }
+  }
+  closedir(directory);
+  return 0;
+}
 
 int link_dir(char *src_dir, char *dest_dir, char **ill_cfg, bool hide){
   DIR *directory = opendir(src_dir);
