@@ -21,7 +21,6 @@ copy_files()
         "$HOME/Jazzian/cfg_files/X11" 
         "$HOME/Jazzian/cfg_files/passgen" 
         "$HOME/Jazzian/cfg_files/shell"
-        "$HOME/Jazzian/cfg_files/nnn_plugins"
         "$HOME/Jazzian/cfg_files/vim"
         "$HOME/Jazzian/cfg_files/vifm"
         "$HOME/Jazzian/cfg_files/code"
@@ -35,14 +34,7 @@ copy_files()
         fi
     done
 
-    # Config files for nnn
-    mkdir -p $HOME/.config/nnn/
-    cp -r $HOME/Jazzian/cfg_files/nnn_plugins $HOME/.config/nnn/plugins
-
-
-    # X11 config files for x11_file in $HOME/Jazzian/cfg_files/X11/*; do cp -r -f $x11_file $HOME/.config/; done
-
-    # Copy bash config files to $HOME
+    # Copy shell config files to $HOME
     shell_path=$HOME/Jazzian/cfg_files/shell
     for sh_file in $(ls $shell_path); do
         cp "$shell_path/$sh_file" "$HOME/.$sh_file";
@@ -74,7 +66,6 @@ link_files()
             "$HOME/Jazzian/cfg_files/X11" 
             "$HOME/Jazzian/cfg_files/passgen" 
             "$HOME/Jazzian/cfg_files/shell"
-            "$HOME/Jazzian/cfg_files/nnn_plugins"
             "$HOME/Jazzian/cfg_files/nvim"
             "$HOME/Jazzian/cfg_files/vim"
             "$HOME/Jazzian/cfg_files/qutebrowser"
@@ -88,24 +79,12 @@ link_files()
         fi
     done
 
-    # config files for nnn
-    [ -d $HOME/.config/nnn/plugins/ ] || mkdir -p $HOME/.config/nnn/plugins
-
-    for plugin in $HOME/Jazzian/cfg_files/nnn_plugins/*; do 
-        ln -sf $plugin $HOME/.config/nnn/plugins/
-    done
-        
-
-    ln -s $HOME/Jazzian/cfg_files/nnn_plugins/* $HOME/.config/nnn/plugins/;
-
     # copying qutebrowser config
     if ! [ -d $HOME/.config/qutebrowser ]; then
         cp -r $HOME/Jazzian/cfg_files/qutebrowser $HOME/.config/;
     fi
 
-    # Link X11 config files for x11_file in $HOME/Jazzian/cfg_files/X11/*; do ln -sf $x11_file $HOME/.config/; done
-
-    # Link bash config files to $HOME
+    # Link shell config files to $HOME
     shell_path=$HOME/Jazzian/cfg_files/shell
     for sh_file in $(ls $shell_path); do
         ln -sf "$shell_path/$sh_file" "$HOME/.$sh_file";

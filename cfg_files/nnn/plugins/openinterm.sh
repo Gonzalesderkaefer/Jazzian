@@ -1,1 +1,6 @@
-/home/user1/Jazzian/cfg_files/nnn_plugins/openinterm.sh
+#!/bin/sh
+f=$2/
+
+nohup alacritty --working-directory "$f" &
+sleep 2;
+rm nohup.out

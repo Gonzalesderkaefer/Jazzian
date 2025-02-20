@@ -1,1 +1,6 @@
-/home/user1/Jazzian/cfg_files/nnn_plugins/mkdir.sh
+#!/bin/sh
+
+
+echo -n "Please enter a name for the folder: "
+read name
+mkdir $name
