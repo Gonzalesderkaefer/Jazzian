@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 
 
@@ -38,6 +39,7 @@ outside : while ((cfg_content = readdir(directory)) != NULL) {
       strcat(dest, cfg_content->d_name);
       dest[dest_len + 2 + direlem_len] = '\0';
       printf("linking %s to %s\n", src, dest);
+      //symlink(src, dest);
     } else {
       // Define dest file path
       char dest[dest_len + 1 + direlem_len + 1];
@@ -45,6 +47,7 @@ outside : while ((cfg_content = readdir(directory)) != NULL) {
       strcat(dest, "/");
       strcat(dest, cfg_content->d_name);
       printf("linking %s to %s\n", src, dest);
+      //symlink(src, dest);
     }
 
   }
@@ -126,9 +129,7 @@ int link_cfg() {
     "X11",
     "passgen",
     "shell",
-    "nnn_plugins",
     "nvim",
-    "vim",
     "qutebrowser",
     "code",
     NULL
@@ -144,7 +145,7 @@ int link_cfg() {
   putc('\n',stdout);
   putc('\n',stdout);
 
-  // Link scripts
+  // Link shell configs
   link_dir(shellsrc, getenv("HOME"), ill_cfg, true);
   putc('\n',stdout);
   putc('\n',stdout);
