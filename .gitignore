@@ -22,3 +22,7 @@ newsboat*
 
 # Lazy nvim stuff
 *lazy-lock.json*
+
+# NNN-File manager files
+/cfg_files/nnn/*
+!/cfg_files/nnn/plugins
