@@ -79,6 +79,11 @@ void devicespecific_cfg() {
     printf("Created file: %s\n", cfg);
   }
 
+  // .zprofile eqivalent
+  int dev_sh_len = strlen(getenv("HOME")) + strlen(".devicespecific.sh") + 2;
+  char dev_sh_path[dev_sh_len];
+  sprintf(dev_sh_path, "%s/.devicespecific.sh", getenv("HOME"));
+
 
 
 }

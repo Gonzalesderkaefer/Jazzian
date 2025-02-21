@@ -1,6 +1,7 @@
 // Other files
 #include "../def.h"
 #include "../utils/file_utils.c"
+#include <stdlib.h>
 
 
 
@@ -9,43 +10,37 @@ int move_cfg(TRANSFER mode_of_transfer) {
   // Define config src directory
   int cfg_src_len = strlen(getenv("HOME")) + strlen("/Jazzian/cfg_files") + 1;
   char cfg_src[cfg_src_len];
-  strcpy(cfg_src,getenv("HOME"));
-  strcat(cfg_src,"/Jazzian/cfg_files");
+  sprintf(cfg_src,"%s/Jazzian/cfg_files", getenv("HOME"));
 
 
   // Define script directory
   int binsrc_len = strlen(getenv("HOME")) + strlen("/Jazzian/bin") + 1;
   char binsrc[binsrc_len];
-  strcpy(binsrc,getenv("HOME"));
-  strcat(binsrc,"/Jazzian/bin");
+  sprintf(binsrc,"%s/Jazzian/bin", getenv("HOME"));
 
 
   // Define script directory
   int shell_len = strlen(getenv("HOME")) + strlen("/Jazzian/cfg_files/shell") + 1;
   char shellsrc[shell_len];
-  strcpy(shellsrc,getenv("HOME"));
-  strcat(shellsrc,"/Jazzian/cfg_files/shell");
+  sprintf(shellsrc,"%s/Jazzian/cfg_files/shell", getenv("HOME"));
 
 
   // Define config dest directory
   int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config") + 1;
   char cfg_dest[cfg_dest_len];
-  strcpy(cfg_dest,getenv("HOME"));
-  strcat(cfg_dest,"/.config");
+  sprintf(cfg_dest,"%s/.config", getenv("HOME"));
 
 
   // Define local dest directory
   int local_len = strlen(getenv("HOME")) + strlen("/.local") + 1;
   char local[local_len];
-  strcpy(local,getenv("HOME"));
-  strcat(local,"/.local");
+  sprintf(local,"%s/.local", getenv("HOME"));
 
 
   // Define local_bin dest directory
   int localbin_len = strlen(getenv("HOME")) + strlen("/.local/bin") + 1;
   char localbin[localbin_len];
-  strcpy(localbin,getenv("HOME"));
-  strcat(localbin,"/.local/bin");
+  sprintf(localbin,"%s/.local/bin", getenv("HOME"));
 
 
   // create dest .config dir
@@ -126,5 +121,5 @@ int move_cfg(TRANSFER mode_of_transfer) {
 
 
 int main() {
-  move_cfg(COPY);
+  move_cfg(LINK);
 }
