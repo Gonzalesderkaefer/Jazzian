@@ -25,7 +25,7 @@ void copy_file(char *src_file, char *dest_file, mode_t mode) {
 }
 
 
-void write_to_file(char *data, int length, const char *file_path, const char *modes) {
+void write_to_file(char *data, int length, const char *file_path, const char *modes, mode_t mode) {
   // Open file for writing
   FILE *file = fopen(file_path, modes);
 
@@ -34,6 +34,9 @@ void write_to_file(char *data, int length, const char *file_path, const char *mo
 
   // Close file
   fclose(file);
+
+  // Change file permissions
+  chmod(file_path, mode);
 }
 
 

@@ -83,6 +83,8 @@ void devicespecific_cfg() {
   int dev_sh_len = strlen(getenv("HOME")) + strlen(".devicespecific.sh") + 2;
   char dev_sh_path[dev_sh_len];
   sprintf(dev_sh_path, "%s/.devicespecific.sh", getenv("HOME"));
+  if (!file_exists(dev_sh_path))
+    write_to_file(devicespecific_sh, strlen(devicespecific_sh), dev_sh_path, "w", 0777);
 
 
 
