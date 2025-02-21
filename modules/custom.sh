@@ -39,15 +39,9 @@ fi
 if ! [ -f $HOME/.$custom.sh ]; then
     touch $HOME/.$custom.sh;
     
-    echo 'shell_tokill="$(echo $SHELL | grep -E -o "[^\/]*$")"' >> $HOME/.$custom.sh
-    echo 'shells=$(ps | grep -E "tty1.*$shell_tokill" | awk '\''{print $1}'\'')' >> $HOME/.$custom.sh
-
-
     echo 'killshells()' >> $HOME/.$custom.sh
     echo '{' >> $HOME/.devicespecific.sh
-    echo '   for shell in $shells; do' >> $HOME/.$custom.sh
-    echo '       kill -9 $shell;' >> $HOME/.$custom.sh
-    echo '   done' >> $HOME/.$custom.sh
+    echo '    pkill -KILL -u $USER -t tty1' >> $HOME/.$custom.sh
     echo '}' >> $HOME/.$custom.sh
 
     echo 'export WM=i3' >> $HOME/.$custom.sh
