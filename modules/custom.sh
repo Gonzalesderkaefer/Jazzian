@@ -180,5 +180,7 @@ fi
 
 chmod +x $HOME/.local/bin/myterm
 
-
+# switch shell to zsh
+echo -e "${start_green}Changing shell to zsh..${end_green}"
+chsh -s /usr/bin/zsh
 
