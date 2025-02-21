@@ -1,7 +1,7 @@
 // Other files
 #include "../def.h"
 
-int copy_file(char *src_file, char *dest_file) {
+void copy_file(char *src_file, char *dest_file, mode_t mode) {
   // Open source file for reading
   FILE *srcfp = fopen(src_file, "r");
   fseek(srcfp,0, SEEK_END);
@@ -21,8 +21,22 @@ int copy_file(char *src_file, char *dest_file) {
   fwrite(data, sizeof(char), file_size, destfp);
 
   fclose(srcfp);
-  return 0;
+  chmod(dest_file, mode);
 }
+
+
+void write_to_file(char *data, int length, const char *file_path, const char *modes) {
+  // Open file for writing
+  FILE *file = fopen(file_path, modes);
+
+  // Write into the file
+  fwrite(data, sizeof(char), length, file);
+
+  // Close file
+  fclose(file);
+}
+
+
 
 
 int copy_dir(char *src_dir, char *dest_parent, char **ill_cfg, bool hide) {
