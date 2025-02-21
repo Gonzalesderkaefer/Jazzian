@@ -1,3 +1,6 @@
+#ifndef DEF_H
+#define DEF_H
+
 // Libraries
 #include <dirent.h>
 #include <errno.h>
@@ -11,10 +14,9 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+
 // Other files
 #include "packages/packages.c"
-
-
 
 // Display server
 typedef enum DISPLAYSERVER { XORG = 0, WAYLAND } DISPLAYSERVER;
@@ -42,3 +44,4 @@ typedef struct setup_config {
   DISTRO distro;
   TRANSFER file_transfer;
 } config;
+#endif
