@@ -113,13 +113,13 @@ void devicespecific_cfg(config *cfg) {
     write_to_file(myterm_content, strlen(myterm_content), myterm, "w", 0777);
   
   // mdrun
-  int mdrunlen = strlen(getenv("HOME")) + strlen(".local/bin/myterm") + 2;
+  int mdrunlen = strlen(getenv("HOME")) + strlen(".local/bin/mdrun") + 2;
   char mdrun[mdrunlen];
-  sprintf(mdrun, "%s/.local/bin/myterm", getenv("HOME"));
+  sprintf(mdrun, "%s/.local/bin/mdrun", getenv("HOME"));
   
-  int mdmenulen = strlen(getenv("HOME")) + strlen(".local/bin/myterm") + 2;
+  int mdmenulen = strlen(getenv("HOME")) + strlen(".local/bin/mdmenu") + 2;
   char mdmenu[mdmenulen];
-  sprintf(mdmenu, "%s/.local/bin/myterm", getenv("HOME"));
+  sprintf(mdmenu, "%s/.local/bin/mdmenu", getenv("HOME"));
 
 
   switch(cfg->distro) {
