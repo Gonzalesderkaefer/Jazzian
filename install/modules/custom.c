@@ -25,15 +25,26 @@ char *debmdrun =
   "    rofi_app;\n"
   "fi\n";
 
-char *mdmenu =
+char *mdmenu_content =
   "#!/usr/bin/sh\n"
   "rofi_dmenu\n";
 
-char *mdrun =
+char *mdrun_content =
   "#!/usr/bin/sh\n"
   "rofi_app\n";
 
-void devicespecific_cfg() {
+char *myterm_content =
+"    #!/bin/dash\n"
+"    case $XDG_SESSION_TYPE in\n"
+"        \"wayland\")\n"
+"            alacritty -o font.size=12\n"
+"            ;;\n"
+"        *)\n"
+"            alacritty -o font.size=12\n"
+"            ;;\n"
+"    esac\n";
+
+void devicespecific_cfg(config *cfg) {
   // Define config dest directory
   int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config") + 1;
   char cfg_dest[cfg_dest_len];
@@ -47,6 +58,7 @@ void devicespecific_cfg() {
     "hypr",
     "sway",
     "river",
+    "vim",
     NULL
   };
 
@@ -86,10 +98,45 @@ void devicespecific_cfg() {
   if (!file_exists(dev_sh_path))
     write_to_file(devicespecific_sh, strlen(devicespecific_sh), dev_sh_path, "w", 0777);
 
+  // .zshrc eqivalent
+  int sh_len = strlen(getenv("HOME")) + strlen(".devicerc.sh") + 2;
+  char sh_path[sh_len];
+  sprintf(sh_path, "%s/.devicerc.sh", getenv("HOME"));
+  if (!file_exists(sh_path))
+    write_to_file("", strlen(""), sh_path, "w", 0777);
+
+  // myterm
+  int myterm_len = strlen(getenv("HOME")) + strlen(".local/bin/myterm") + 2;
+  char myterm[myterm_len];
+  sprintf(myterm, "%s/.local/bin/myterm", getenv("HOME"));
+  if (!file_exists(myterm))
+    write_to_file(myterm_content, strlen(myterm_content), myterm, "w", 0777);
+  
+  // mdrun
+  int mdrunlen = strlen(getenv("HOME")) + strlen(".local/bin/myterm") + 2;
+  char mdrun[mdrunlen];
+  sprintf(mdrun, "%s/.local/bin/myterm", getenv("HOME"));
+  
+  int mdmenulen = strlen(getenv("HOME")) + strlen(".local/bin/myterm") + 2;
+  char mdmenu[mdmenulen];
+  sprintf(mdmenu, "%s/.local/bin/myterm", getenv("HOME"));
 
 
+  switch(cfg->distro) {
+    case DEBIAN: 
+      if (!file_exists(mdmenu))
+        write_to_file(debmdmenu, strlen(debmdmenu), mdmenu, "w", 0777);
+      if (!file_exists(mdrun))
+        write_to_file(debmdrun, strlen(debmdrun), mdrun, "w", 0777);
+      break;
+
+    default:
+      if (!file_exists(mdmenu))
+        write_to_file(mdmenu_content, strlen(mdmenu_content), mdmenu, "w", 0777);
+      if (!file_exists(mdrun))
+        write_to_file(mdrun_content, strlen(mdrun_content), mdrun, "w", 0777);
+  }
 }
 
 int main() {
-  devicespecific_cfg();
 }
