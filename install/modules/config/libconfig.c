@@ -1,5 +1,5 @@
 // Other files
-#include "../def.h"
+#include "libconfig.h"
 
 
 enum DISPLAYSERVER get_display_server() {
