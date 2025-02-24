@@ -10,8 +10,11 @@ int main() {
     // Get Config from user
     config *system = get_config();
 
+    // Update system
+    update(system);
+
     // Install required packages
-    //inst_pac(system);
+    inst_pac(system);
 
     // Transfer config files
     //move_cfg(system->file_transfer);
