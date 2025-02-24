@@ -1,3 +1,6 @@
+#ifndef FILE_UTILS_C
+#define FILE_UTILS_C
+
 // Other files
 #include "../def.h"
 
@@ -139,4 +142,4 @@ bool file_exists(char *filepath) {
   return !access(filepath, F_OK);
 }
 
-
+#endif

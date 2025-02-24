@@ -137,6 +137,3 @@ void devicespecific_cfg(config *cfg) {
         write_to_file(mdrun_content, strlen(mdrun_content), mdrun, "w", 0777);
   }
 }
-
-int main() {
-}

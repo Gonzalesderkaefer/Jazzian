@@ -1,7 +1,6 @@
 // Other files
-#include "../def.h"
 #include "../utils/file_utils.c"
-#include <stdlib.h>
+#include "../def.h"
 
 
 
@@ -117,9 +116,4 @@ int move_cfg(TRANSFER mode_of_transfer) {
       printf("Not Moving anything\n");
   }
   return 0;
-}
-
-
-int main() {
-  move_cfg(LINK);
 }

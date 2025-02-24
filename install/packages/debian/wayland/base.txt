@@ -1,1 +1,0 @@
-grim swaylock wofi xwayland wlr-randr wl-clipboard swayidle mako-notifier slurp

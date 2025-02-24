@@ -1,1 +1,0 @@
-xclip @base-x maim lxappearance xinput arandr nitrogen picom dunst xclip i3lock rxvt-unicode nitrogen

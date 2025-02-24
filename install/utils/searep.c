@@ -1,3 +1,9 @@
+#ifndef SEAREP_C
+#define SEAREP_C
+
+
+
+
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,3 +90,5 @@ void testing() {
     }
     free(radio);
 }
+
+#endif
