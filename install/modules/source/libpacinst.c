@@ -1,5 +1,5 @@
 // Other files
-#include "libpacinst.h"
+#include "../headers/libpacinst.h"
 
 int inst_pac(config *config) {
   // array names

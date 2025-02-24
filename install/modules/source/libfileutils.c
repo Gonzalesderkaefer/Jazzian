@@ -1,8 +1,5 @@
-#ifndef FILE_UTILS_C
-#define FILE_UTILS_C
-
 // Other files
-#include "../def.h"
+#include "../headers/utils/file_utils.h"
 
 void copy_file(char *src_file, char *dest_file, mode_t mode) {
   // Open source file for reading
@@ -141,5 +138,3 @@ outside : while ((cfg_content = readdir(directory)) != NULL) {
 bool file_exists(char *filepath) {
   return !access(filepath, F_OK);
 }
-
-#endif

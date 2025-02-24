@@ -4,7 +4,6 @@
 // Libraries
 #include <dirent.h>
 #include <errno.h>
-#include <regex.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,6 +12,8 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <regex.h>
+#include <sys/types.h>
 
 
 // Other files

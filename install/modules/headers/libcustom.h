@@ -1,5 +1,6 @@
 #include "../../def.h"
-#include "../../utils/file_utils.c"
+#include "../headers/utils/file_utils.h"
+#include "../headers/utils/searep.h"
 
 
 char *devicespecific_sh =

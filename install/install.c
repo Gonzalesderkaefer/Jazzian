@@ -1,9 +1,9 @@
 // Other files
 #include "def.h"
-#include "modules/pac_inst.c"
-#include "modules/custom.c"
-#include "modules/config.c"
-#include "modules/move.c"
+#include "modules/headers/libpacinst.h"
+#include "modules/headers/libcustom.h"
+#include "modules/headers/libconfig.h"
+#include "modules/headers/libmove.h"
 
 
 int main() {
@@ -11,11 +11,11 @@ int main() {
     config *system = get_config();
 
     // Install required packages
-    inst_pac(system);
+    //inst_pac(system);
 
     // Transfer config files
-    move_cfg(system->file_transfer);
+    //move_cfg(system->file_transfer);
 
     // Create custom config files
-    devicespecific_cfg(system);
+    //devicespecific_cfg(system);
 }

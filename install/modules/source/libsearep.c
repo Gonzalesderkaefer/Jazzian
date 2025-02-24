@@ -1,17 +1,6 @@
-#ifndef SEAREP_C
-#define SEAREP_C
+#include "../headers/utils/searep.h"
 
 
-
-
-#include <regex.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-
-
-// TODO: Warn user to not ignore return value
 [[nodiscard]]
 char *rep_interval(char *freeable, int start, int end, char *insertion) {
     // Bounds checking
@@ -78,17 +67,3 @@ char *search_replace(char *freeable, char *regexp, char *substitute) {
 
     return edited;
 }
-
-
-void testing() {
-    char *radio = (char *)malloc(strlen("[ \"$(tty)\" = \"/dev/tty1\" ] && (Hyprland; killshells)") + 1);
-    strcpy(radio, "[ \"$(tty)\" = \"/dev/tty1\" ] && (Hyprland; killshells)");
-    char *newdio = search_replace(radio, "&& \\(.*;", "&& (JoeMama;");
-    if (newdio) {
-        printf("%s\n", newdio);
-        free(newdio);
-    }
-    free(radio);
-}
-
-#endif

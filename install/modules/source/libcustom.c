@@ -1,4 +1,4 @@
-#include "libcustom.h"
+#include "../headers/libcustom.h"
 
 
 void devicespecific_cfg(config *cfg) {
