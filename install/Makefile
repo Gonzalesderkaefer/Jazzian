@@ -8,7 +8,7 @@ mainobj=install.o
 CC=gcc
 CFLAGS=
 
-all: libpacinst libmove libcustom libconfig libfileutils libsearep libconfigutils run
+all: libpacinst libmove libcustom libconfig libfileutils libsearep libconfigutils libpkgutils run
 
 libpacinst: modules/headers/libpacinst.h modules/source/libpacinst.c
 	$(CC) $(CFLAGS) -fPIC -shared -o modules/lib/libpacinst.so modules/source/libpacinst.c -lc
@@ -31,11 +31,14 @@ libsearep: modules/headers/utils/searep.h modules/source/libsearep.c
 libconfigutils: modules/headers/utils/config_utils.h modules/source/libconfigutils.c
 	$(CC) $(CFLAGS) -fPIC -shared -o modules/lib/libconfigutils.so modules/source/libconfigutils.c -lc
 
+libpkgutils: modules/headers/utils/pkgutils.h modules/source/libpkgutils.c
+	$(CC) $(CFLAGS) -fPIC -shared -o modules/lib/libpkgutils.so modules/source/libpkgutils.c -lc
+
 # Define Targets
 run:
 	[ -d $(bindir) ] || mkdir $(bindir)
 	gcc -c $(src) -o $(bindir)/$(mainobj)
-	gcc -o $(bindir)/$(bin) $(bindir)/$(mainobj) -lmove -lconfig -lcustom -lpacinst -lfileutils -lsearep -lconfigutils -L ./modules/lib 
+	gcc -o $(bindir)/$(bin) $(bindir)/$(mainobj) -lmove -lconfig -lcustom -lpacinst -lfileutils -lsearep -lconfigutils -lpkgutils -L ./modules/lib 
 	LD_LIBRARY_PATH="./modules/lib/:$LD_LIBRARY_PATH" ./$(bindir)/$(bin)
 
 
