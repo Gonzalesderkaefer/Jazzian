@@ -8,7 +8,7 @@ mainobj=install.o
 CC=gcc
 CFLAGS=
 
-all: libpacinst libmove libcustom libconfig libfileutils libsearep run
+all: libpacinst libmove libcustom libconfig libfileutils libsearep libconfigutils run
 
 libpacinst: modules/headers/libpacinst.h modules/source/libpacinst.c
 	$(CC) $(CFLAGS) -fPIC -shared -o modules/lib/libpacinst.so modules/source/libpacinst.c -lc
@@ -28,12 +28,14 @@ libfileutils: modules/headers/utils/file_utils.h modules/source/libfileutils.c
 libsearep: modules/headers/utils/searep.h modules/source/libsearep.c
 	$(CC) $(CFLAGS) -fPIC -shared -o modules/lib/libsearep.so modules/source/libsearep.c -lc
 
+libconfigutils: modules/headers/utils/config_utils.h modules/source/libconfigutils.c
+	$(CC) $(CFLAGS) -fPIC -shared -o modules/lib/libconfigutils.so modules/source/libconfigutils.c -lc
 
 # Define Targets
 run:
 	[ -d $(bindir) ] || mkdir $(bindir)
 	gcc -c $(src) -o $(bindir)/$(mainobj)
-	gcc -o $(bindir)/$(bin) $(bindir)/$(mainobj) -lmove -lconfig -lcustom -lpacinst -lfileutils -lsearep -L ./modules/lib 
+	gcc -o $(bindir)/$(bin) $(bindir)/$(mainobj) -lmove -lconfig -lcustom -lpacinst -lfileutils -lsearep -lconfigutils -L ./modules/lib 
 	LD_LIBRARY_PATH="./modules/lib/:$LD_LIBRARY_PATH" ./$(bindir)/$(bin)
 
 
@@ -41,8 +43,6 @@ compile:
 	[ -d $(bindir) ] || mkdir $(bindir)
 	gcc -c $(src) -o $(bindir)/$(mainobj)
 	gcc -o $(bindir)/$(bin) $(bindir)/$(mainobj) -lmove -lconfig -lcustom -lpacinst -lfileutils -lsearep -L ./modules/lib 
-
-
 
 
 val:

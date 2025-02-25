@@ -5,10 +5,10 @@
 #define SEAREP_C
 
 
-[[nodiscard]]
+[[nodiscard("Heap allocated return value must be free'd")]]
 char *rep_interval(char *freeable, int start, int end, char *insertion);
 
-[[nodiscard]]
+[[nodiscard("Heap allocated return value must be free'd")]]
 char *search_replace(char *freeable, char *regexp, char *substitute);
 
 

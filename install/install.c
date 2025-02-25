@@ -4,6 +4,7 @@
 #include "modules/headers/libcustom.h"
 #include "modules/headers/libmove.h"
 #include "modules/headers/libpacinst.h"
+#include "modules/headers/utils/config_utils.h"
 
 
 int main() {
