@@ -115,6 +115,10 @@ genfstab -U /mnt >> /mnt/etc/fstab;
 # copy chroot setup to target system
 cp ./chroot.sh /mnt/
 
+# Store uuid of root part
+rootuuid=$(sudo blkid -s UUID -o value ${lukspart});
+
+
 # chrooting into the new system
 arch-chroot /mnt ./chroot.sh ${rootuuid} ${luks_name};
 
