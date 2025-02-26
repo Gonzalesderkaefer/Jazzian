@@ -111,8 +111,14 @@ pacstrap -K /mnt base linux linux-firmware linux-headers networkmanager cryptset
 # generate fstab and write it to rootdrive
 genfstab -U /mnt >> /mnt/etc/fstab;
 
+# copy chroot setup to target system
+cp ./chroot.sh /mnt/chroot.sh
+
 # chrooting into the new system
 arch-chroot /mnt ./chroot.sh ${rootuuid} ${luks_name};
+
+# remove chroot script
+rm /mnt/chroot.sh
 
 # user specific configuration
 arch-chroot /mnt;
