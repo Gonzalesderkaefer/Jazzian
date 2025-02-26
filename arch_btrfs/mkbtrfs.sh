@@ -112,7 +112,7 @@ pacstrap -K /mnt base linux linux-firmware linux-headers networkmanager cryptset
 genfstab -U /mnt >> /mnt/etc/fstab;
 
 # chrooting into the new system
-arch-chroot /mnt ./chrootsetup.sh ${rootuuid} ${luks_name};
+arch-chroot /mnt ./chroot.sh ${rootuuid} ${luks_name};
 
 # user specific configuration
 arch-chroot /mnt;
