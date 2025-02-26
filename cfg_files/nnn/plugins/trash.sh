@@ -7,5 +7,5 @@ selection="$(cat $HOME/.config/nnn/.selection | tr '\0' '\n')";
 IFS=$'\n'
 # iterate through $selection and move the files to .trash
 for i in $selection; do
-    echo "$i";
+    trash "$i";
 done
