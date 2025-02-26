@@ -5,6 +5,7 @@ green="\033[0;32m";
 red="\033[0;31m";
 end="\033[0m";
 
+CURRENTDIR=$(pwd);
 
 # Install JQ
 pacman -S jq --needed --noconfirm;
@@ -94,7 +95,7 @@ btrfs subvolume create @;
 # Create swap subvolume
 btrfs subvolume create @swap;
 btrfs filesystem mkswapfile --size 4g --uuid clear @swap/swapfile; # Might switch to zram
-cd ~
+cd ${CURRENTDIR};
 
 # Remounting subvolumes
 umount /target;
@@ -112,7 +113,7 @@ pacstrap -K /mnt base linux linux-firmware linux-headers networkmanager cryptset
 genfstab -U /mnt >> /mnt/etc/fstab;
 
 # copy chroot setup to target system
-cp ./chroot.sh /mnt/chroot.sh
+cp ./chroot.sh /mnt/
 
 # chrooting into the new system
 arch-chroot /mnt ./chroot.sh ${rootuuid} ${luks_name};
