@@ -26,3 +26,7 @@ newsboat*
 # NNN-File manager files
 /cfg_files/nnn/*
 !/cfg_files/nnn/plugins
+
+# (Shared) Libraries
+*.so
+*.o
