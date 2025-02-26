@@ -7,7 +7,7 @@ end="\033[0m";
 
 
 # Install JQ
-pacman -S jq;
+pacman -S jq --needed --noconfirm;
 
 
 # Get all drives
