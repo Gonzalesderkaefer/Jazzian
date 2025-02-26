@@ -50,7 +50,7 @@ echo -ne "${green}Username: ${end}";
 read username;
 useradd -m -G wheel,audio,video ${username};
 passwd ${username};
-echo "${user}   ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/${user};
+echo "${username}   ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/${username};
 
 
 
