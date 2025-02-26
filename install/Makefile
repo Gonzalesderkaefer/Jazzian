@@ -47,6 +47,12 @@ compile:
 	gcc -c $(src) -o $(bindir)/$(mainobj)
 	gcc -o $(bindir)/$(bin) $(bindir)/$(mainobj) -lmove -lconfig -lcustom -lpacinst -lfileutils -lsearep -L ./modules/lib 
 
+bundle:
+	[ -d $(bindir) ] || mkdir $(bindir)
+	gcc -o $(bindir)/$(bin) $(src) ./modules/source/libmove.c ./modules/source/libconfig.c \
+		./modules/source/libcustom.c ./modules/source/libsearep.c ./modules/source/libpacinst.c \
+		./modules/source/libpkgutils.c ./modules/source/libfileutils.c ./modules/source/libconfigutils.c
+
 
 val:
 	[ -d $(bindir) ] || mkdir $(bindir)
