@@ -107,7 +107,7 @@ swapon /mnt/swap/swapfile;
 mount --mkdir ${efipart} /mnt/boot;
 
 # installing the base system
-pacstrap -K /mnt base linux linux-firmware linux-headers networkmanager cryptsetup btrfs-progs grub grub-btrfs efibootmgr vim sudo;
+pacstrap -K /mnt base linux linux-firmware linux-headers networkmanager cryptsetup btrfs-progs grub grub-btrfs efibootmgr vim sudo base-devel;
 
 # generate fstab and write it to rootdrive
 genfstab -U /mnt >> /mnt/etc/fstab;
