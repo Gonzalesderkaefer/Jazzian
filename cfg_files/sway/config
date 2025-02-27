@@ -110,6 +110,10 @@ bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
 
+### Alt+tab
+bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
+
 ### Moving Windows
 bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
