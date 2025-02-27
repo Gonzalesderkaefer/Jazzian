@@ -83,6 +83,7 @@ outside : while ((cfg_content = readdir(directory)) != NULL) {
       copy_dir(src, dest, ill_cfg, false);
     } else {
       printf("Copy %s to %s\n", src, dest);
+      copy_file(src, dest, path_stat.st_mode);
     }
   }
   closedir(directory);
@@ -119,7 +120,7 @@ outside : while ((cfg_content = readdir(directory)) != NULL) {
       strcat(dest, cfg_content->d_name);
       dest[dest_len + 2 + direlem_len] = '\0';
       printf("linking %s to %s\n", src, dest);
-      //symlink(src, dest);
+      symlink(src, dest);
     } else {
       // Define dest file path
       char dest[dest_len + 1 + direlem_len + 1];
@@ -127,7 +128,7 @@ outside : while ((cfg_content = readdir(directory)) != NULL) {
       strcat(dest, "/");
       strcat(dest, cfg_content->d_name);
       printf("linking %s to %s\n", src, dest);
-      //symlink(src, dest);
+      symlink(src, dest);
     }
 
   }

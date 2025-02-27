@@ -41,6 +41,9 @@ char *myterm_content = "    #!/bin/dash\n"
 
 char *startx_content = "exec i3\n";
 
+
+int edit_files(config *system);
+
 void devicespecific_cfg(config *system) {
   // Define config dest directory
   int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config") + 1;
@@ -132,6 +135,7 @@ void devicespecific_cfg(config *system) {
     if (!file_exists(mdrun))
       write_to_file(mdrun_content, strlen(mdrun_content), mdrun, "w", 0777);
   }
+  edit_files(system);
 }
 
 int edit_files(config *system) {
