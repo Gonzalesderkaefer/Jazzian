@@ -6,7 +6,6 @@ char *devicespecific_sh =
     "killshells() {\n"
     "    pkill -KILL -u $USER -t tty1\n"
     "}\n"
-    "export WM=i3\n"
     "[ \"$(tty)\" = \"/dev/tty1\" ] && (startx; killshells)\n";
 
 char *debmdmenu = "#!/usr/bin/sh\n"
@@ -63,6 +62,7 @@ void devicespecific_cfg(config *system) {
     strcat(devspc, "/");
     strcat(devspc, "devicespecific");
     printf("Created Directory: %s\n", devspc);
+    mkdir(devspc, 0755);
 
     if (strcmp(wm[i], "awesome") == 0) {
       // Create cfg file for awesome
@@ -72,6 +72,7 @@ void devicespecific_cfg(config *system) {
       strcat(cfg, "/");
       strcat(cfg, "devicespecific.lua");
       printf("Created file: %s\n", cfg);
+      write_to_file("", 0,cfg , "a+", 0644);
       continue;
     }
     // Create cfg file
@@ -81,6 +82,7 @@ void devicespecific_cfg(config *system) {
     strcat(cfg, "/");
     strcat(cfg, "devicespecific");
     printf("Created file: %s\n", cfg);
+    write_to_file("", 0,cfg , "a+", 0644);
   }
 
   // .zprofile eqivalent
