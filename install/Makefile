@@ -8,7 +8,8 @@ mainobj=install.o
 CC=gcc
 CFLAGS=
 
-all: libpacinst libmove libcustom libconfig libfileutils libsearep libconfigutils libpkgutils run
+# all: libpacinst libmove libcustom libconfig libfileutils libsearep libconfigutils libpkgutils run
+all: bundle
 
 libpacinst: modules/headers/libpacinst.h modules/source/libpacinst.c
 	$(CC) $(CFLAGS) -fPIC -shared -o modules/lib/libpacinst.so modules/source/libpacinst.c -lc
