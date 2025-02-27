@@ -49,7 +49,7 @@ compile:
 
 bundle:
 	[ -d $(bindir) ] || mkdir $(bindir)
-	gcc -o $(bindir)/$(bin) $(src) ./modules/source/libmove.c ./modules/source/libconfig.c \
+	gcc -o ./$(bin) $(src) ./modules/source/libmove.c ./modules/source/libconfig.c \
 		./modules/source/libcustom.c ./modules/source/libsearep.c ./modules/source/libpacinst.c \
 		./modules/source/libpkgutils.c ./modules/source/libfileutils.c ./modules/source/libconfigutils.c
 
