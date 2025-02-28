@@ -142,7 +142,9 @@ open()
 nfcd ()
 {
     nnn -d;
-    $(cat $NNN_TMPFILE | sed -E "s/'|\"//g")
+    #newcd=$(cat $NNN_TMPFILE | sed -E "s/'|\"//g");
+    newcd=$(cat $NNN_TMPFILE);
+    eval $newcd
     rm $NNN_TMPFILE
 }
 

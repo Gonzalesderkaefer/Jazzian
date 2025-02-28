@@ -135,7 +135,3 @@ outside : while ((cfg_content = readdir(directory)) != NULL) {
   closedir(directory);
   return 0;
 }
-
-bool file_exists(char *filepath) {
-  return !access(filepath, F_OK);
-}
