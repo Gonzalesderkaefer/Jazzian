@@ -45,12 +45,16 @@ void write_to_file(char *data, int length, const char *file_path, const char *mo
 int copy_dir(char *src_dir, char *dest_parent, char **ill_cfg, bool hide) {
   DIR *directory = opendir(src_dir);
   struct dirent *cfg_content;
-outside : while ((cfg_content = readdir(directory)) != NULL) {
+  while ((cfg_content = readdir(directory)) != NULL) {
+    bool skip = false;
     // Check if dir name is in ill_cfg
     for(int i = 0; ill_cfg[i] != NULL; ++i){
-      if (!strcmp(ill_cfg[i], cfg_content->d_name)) 
-        goto outside;
+      if (!strcmp(ill_cfg[i], cfg_content->d_name) ) {
+        skip = true;
+        break;
+      }
     }
+    if (skip) continue;
 
 
     // Define full path of file in directory
@@ -79,10 +83,12 @@ outside : while ((cfg_content = readdir(directory)) != NULL) {
     // Check whether file is directory
     if (S_ISDIR(path_stat.st_mode)) {
       mkdir(dest, path_stat.st_mode);
-      printf("Created new Dir in %s\n", dest);
+      printf("Created new Dir in %s with mode %d\n", dest, path_stat.st_mode);
+      if (access(src, R_OK) == -1) printf("NO ACCESS");
       copy_dir(src, dest, ill_cfg, false);
     } else {
       printf("Copy %s to %s\n", src, dest);
+      if (access(src, R_OK) == -1) printf("NO ACCESS");
       copy_file(src, dest, path_stat.st_mode);
     }
   }
@@ -94,6 +100,7 @@ int link_dir(char *src_dir, char *dest_dir, char **ill_cfg, bool hide){
   DIR *directory = opendir(src_dir);
   struct dirent *cfg_content;
 outside : while ((cfg_content = readdir(directory)) != NULL) {
+    
     // Check if dir name is in ill_cfg
     for(int i = 0; ill_cfg[i] != NULL; ++i){
       if (!strcmp(ill_cfg[i], cfg_content->d_name)) 
@@ -110,6 +117,7 @@ outside : while ((cfg_content = readdir(directory)) != NULL) {
     strcat(src, "/");
     strcat(src, cfg_content->d_name);
     src[src_len + 1 + direlem_len] = '\0';
+    
 
 
     if (hide) {

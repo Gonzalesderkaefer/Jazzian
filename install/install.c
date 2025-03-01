@@ -5,11 +5,14 @@
 #include "modules/headers/libmove.h"
 #include "modules/headers/libpacinst.h"
 #include "modules/headers/utils/config_utils.h"
+#include "modules/headers/libbackup.h"
 
 
 int main() {
   // Get Config from user
   //config *system = get_config();
+
+  backup_cfgs("myBackup");
 
   // Update system
   //update(system);

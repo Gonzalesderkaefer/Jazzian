@@ -8,8 +8,9 @@ mainobj=install.o
 CC=gcc
 CFLAGS=
 
-# all: libpacinst libmove libcustom libconfig libfileutils libsearep libconfigutils libpkgutils run
 all: bundle
+
+libs: libpacinst libmove libcustom libconfig libfileutils libsearep libconfigutils libpkgutils run
 
 libpacinst: modules/headers/libpacinst.h modules/source/libpacinst.c
 	$(CC) $(CFLAGS) -fPIC -shared -o modules/lib/libpacinst.so modules/source/libpacinst.c -lc
@@ -35,11 +36,15 @@ libconfigutils: modules/headers/utils/config_utils.h modules/source/libconfiguti
 libpkgutils: modules/headers/utils/pkgutils.h modules/source/libpkgutils.c
 	$(CC) $(CFLAGS) -fPIC -shared -o modules/lib/libpkgutils.so modules/source/libpkgutils.c -lc
 
+libbackup: modules/headers/utils/pkgutils.h modules/source/libbackup.c
+	$(CC) $(CFLAGS) -fPIC -shared -o modules/lib/libbackup.so modules/source/libbackup.c -lc
+
 # Define Targets
 run:
 	[ -d $(bindir) ] || mkdir $(bindir)
 	gcc -c $(src) -o $(bindir)/$(mainobj)
-	gcc -o $(bindir)/$(bin) $(bindir)/$(mainobj) -lmove -lconfig -lcustom -lpacinst -lfileutils -lsearep -lconfigutils -lpkgutils -L ./modules/lib 
+	gcc -o $(bindir)/$(bin) $(bindir)/$(mainobj) -lmove -lconfig -lcustom -lpacinst -lfileutils \
+		-lsearep -lconfigutils -lpkgutils -lbackup -L ./modules/lib 
 	LD_LIBRARY_PATH="./modules/lib/:$LD_LIBRARY_PATH" ./$(bindir)/$(bin)
 
 
@@ -50,9 +55,10 @@ compile:
 
 bundle:
 	[ -d $(bindir) ] || mkdir $(bindir)
-	gcc -o ./jazzy $(src) ./modules/source/libmove.c ./modules/source/libconfig.c \
+	gcc -g -o ./jazzy $(src) ./modules/source/libmove.c ./modules/source/libconfig.c \
 		./modules/source/libcustom.c ./modules/source/libsearep.c ./modules/source/libpacinst.c \
-		./modules/source/libpkgutils.c ./modules/source/libfileutils.c ./modules/source/libconfigutils.c
+		./modules/source/libpkgutils.c ./modules/source/libfileutils.c ./modules/source/libconfigutils.c \
+		./modules/source/libbackup.c
 
 
 val:

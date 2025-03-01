@@ -71,8 +71,8 @@ nmap <leader>bb :buffers<CR>
 set laststatus=2
 
 " source user-specific config
-if !empty(glob("$HOME/.vim/devicespecific"))
-    source $HOME/.vim/devicespecific
+if !empty(glob("$HOME/.vim/devicespecific/devicespecific"))
+    source $HOME/.vim/devicespecific/devicespecific
 endif
 
 " Enable OS-Clipboard

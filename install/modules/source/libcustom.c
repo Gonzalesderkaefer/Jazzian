@@ -41,7 +41,7 @@ char *myterm_content = "    #!/bin/dash\n"
 char *startx_content = "exec i3\n";
 
 
-int edit_files(config *system);
+static int edit_files(config *system);
 
 void devicespecific_cfg(config *system) {
   // Define config dest directory
@@ -94,9 +94,9 @@ void devicespecific_cfg(config *system) {
                   "w", 0777);
 
   // .zshrc eqivalent
-  int sh_len = strlen(getenv("HOME")) + strlen(".devicerc.sh") + 2;
+  int sh_len = strlen(getenv("HOME")) + strlen(".devicerc") + 2;
   char sh_path[sh_len];
-  sprintf(sh_path, "%s/.devicerc.sh", getenv("HOME"));
+  sprintf(sh_path, "%s/.devicerc", getenv("HOME"));
   if (!file_exists(sh_path))
     write_to_file("", strlen(""), sh_path, "w", 0777);
 
