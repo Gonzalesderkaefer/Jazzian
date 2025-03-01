@@ -10,9 +10,9 @@
 
 int main() {
   // Get Config from user
-  //config *system = get_config();
+  config *system = get_config();
 
-  backup_cfgs("myBackup");
+  //backup_cfgs("myBackup");
 
   // Update system
   //update(system);

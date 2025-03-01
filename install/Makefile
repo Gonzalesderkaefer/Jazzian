@@ -60,6 +60,9 @@ bundle:
 		./modules/source/libpkgutils.c ./modules/source/libfileutils.c ./modules/source/libconfigutils.c \
 		./modules/source/libbackup.c
 
+clean:
+	rm jazzy;
+
 
 val:
 	[ -d $(bindir) ] || mkdir $(bindir)
