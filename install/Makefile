@@ -1,8 +1,8 @@
 # File Variables
-src=install.c
-bin=install.out
+src=main.c
+bin=main.out
 bindir=.bin
-mainobj=install.o
+mainobj=main.o
 
 
 CC=gcc
