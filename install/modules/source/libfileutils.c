@@ -143,7 +143,6 @@ int link_dir(char *src_dir, char *dest_dir, char **ill_cfg, bool hide) {
     char dest[dest_len + 2 + direlem_len + 1];
     if (hide) {
       // Define dest hidden file path
-      char dest[dest_len + 2 + direlem_len + 1];
       strcpy(dest, dest_dir);
       strcat(dest, "/.");
       strcat(dest, cfg_content->d_name);
