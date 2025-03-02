@@ -12,7 +12,6 @@ int main() {
   // Get Config from user
   config *system = get_config();
 
-  //backup_cfgs("myBackup");
 
   // Update system
   update(system);

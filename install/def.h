@@ -15,6 +15,9 @@
 #include <regex.h>
 #include <sys/types.h>
 
+// For flushing stdin
+extern int flush_CHAR;
+#define flush_stdin() while ((flush_CHAR = getchar()) != '\n' && flush_CHAR != EOF) ;
 
 // Other files
 #include "packages/packages.h"

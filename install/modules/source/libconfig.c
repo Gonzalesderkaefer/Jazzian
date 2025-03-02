@@ -1,6 +1,8 @@
 // Other files
 #include "../headers/libconfig.h"
 
+// Flush char
+int flush_CHAR;
 
 enum DISPLAYSERVER get_display_server() {
   // Ask user
@@ -155,26 +157,21 @@ enum TRANSFER get_transfer() {
 
 
 config *get_config() {
-  // Buff char for flushing
-  int c;
   // Config struct
   static config this_config;
   // get display manager from user
   this_config.display_manager = get_display_server();
   // getchar won't work otherwise
-  while ((c = getchar()) != '\n' && c != EOF)
-    ;
+  flush_stdin();
   // get window manager
   this_config.window_manager = get_window_manager(this_config.display_manager);
   // getchar won't work otherwise
-  while ((c = getchar()) != '\n' && c != EOF)
-    ;
+  flush_stdin();
   // Get Distro
   this_config.distro = get_distro();
   // Get Transfer type
   this_config.file_transfer = get_transfer();
-  while ((c = getchar()) != '\n' && c != EOF)
-    ;
+  flush_stdin();
   return &this_config;
 }
 
