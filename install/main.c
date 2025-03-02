@@ -15,14 +15,14 @@ int main() {
   //backup_cfgs("myBackup");
 
   // Update system
-  //update(system);
+  update(system);
 
   // Install required packages
-  //inst_pac(system);
+  inst_pac(system);
 
   // Transfer config files
-  //move_cfg(system->file_transfer);
+  move_cfg(system->file_transfer);
 
   // Create custom config files
-  //devicespecific_cfg(system);
+  devicespecific_cfg(system);
 }
