@@ -11,7 +11,7 @@
 ## Setting colors
 set $bg #222222
 set $fg #eff1f5
-set $in	#ff5500
+set $in #ff5500
 set $br #8e60f7 
 
 
