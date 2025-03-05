@@ -4,7 +4,7 @@
 
 
 // Other files
-#include "../../../def.h"
+#include "../def.h"
 #include<ftw.h>
 
 

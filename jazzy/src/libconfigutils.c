@@ -1,4 +1,4 @@
-#include "../headers/utils/config_utils.h"
+#include "include/utils/config_utils.h"
 
 char *wm_tostr(WINDOWMANAGER wm) {
   switch (wm) {

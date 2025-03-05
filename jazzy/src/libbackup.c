@@ -1,5 +1,5 @@
-#include "../headers/libbackup.h"
-#include "../headers/utils/file_utils.h"
+#include "include/libbackup.h"
+#include "include/utils/file_utils.h"
 #include <string.h>
 
 #define HOME getenv("HOME")

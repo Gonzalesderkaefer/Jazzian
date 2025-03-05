@@ -1,5 +1,5 @@
 // Other files
-#include "../headers/utils/file_utils.h"
+#include "include/utils/file_utils.h"
 #include <sys/types.h>
 
 void copy_file(char *src_file, char *dest_file, mode_t mode) {

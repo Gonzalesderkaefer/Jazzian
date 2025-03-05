@@ -1,4 +1,4 @@
-#include "../headers/libcustom.h"
+#include "include/libcustom.h"
 #include <stdlib.h>
 
 // Predifined file contents

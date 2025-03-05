@@ -1,5 +1,5 @@
 // Other files
-#include "../headers/libconfig.h"
+#include "include//libconfig.h"
 
 // Flush char
 int flush_CHAR;

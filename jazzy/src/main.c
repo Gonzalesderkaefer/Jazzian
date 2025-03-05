@@ -1,11 +1,11 @@
 // Other files
-#include "def.h"
-#include "modules/headers/libconfig.h"
-#include "modules/headers/libcustom.h"
-#include "modules/headers/libmove.h"
-#include "modules/headers/libpacinst.h"
-#include "modules/headers/utils/config_utils.h"
-#include "modules/headers/libbackup.h"
+#include "include/def.h"
+#include "include/libconfig.h"
+#include "include/libcustom.h"
+#include "include/libmove.h"
+#include "include/libpacinst.h"
+#include "include/utils/config_utils.h"
+#include "include/libbackup.h"
 
 
 int main() {

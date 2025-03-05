@@ -1,5 +1,5 @@
 // Other files
-#include "../headers/libpacinst.h"
+#include "include/libpacinst.h"
 #include <stdio.h>
 
 int inst_pac(config *system) {

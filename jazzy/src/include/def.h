@@ -20,7 +20,7 @@ extern int flush_CHAR;
 #define flush_stdin() while ((flush_CHAR = getchar()) != '\n' && flush_CHAR != EOF) ;
 
 // Other files
-#include "packages/packages.h"
+#include "packages.h"
 
 // Display server
 typedef enum DISPLAYSERVER { XORG = 0, WAYLAND } DISPLAYSERVER;
