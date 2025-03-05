@@ -42,6 +42,7 @@ alias "fgs"="fg %"
 
 ## Editor
 alias "v"="$EDITOR"
+alias "sv"="sudo $EDITOR"
 alias "vv"="$EDITOR ."
 # (command -v nvim > /dev/null) && alias "v"="nvim" || alias "v"="vim"
 # (command -v nvim > /dev/null) && alias "vv"="nvim ." || alias "vv"="vim ."
