@@ -5,7 +5,7 @@ CC=gcc
 CFLAGS= -Wall
 
 default: build/main.o build/libpacinst.o build/libsearep.o build/libfileutils.o build/libbackup.o build/libconfig.o build/libconfigutils.o \
-		 build/libcustom.o build/libmove.o build/libpkgutils.o
+		 build/libcustom.o build/libmove.o build/libpkgutils.o build/libmenu.o
 	${CC} ${CFLAGS} $^ -o build/jazzy
 
 build/main.o: src/main.c
@@ -37,3 +37,7 @@ build/libmove.o : src/libmove.c
 
 build/libpkgutils.o : src/libpkgutils.c
 	${CC} ${CFLAGS} -c $^ -o $@
+
+build/libmenu.o : src/libmenu.c
+	${CC} ${CFLAGS} -c $^ -o $@
+

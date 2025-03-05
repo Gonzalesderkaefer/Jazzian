@@ -19,6 +19,14 @@
 extern int flush_CHAR;
 #define flush_stdin() while ((flush_CHAR = getchar()) != '\n' && flush_CHAR != EOF) ;
 
+// Format colors
+#define F_PURPLE "\033[1;35m"
+#define F_GREEN "\033[0;32m"
+#define F_RED "\033[0;31m"
+#define F_END "\033[0m "
+
+
+
 // Other files
 #include "packages.h"
 
