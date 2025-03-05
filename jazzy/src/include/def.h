@@ -20,10 +20,14 @@ extern int flush_CHAR;
 #define flush_stdin() while ((flush_CHAR = getchar()) != '\n' && flush_CHAR != EOF) ;
 
 // Format colors
-#define F_PURPLE "\033[1;35m"
-#define F_GREEN "\033[0;32m"
-#define F_RED "\033[0;31m"
-#define F_END "\033[0m "
+#define F_BLACK "\e[0;30m"
+#define F_RED "\e[0;31m"
+#define F_GREEN "\e[0;32m"
+#define F_YELLOW "\e[0;33m"
+#define F_BLUE "\e[0;34m"
+#define F_PURPLE "\e[0;35m"
+#define F_CYAN "\e[0;36m"
+#define F_WHITE "\e[0;37m"
 
 
 

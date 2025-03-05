@@ -10,21 +10,6 @@
 
 
 
-int main() {
-  const char *header = "The jazzy utility";
-  const char *prompt = "Your Choice";
-  const char *options[] = {
-    "create [b]ackup",
-    "[r]estore backup",
-    "[s]etup system",
-    NULL
-  };
-
-  char choice = print_menu(header, options, prompt);
-  printf("%c\n", choice);
-}
-
-
 
 void init_system() {
   // Get Config from user
@@ -41,4 +26,28 @@ void init_system() {
 
   // Create custom config files
   devicespecific_cfg(system);
+}
+
+int main() {
+  const char *header = "The jazzy utility";
+  const char *prompt = "Your Choice";
+  const char *options[] = {
+    "create [b]ackup",
+    "[r]estore backup",
+    "[s]etup system",
+    NULL
+  };
+
+  char choice = print_menu(header, options, prompt);
+  switch(choice) {
+    case 'b':
+      backup_cfgs("myBackup");
+      break;
+    case 'r':
+      restore_cfgs("myBackup");
+      break;
+    case 's':
+      init_system();
+      break;
+  }
 }
