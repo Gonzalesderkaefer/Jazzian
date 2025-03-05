@@ -8,6 +8,9 @@ default: build/main.o build/libpacinst.o build/libsearep.o build/libfileutils.o 
 		 build/libcustom.o build/libmove.o build/libpkgutils.o build/libmenu.o
 	${CC} ${CFLAGS} $^ -o build/jazzy
 
+install: default
+	cp build/jazzy ${HOME}/.local/bin/jazzy
+
 build/main.o: src/main.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
