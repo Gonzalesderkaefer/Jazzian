@@ -13,8 +13,9 @@ enum DISPLAYSERVER get_display_server() {
   /* Get users choice */
   char choice = getchar();
 
-  if (choice == 'w' || choice == 'W')
+  if (choice == 'w' || choice == 'W') {
     return WAYLAND;
+  }
 
   return XORG;
 }

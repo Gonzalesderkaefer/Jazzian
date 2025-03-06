@@ -9,8 +9,6 @@
 #include "include/libbackup.h"
 
 
-
-
 void init_system() {
   /* Get Config from user */
   config *system = get_config();
@@ -39,6 +37,7 @@ int main() {
   };
 
   char choice = print_menu(header, options, prompt);
+  flush_stdin();
   switch(choice) {
     case 'b':
       backup_cfgs("myBackup");
