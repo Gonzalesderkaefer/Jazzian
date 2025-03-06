@@ -1,4 +1,4 @@
-// Other files
+/* Other files */
 #include "include/def.h"
 #include "include/libconfig.h"
 #include "include/libcustom.h"
@@ -12,19 +12,19 @@
 
 
 void init_system() {
-  // Get Config from user
+  /* Get Config from user */
   config *system = get_config();
 
-  // Update system
+  /* Update system */
   update(system);
 
-  // Install required packages
+  /* Install required packages */
   inst_pac(system);
 
-  // Transfer config files
+  /* Transfer config files */
   move_cfg(system->file_transfer);
 
-  // Create custom config files
+  /* Create custom config files */
   devicespecific_cfg(system);
 }
 

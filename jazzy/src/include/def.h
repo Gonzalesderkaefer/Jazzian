@@ -1,7 +1,7 @@
 #ifndef DEF_H
 #define DEF_H
 
-// Libraries
+/* Libraries */
 #include <dirent.h>
 #include <errno.h>
 #include <stdbool.h>
@@ -15,11 +15,11 @@
 #include <regex.h>
 #include <sys/types.h>
 
-// For flushing stdin
+/* For flushing stdin */
 extern int flush_CHAR;
 #define flush_stdin() while ((flush_CHAR = getchar()) != '\n' && flush_CHAR != EOF) ;
 
-// Format colors
+/* Format colors */
 #define F_BLACK "\e[0;30m"
 #define F_RED "\e[0;31m"
 #define F_GREEN "\e[0;32m"
@@ -28,16 +28,17 @@ extern int flush_CHAR;
 #define F_PURPLE "\e[0;35m"
 #define F_CYAN "\e[0;36m"
 #define F_WHITE "\e[0;37m"
+#define F_END "\e[0m"
 
 
 
-// Other files
+/* Other files */
 #include "packages.h"
 
-// Display server
+/* Display server */
 typedef enum DISPLAYSERVER { XORG = 0, WAYLAND } DISPLAYSERVER;
 
-// Windowmanager
+/* Windowmanager */
 typedef enum WINDOWMANAGER {
   I3 = 0,
   AWESOME,
@@ -47,13 +48,13 @@ typedef enum WINDOWMANAGER {
   RIVER
 } WINDOWMANAGER;
 
-// Distro
+/* Distro */
 typedef enum DISTRO { DEBIAN = 0, FEDORA, ARCH, UNKNOWN } DISTRO;
 
-// Type of transfer
+/* Type of transfer */
 typedef enum TRANSFER { NOTHING = 0, LINK, COPY } TRANSFER;
 
-// Config
+/* Config */
 typedef struct setup_config {
   DISPLAYSERVER display_manager;
   WINDOWMANAGER window_manager;

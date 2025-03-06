@@ -67,7 +67,7 @@ char *distro_tostr(DISTRO distro) {
 
 [[nodiscard]]
 char *config_tostr(config *system) {
-  // Store the values
+  /* Store the values */
   char *distro = distro_tostr(system->distro);
   char *wm = wm_tostr(system->window_manager);
   char *transfer = transfer_tostr(system->file_transfer);

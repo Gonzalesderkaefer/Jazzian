@@ -3,7 +3,7 @@
 #define FILE_UTILS_C
 
 
-// Other files
+/* Other files */
 #include "../def.h"
 #include<ftw.h>
 

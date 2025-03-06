@@ -1,23 +1,23 @@
-// Other files
+/* Other files */
 #include "include/utils/file_utils.h"
 #include <sys/types.h>
 
 void copy_file(char *src_file, char *dest_file, mode_t mode) {
-  // Open source file for reading
+  /* Open source file for reading */
   FILE *srcfp = fopen(src_file, "r");
   fseek(srcfp, 0, SEEK_END);
 
-  // Get size
+  /* Get size */
   int file_size = ftell(srcfp);
   fseek(srcfp, 0, SEEK_SET);
 
-  // Data buffer
+  /* Data buffer */
   char data[file_size + 3];
 
-  // Read data into buffer
+  /* Read data into buffer */
   fread(data, sizeof(char), file_size, srcfp);
 
-  // Open file for writing
+  /* Open file for writing */
   FILE *destfp = fopen(dest_file, "w");
   fwrite(data, sizeof(char), file_size, destfp);
 
@@ -27,16 +27,16 @@ void copy_file(char *src_file, char *dest_file, mode_t mode) {
 
 void write_to_file(char *data, int length, const char *file_path,
                    const char *modes, mode_t mode) {
-  // Open file for writing
+  /* Open file for writing */
   FILE *file = fopen(file_path, modes);
 
-  // Write into the file
+  /* Write into the file */
   fwrite(data, sizeof(char), length, file);
 
-  // Close file
+  /* Close file */
   fclose(file);
 
-  // Change file permissions
+  /* Change file permissions */
   chmod(file_path, mode);
 }
 
@@ -45,7 +45,7 @@ int copy_dir(char *src_dir, char *dest_parent, char **ill_cfg, bool hide) {
   struct dirent *cfg_content;
   while ((cfg_content = readdir(directory)) != NULL) {
     bool skip = false;
-    // Check if dir name is in ill_cfg
+    /* Check if dir name is in ill_cfg */
     for (int i = 0; ill_cfg[i] != NULL; ++i) {
       if (!strcmp(ill_cfg[i], cfg_content->d_name)) {
         skip = true;
@@ -55,13 +55,13 @@ int copy_dir(char *src_dir, char *dest_parent, char **ill_cfg, bool hide) {
     if (skip)
       continue;
 
-    // Define full path of file in directory
+    /* Define full path of file in directory */
     char src[strlen(src_dir) + strlen(cfg_content->d_name) + 2];
     strcpy(src, src_dir);
     strcat(src, "/");
     strcat(src, cfg_content->d_name);
 
-    // Define full path of dest file
+    /* Define full path of dest file */
     char dest[strlen(dest_parent) + strlen(cfg_content->d_name) + 3];
     if (hide) {
       strcpy(dest, dest_parent);
@@ -73,15 +73,15 @@ int copy_dir(char *src_dir, char *dest_parent, char **ill_cfg, bool hide) {
       strcat(dest, cfg_content->d_name);
     }
 
-    // Get Stat of src file
+    /* Get Stat of src file */
     struct stat src_stat;
     lstat(src, &src_stat);
 
-    // Get Stat for dest file
+    /* Get Stat for dest file */
     struct stat dest_stat;
     lstat(dest, &dest_stat);
 
-    // Check if destination file exists
+    /* Check if destination file exists */
     if (file_exists(dest)) {
       printf("%s exists already\n", dest);
       printf("going to remove %s \n", dest);
@@ -95,7 +95,7 @@ int copy_dir(char *src_dir, char *dest_parent, char **ill_cfg, bool hide) {
       }
     }
 
-    // Check whether file is directory
+    /* Check whether file is directory */
     if (S_ISDIR(src_stat.st_mode)) {
       mkdir(dest, src_stat.st_mode);
       printf("Created new Dir in %s with mode %d\n", dest, src_stat.st_mode);
@@ -119,7 +119,7 @@ int link_dir(char *src_dir, char *dest_dir, char **ill_cfg, bool hide) {
   while ((cfg_content = readdir(directory)) != NULL) {
     bool skip = false;
 
-    // Check if dir name is in ill_cfg
+    /* Check if dir name is in ill_cfg */
     for (int i = 0; ill_cfg[i] != NULL; ++i) {
       if (!strcmp(ill_cfg[i], cfg_content->d_name)) {
         skip = true;
@@ -133,7 +133,7 @@ int link_dir(char *src_dir, char *dest_dir, char **ill_cfg, bool hide) {
     unsigned int src_len = strlen(src_dir);
     unsigned int dest_len = strlen(dest_dir);
 
-    // Define src file path
+    /* Define src file path */
     char src[src_len + 1 + direlem_len + 1];
     strcpy(src, src_dir);
     strcat(src, "/");
@@ -142,24 +142,24 @@ int link_dir(char *src_dir, char *dest_dir, char **ill_cfg, bool hide) {
 
     char dest[dest_len + 2 + direlem_len + 1];
     if (hide) {
-      // Define dest hidden file path
+      /* Define dest hidden file path */
       strcpy(dest, dest_dir);
       strcat(dest, "/.");
       strcat(dest, cfg_content->d_name);
       printf("linking %s to %s\n", src, dest);
     } else {
-      // Define dest file path
+      /* Define dest file path */
       strcpy(dest, dest_dir);
       strcat(dest, "/");
       strcat(dest, cfg_content->d_name);
       printf("linking %s to %s\n", src, dest);
     }
 
-    // Get Stat for dest file
+    /* Get Stat for dest file */
     struct stat dest_stat;
     lstat(dest, &dest_stat);
 
-    // Check if destination file exists
+    /* Check if destination file exists */
     if (file_exists(dest)) {
       printf("%s exists already\n", dest);
       printf("going to remove %s \n", dest);

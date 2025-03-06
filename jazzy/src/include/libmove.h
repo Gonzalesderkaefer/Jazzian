@@ -1,4 +1,4 @@
-// Other files
+/* Other files */
 #include "utils/file_utils.h"
 #include "def.h"
 

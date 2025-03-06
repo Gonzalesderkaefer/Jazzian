@@ -1,7 +1,7 @@
-// Other files
+/* Other files */
 #include <stdio.h>
 
-// Debian standard packages
+/* Debian standard packages */
 static const char *debian_base[] = {
   "tmux",
   "vifm",
@@ -43,7 +43,7 @@ static const char *debian_base[] = {
   NULL
 };
 
-// Debian xorg packages
+/* Debian xorg packages */
 static const char *debian_xorg[] = {
   "lxappearance",
   "maim",
@@ -62,14 +62,14 @@ static const char *debian_xorg[] = {
   NULL
 };
 
-// Debian i3 packages
+/* Debian i3 packages */
 static const char *debian_i3[] = {
   "i3",
   "i3blocks",
   NULL
 };
 
-// Debian bspwm packages
+/* Debian bspwm packages */
 static const char *debian_bspwm[] = {
   "bspwm",
   "sxhkd",
@@ -77,7 +77,7 @@ static const char *debian_bspwm[] = {
   NULL
 };
 
-// Debian awesome packages
+/* Debian awesome packages */
 static const char *debian_awesome[] = {
   "awesome",
   NULL
@@ -85,7 +85,7 @@ static const char *debian_awesome[] = {
 
 
 
-// Debian wayland packages
+/* Debian wayland packages */
 static const char *debian_wayland[] = {
   "grim",
   "swaylock",
@@ -99,28 +99,28 @@ static const char *debian_wayland[] = {
   NULL
 };
 
-// Debian sway packages
+/* Debian sway packages */
 static const char *debian_sway[] = {
   "sway",
   "i3block",
   NULL
 };
 
-// Debian hyprland packages
+/* Debian hyprland packages */
 static const char *debian_hypr[] = {
   "sway",
   "i3block",
   NULL
 };
 
-// Debian river packages
+/* Debian river packages */
 static const char *debian_river[] = {
   "sway",
   "i3block",
   NULL
 };
 
-// Fedora standard packages
+/* Fedora standard packages */
 static const char *fedora_base[] = {
   "rofi-wayland",
   "vifm",
@@ -160,7 +160,7 @@ static const char *fedora_base[] = {
 
 };
 
-// Fedora xorg packages
+/* Fedora xorg packages */
 static const char *fedora_xorg[] = {
   "xclip",
   "@base-x",
@@ -178,13 +178,13 @@ static const char *fedora_xorg[] = {
   NULL
 };
 
-// Fedora awesome packages
+/* Fedora awesome packages */
 static const char *fedora_awesome[] = {
   "awesome",
   NULL
 };
 
-// Fedora bspwm packages
+/* Fedora bspwm packages */
 static const char *fedora_bspwm[] = {
   "bspwm",
   "polybar",
@@ -192,14 +192,14 @@ static const char *fedora_bspwm[] = {
   NULL
 };
 
-// Fedora i3 packages
+/* Fedora i3 packages */
 static const char *fedora_i3[] = {
   "i3",
   "i3blocks",
   NULL
 };
 
-// Fedora wayland packages
+/* Fedora wayland packages */
 static const char *fedora_wayland[] = {
   "grim",
   "swaybg",
@@ -214,28 +214,28 @@ static const char *fedora_wayland[] = {
 };
 
 
-// Fedora hyprland packages
+/* Fedora hyprland packages */
 static const char *fedora_hypr[] = {
   "hyprland",
   "waybar",
   NULL
 };
 
-// Fedora river packages
+/* Fedora river packages */
 static const char *fedora_river[] = {
   "river",
   "waybar",
   NULL
 };
 
-// Fedora sway packages
+/* Fedora sway packages */
 static const char *fedora_sway[] = {
   "sway",
   "i3blocks",
   NULL
 };
 
-// Arch linux standard packages
+/* Arch linux standard packages */
 static const char *arch_base[] = {
   "fzf",
   "tmux",
@@ -283,7 +283,7 @@ static const char *arch_base[] = {
   NULL
 };
 
-// Arch xorg packages
+/* Arch xorg packages */
 static const char *arch_xorg[] = {
   "xorg",
   "lxappearance",
@@ -299,13 +299,13 @@ static const char *arch_xorg[] = {
   NULL
 };
 
-// Arch awesome packages
+/* Arch awesome packages */
 static const char *arch_awesome[] = {
   "awesome",
   NULL
 };
 
-// Arch bspwm packages
+/* Arch bspwm packages */
 static const char *arch_bspwm[] = {
   "bspwm",
   "polybar",
@@ -313,7 +313,7 @@ static const char *arch_bspwm[] = {
   NULL
 };
 
-// Arch i3 packages
+/* Arch i3 packages */
 static const char *arch_i3[] = {
   "i3blocks",
   "i3",
@@ -321,7 +321,7 @@ static const char *arch_i3[] = {
 };
 
 
-// Arch wayland packages
+/* Arch wayland packages */
 static const char *arch_wayland[] = {
   "grim",
   "wofi",
@@ -335,7 +335,7 @@ static const char *arch_wayland[] = {
   NULL
 };
 
-// Arch hyprland packages
+/* Arch hyprland packages */
 static const char *arch_hypr[] = {
   "hyprland",
   "waybar",
@@ -343,7 +343,7 @@ static const char *arch_hypr[] = {
   NULL
 };
 
-// Arch sway packages
+/* Arch sway packages */
 static const char *arch_sway[] = {
   "sway",
   "i3blocks",
@@ -351,7 +351,7 @@ static const char *arch_sway[] = {
   NULL
 };
 
-// Arch river packages
+/* Arch river packages */
 static const char *arch_river[] = {
   "waybar",
   "river",

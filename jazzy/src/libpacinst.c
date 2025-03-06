@@ -1,9 +1,9 @@
-// Other files
+/* Other files */
 #include "include/libpacinst.h"
 #include <stdio.h>
 
 int inst_pac(config *system) {
-  // array names
+  /* array names */
   const char **base;
   const char **dsp_server;
   const char **wm;

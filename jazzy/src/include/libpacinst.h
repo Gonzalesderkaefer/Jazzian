@@ -1,4 +1,4 @@
-// Other files
+/* Other files */
 #include "def.h"
 #include "utils/pkgutils.h"
 

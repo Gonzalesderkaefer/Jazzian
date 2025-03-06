@@ -1,7 +1,7 @@
 #include "include/libcustom.h"
 #include <stdlib.h>
 
-// Predifined file contents
+/* Predifined file contents */
 char *devicespecific_sh =
     "killshells() {\n"
     "    pkill -KILL -u $USER -t tty1\n"
@@ -44,7 +44,7 @@ char *startx_content = "exec i3\n";
 static int edit_files(config *system);
 
 void devicespecific_cfg(config *system) {
-  // Define config dest directory
+  /* Define config dest directory */
   int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config") + 1;
   char cfg_dest[cfg_dest_len];
   strcpy(cfg_dest, getenv("HOME"));
@@ -65,7 +65,7 @@ void devicespecific_cfg(config *system) {
     mkdir(devspc, 0755);
 
     if (strcmp(wm[i], "awesome") == 0) {
-      // Create cfg file for awesome
+      /* Create cfg file for awesome */
       int cfg_len = devspc_len + strlen("devicespecific.lua") + 2;
       char cfg[cfg_len];
       strcpy(cfg, devspc);
@@ -75,7 +75,7 @@ void devicespecific_cfg(config *system) {
       write_to_file("", 0,cfg , "a+", 0644);
       continue;
     }
-    // Create cfg file
+    /* Create cfg file */
     int cfg_len = devspc_len + strlen("devicespecific") + 2;
     char cfg[cfg_len];
     strcpy(cfg, devspc);
@@ -85,7 +85,7 @@ void devicespecific_cfg(config *system) {
     write_to_file("", 0,cfg , "a+", 0644);
   }
 
-  // .zprofile eqivalent
+  /* .zprofile eqivalent */
   int dev_sh_len = strlen(getenv("HOME")) + strlen(".devicespecific.sh") + 2;
   char dev_sh_path[dev_sh_len];
   sprintf(dev_sh_path, "%s/.devicespecific.sh", getenv("HOME"));
@@ -93,21 +93,21 @@ void devicespecific_cfg(config *system) {
     write_to_file(devicespecific_sh, strlen(devicespecific_sh), dev_sh_path,
                   "w", 0777);
 
-  // .zshrc eqivalent
+  /* .zshrc eqivalent */
   int sh_len = strlen(getenv("HOME")) + strlen(".devicerc") + 2;
   char sh_path[sh_len];
   sprintf(sh_path, "%s/.devicerc", getenv("HOME"));
   if (!file_exists(sh_path))
     write_to_file("", strlen(""), sh_path, "w", 0777);
 
-  // myterm
+  /* myterm */
   int myterm_len = strlen(getenv("HOME")) + strlen(".local/bin/myterm") + 2;
   char myterm[myterm_len];
   sprintf(myterm, "%s/.local/bin/myterm", getenv("HOME"));
   if (!file_exists(myterm))
     write_to_file(myterm_content, strlen(myterm_content), myterm, "w", 0777);
 
-  // mdrun
+  /* mdrun */
   int mdrunlen = strlen(getenv("HOME")) + strlen(".local/bin/mdrun") + 2;
   char mdrun[mdrunlen];
   sprintf(mdrun, "%s/.local/bin/mdrun", getenv("HOME"));
@@ -116,7 +116,7 @@ void devicespecific_cfg(config *system) {
   char mdmenu[mdmenulen];
   sprintf(mdmenu, "%s/.local/bin/mdmenu", getenv("HOME"));
 
-  // xinitrc
+  /* xinitrc */
   int xinitlen = strlen(getenv("HOME")) + strlen(".xinitrc") + 2;
   char xinit[xinitlen];
   sprintf(xinit, "%s/.xinitrc", getenv("HOME"));
@@ -141,7 +141,7 @@ void devicespecific_cfg(config *system) {
 }
 
 int edit_files(config *system) {
-  // Deterimine new window manager
+  /* Deterimine new window manager */
   char *windowmanager;
   bool skip_xinit = false;
 
@@ -170,16 +170,16 @@ int edit_files(config *system) {
   }
 
   if (!skip_xinit) {
-    // xinitrc filename
+    /* xinitrc filename */
     int xinitlen = strlen(getenv("HOME")) + strlen(".xinitrc") + 2;
     char xinit[xinitlen];
     sprintf(xinit, "%s/.xinitrc", getenv("HOME"));
 
-    // Open file
+    /* Open file */
     FILE *startx = fopen(xinit, "r");
 
-    // Read from file
-    // TODO: Error checking
+    /* Read from file */
+    /* TODO: Error checking */
     char *oldxinit = NULL;
     size_t bufsize = 0;
     if (getdelim(&oldxinit, &bufsize, EOF, startx) == -1) {
@@ -187,12 +187,12 @@ int edit_files(config *system) {
       return -1;
     }
 
-    // Substitute
+    /* Substitute */
     char *newxinit = search_replace(oldxinit, "exec i3|exec awesome|exec bspwm",
                                     windowmanager);
 
     if (newxinit) {
-      // Write to file
+      /* Write to file */
       write_to_file(newxinit, strlen(newxinit), xinit, "w", 0644);
       free(newxinit);
     }
@@ -200,26 +200,26 @@ int edit_files(config *system) {
     fclose(startx);
   }
 
-  // devicespecific filename
+  /* devicespecific filename */
   int devspclen = strlen(getenv("HOME")) + strlen(".devicespecific.sh") + 2;
   char devspc[devspclen];
   sprintf(devspc, "%s/.devicespecific.sh", getenv("HOME"));
 
-  // Open file
+  /* Open file */
   FILE *device = fopen(devspc, "r");
 
-  // Read from file
+  /* Read from file */
   char *olddev = NULL;
   size_t bufsize = 0;
   if (getdelim(&olddev, &bufsize, EOF, device) == -1) {
     free(olddev);
     return -1;
   }
-  // Substitute
+  /* Substitute */
   char *newdev = search_replace(olddev, "&& \\(.*;", windowmanager);
 
   if (newdev) {
-    // Write to file
+    /* Write to file */
     write_to_file(newdev, strlen(newdev), devspc, "w", 0644);
     free(newdev);
   }
