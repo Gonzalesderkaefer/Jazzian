@@ -42,6 +42,7 @@ char *startx_content = "exec i3\n";
 
 
 static int edit_files(config *system);
+static int set_theme();
 
 void devicespecific_cfg(config *system) {
   /* Define config dest directory */
@@ -225,5 +226,88 @@ int edit_files(config *system) {
   }
 
   fclose(device);
+
+  set_theme();
+  return 0;
+}
+
+
+
+
+int set_theme() {
+
+  char *themecmd[] = { 
+    "gsettings",
+    "set",
+    "org.gnome.desktop.interface",
+    "gtk-theme",
+    "\'Arc-Dark\'",
+    NULL
+  };
+
+  char *fontcmd[] = { 
+    "gsettings",
+    "set",
+    "org.gnome.desktop.interface",
+    "font-name",
+    "\'Jetbrains Mono\'",
+    NULL
+  };
+  
+  char *iconcmd[] = { 
+    "gsettings",
+    "set",
+    "org.gnome.desktop.interface",
+    "icon-theme",
+    "\'Papirus-Dark\'",
+    NULL
+  };
+
+
+  pid_t pidtheme = fork();
+
+  switch (pidtheme) {
+  case 0:
+    execvp("gsettings", (char **)themecmd);
+    break;
+  case -1:
+    fprintf(stderr, "fork failed\n");
+    return -1;
+    break;
+  default:
+    wait(NULL);
+    break;
+  }
+
+  pid_t pidicon = fork();
+
+  switch (pidicon) {
+  case 0:
+    execvp("gsettings", (char **)iconcmd);
+    break;
+  case -1:
+    fprintf(stderr, "fork failed\n");
+    return -1;
+    break;
+  default:
+    wait(NULL);
+    break;
+  }
+
+  pid_t pidfont = fork();
+
+  switch (pidfont) {
+  case 0:
+    execvp("gsettings", (char **)fontcmd);
+    break;
+  case -1:
+    fprintf(stderr, "fork failed\n");
+    return -1;
+    break;
+  default:
+    wait(NULL);
+    break;
+  }
+
   return 0;
 }
