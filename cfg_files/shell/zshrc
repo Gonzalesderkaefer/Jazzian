@@ -63,6 +63,8 @@ fi
 # CTRL-R to resource ~/.zshrc
 bindkey -s "^R" 'source ~/.zshrc^M';
 
+# CTRL-T to start tmux
+bindkey -s "^T" 'tmux^M';
 
 zle-keymap-select()
 {

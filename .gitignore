@@ -30,4 +30,4 @@ newsboat*
 # (Shared) Libraries
 *.so
 *.o
-*build/jazzy*
+/jazzy/build/jazzy
