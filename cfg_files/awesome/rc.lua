@@ -283,13 +283,22 @@ local getvolume = function(callback)
 
     awful.spawn.with_line_callback(volumehandle, {
         stdout = function(line)
-            local clean_audio_level = string.gsub(string.gsub(line,"Volume: ", ""),"%p", "")
+            local volume = string.gsub(string.gsub(string.gsub(line,"Volume: ", ""),"%p", ""),"MUTED", "")
             local muted = string.find(line, "MUTED") ~= nil
 
             if muted then
-                callback("MUTED")
+                callback("<span color='#ff6666'> 󰝟 </span>")
             else
-                callback(clean_audio_level .. " %")  -- You can process this output here or return it
+
+                if tonumber(volume) > 100 then
+                    callback("<span color='#ff6666'>" .. volume .. "  </span>")
+                elseif tonumber(volume) <= 100 and tonumber(volume) >= 65 then
+                    callback("<span color='#987ae6'>"  .. volume .. "  </span>")
+                elseif tonumber(volume) < 65 and tonumber(volume) >= 35 then
+                    callback("<span color='#987ae6'>"  .. volume .. "  </span>")
+                elseif tonumber(volume) < 35 then
+                    callback("<span color='#987ae6'>"  .. volume .. "  </span>")
+                end
             end
         end,
     })
