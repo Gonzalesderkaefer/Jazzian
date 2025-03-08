@@ -278,37 +278,22 @@ audio_module:buttons(gears.table.join(
 
 
 
-local getvolume = function ()
-    local volumehandle = io.popen("wpctl get-volume @DEFAULT_SINK@ | tr -d \"[a-zA-z] \\. :\"")
-    local mutehandle = io.popen("wpctl get-volume @DEFAULT_SINK@ | grep -o \"MUTED\"")
-    if volumehandle == nil or mutehandle == nil then
-        return "??"
-    end
-    local volume = tonumber(volumehandle:read("*a"))
-    local muted = string.find(mutehandle:read("*a"), "MUTED")
+local getvolume = function(callback)
+    local volumehandle = 'wpctl get-volume @DEFAULT_SINK@'
 
+    awful.spawn.with_line_callback(volumehandle, {
+        stdout = function(line)
+            local clean_audio_level = string.gsub(string.gsub(line,"Volume: ", ""),"%p", "")
+            local muted = string.find(line, "MUTED") ~= nil
 
-
-    if volume == nil then
-	return "??"
-    end
-    if muted then
-        return  "<span color='#ff6666'> 󰝟 </span>"
-    end
-     if volume > 100 then
-         return "<span color='#ff6666'>" .. volume .. "  </span>"
-     elseif volume <= 100 and volume >= 65 then
-         return  "<span color='#987ae6'>"  .. volume .. "  </span>"
-     elseif volume < 65 and volume >= 35 then
-         return  "<span color='#987ae6'>"  .. volume .. "  </span>"
-     elseif volume < 35 then
-         return "<span color='#987ae6'>"  .. volume .. "  </span>"
-     end
-    volumehandle:close()
-    mutehandle:close()
+            if muted then
+                callback("MUTED")
+            else
+                callback(clean_audio_level .. " %")  -- You can process this output here or return it
+            end
+        end,
+    })
 end
-
-
 
 local audio_widget = wibox.widget{
     markup = "",
@@ -316,11 +301,20 @@ local audio_widget = wibox.widget{
     valign = 'center',
     widget = wibox.widget.textbox
 }
-local get_output = function()
-    audio_widget.markup = getvolume()
+local get_output = function ()
+    getvolume(function(lines)
+        audio_widget.markup = lines
+    end)
 end
+
 get_output()
 
+
+gears.timer {
+    timeout = 10,
+    autostart = true,
+    callback = get_output
+}
 
 audio_widget:buttons(gears.table.join(
                             awful.button({ }, 1, function()
