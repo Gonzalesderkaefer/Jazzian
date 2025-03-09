@@ -108,7 +108,7 @@ super + shift + 0
 
 ### Run powermenu
 alt + F4
-    powermenu_rofi
+    powermenu
 
 ### Take screenshot
 super + p
