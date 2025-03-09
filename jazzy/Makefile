@@ -2,7 +2,7 @@
 
 # Compiler stuff
 CC=gcc
-CFLAGS= -Wall
+CFLAGS= -Wall -Wno-unused-function -Wno-unused-variable
 
 default: build/main.o build/libpacinst.o build/libsearep.o build/libfileutils.o build/libbackup.o build/libconfig.o build/libconfigutils.o \
 		 build/libcustom.o build/libmove.o build/libpkgutils.o build/libmenu.o
