@@ -122,6 +122,7 @@ static const char *debian_river[] = {
 
 /* Fedora standard packages */
 static const char *fedora_base[] = {
+  "flatpak",
   "rofi-wayland",
   "vifm",
   "tmux",
@@ -237,6 +238,7 @@ static const char *fedora_sway[] = {
 
 /* Arch linux standard packages */
 static const char *arch_base[] = {
+  "flatpak",
   "fzf",
   "tmux",
   "zsh",
