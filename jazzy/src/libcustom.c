@@ -191,6 +191,8 @@ int edit_files(config *system) {
     /* Substitute */
     char *newxinit = search_replace(oldxinit, "exec i3|exec awesome|exec bspwm",
                                     windowmanager);
+    /* Free olddev */
+    free(oldxinit);
 
     if (newxinit) {
       /* Write to file */
@@ -218,6 +220,11 @@ int edit_files(config *system) {
   }
   /* Substitute */
   char *newdev = search_replace(olddev, "&& \\(.*;", windowmanager);
+
+
+  /* Free olddev */
+  free(olddev);
+
 
   if (newdev) {
     /* Write to file */
