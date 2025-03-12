@@ -206,7 +206,7 @@ local toggle_max = function()
     local cur_screen = awful.screen.focused()
     local layout = awful.layout.get(cur_screen)
     if layout == awful.layout.suit.max then
-        awful.layout.set(awful.layout.suit.spiral.dwindle)
+        awful.layout.set(awful.layout.suit.tile) -- Will have to create a seperate variable for default layout
     else
         awful.layout.set(awful.layout.suit.max)
     end
