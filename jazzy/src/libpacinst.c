@@ -66,13 +66,13 @@ int inst_pac(config *system) {
             wm = fedora_hypr;
             break;
           case SWAY:
-            wm = fedora_hypr;
+            wm = fedora_sway;
             break;
           case RIVER:
-            wm = fedora_hypr;
+            wm = fedora_river;
             break;
           default: 
-            wm = fedora_hypr;
+            wm = fedora_sway;
             break;
         }
       } else {
