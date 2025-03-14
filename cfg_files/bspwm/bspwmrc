@@ -29,5 +29,4 @@ polybar &
 xrdb ~/.Xresources &
 xsetroot -cursor_name left_ptr &
 dunst &
-x11startup && sleep 1;
-sh $HOME/.config/bspwm/devicespecific/devicespecific
+sh $HOME/.config/bspwm/devicespecific/devicespecific;

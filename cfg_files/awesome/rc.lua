@@ -887,7 +887,7 @@ end)
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("xrdb $HOME/.Xresources")
-awful.spawn.with_shell("x11startup")
+-- awful.spawn.with_shell("x11startup")
 
 -- Devicespecific
 require("devicespecific.devicespecific")

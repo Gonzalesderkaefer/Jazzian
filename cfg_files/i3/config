@@ -78,7 +78,7 @@ exec picom
 exec nm-applet
 
 ### Launching x11 Startup
-exec x11startup
+# exec x11startup
 
 ### Load Xresources file
 exec xrdb $HOME/.Xresources

@@ -38,7 +38,9 @@ char *myterm_content = "    #!/bin/dash\n"
                        "            ;;\n"
                        "    esac\n";
 
-char *startx_content = "exec i3\n";
+char *startx_content = "exec x11startup &\nexec i3\n";
+
+char *x11startup = "#!/usr/bin/bash\n";
 
 
 static int edit_files(config *system);
@@ -123,6 +125,14 @@ void devicespecific_cfg(config *system) {
   sprintf(xinit, "%s/.xinitrc", getenv("HOME"));
   if (!file_exists(xinit))
     write_to_file(startx_content, strlen(startx_content), xinit, "w", 0644);
+
+  /* x11startup */
+  int x11start_len = strlen(getenv("HOME")) + strlen(".local/bin/x11startup") + 2;
+  char x11start[x11start_len];
+  sprintf(x11start, "%s/.local/bin/x11startup", getenv("HOME"));
+  if (!file_exists(x11start))
+    write_to_file(x11start, strlen(x11startup), x11start, "w", 0755);
+
 
   switch (system->distro) {
   case DEBIAN:
