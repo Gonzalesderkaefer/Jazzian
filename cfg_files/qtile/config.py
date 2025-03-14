@@ -161,10 +161,8 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
+
+status_bar = top=bar.Bar([
                 widget.GroupBox(font="Jetbrains Mono Nerd Font"),
                 widget.Sep(linewidth=2),
                 widget.WindowName(font="Jetbrains Mono Nerd Font"),
@@ -187,22 +185,28 @@ screens = [
                 # This is just for experimentation
                 widget.GenPollText(
                     func=lambda: subprocess.run(
-                        ["echo", "hello"], capture_output=True, text=True
-                    ).stdout.strip()[:4],
+                    ["date"], capture_output=True, text=True
+                    ).stdout.strip(),
                     update_interval=5,
                     name="randomgenpoll",
                     foreground="#ffffff",
                     background="#000000",
                     padding=5,
                     rotate=False,
-                    font="Jetbrains Mono Nerd Font"
+                    font="Jetbrains Mono Nerd Font",
+                    mouse_callbacks={"Button1": lazy.widget["randomgenpoll"].force_update()}
                 ),
                 widget.Systray(font="Jetbrains Mono Nerd Font"),
             ],
             24,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-        ),
+        )
+
+
+screens = [
+    Screen(
+        status_bar,
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
         # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
