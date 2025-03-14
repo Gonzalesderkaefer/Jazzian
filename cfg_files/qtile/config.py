@@ -28,19 +28,9 @@ from libqtile import bar, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
-from libqtile.backend.wayland import InputConfig
-
-from devicespecific import devicespecific
-import os
-import subprocess
-
-
-
 
 mod = "mod4"
-terminal = "myterm"
-
-
+terminal = guess_terminal()
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -59,8 +49,14 @@ keys = [
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
-    Key([mod, "control"], "h", lazy.prev_screen(), desc="Focus previous Screen"),
-    Key([mod, "control"], "l", lazy.next_screen(), desc="Focus next Screen"),
+    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
+    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
+    Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
+    Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
+    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    # Toggle between split and unsplit sides of stack.
+    # Split = all windows displayed
+    # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key(
         [mod, "shift"],
@@ -69,11 +65,9 @@ keys = [
         desc="Toggle between split and unsplit sides of stack",
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key(["mod1"], "space", lazy.spawn("rofi -show drun"), desc="Program Launcher"),
-    Key(["mod1"], "f4", lazy.spawn("powermenu"), desc="Powermenu"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
     Key(
         [mod],
         "f",
@@ -110,14 +104,14 @@ for i in groups:
                 [mod],
                 i.name,
                 lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
+                desc=f"Switch to group {i.name}",
             ),
             # mod + shift + group number = switch to & move focused window to group
             Key(
                 [mod, "shift"],
                 i.name,
                 lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                desc=f"Switch to & move focused window to group {i.name}",
             ),
             # Or, use below if you prefer not to switch to that group.
             # # mod + shift + group number = move focused window to group
@@ -127,27 +121,35 @@ for i in groups:
     )
 
 layouts = [
-    layout.MonadTall(
-        border_focus=["#8860f7"], 
-        border_normal=["#404040"],
-        border_width=2,
-        margin = 8
-        ),
+    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+    layout.Max(),
+    # Try more layouts by unleashing below layouts.
+    # layout.Stack(num_stacks=2),
+    # layout.Bsp(),
+    # layout.Matrix(),
+    # layout.MonadTall(),
+    # layout.MonadWide(),
+    # layout.RatioTile(),
+    # layout.Tile(),
+    # layout.TreeTab(),
+    # layout.VerticalTile(),
+    # layout.Zoomy(),
 ]
 
 widget_defaults = dict(
-    font="Jetbrains Mono Nerd Font",
-    fontsize=15,
-    padding=5,
+    font="sans",
+    fontsize=12,
+    padding=3,
 )
 extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        top=bar.Bar(
+        bottom=bar.Bar(
             [
                 widget.CurrentLayout(),
                 widget.GroupBox(),
+                widget.Prompt(),
                 widget.WindowName(),
                 widget.Chord(
                     chords_colors={
@@ -155,15 +157,17 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                # widget.TextBox("default config", name="default"),
-                # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
+                widget.TextBox("default config", name="default"),
+                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                widget.Clock(format="%d.%m   | %R  ", foreground="#f5d0ac"),
-                widget.CPU(format='CPU: {load_percent}'),
+                # widget.StatusNotifier(),
                 widget.Systray(),
+                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+                widget.QuickExit(),
             ],
-            35,
-            background="#24273a"
+            24,
+            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
@@ -211,29 +215,6 @@ wl_input_rules = None
 # xcursor theme (string or None) and size (integer) for Wayland backend
 wl_xcursor_theme = None
 wl_xcursor_size = 24
-
-
-
-# Autostart
-import os
-import subprocess
-
-from libqtile import hook
-
-@hook.subscribe.startup_once
-def autostart():
-    home = os.path.expanduser('~/.config/qtile/autostart.sh')
-    subprocess.Popen([home])
-
-
-
-
-# Devicespecific input config
-wl_input_rules = devicespecific.input_config()
-
-
-
-
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
