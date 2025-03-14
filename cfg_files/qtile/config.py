@@ -184,6 +184,19 @@ screens = [
                 widget.Sep(linewidth=2),
                 widget.Clock(format="%I:%M %p", font="JetBrains Mono Nerd Font"),
                 widget.Sep(linewidth=2),
+                # This is just for experimentation
+                widget.GenPollText(
+                    func=lambda: subprocess.run(
+                        ["echo", "hello"], capture_output=True, text=True
+                    ).stdout.strip()[:4],
+                    update_interval=5,
+                    name="randomgenpoll",
+                    foreground="#ffffff",
+                    background="#000000",
+                    padding=5,
+                    rotate=False,
+                    font="Jetbrains Mono Nerd Font"
+                ),
                 widget.Systray(font="Jetbrains Mono Nerd Font"),
             ],
             24,
