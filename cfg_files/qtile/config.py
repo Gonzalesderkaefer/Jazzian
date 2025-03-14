@@ -29,8 +29,11 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
+# Variables
 mod = "mod4"
-terminal = guess_terminal()
+terminal = "myterm"
+applauncher = "mdrun"
+
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -40,7 +43,11 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+
+    # Cycle through windows
+    Key(["mod1"], "Tab", lazy.group.next_window(), desc="Focus next window"),
+    Key(["mod1", "shift"], "Tab", lazy.group.prev_window(), desc="Focus previous window"),
+
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
@@ -59,15 +66,15 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key(
-        [mod, "shift"],
-        "Return",
+        [mod],
+        "w",
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key(
         [mod],
         "f",
@@ -76,8 +83,8 @@ keys = [
     ),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    Key([mod], "d", lazy.spawn(applauncher), desc="Spawn a Applauncher"),
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -121,7 +128,12 @@ for i in groups:
     )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+    layout.Columns(
+        border_focus_stack=["#d75f5f", "#8f3d3d"],
+        border_width=2,
+        border_focus = "#8e60f7",
+        border_normal = "#24273A"
+    ),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
