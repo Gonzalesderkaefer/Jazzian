@@ -199,6 +199,7 @@ button {
 
 #battery {
     color:#24273a;
+    padding-right:15px;
     background-color: #BD93F9;
     border-bottom: 2px solid #BD93F9;
 }
