@@ -35,13 +35,51 @@ from libqtile.utils import guess_terminal
 mod = "mod4"
 terminal = "myterm"
 applauncher = "mdrun"
+powermenu = "powermenu"
 
 # Start picom
 @hook.subscribe.startup_once
 def autostart():
     subprocess.call("picom &")
 
+# Custom functions
+
+## Get the audio level
+def get_audio():
+    volumehandle = ["wpctl", "get-volume", "@DEFAULT_SINK@"]
+    # volumehandle = ["date"]
+    cmd_val = subprocess.run(volumehandle, capture_output=True, text=True).stdout.strip()
+    muted = not cmd_val.find("MUTED") == -1
+    value = cmd_val.replace("Volume: ", "").replace(".","")
+
+
+    if muted: 
+        return "MUTED"
+    else:
+        return f'{value}%'
+
+## Increment audio and update
+@lazy.function
+def inc_audio(qtile):
+    lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 5%+")
+    w = qtile.widgets_map["myaudio"]
+    w.update(w.poll())
+
+
+
+## Decrement audio and update
+@lazy.function
+def dec_audio(qtile):
+    subprocess.run(["wpctl", "set-volume", "@DEFAULT_SINK@", "5%-"])
+    w = qtile.widgets_map["myaudio"]
+    w.update(w.poll())
+
+
+
 keys = [
+    # Media controls
+    Key([],"XF86AudioLowerVolume", dec_audio, desc="Spawn a Powermenu"),
+
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     # Switch between windows
@@ -91,6 +129,9 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "d", lazy.spawn(applauncher), desc="Spawn a Applauncher"),
+    Key(["mod1"], "F4", lazy.spawn(powermenu), desc="Spawn a Powermenu"),
+
+
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -184,17 +225,19 @@ status_bar = top=bar.Bar([
                 widget.Sep(linewidth=2),
                 # This is just for experimentation
                 widget.GenPollText(
-                    func=lambda: subprocess.run(
-                    ["date"], capture_output=True, text=True
-                    ).stdout.strip(),
-                    update_interval=5,
-                    name="randomgenpoll",
+                    func=get_audio,
+                    # func=lambda: subprocess.run(
+                    # ["date"], capture_output=True, text=True
+                    # ).stdout.strip(),
+                    # update_interval=5,
+                    name="myaudio",
                     foreground="#ffffff",
                     background="#000000",
                     padding=5,
                     rotate=False,
                     font="Jetbrains Mono Nerd Font",
-                    mouse_callbacks={"Button1": lazy.widget["randomgenpoll"].force_update()}
+                    mouse_callbacks={"Button1": lazy.widget["myaudio"].force_update()},
+                    fmt='<u>{}</u>' 
                 ),
                 widget.Systray(font="Jetbrains Mono Nerd Font"),
             ],
