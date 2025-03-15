@@ -18,7 +18,7 @@ riverctl default-layout rivertile
 
 
 # Start waybar
-waybar -c $HOME/.config/waybar/config_river &
+waybar -c $HOME/.config/waybar/config_river.jsonc &
 
 # Setting keyboard Layout to US-INTL
 riverctl keyboard-layout "us(altgr-intl)"
