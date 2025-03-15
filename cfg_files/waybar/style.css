@@ -1,8 +1,36 @@
+/*
+:root {
+    black: "#0c0e15",
+    bg0: "#1a212e",
+    bg1: "#21283b",
+    bg2: "#283347",
+    bg3: "#2a324a",
+    bg_d: "#141b24",
+    bg_blue: "#54b0fd",
+    bg_yellow: "#f2cc81",
+    fg: "#93a4c3",
+    purple: "#c75ae8",
+    green: "#8bcd5b",
+    orange: "#dd9046",
+    blue: "#41a7fc",
+    yellow: "#efbd5d",
+    cyan: "#34bfd0",
+    red: "#f65866",
+    grey: "#455574",
+    light_grey: "#6c7d9c",
+    dark_cyan: "#1b6a73",
+    dark_red: "#992525",
+    dark_yellow: "#8f610d",
+    dark_purple: "#862aa1",
+}
+*/
+
+
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: JetbrainsMono Nerd Font;
     font-size: 13px;
-    font-weight: Bold;
+    font-weight: 800;
 }
 
 
@@ -77,27 +105,19 @@ button {
     background-color: #eb4d4b;
 }
 
-
-#custom-kernel,
+#custom-home
 #custom-drivespace,
 #clock,
 #battery,
 #cpu,
 #memory,
-#disk,
 #temperature,
-#backlight,
-#network,
 #pulseaudio,
-#wireplumber,
-#custom-media,
 #tray,
-#mode,
-#idle_inhibitor,
-#scratchpad,
-#mpd {
+#idle_inhibitor {
     padding: 0 10px;
-    color: #ffffff;
+    border-radius: 0px;
+    margin: 0px;
 }
 
 
@@ -118,29 +138,29 @@ button {
 
 /* Space in HOME */
 #custom-home {
-    color: #cc5f7f;
-    border-bottom: 2px solid #cc5f7f;
-    padding-right: 10px;
-    padding-left: 10px;
+    background-color: #ff5555;
+    border-bottom: 2px solid #ff5555;
 }
 
 
 /* Root drive space */
 #custom-drivespace {
-    color: #fc9877;
-    border-bottom: 2px solid #fc9877;
-    padding-right: 7px;
-    padding-left: 10px;
+    color:#24273a;
+    background-color: #ff7777;
+    border-bottom: 2px solid #ff7777;
 }
 
 /* Idle */
 #idle_inhibitor {
-    color: #ecc2fc;
-    border-bottom: 2px solid #ecc2fc;
+    color:#24273a;
+    background-color: #e78284;
+    border-bottom: 2px solid #e78284;
+    padding-right: 12px
 }
 
 #idle_inhibitor.activated {
-    color: #f56464;
+    color:#24273a;
+    background-color: #f56464;
     border-bottom: 2px solid #f56464;
 
 }
@@ -149,65 +169,67 @@ button {
 
 /* Audio widget */
 #pulseaudio {
-    color: #987ae6;
-    border-bottom: 2px solid #987ae6;
-    padding-right: 7px;
+    color:#24273a;
+    background-color: #f38ba8;
+    border-bottom: 2px solid #f38ba8;
 }
 
 #pulseaudio.muted {
     background-color: #90b1b1;
-    color: #2a5c45;
-    padding-right: 7px;
+    color:#24273a;
 }
 
 /* Battery widget */
 #battery.charging {
-    color: #eed49f;
+    color:#24273a;
+    background-color: #eed49f;
     border-bottom: 2px solid #eed49f;
-    padding-right: 15px;
 }
 
 #battery.plugged {
-    color: #fff;
-    border-bottom: 2px solid #fff;
-    padding-right: 10px;
-    padding-left: 7px;
+    color:#24273a;
+    background-color: #BD93F9;
+    border-bottom: 2px solid #BD93F9;
 }
 
 #battery {
-    color: #fff;
-    border-bottom: 2px solid #fff;
-    padding-right: 15px;
+    color:#24273a;
+    background-color: #BD93F9;
+    border-bottom: 2px solid #BD93F9;
 }
 
 /* CPU Usage */
 #cpu {
-    color: #2ecc71;
-    border-bottom: 2px solid #2ecc71;
+    color:#24273a;
+    background-color: #9083fc;
+    border-bottom: 2px solid #9083fc;
 }
 
 /* Memory Usage */
 #memory {
-    color: #fc6885;
-    border-bottom: 2px solid #fc6885;
+    color:#24273a;
+    background-color: #89b4fa;
+    border-bottom: 2px solid #89b4fa;
 }
 
 /* 'System' temperature */
 #temperature {
-    color: #9083fc;
-    border-bottom: 2px solid #9083fc;
+    color:#24273a;
+    background-color: #81c8be;
+    border-bottom: 2px solid #81c8be;
 }
 
 #temperature.critical {
-    color: #000;
+    color:#24273a;
     background-color: #fa7f7a;
 }
 
 
 /* Clock widget */
 #clock {
-    color: #f5d0ac;
-    border-bottom: 2px solid #f5d0ac;
+    color:#24273a;
+    background-color: #a6e3a1;
+    border-bottom: 2px solid #a6e3a1;
 }
 
 
