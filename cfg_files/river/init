@@ -34,7 +34,7 @@ nm-applet &
 riverctl map normal Super Return spawn myterm
 
 # Super+A to toggle waybar
-riverctl map normal Super A spawn $HOME/.config/river/killbar.sh 
+riverctl map normal Super A spawn 'killall -SIGUSR1 waybar'
 
 # Make new Window appear below currently focused window in stack
 riverctl default-attach-mode below
@@ -43,8 +43,8 @@ riverctl default-attach-mode below
 # Super+Q to close the focused view
 riverctl map normal Super Q close
 
-# Super+Shift+E to exit river
-riverctl map normal Super+Shift E exit
+# Super+Shift+Q to exit river
+riverctl map normal Super+Shift Q exit
 
 # Alt+Space to run w-rofi
 riverctl map normal Super D spawn 'mdrun'
