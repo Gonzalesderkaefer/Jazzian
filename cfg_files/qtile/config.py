@@ -61,8 +61,9 @@ def get_audio():
 ## Increment audio and update
 @lazy.function
 def inc_audio(qtile):
-    lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 5%+")
+    subprocess.run(["wpctl", "set-volume", "@DEFAULT_SINK@", "5%+"])
     w = qtile.widgets_map["myaudio"]
+    w.foreground="#ff5555"
     w.update(w.poll())
 
 
@@ -72,6 +73,7 @@ def inc_audio(qtile):
 def dec_audio(qtile):
     subprocess.run(["wpctl", "set-volume", "@DEFAULT_SINK@", "5%-"])
     w = qtile.widgets_map["myaudio"]
+    w.foreground="#5555ff"
     w.update(w.poll())
 
 
@@ -79,6 +81,7 @@ def dec_audio(qtile):
 keys = [
     # Media controls
     Key([],"XF86AudioLowerVolume", dec_audio, desc="Spawn a Powermenu"),
+    Key([],"XF86AudioRaiseVolume", inc_audio, desc="Spawn a Powermenu"),
 
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
@@ -237,7 +240,7 @@ status_bar = top=bar.Bar([
                     rotate=False,
                     font="Jetbrains Mono Nerd Font",
                     mouse_callbacks={"Button1": lazy.widget["myaudio"].force_update()},
-                    fmt='<u>{}</u>' 
+                    fmt='{}' 
                 ),
                 widget.Systray(font="Jetbrains Mono Nerd Font"),
             ],
