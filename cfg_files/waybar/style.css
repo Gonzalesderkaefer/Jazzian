@@ -139,13 +139,18 @@ button {
 /* Space in HOME */
 #custom-home {
     background-color: #ff5555;
+    padding-left: 8px;
+    padding-right: 8px;
     border-bottom: 2px solid #ff5555;
+    color:#24273a;
 }
 
 
 /* Root drive space */
 #custom-drivespace {
     color:#24273a;
+    padding-left: 8px;
+    padding-right: 8px;
     background-color: #ff7777;
     border-bottom: 2px solid #ff7777;
 }
