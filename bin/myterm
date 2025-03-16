@@ -1,9 +1,0 @@
-#!/bin/sh
-case $XDG_SESSION_TYPE in
-    "wayland")
-        alacritty -o font.size=12
-        ;;
-    *)
-        alacritty -o font.size=12
-        ;;
-esac
