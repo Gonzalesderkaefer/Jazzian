@@ -1,2 +1,2 @@
 #include "../def.h"
-int lst_len(const char **lst);
+# define lst_len(i, lst) for (i = 0; lst[i] != NULL; ++i); 
