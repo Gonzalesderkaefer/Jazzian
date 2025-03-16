@@ -7,8 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": [],
-    "modules-right": ["custom/keyboard","custom/home", "custom/drivespace", "idle_inhibitor" ,"pulseaudio", "battery", "cpu", "memory", "temperature", "clock", "tray"],
-
+    "modules-right": ["custom/home", "custom/drivespace", "idle_inhibitor" ,"pulseaudio", "battery", "cpu", "memory", "temperature", "clock", "tray"],
 
     "idle_inhibitor": {
         "format": "{icon}",
@@ -49,9 +48,11 @@
         "format": "{usage}%  ",
         "tooltip": false
     },
+
     "memory": {
         "format": "{}%  "
     },
+
     "temperature": {
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
@@ -71,11 +72,10 @@
     },
 
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format-muted": " ",
         "format-source": " {volume}% ",
         "format-source-muted": "",
         "format-icons": {
@@ -87,6 +87,5 @@
             "car": "",
             "default": [" ", " ", " "]
         },
-        "on-click": "pavucontrol"
     },
 }
