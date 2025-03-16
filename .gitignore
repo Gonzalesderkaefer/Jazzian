@@ -1,8 +1,8 @@
 # Devicespecific stuff
-# *devicespecific* # will uncomment this later
+*devicespecific*
 devicerc
 x11startup
-# *myterm*
+*myterm*
 *vifminfo.json*
 
 # Anything in qutebrowser except config
