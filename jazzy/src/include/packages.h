@@ -104,7 +104,7 @@ static const char *debian_wayland[] = {
 /* Debian sway packages */
 static const char *debian_sway[] = {
   "sway",
-  "i3block",
+  "i3blocks",
   NULL
 };
 
