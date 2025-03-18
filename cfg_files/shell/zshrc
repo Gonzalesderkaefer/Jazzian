@@ -70,17 +70,17 @@ zle-keymap-select()
 {
     if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]] ; then
         echo -ne '\e[1 q'
-	# PROMPT="   [%F{blue}%~%f] > "
+    # PROMPT="   [%F{blue}%~%f] > "
         PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}%F{blue}[N]%f%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
-	zle reset-prompt
+    zle reset-prompt
     elif [[ ${KEYMAP} == main ]] ||
          [[ ${KEYMAP} == viins ]] ||
          [[ ${KEYMAP} = '' ]] ||
          [[ $1 = 'beam' ]]; then
         echo -ne '\e[1 q'
-	# PROMPT="%F{green}[I]%f[%F{blue}%~%f] > "
+    # PROMPT="%F{green}[I]%f[%F{blue}%~%f] > "
         PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
-	zle reset-prompt
+    zle reset-prompt
     fi
 }
 
