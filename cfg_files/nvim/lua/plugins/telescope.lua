@@ -18,7 +18,12 @@ return {
         require("telescope").setup {
             extensions = {
                 fzf = {}
-            }
+            },
+            pickers = {
+                find_files = {
+                    theme = "ivy"
+                },
+            },
         }
         -- Use native fzf
         require("telescope").load_extension("fzf")
