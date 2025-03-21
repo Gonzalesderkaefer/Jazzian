@@ -29,3 +29,7 @@ vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [G]oto [D]ecla
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP: [G]oto [D]efinition" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "LSP: Open diagnostic [Q]uickfix list" })
 vim.keymap.set("n", "dm", vim.diagnostic.open_float, { desc = "LSP: [D]iagnostic [M]essage" })
+
+
+-- Command key
+vim.keymap.set("n", "<leader>c", ":!", { desc = "Enter command" })
