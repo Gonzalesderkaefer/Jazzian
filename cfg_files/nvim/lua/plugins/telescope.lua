@@ -9,9 +9,6 @@ return {
                 return vim.fn.executable 'make' == 1
             end,
         }
-
-
-
     },
 
     config = function()
@@ -19,28 +16,28 @@ return {
             extensions = {
                 fzf = {}
             },
-            pickers = {
-                find_files = {
-                    theme = "ivy"
-                },
-            },
         }
         -- Use native fzf
         require("telescope").load_extension("fzf")
 
 
         -- NOTE: Keybindings
-        local builtin = require("telescope.builtin")
-        vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-        vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-        vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
-        vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-        vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-        vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-        vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-        vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[S]earch [R]esume' })
-        vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-        vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+        local builtin = require('telescope.builtin')
+        local themes = require('telescope.themes')
+
+
+
+
+        vim.keymap.set('n', '<leader>fh', function() builtin.help_tags(themes.get_ivy()) end, { desc = '[S]earch [H]elp' })
+        vim.keymap.set('n', '<leader>fk', function() builtin.keymaps(themes.get_ivy()) end, { desc = '[S]earch [K]eymaps' })
+        vim.keymap.set('n', '<leader>ff', function() builtin.find_files(themes.get_ivy()) end, { desc = '[F]ind [F]iles' })
+        vim.keymap.set('n', '<leader>fs', function() builtin.builtin(themes.get_ivy()) end, { desc = '[S]earch [S]elect Telescope' })
+        vim.keymap.set('n', '<leader>fw', function() builtin.grep_string(themes.get_ivy()) end, { desc = '[S]earch current [W]ord' })
+        vim.keymap.set('n', '<leader>fg', function() builtin.live_grep(themes.get_ivy()) end, { desc = '[S]earch by [G]rep' })
+        vim.keymap.set('n', '<leader>fd', function() builtin.diagnostics(themes.get_ivy()) end, { desc = '[S]earch [D]iagnostics' })
+        vim.keymap.set('n', '<leader>fr', function() builtin.resume(themes.get_ivy()) end, { desc = '[S]earch [R]esume' })
+        vim.keymap.set('n', '<leader>f.', function() builtin.oldfiles(themes.get_ivy()) end, { desc = '[S]earch Recent Files ("." for repeat)' })
+        vim.keymap.set('n', '<leader><leader>', function() builtin.buffers(themes.get_ivy()) end, { desc = '[ ] Find existing buffers' })
 
 
 
