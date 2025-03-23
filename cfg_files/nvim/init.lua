@@ -59,6 +59,10 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 
+-- Set key timeout
+vim.opt.timeoutlen = 2000
+
+
 -- Highlight when yanking
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
