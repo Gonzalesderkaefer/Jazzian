@@ -58,11 +58,7 @@ void devicespecific_cfg(config *system) {
     int devspc_len =
         cfg_dest_len + strlen(wm[i]) + strlen("devicespecific") + 3;
     char devspc[devspc_len];
-    strcpy(devspc, cfg_dest);
-    strcat(devspc, "/");
-    strcat(devspc, wm[i]);
-    strcat(devspc, "/");
-    strcat(devspc, "devicespecific");
+    sprintf(devspc, "%s/%s/devicespecific", cfg_dest, wm[i]);
     printf("Created Directory: %s\n", devspc);
     mkdir(devspc, 0755);
 
@@ -70,9 +66,7 @@ void devicespecific_cfg(config *system) {
       /* Create cfg file for awesome */
       int cfg_len = devspc_len + strlen("devicespecific.lua") + 2;
       char cfg[cfg_len];
-      strcpy(cfg, devspc);
-      strcat(cfg, "/");
-      strcat(cfg, "devicespecific.lua");
+      sprintf(cfg, "%s/devicespecific.lua", devspc);
       printf("Created file: %s\n", cfg);
       write_to_file("", 0,cfg , "a+", 0644);
       continue;
@@ -80,9 +74,7 @@ void devicespecific_cfg(config *system) {
     /* Create cfg file */
     int cfg_len = devspc_len + strlen("devicespecific") + 2;
     char cfg[cfg_len];
-    strcpy(cfg, devspc);
-    strcat(cfg, "/");
-    strcat(cfg, "devicespecific");
+    sprintf(cfg, "%s/devicespecific", devspc);
     printf("Created file: %s\n", cfg);
     write_to_file("", 0,cfg , "a+", 0644);
   }
