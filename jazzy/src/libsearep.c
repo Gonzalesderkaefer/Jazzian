@@ -15,7 +15,7 @@ char *rep_interval(char *freeable, int start, int end, char *insertion) {
 
     /* New Buffer  */
     char *newbuf;
-    if (!(newbuf = (char *)malloc (sizeof(char) * new_len + 1))) {
+    if (!(newbuf = (char *)calloc (sizeof(char), new_len + 1))) {
         fprintf(stderr, "Memory Allocation error\n");
         return NULL;
     }

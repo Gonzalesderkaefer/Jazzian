@@ -1,9 +1,8 @@
 #include "include/libcustom.h"
+#include <stdbool.h>
 #include <stdlib.h>
-
-/* Predifined file contents */
-char *devicespecific_sh =
-    "killshells() {\n"
+#include <string.h> /* Predifined file contents */
+char *devicespecific_sh = "killshells() {\n"
     "    pkill -KILL -u $USER -t tty1\n"
     "}\n"
     "[ \"$(tty)\" = \"/dev/tty1\" ] && (startx; killshells)\n";
@@ -189,28 +188,30 @@ int edit_files(config *system) {
     /* Open file */
     FILE *startx = fopen(xinit, "r");
 
-    /* Read from file */
-    /* TODO: Error checking */
-    char *oldxinit = NULL;
-    size_t bufsize = 0;
-    if (getdelim(&oldxinit, &bufsize, EOF, startx) == -1) {
-      free(oldxinit);
-      return -1;
-    }
+    /* Determine size */
+    fseek(startx, 0, SEEK_END);
+    size_t startx_buf_size = ftell(startx);
+    fseek(startx, 0, SEEK_SET); /* Have to reset position */
+
+    /* Read file */
+    char startx_buf[startx_buf_size + 1];
+    memset(startx_buf, '\0', startx_buf_size + 1);
+    fread(startx_buf, sizeof(char), startx_buf_size, startx);
+    fclose(startx);
 
     /* Substitute */
-    char *newxinit = search_replace(oldxinit, "exec i3|exec awesome|exec bspwm",
-                                    windowmanager);
-    /* Free olddev */
-    free(oldxinit);
+    char *newstartx_buf = search_replace(startx_buf, "exec i3|exec awesome|exec bspwm", windowmanager);
+    if(!newstartx_buf) return -1;
 
-    if (newxinit) {
-      /* Write to file */
-      write_to_file(newxinit, strlen(newxinit), xinit, "w", 0644);
-      free(newxinit);
-    }
-    windowmanager = "&& (startx;";
+    /* Open file for writing */
+    startx = fopen(xinit, "w");
+    fwrite(newstartx_buf, sizeof(char), strlen(newstartx_buf), startx);
     fclose(startx);
+
+    windowmanager = "&& (startx;";
+
+    /* free new substition */
+    free(newstartx_buf);
   }
 
   /* devicespecific filename */
@@ -221,28 +222,27 @@ int edit_files(config *system) {
   /* Open file */
   FILE *device = fopen(devspc, "r");
 
+  /* Determine size */
+  fseek(device, 0, SEEK_END);
+  size_t device_buf_size = ftell(device);
+  fseek(device, 0, SEEK_SET);
+
+
   /* Read from file */
-  char *olddev = NULL;
-  size_t bufsize = 0;
-  if (getdelim(&olddev, &bufsize, EOF, device) == -1) {
-    free(olddev);
-    return -1;
-  }
-  /* Substitute */
-  char *newdev = search_replace(olddev, "&& \\(.*;", windowmanager);
-
-
-  /* Free olddev */
-  free(olddev);
-
-
-  if (newdev) {
-    /* Write to file */
-    write_to_file(newdev, strlen(newdev), devspc, "w", 0644);
-    free(newdev);
-  }
-
+  char device_buf[device_buf_size + 1];
+  memset(device_buf, '\0', device_buf_size + 1);
+  fread(device_buf, sizeof(char), device_buf_size, device);
   fclose(device);
+
+  /* Substitute */
+  char *newdevice_buf = search_replace(device_buf, "&& \\(.*;", windowmanager); /* Has to be freed!! */
+
+  /* Reopen for writing */
+  device = fopen(devspc, "w");
+  fwrite(newdevice_buf, sizeof(char), strlen(newdevice_buf), device);
+  fclose(device);
+
+  free(newdevice_buf);
 
   set_theme();
   return 0;
