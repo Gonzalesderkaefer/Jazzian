@@ -1,6 +1,39 @@
 /* Other files */
 #include "include/utils/file_utils.h"
 #include <sys/types.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <stdbool.h>
+#include <errno.h>
+
+int mkdir_r(char const *pathname, mode_t mode) {
+    /* Copy String to array */
+    char path[strlen(pathname) + 1];
+    strcpy(path,pathname);
+
+
+    /* tokenize */
+    char *curPath = (char *)calloc(strlen("/") + 1, sizeof(char));
+    strcpy(curPath, "/");
+
+    char *token , *rest;
+    rest = path;
+    while ((token = strtok_r(rest, "/", &rest))) {
+        curPath = (char *)realloc(curPath, strlen(curPath) + strlen(token) + 2);
+        strcat(curPath, token);
+        strcat(curPath, "/");
+        mkdir(curPath, mode);
+    }
+
+    free(curPath);
+    return 0;
+}
+
+
 
 void copy_file(char *src_file, char *dest_file, mode_t mode) {
   /* Open source file for reading */
@@ -195,4 +228,120 @@ int rm_dir(char *path) {
   nftw(path, rmfile, 10, 0);
   nftw(path, rmfile, 10, 0);
   rmdir(path);
+  return 0;
 }
+
+
+
+
+static int _copy_dir_r(char *src_dir, char const *dest_dir) {
+    DIR *directory = opendir(src_dir);
+    struct dirent *dircontent;
+    while ((dircontent = readdir(directory)) != NULL) {
+        /* Don't include ".." and "." */
+        if (!(strcmp(dircontent->d_name, "..") && strcmp(dircontent->d_name, ".")))
+            continue;
+
+        /* Build src */
+        uint32_t src_len = strlen(src_dir) + 1 + strlen(dircontent->d_name) + 1;
+        char src[src_len];
+        sprintf(src, "%s/%s", src_dir, dircontent->d_name);
+
+        /* Build dest */
+        uint32_t dest_len = strlen(dest_dir) + 1 + strlen(dircontent->d_name) + 1;
+        char dest[dest_len];
+        sprintf(dest, "%s/%s", dest_dir, dircontent->d_name);
+
+
+        /* if dest already exists, skip */
+        if (file_exists(dest)) continue;
+
+
+
+        /* Determine type of src */
+        struct stat src_stat;
+        lstat(src, &src_stat);
+
+        if (S_ISDIR(src_stat.st_mode)) {
+            if (access(src, R_OK) == -1) continue; /* If we can't access don't do anything */
+            puts("Creating new dir in dest");
+            mkdir(dest, src_stat.st_mode);
+            _copy_dir_r(src,dest);
+        } else {
+            if (access(src, R_OK) == -1) continue; /* If we can't access don't do anything */
+            printf("%s to %s\n", src, dest);
+            copy_file(src, dest, src_stat.st_mode);
+        }
+    }
+
+    closedir(directory);
+    return 0;
+}
+
+
+
+
+
+int copy_dir_r(char *src_dir, char const *dest_dir) {
+    /* Sanity Check */
+    if (!src_dir || !dest_dir || *src_dir != '/' || *dest_dir != '/')
+        return -1;
+
+    /* Sanitize src_dir */
+    char *clean_src;
+    char src[strlen(src_dir)];
+    /* Check if there's / at the end if so remove it */
+    if (src_dir[strlen(src_dir) - 1] == '/'){
+        memset(src, '\0', strlen(src_dir));
+        strncpy(src, src_dir, strlen(src_dir) - 1);
+        clean_src = src;
+    } else {
+        clean_src = src_dir;
+    }
+
+    /* Check if src is directory */
+    struct stat srcst;
+    lstat(clean_src, &srcst);
+    if (!S_ISDIR(srcst.st_mode) || !file_exists(clean_src))
+        return -1;
+
+    /* This will hold the actual dest base dir */
+    char *actual_dest = (char *)dest_dir;
+    /* Check if dest_dir is a parent */
+    if (dest_dir[strlen(dest_dir) - 1] == '/') {
+        /* Get dir name */
+        char src[strlen(clean_src)]; /* Otherwise strtok_r will SEGV */
+        strcpy(src, clean_src);
+        char *rest, *token, *pretok;
+        rest = src;
+        while((token = strtok_r(rest, "/", &rest)))
+            pretok = token;
+
+        char *new_dest =(char *)calloc(strlen(dest_dir) + strlen(pretok) + 1, sizeof(char));
+        sprintf(new_dest, "%s%s", dest_dir, pretok);
+        actual_dest = new_dest;
+
+        /* Check if new dest exists */
+        if (file_exists(new_dest)) {
+            free(new_dest);
+            return -1;
+        }
+    } else if (file_exists(dest_dir)) {
+        /* Check if new dest exists */ 
+        return -1;
+    }
+    mkdir(actual_dest, srcst.st_mode);
+
+
+
+
+
+    int cpystat = _copy_dir_r(clean_src, actual_dest);
+
+    if (actual_dest != dest_dir)
+        free(actual_dest);
+
+    return cpystat;
+}
+
+
