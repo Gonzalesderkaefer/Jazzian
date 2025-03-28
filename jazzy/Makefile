@@ -4,8 +4,8 @@
 CC=gcc
 CFLAGS= -Wall -Wno-unused-function -Wno-unused-variable
 
-default: build/main.o build/libpacinst.o build/libsearep.o build/libfileutils.o build/libbackup.o build/libconfig.o build/libconfigutils.o \
-		 build/libcustom.o build/libmove.o build/libpkgutils.o build/libmenu.o
+default: build/main.o build/pacinst.o build/searep.o build/fileutils.o build/backup.o build/config.o build/configutils.o \
+		 build/custom.o build/move.o build/pkgutils.o build/menu.o
 	${CC} ${CFLAGS} $^ -o build/jazzy
 
 install: default
@@ -14,33 +14,33 @@ install: default
 build/main.o: src/main.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
-build/libpacinst.o: src/libpacinst.c
+build/pacinst.o: src/pacinst.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
-build/libsearep.o: src/libsearep.c
+build/searep.o: src/searep.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
-build/libfileutils.o: src/libfileutils.c
+build/fileutils.o: src/fileutils.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
-build/libbackup.o : src/libbackup.c
+build/backup.o : src/backup.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
-build/libconfig.o : src/libconfig.c
+build/config.o : src/config.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
-build/libconfigutils.o: src/libconfigutils.c
+build/configutils.o: src/configutils.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
-build/libcustom.o : src/libcustom.c
+build/custom.o : src/custom.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
-build/libmove.o : src/libmove.c
+build/move.o : src/move.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
-build/libpkgutils.o : src/libpkgutils.c
+build/pkgutils.o : src/pkgutils.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
-build/libmenu.o : src/libmenu.c
+build/menu.o : src/menu.c
 	${CC} ${CFLAGS} -c $^ -o $@
 

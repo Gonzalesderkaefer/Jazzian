@@ -263,6 +263,7 @@ static const char *fedora_update[] = {
   "-y",
   NULL
 };
+
 /* Arch linux standard packages */
 static const char *arch_base[] = {
   "sudo", "pacman", "-S", /* Install command do not change */
