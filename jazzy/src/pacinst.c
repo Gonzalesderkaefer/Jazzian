@@ -1,5 +1,5 @@
 /* Other files */
-#include "include/libpacinst.h"
+#include "include/pacinst.h"
 #include "include/def.h"
 #include <stdio.h>
 

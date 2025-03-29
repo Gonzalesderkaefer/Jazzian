@@ -1,5 +1,5 @@
 /* Other files */
-#include "include/libconfig.h"
+#include "include/config.h"
 
 /* Flush char */
 int flush_CHAR;

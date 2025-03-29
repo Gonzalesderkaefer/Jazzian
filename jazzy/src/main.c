@@ -1,10 +1,10 @@
 /* Other files */
 #include "include/def.h"
-#include "include/libbackup.h"
-#include "include/libconfig.h"
-#include "include/libcustom.h"
-#include "include/libmove.h"
-#include "include/libpacinst.h"
+#include "include/backup.h"
+#include "include/config.h"
+#include "include/custom.h"
+#include "include/move.h"
+#include "include/pacinst.h"
 #include "include/utils/config_utils.h"
 #include "include/utils/mymenu.h"
 
