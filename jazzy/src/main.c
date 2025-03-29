@@ -22,7 +22,7 @@ void init_system() {
   move_cfg(system->file_transfer);
 
   /* Create custom config files */
-  devicespecific_cfg(system);
+  create_customized(system);
 }
 
 int main() {
