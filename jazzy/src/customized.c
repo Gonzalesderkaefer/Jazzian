@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <sys/stat.h>
 
 /* Other files */
 #include "include/utils/file_utils.h"
@@ -12,7 +13,7 @@
 #include "include/customized.h"
 
 
-void customized(char *relpath, char *contents) {
+void customized(char *relpath, char *contents, mode_t mode, bool customperm) {
     /* Build absolute file path */
     char filepath[strlen(getenv("HOME")) + strlen(relpath) + 1];
     sprintf(filepath, "%s%s", getenv("HOME"), relpath);
@@ -50,5 +51,9 @@ void customized(char *relpath, char *contents) {
         FILE *fp = fopen(filepath, "w+");
         fwrite(contents, strlen(contents), sizeof(char), fp);
         fclose(fp);
+
+        /* Set file mode */
+        if (customperm)
+            chmod(filepath, mode);
     }
 }

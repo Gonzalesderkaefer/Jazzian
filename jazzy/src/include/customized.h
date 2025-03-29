@@ -8,7 +8,9 @@
  *
  * @param relpath a file path relative to $HOME
  * @param contents of that file
+ * @param mode permissions of that file
  */
-void customized(char *relpath, char *contents);
+#include <sys/types.h>
+void customized(char *relpath, char *contents, mode_t mode, bool customperm);
 
 #endif /* JAZZCUSTOMIZED_H */

@@ -1,7 +1,11 @@
 #include "include/libcustom.h"
+#include "include/customized.h"
 #include <stdbool.h>
 #include <stdlib.h>
-#include <string.h> /* Predifined file contents */
+#include <string.h> 
+
+
+/* Predifined file contents */
 char *devicespecific_sh = "killshells() {\n"
     "    pkill -KILL -u $USER -t tty1\n"
     "}\n"
@@ -9,35 +13,35 @@ char *devicespecific_sh = "killshells() {\n"
 
 char *debmdmenu = "#!/usr/bin/sh\n"
                   "if [ $XDG_SESSION_TYPE = \"wayland\" ]; then\n"
-                  "    wofi_dmenu;\n"
+                  "    exec wofi_dmenu;\n"
                   "else\n"
-                  "    rofi_dmenu;\n"
+                  "    exec rofi_dmenu;\n"
                   "fi\n";
 
 char *debmdrun = "#!/usr/bin/sh\n"
                  "if [ $XDG_SESSION_TYPE = \"wayland\" ]; then\n"
-                 "    wofi_app;\n"
+                 "    exec wofi_app;\n"
                  "else\n"
-                 "    rofi_app;\n"
+                 "    exec rofi_app;\n"
                  "fi\n";
 
 char *mdmenu_content = "#!/usr/bin/sh\n"
-                       "rofi_dmenu\n";
+                       "exec rofi_dmenu\n";
 
 char *mdrun_content = "#!/usr/bin/sh\n"
-                      "rofi_app\n";
+                      "exec rofi_app\n";
 
-char *myterm_content = "    #!/bin/dash\n"
-                       "    case $XDG_SESSION_TYPE in\n"
-                       "        \"wayland\")\n"
-                       "            alacritty -o font.size=12\n"
-                       "            ;;\n"
-                       "        *)\n"
-                       "            alacritty -o font.size=12\n"
-                       "            ;;\n"
-                       "    esac\n";
+char *myterm_content = "#!/bin/dash\n"
+                       "case $XDG_SESSION_TYPE in\n"
+                       "    \"wayland\")\n"
+                       "        exec alacritty -o font.size=12\n"
+                       "        ;;\n"
+                       "    *)\n"
+                       "        exec alacritty -o font.size=12\n"
+                       "        ;;\n"
+                       "esac\n";
 
-char *startx_content = "exec x11startup &\nexec i3\n";
+char *startx_content = "x11startup &\nexec i3\n";
 
 char *x11startup = "#!/usr/bin/bash\n";
 
@@ -45,101 +49,136 @@ char *x11startup = "#!/usr/bin/bash\n";
 static int edit_files(config *system);
 static int set_theme();
 
-void devicespecific_cfg(config *system) {
-  /* Define config dest directory */
-  int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config") + 1;
-  char cfg_dest[cfg_dest_len];
-  strcpy(cfg_dest, getenv("HOME"));
-  strcat(cfg_dest, "/.config");
 
-  char *wm[] = {"i3", "bspwm", "awesome", "hypr", "sway", "river", "vim", NULL};
+void create_customized(config *system) {
+    /* Customized files for window managers/compositors */
+    customized("/.config/i3/devicespecific/devicespecific", "",-1, false);
+    customized("/.config/bspwm/devicespecific/devicespecific", "",-1, false);
+    customized("/.config/awesome/devicespecific/devicespecific.lua", "",-1, false);
+    customized("/.config/sway/devicespecific/devicespecific", "",-1, false);
+    customized("/.config/hypr/devicespecific/devicespecific", "",-1, false);
+    customized("/.config/river/devicespecific/devicespecific", "",-1, false);
 
-  for (int i = 0; wm[i] != NULL; ++i) {
-    int devspc_len =
-        cfg_dest_len + strlen(wm[i]) + strlen("devicespecific") + 3;
-    char devspc[devspc_len];
-    sprintf(devspc, "%s/%s/devicespecific", cfg_dest, wm[i]);
-    printf("Created Directory: %s\n", devspc);
-    mkdir(devspc, 0755);
+    /* Customized shell files */
+    customized("/.devicerc", "",-1, false);
+    customized("/.devicespecific.sh", devicespecific_sh,-1, false);
 
-    if (strcmp(wm[i], "awesome") == 0) {
-      /* Create cfg file for awesome */
-      int cfg_len = devspc_len + strlen("devicespecific.lua") + 2;
-      char cfg[cfg_len];
-      sprintf(cfg, "%s/devicespecific.lua", devspc);
-      printf("Created file: %s\n", cfg);
-      write_to_file("", 0,cfg , "a+", 0644);
-      continue;
+    /* X11 startup */
+    customized("/.local/bin/x11startup", x11startup, 0755, true);
+
+    /* Xinitrc */
+    customized("/.xinitrc", startx_content,-1, false);
+
+    /* Menus */
+    switch (system->distro) {
+        case DEBIAN:
+            customized("/.local/bin/mdmenu",debmdmenu, 0755, true);
+            customized("/.local/bin/mdrun",debmdrun, 0755, true);
+            break;
+        default:
+            customized("/.local/bin/mdmenu",mdmenu_content, 0755, true);
+            customized("/.local/bin/mdrun",mdrun_content, 0755, true);
+            break;
     }
-    /* Create cfg file */
-    int cfg_len = devspc_len + strlen("devicespecific") + 2;
-    char cfg[cfg_len];
-    sprintf(cfg, "%s/devicespecific", devspc);
-    printf("Created file: %s\n", cfg);
-    write_to_file("", 0,cfg , "a+", 0644);
-  }
 
-  /* .zprofile eqivalent */
-  int dev_sh_len = strlen(getenv("HOME")) + strlen(".devicespecific.sh") + 2;
-  char dev_sh_path[dev_sh_len];
-  sprintf(dev_sh_path, "%s/.devicespecific.sh", getenv("HOME"));
-  if (!file_exists(dev_sh_path))
-    write_to_file(devicespecific_sh, strlen(devicespecific_sh), dev_sh_path,
-                  "w", 0777);
+    edit_files(system);
+}
 
-  /* .zshrc eqivalent */
-  int sh_len = strlen(getenv("HOME")) + strlen(".devicerc") + 2;
-  char sh_path[sh_len];
-  sprintf(sh_path, "%s/.devicerc", getenv("HOME"));
-  if (!file_exists(sh_path))
-    write_to_file("", strlen(""), sh_path, "w", 0777);
+void devicespecific_cfg(config *system) {
+    /* Define config dest directory */
+    int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config") + 1;
+    char cfg_dest[cfg_dest_len];
+    strcpy(cfg_dest, getenv("HOME"));
+    strcat(cfg_dest, "/.config");
 
-  /* myterm */
-  int myterm_len = strlen(getenv("HOME")) + strlen(".local/bin/myterm") + 2;
-  char myterm[myterm_len];
-  sprintf(myterm, "%s/.local/bin/myterm", getenv("HOME"));
-  if (!file_exists(myterm))
-    write_to_file(myterm_content, strlen(myterm_content), myterm, "w", 0777);
+    char *wm[] = {"i3", "bspwm", "awesome", "hypr", "sway", "river", "vim", NULL};
 
-  /* mdrun */
-  int mdrunlen = strlen(getenv("HOME")) + strlen(".local/bin/mdrun") + 2;
-  char mdrun[mdrunlen];
-  sprintf(mdrun, "%s/.local/bin/mdrun", getenv("HOME"));
+    for (int i = 0; wm[i] != NULL; ++i) {
+        int devspc_len =
+                cfg_dest_len + strlen(wm[i]) + strlen("devicespecific") + 3;
+        char devspc[devspc_len];
+        sprintf(devspc, "%s/%s/devicespecific", cfg_dest, wm[i]);
+        printf("Created Directory: %s\n", devspc);
+        mkdir(devspc, 0755);
 
-  int mdmenulen = strlen(getenv("HOME")) + strlen(".local/bin/mdmenu") + 2;
-  char mdmenu[mdmenulen];
-  sprintf(mdmenu, "%s/.local/bin/mdmenu", getenv("HOME"));
+        if (strcmp(wm[i], "awesome") == 0) {
+            /* Create cfg file for awesome */
+            int cfg_len = devspc_len + strlen("devicespecific.lua") + 2;
+            char cfg[cfg_len];
+            sprintf(cfg, "%s/devicespecific.lua", devspc);
+            printf("Created file: %s\n", cfg);
+            write_to_file("", 0,cfg , "a+", 0644);
+            continue;
+        }
+        /* Create cfg file */
+        int cfg_len = devspc_len + strlen("devicespecific") + 2;
+        char cfg[cfg_len];
+        sprintf(cfg, "%s/devicespecific", devspc);
+        printf("Created file: %s\n", cfg);
+        write_to_file("", 0,cfg , "a+", 0644);
+    }
 
-  /* xinitrc */
-  int xinitlen = strlen(getenv("HOME")) + strlen(".xinitrc") + 2;
-  char xinit[xinitlen];
-  sprintf(xinit, "%s/.xinitrc", getenv("HOME"));
-  if (!file_exists(xinit))
-    write_to_file(startx_content, strlen(startx_content), xinit, "w", 0644);
+    /* .zprofile eqivalent */
+    int dev_sh_len = strlen(getenv("HOME")) + strlen(".devicespecific.sh") + 2;
+    char dev_sh_path[dev_sh_len];
+    sprintf(dev_sh_path, "%s/.devicespecific.sh", getenv("HOME"));
+    if (!file_exists(dev_sh_path))
+        write_to_file(devicespecific_sh, strlen(devicespecific_sh), dev_sh_path,
+                                    "w", 0777);
 
-  /* x11startup */
-  int x11start_len = strlen(getenv("HOME")) + strlen(".local/bin/x11startup") + 2;
-  char x11start[x11start_len];
-  sprintf(x11start, "%s/.local/bin/x11startup", getenv("HOME"));
-  if (!file_exists(x11start))
-    write_to_file(x11start, strlen(x11startup), x11start, "w", 0755);
+    /* .zshrc eqivalent */
+    int sh_len = strlen(getenv("HOME")) + strlen(".devicerc") + 2;
+    char sh_path[sh_len];
+    sprintf(sh_path, "%s/.devicerc", getenv("HOME"));
+    if (!file_exists(sh_path))
+        write_to_file("", strlen(""), sh_path, "w", 0777);
+
+    /* myterm */
+    int myterm_len = strlen(getenv("HOME")) + strlen(".local/bin/myterm") + 2;
+    char myterm[myterm_len];
+    sprintf(myterm, "%s/.local/bin/myterm", getenv("HOME"));
+    if (!file_exists(myterm))
+        write_to_file(myterm_content, strlen(myterm_content), myterm, "w", 0777);
+
+    /* mdrun */
+    int mdrunlen = strlen(getenv("HOME")) + strlen(".local/bin/mdrun") + 2;
+    char mdrun[mdrunlen];
+    sprintf(mdrun, "%s/.local/bin/mdrun", getenv("HOME"));
+
+    int mdmenulen = strlen(getenv("HOME")) + strlen(".local/bin/mdmenu") + 2;
+    char mdmenu[mdmenulen];
+    sprintf(mdmenu, "%s/.local/bin/mdmenu", getenv("HOME"));
+
+    /* xinitrc */
+    int xinitlen = strlen(getenv("HOME")) + strlen(".xinitrc") + 2;
+    char xinit[xinitlen];
+    sprintf(xinit, "%s/.xinitrc", getenv("HOME"));
+    if (!file_exists(xinit))
+        write_to_file(startx_content, strlen(startx_content), xinit, "w", 0644);
+
+    /* x11startup */
+    int x11start_len = strlen(getenv("HOME")) + strlen(".local/bin/x11startup") + 2;
+    char x11start[x11start_len];
+    sprintf(x11start, "%s/.local/bin/x11startup", getenv("HOME"));
+    if (!file_exists(x11start))
+        write_to_file(x11start, strlen(x11startup), x11start, "w", 0755);
 
 
-  switch (system->distro) {
-  case DEBIAN:
-    if (!file_exists(mdmenu))
-      write_to_file(debmdmenu, strlen(debmdmenu), mdmenu, "w", 0777);
-    if (!file_exists(mdrun))
-      write_to_file(debmdrun, strlen(debmdrun), mdrun, "w", 0777);
-    break;
+    switch (system->distro) {
+    case DEBIAN:
+        if (!file_exists(mdmenu))
+            write_to_file(debmdmenu, strlen(debmdmenu), mdmenu, "w", 0777);
+        if (!file_exists(mdrun))
+            write_to_file(debmdrun, strlen(debmdrun), mdrun, "w", 0777);
+        break;
 
-  default:
-    if (!file_exists(mdmenu))
-      write_to_file(mdmenu_content, strlen(mdmenu_content), mdmenu, "w", 0777);
-    if (!file_exists(mdrun))
-      write_to_file(mdrun_content, strlen(mdrun_content), mdrun, "w", 0777);
-  }
-  edit_files(system);
+    default:
+        if (!file_exists(mdmenu))
+            write_to_file(mdmenu_content, strlen(mdmenu_content), mdmenu, "w", 0777);
+        if (!file_exists(mdrun))
+            write_to_file(mdrun_content, strlen(mdrun_content), mdrun, "w", 0777);
+    }
+    edit_files(system);
 }
 
 int edit_files(config *system) {
@@ -244,79 +283,78 @@ int edit_files(config *system) {
 
 
 int set_theme() {
+    char *themecmd[] = { 
+        "gsettings",
+        "set",
+        "org.gnome.desktop.interface",
+        "gtk-theme",
+        "\'Arc-Dark\'",
+        NULL
+    };
 
-  char *themecmd[] = { 
-    "gsettings",
-    "set",
-    "org.gnome.desktop.interface",
-    "gtk-theme",
-    "\'Arc-Dark\'",
-    NULL
-  };
-
-  char *fontcmd[] = { 
-    "gsettings",
-    "set",
-    "org.gnome.desktop.interface",
-    "font-name",
-    "\'Jetbrains Mono\'",
-    NULL
-  };
-  
-  char *iconcmd[] = { 
-    "gsettings",
-    "set",
-    "org.gnome.desktop.interface",
-    "icon-theme",
-    "\'Papirus-Dark\'",
-    NULL
-  };
+    char *fontcmd[] = { 
+        "gsettings",
+        "set",
+        "org.gnome.desktop.interface",
+        "font-name",
+        "\'Jetbrains Mono\'",
+        NULL
+    };
+    
+    char *iconcmd[] = { 
+        "gsettings",
+        "set",
+        "org.gnome.desktop.interface",
+        "icon-theme",
+        "\'Papirus-Dark\'",
+        NULL
+    };
 
 
-  pid_t pidtheme = fork();
+    pid_t pidtheme = fork();
 
-  switch (pidtheme) {
-  case 0:
-    execvp("gsettings", (char **)themecmd);
-    break;
-  case -1:
-    fprintf(stderr, "fork failed\n");
-    return -1;
-    break;
-  default:
-    wait(NULL);
-    break;
-  }
+    switch (pidtheme) {
+    case 0:
+        execvp("gsettings", (char **)themecmd);
+        break;
+    case -1:
+        fprintf(stderr, "fork failed\n");
+        return -1;
+        break;
+    default:
+        wait(NULL);
+        break;
+    }
 
-  pid_t pidicon = fork();
+    pid_t pidicon = fork();
 
-  switch (pidicon) {
-  case 0:
-    execvp("gsettings", (char **)iconcmd);
-    break;
-  case -1:
-    fprintf(stderr, "fork failed\n");
-    return -1;
-    break;
-  default:
-    wait(NULL);
-    break;
-  }
+    switch (pidicon) {
+    case 0:
+        execvp("gsettings", (char **)iconcmd);
+        break;
+    case -1:
+        fprintf(stderr, "fork failed\n");
+        return -1;
+        break;
+    default:
+        wait(NULL);
+        break;
+    }
 
-  pid_t pidfont = fork();
+    pid_t pidfont = fork();
 
-  switch (pidfont) {
-  case 0:
-    execvp("gsettings", (char **)fontcmd);
-    break;
-  case -1:
-    fprintf(stderr, "fork failed\n");
-    return -1;
-    break;
-  default:
-    wait(NULL);
-    break;
-  }
+    switch (pidfont) {
+    case 0:
+        execvp("gsettings", (char **)fontcmd);
+        break;
+    case -1:
+        fprintf(stderr, "fork failed\n");
+        return -1;
+        break;
+    default:
+        wait(NULL);
+        break;
+    }
 
-  return 0;
+    return 0;
 }
