@@ -7,10 +7,15 @@ export MOZ_ENABLE_WAYLAND=1
 export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh;c:checksum.sh'
 export NNN_TMPFILE=/tmp/.lastd
 
+# Nvim as manpager
+export MANPAGER='nvim +Man!'
 
-## sway config for Nvidia cards
 
-# export WLR_RENDERER=vulkan
-# export WLR_NO_HARDWARE_CURSORS=1
-# export XWAYLAND_NO_GLAMOR=1
-# . "$HOME/.cargo/env"
+# Set editor
+if (command -v nvim) > /dev/null; then
+    export EDITOR=nvim; 
+else
+    export EDITOR=vim; 
+fi
+
+

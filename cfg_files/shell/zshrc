@@ -113,12 +113,9 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 
 
-# Nvim as manpager
-export MANPAGER='nvim +Man!'
 
 
 ## Extract files
-
 extract()
 {
     case $1 in
@@ -132,7 +129,6 @@ extract()
 }
 
 ## Open files in a GUI program
-
 open()
 {
     printf "Program (GUI): ";
@@ -173,5 +169,3 @@ revert ()
 if [ -f $HOME/.devicerc ]; then
     source $HOME/.devicerc
 fi
-
-[ -f "/home/user1/.ghcup/env" ] && . "/home/user1/.ghcup/env" # ghcup-env
