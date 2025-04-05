@@ -75,7 +75,7 @@ void create_customized(config *system) {
     /* X11 startup */
     customized("/.local/bin/x11startup", x11startup, 0755, true);
 
-    /* Xinitrc */
+    /* xinitrc */
     customized("/.xinitrc", startx_content,-1, false);
 
     /* myterm */
