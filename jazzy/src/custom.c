@@ -31,7 +31,7 @@ char *mdmenu_content = "#!/usr/bin/sh\n"
 char *mdrun_content = "#!/usr/bin/sh\n"
                       "exec rofi_app\n";
 
-char *myterm_content = "#!/bin/dash\n"
+char *myterm_content = "#!/bin/sh\n"
                        "case $XDG_SESSION_TYPE in\n"
                        "    \"wayland\")\n"
                        "        exec alacritty -o font.size=12\n"
@@ -44,6 +44,15 @@ char *myterm_content = "#!/bin/dash\n"
 char *startx_content = "x11startup &\nexec i3\n";
 
 char *x11startup = "#!/usr/bin/bash\n";
+
+
+char *gtk3_config = "[Settings]\n"
+                    "gtk-theme-name=Adwaita-dark\n"
+                    "gtk-icon-theme-name=Papirus-Dark\n"
+                    "gtk-font-name=JetBrains Mono Light 12\n"
+                    "gtk-cursor-theme-size=0";
+
+
 
 
 static int edit_files(config *system);
@@ -68,6 +77,14 @@ void create_customized(config *system) {
 
     /* Xinitrc */
     customized("/.xinitrc", startx_content,-1, false);
+
+    /* myterm */
+    customized("/.local/bin/myterm", myterm_content, 0775, true);
+
+    /* GTK 3 config */
+    customized("/.config/gtk-3.0/settings.ini", myterm_content, 0775, true);
+
+
 
     /* Menus */
     switch (system->distro) {

@@ -20,6 +20,7 @@ void init_system() {
 
   /* Transfer config files */
   move_cfg(system->file_transfer);
+  
 
   /* Create custom config files */
   create_customized(system);

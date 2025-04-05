@@ -298,7 +298,6 @@ static const char *arch_base[] = {
   "file-roller",
   "papirus-icon-theme",
   "gnome-themes-extra",
-  "arc-gtk-theme",
   "ttf-jetbrains-mono-nerd",
   "ttf-jetbrains-mono",
   "gcr",
