@@ -305,7 +305,7 @@ int set_theme() {
         "set",
         "org.gnome.desktop.interface",
         "gtk-theme",
-        "\'Arc-Dark\'",
+        "\'Adwaita-dark\'",
         NULL
     };
 

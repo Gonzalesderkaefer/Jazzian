@@ -34,6 +34,8 @@ static int _move_cfg(const char *src_par, const char *dest_par, Dict *ignored, T
             sprintf(dest, "%s/%s", dest_par, cfg_content->d_name);
 
 
+        printf("%s to %s\n", src, dest);
+
         /* If file exists, skip for now */
 
         /*
