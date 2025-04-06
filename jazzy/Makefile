@@ -5,11 +5,17 @@ CC=gcc
 CFLAGS= -Wall -Wno-unused-function -Wno-unused-variable
 
 default: build/main.o build/pacinst.o build/searep.o build/fileutils.o build/backup.o build/config.o build/configutils.o \
-		 build/custom.o build/move.o build/pkgutils.o build/menu.o build/customized.o
+		 build/custom.o build/move.o build/pkgutils.o build/menu.o build/customized.o build/dict.o build/ignored.o
 	${CC} ${CFLAGS} $^ -o build/jazzy
 
 install: default
 	cp build/jazzy ${HOME}/.local/bin/jazzy
+
+build/dict.o: src/dict.c
+	${CC} ${CFLAGS} -c $^ -o $@
+
+build/ignored.o: src/ignored.c
+	${CC} ${CFLAGS} -c $^ -o $@
 
 build/main.o: src/main.c
 	${CC} ${CFLAGS} -c $^ -o $@

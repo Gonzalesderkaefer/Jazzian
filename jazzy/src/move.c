@@ -1,6 +1,77 @@
+/* Libraries */
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+
 /* Other files */
 #include "include/move.h"
+#include "include/def.h"
+#include "include/utils/dict.h"
+#include "include/ignored.h"
 
+
+static int _move_cfg(const char *src_par, const char *dest_par, Dict *ignored, TRANSFER mode_of_transfer, bool hide) {
+    DIR *directory = opendir(src_par);
+    struct dirent *cfg_content;
+    while ((cfg_content = readdir(directory)) != NULL) {
+        /* Check if file is supposed to be ignored */
+        if (dict_get(ignored, cfg_content->d_name)) continue;
+
+        /* Build src */
+        size_t srclen = strlen(src_par) + 1 + strlen(cfg_content->d_name) + 1;
+        char src[srclen];
+        sprintf(src, "%s/%s", src_par, cfg_content->d_name);
+
+
+        /* Build dest */
+        size_t destlen = strlen(dest_par) + 2 + strlen(cfg_content->d_name) + 1;
+        char dest[destlen];
+        if(hide)
+            sprintf(dest, "%s/.%s", dest_par, cfg_content->d_name);
+        else
+            sprintf(dest, "%s/%s", dest_par, cfg_content->d_name);
+
+
+        /* If file exists, skip for now */
+
+        /*
+         * TODO: create a backup of of customized files
+         *       Then delete them if necessary
+         */
+        if(file_exists(dest)) {
+            continue;
+        }
+
+
+        switch(mode_of_transfer) {
+            case NOTHING:
+                closedir(directory);
+                return 0;
+                break;
+            case COPY:
+                copy_dir_r(src, dest);
+                break;
+            case LINK:
+                if (file_exists(dest))
+                    break;
+                symlink(src, dest);
+                break;
+        }
+        printf("%s to %s\n", src, dest);
+    }
+    closedir(directory);
+
+
+
+    return 0;
+}
+
+
+static void _local_i_free(void *ptr) {
+    ignored_free(ptr);
+}
 
 
 int move_cfg(TRANSFER mode_of_transfer) {
@@ -40,78 +111,43 @@ int move_cfg(TRANSFER mode_of_transfer) {
   sprintf(localbin,"%s/.local/bin", getenv("HOME"));
 
 
-  /* create dest .config dir */
-  mkdir(cfg_dest, 0777);
-  if (errno == EEXIST)
-    fprintf(stderr,"%s already exists\n", cfg_dest);
+  /* Define ignored files */
+  Ignored *passgen = ignored_init("passgen", NULL, NULL);
+  Ignored *shell = ignored_init("shell", NULL, NULL);
+  Ignored *qutebrowser = ignored_init("qutebrowser", NULL, NULL);
+  Ignored *code = ignored_init("code", NULL, NULL);
+  Ignored *powersave = ignored_init("powersave", NULL, NULL);
+  Ignored *this = ignored_init(".", NULL, NULL);
+  Ignored *parent = ignored_init("..", NULL, NULL);
 
-  /* create dest .local dir */
-  mkdir(local, 0777);
-  if (errno == EEXIST)
-    fprintf(stderr,"%s already exists\n", local);
+  /* insert ignored files */
+  Dict *ignoredfiles = dict_init();
+  dict_insert(ignoredfiles, "passgen", passgen);
+  dict_insert(ignoredfiles, "shell", shell);
+  dict_insert(ignoredfiles, "qutebrowser", qutebrowser);
+  dict_insert(ignoredfiles, "code", code);
+  dict_insert(ignoredfiles, "powersave", powersave);
+  dict_insert(ignoredfiles, ".", this);
+  dict_insert(ignoredfiles, "..", parent);
 
-  /* create dest .local dir */
-  mkdir(localbin, 0777);
-  if (errno == EEXIST)
-    fprintf(stderr,"%s already exists\n", localbin);
 
-  putc('\n',stdout);
-  putc('\n',stdout);
+  /* Free individual Ignored structs */
+  dict_action(ignoredfiles, (void (*) (void *))ignored_free);
 
-  /* Dirs to not move */
-  char *ill_cfg[] = {
-    ".",
-    "..",
-    "X11",
-    "passgen",
-    "shell",
-    "nvim",
-    "qutebrowser",
-    "code",
-    NULL
-  };
 
-  switch (mode_of_transfer) {
-    case LINK:
+  /* Move the main config files */
+  _move_cfg(cfg_src, cfg_dest, ignoredfiles, mode_of_transfer, false);
 
-      /* Link general files */
-      link_dir(cfg_src, cfg_dest, ill_cfg, false);
-      putc('\n',stdout);
-      putc('\n',stdout);
+  /* Move the scripts */
+  _move_cfg(binsrc, localbin, ignoredfiles, mode_of_transfer, false);
 
-      /* Link scripts */
-      link_dir(binsrc, localbin, ill_cfg, false);
-      putc('\n',stdout);
-      putc('\n',stdout);
+  /* Move shell files */
+  _move_cfg(shellsrc, getenv("HOME"), ignoredfiles, mode_of_transfer, true);
 
-      /* Link shell configs */
-      link_dir(shellsrc, getenv("HOME"), ill_cfg, true);
-      putc('\n',stdout);
-      putc('\n',stdout);
 
-      break;
 
-    case COPY:
+  /* Free the actual dictionary */
+  dict_free(ignoredfiles);
 
-      /* Copy general files */
-      copy_dir(cfg_src, cfg_dest, ill_cfg, false);
-      putc('\n',stdout);
-      putc('\n',stdout);
-
-      /* Copy scripts */
-      copy_dir(binsrc, localbin, ill_cfg, false);
-      putc('\n',stdout);
-      putc('\n',stdout);
-
-      /* Copy shell configs */
-      copy_dir(shellsrc, getenv("HOME"), ill_cfg, true);
-      putc('\n',stdout);
-      putc('\n',stdout);
-
-      break;
-
-    default:
-      printf("Not Moving anything\n");
-  }
   return 0;
 }
