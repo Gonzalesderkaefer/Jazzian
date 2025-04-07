@@ -42,6 +42,7 @@ static const char *debian_base[] = {
   "nnn",
   "fzf",
   "zathura",
+  "jq",
   NULL
 };
 
@@ -177,8 +178,8 @@ static const char *fedora_base[] = {
   "papirus-icon-theme-dark",
   "network-manager-applet",
   "arc-theme",
+  "jq",
   NULL
-
 };
 
 /* Fedora xorg packages */
@@ -311,6 +312,7 @@ static const char *arch_base[] = {
   "wireplumber",
   "cpupower",
   "git",
+  "jq",
   NULL
 };
 
