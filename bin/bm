@@ -17,8 +17,13 @@ fi
 
 # Let user select bookmark
 while [[ -d ${selection} ]]; do
+    # Files that are displayed
+    current_files=$()
+    current_files+=$(find ${selection} -not -path '*/.*' -maxdepth 1 -mindepth 1 \! -type d -printf "%f\n")
+    current_files+=$(find ${selection} -not -path '*/.*' -maxdepth 1 -mindepth 1 -type d -printf "\n%f/")
+
     # Set selection to one of its 'sub-files'
-    selection="${selection}/$(ls -p ${selection} | mdmenu)";
+    selection="${selection}/$(printf "%s\n" ${current_files[*]} | mdmenu)";
 
     # If user pressed ESC then exit
     exit=${?}
@@ -32,3 +37,6 @@ site=$(head -n1 ${selection})
 
 # Open site
 exec ${BROWSER_PREFIX} ${site}
+
+# find .  -maxdepth 1 -mindepth 1 \! -type d -printf "%f "
+# find .  -maxdepth 1 -mindepth 1 -type d -printf "%f "

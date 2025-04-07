@@ -1,2 +1,2 @@
 #!/usr/bin/sh
-rofi -show -dmenu -i -p ""
+rofi -show -dmenu -i -p "" -matching fuzzy
