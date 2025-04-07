@@ -54,7 +54,6 @@ char *gtk3_config = "[Settings]\n"
 
 
 
-
 static int edit_files(config *system);
 static int set_theme();
 
@@ -82,7 +81,8 @@ void create_customized(config *system) {
     customized("/.local/bin/myterm", myterm_content, 0775, true);
 
     /* GTK 3 config */
-    customized("/.config/gtk-3.0/settings.ini", myterm_content, 0775, true);
+    customized("/.config/gtk-3.0/settings.ini", gtk3_config, 0775, true);
+
 
 
 
