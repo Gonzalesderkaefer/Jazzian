@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+
+# Set bookmarks directory
+selection="${HOME}/Documents/bookmarks";
+
+# Sanity check
+if ! [[ -d ${selection} ]]; then
+    echo "${selection} does not yet exist please create it" | mdmenu
+    exit 1
+fi
+
+if [[ -z ${BROWSER_PREFIX} ]]; then
+    echo "\${BROWSER_PREFIX} is not set please set it to a prefix that can be used to open sites" | mdmenu
+    exit 1
+fi
+
+
+# Let user select bookmark
+while [[ -d ${selection} ]]; do
+    # Set selection to one of its 'sub-files'
+    selection="${selection}/$(ls -p ${selection} | mdmenu)";
+
+    # If user pressed ESC then exit
+    exit=${?}
+    if [[ ${exit} == 1 ]]; then
+        exit 1;
+    fi
+done
+
+# Save site
+site=$(head -n1 ${selection})
+
+# Open site
+exec ${BROWSER_PREFIX} ${site}

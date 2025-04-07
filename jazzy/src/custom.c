@@ -9,6 +9,7 @@
 char *devicespecific_sh = "killshells() {\n"
     "    pkill -KILL -u $USER -t tty1\n"
     "}\n"
+    "export BROWSER_PREFIX=\"firefox\"\n"
     "[ \"$(tty)\" = \"/dev/tty1\" ] && (startx; killshells)\n";
 
 char *debmdmenu = "#!/usr/bin/sh\n"
@@ -81,7 +82,7 @@ void create_customized(config *system) {
     customized("/.local/bin/myterm", myterm_content, 0775, true);
 
     /* GTK 3 config */
-    customized("/.config/gtk-3.0/settings.ini", gtk3_config, 0775, true);
+    customized("/.config/gtk-3.0/settings.ini", gtk3_config, -1, false);
 
 
 
