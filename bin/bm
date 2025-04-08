@@ -3,18 +3,19 @@
 # Set bookmarks directory
 selection="${HOME}/Documents/bookmarks";
 
-# Sanity check
-if ! [[ -d ${selection} ]]; then
-    echo "${selection} does not yet exist please create it" | mdmenu
-    exit 1
-fi
-
-if [[ -z ${BROWSER_PREFIX} ]]; then
-    echo "\${BROWSER_PREFIX} is not set please set it to a prefix that can be used to open sites" | mdmenu
-    exit 1
-fi
 
 selection() {
+    # Sanity check
+    if ! [[ -d ${selection} ]]; then
+        echo "${selection} does not yet exist please create it" | mdmenu
+        exit 1
+    fi
+
+    if [[ -z ${BROWSER_PREFIX} ]]; then
+        echo "\${BROWSER_PREFIX} is not set please set it to a prefix that can be used to open sites" | mdmenu
+        exit 1
+    fi
+
     # Let user select bookmark
     while [[ -d ${selection} ]]; do
         # Files that are displayed
@@ -40,9 +41,36 @@ selection() {
 }
 
 
+insert() {
+    # sanity check
+    if [[ -z ${2} ]] || [[ -z ${3} ]]; then
+        echo "[insert] :: not enough args"
+    fi
+
+
+    # compose full path
+    if [[ ${2:0:1} != "/" ]]; then
+        full_path=${selection}/${2}
+    else
+        full_path=${selection}${2}
+    fi
+
+    # remove basename
+    base_dir=$(echo ${full_path} | sed -E "s/\/[^\/]*$|\/[^\/]*\/$//g")
+    mkdir -p ${base_dir}
+
+    echo ${3} > ${full_path}
+
+
+}
+
+
+
+
 
 case ${1} in
     "insert")
+        insert $@
         ;;
     *)
         selection
