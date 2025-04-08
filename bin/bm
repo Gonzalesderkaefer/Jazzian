@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # Set bookmarks directory
-selection="${HOME}/Documents/bookmarks";
+selection="${HOME}/Documents/bookmarks"
 
 
 selection() {
@@ -20,23 +20,25 @@ selection() {
     while [[ -d ${selection} ]]; do
         # Files that are displayed
         current_files=$()
-        current_files+=$(find ${selection} -not -path '*/.*' -maxdepth 1 -mindepth 1 \! -type d -printf "%f\n")
-        current_files+=$(find ${selection} -not -path '*/.*' -maxdepth 1 -mindepth 1 -type d -printf "\n%f/")
+        current_files+=$(echo "..")
+        current_files+=$(find ${selection} -maxdepth 1 -mindepth 1 \! -type d -printf "\n%f")
+        current_files+=$(find ${selection} -maxdepth 1 -mindepth 1 -type d -printf "\n%f/")
 
         # Set selection to one of its 'sub-files'
-        selection="${selection}/$(printf "%s\n" ${current_files[*]} | mdmenu)";
+        selection="${selection}/$(printf "%s\n" ${current_files[*]} | mdmenu)"
 
         # If user pressed ESC then exit
         exit=${?}
         if [[ ${exit} == 1 ]]; then
-            exit 1;
+            exit 1
         fi
     done
 
-    # Save site
+
+    #Save site
     site=$(head -n1 ${selection})
 
-    # Open site
+    #Open site
     exec ${BROWSER_PREFIX} ${site}
 }
 
@@ -60,8 +62,6 @@ insert() {
     mkdir -p ${base_dir}
 
     echo ${3} > ${full_path}
-
-
 }
 
 
