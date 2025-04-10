@@ -20,21 +20,22 @@ static int _move_cfg(const char *src_par, const char *dest_par, Dict *ignored, T
         Ignored *ig;
         if ((ig = dict_get(ignored, cfg_content->d_name))) {
             ignored_apply(ig, mode_of_transfer);
+            continue;
         }
 
         /* Build src */
-        size_t srclen = strlen(src_par) + 1 + strlen(cfg_content->d_name) + 1;
-        char src[srclen];
-        sprintf(src, "%s/%s", src_par, cfg_content->d_name);
+        size_t srclen = strlen(src_par) + 1 + strlen(cfg_content->d_name);
+        char src[srclen + 1];
+        snprintf(src, srclen + 1, "%s/%s", src_par, cfg_content->d_name);
 
 
         /* Build dest */
-        size_t destlen = strlen(dest_par) + 2 + strlen(cfg_content->d_name) + 1;
-        char dest[destlen];
+        size_t destlen = strlen(dest_par) + 2 + strlen(cfg_content->d_name);
+        char dest[destlen + 1];
         if(hide)
-            sprintf(dest, "%s/.%s", dest_par, cfg_content->d_name);
+            snprintf(dest, destlen + 1, "%s/.%s", dest_par, cfg_content->d_name);
         else
-            sprintf(dest, "%s/%s", dest_par, cfg_content->d_name);
+            snprintf(dest, destlen + 1, "%s/%s", dest_par, cfg_content->d_name);
 
 
         printf("%s to %s\n", src, dest);
@@ -77,39 +78,39 @@ static int _move_cfg(const char *src_par, const char *dest_par, Dict *ignored, T
 
 int move_cfg(TRANSFER mode_of_transfer) {
   /* Define config src directory */
-  int cfg_src_len = strlen(getenv("HOME")) + strlen("/Jazzian/cfg_files") + 1;
-  char cfg_src[cfg_src_len];
-  sprintf(cfg_src,"%s/Jazzian/cfg_files", getenv("HOME"));
+  int cfg_src_len = strlen(getenv("HOME")) + strlen("/Jazzian/cfg_files");
+  char cfg_src[cfg_src_len + 1];
+  snprintf(cfg_src, cfg_src_len + 1, "%s/Jazzian/cfg_files", getenv("HOME"));
 
 
   /* Define script directory */
-  int binsrc_len = strlen(getenv("HOME")) + strlen("/Jazzian/bin") + 1;
-  char binsrc[binsrc_len];
-  sprintf(binsrc,"%s/Jazzian/bin", getenv("HOME"));
+  int binsrc_len = strlen(getenv("HOME")) + strlen("/Jazzian/bin");
+  char binsrc[binsrc_len + 1];
+  snprintf(binsrc, binsrc_len + 1, "%s/Jazzian/bin", getenv("HOME"));
 
 
   /* Define script directory */
-  int shell_len = strlen(getenv("HOME")) + strlen("/Jazzian/cfg_files/shell") + 1;
-  char shellsrc[shell_len];
-  sprintf(shellsrc,"%s/Jazzian/cfg_files/shell", getenv("HOME"));
+  int shell_len = strlen(getenv("HOME")) + strlen("/Jazzian/cfg_files/shell");
+  char shellsrc[shell_len + 1];
+  snprintf(shellsrc, shell_len + 1, "%s/Jazzian/cfg_files/shell", getenv("HOME"));
 
 
   /* Define config dest directory */
-  int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config") + 1;
-  char cfg_dest[cfg_dest_len];
-  sprintf(cfg_dest,"%s/.config", getenv("HOME"));
+  int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config");
+  char cfg_dest[cfg_dest_len + 1];
+  snprintf(cfg_dest, cfg_src_len + 1, "%s/.config", getenv("HOME"));
 
 
   /* Define local dest directory */
-  int local_len = strlen(getenv("HOME")) + strlen("/.local") + 1;
-  char local[local_len];
-  sprintf(local,"%s/.local", getenv("HOME"));
+  int local_len = strlen(getenv("HOME")) + strlen("/.local");
+  char local[local_len + 1];
+  snprintf(local, local_len + 1, "%s/.local", getenv("HOME"));
 
 
   /* Define local_bin dest directory */
-  int localbin_len = strlen(getenv("HOME")) + strlen("/.local/bin") + 1;
-  char localbin[localbin_len];
-  sprintf(localbin,"%s/.local/bin", getenv("HOME"));
+  int localbin_len = strlen(getenv("HOME")) + strlen("/.local/bin");
+  char localbin[localbin_len + 1];
+  snprintf(localbin, localbin_len + 1, "%s/.local/bin", getenv("HOME"));
 
 
   /* Define ignored files */
@@ -120,6 +121,8 @@ int move_cfg(TRANSFER mode_of_transfer) {
   Ignored *powersave = ignored_init("powersave", NULL, NULL);
   Ignored *this = ignored_init(".", NULL, NULL);
   Ignored *parent = ignored_init("..", NULL, NULL);
+  Ignored *vim = ignored_init("vim", "/Jazzian/cfg_files/vim", "/.vim");
+
 
   /* insert ignored files */
   Dict *ignoredfiles = dict_init();
@@ -128,12 +131,9 @@ int move_cfg(TRANSFER mode_of_transfer) {
   dict_insert(ignoredfiles, "qutebrowser", qutebrowser);
   dict_insert(ignoredfiles, "code", code);
   dict_insert(ignoredfiles, "powersave", powersave);
+  dict_insert(ignoredfiles, "vim", vim);
   dict_insert(ignoredfiles, ".", this);
   dict_insert(ignoredfiles, "..", parent);
-
-
-  /* Free individual Ignored structs */
-  dict_action(ignoredfiles, (void (*) (void *))ignored_free);
 
 
   /* Move the main config files */
@@ -145,6 +145,9 @@ int move_cfg(TRANSFER mode_of_transfer) {
   /* Move shell files */
   _move_cfg(shellsrc, getenv("HOME"), ignoredfiles, mode_of_transfer, true);
 
+
+  /* Free individual Ignored structs */
+  dict_action(ignoredfiles, (void (*) (void *))ignored_free);
 
 
   /* Free the actual dictionary */

@@ -14,7 +14,7 @@ int mkdir_r(char const *pathname, mode_t mode) {
     /* Copy String to array */
     size_t pathlen = strlen(pathname);
     char path[pathlen + 1];
-    snprintf(path, pathlen, "%s", pathname);
+    snprintf(path, pathlen + 1, "%s", pathname);
 
 
     /* tokenize */
@@ -35,7 +35,7 @@ int mkdir_r(char const *pathname, mode_t mode) {
             return -1;
         }
         /* Copy to new string */
-        snprintf(newpath, newpathlen, "%s%s/", curPath, token);
+        snprintf(newpath, newpathlen + 1, "%s%s/", curPath, token);
 
         /* free curpath */
         free(curPath);
@@ -121,14 +121,14 @@ static int _copy_dir_r(char *src_dir, char const *dest_dir) {
             continue;
 
         /* Build src */
-        uint32_t src_len = strlen(src_dir) + 1 + strlen(dircontent->d_name) + 1;
-        char src[src_len];
-        sprintf(src, "%s/%s", src_dir, dircontent->d_name);
+        uint32_t src_len = strlen(src_dir) + 1 + strlen(dircontent->d_name);
+        char src[src_len + 1];
+        snprintf(src, src_len + 1, "%s/%s", src_dir, dircontent->d_name);
 
         /* Build dest */
-        uint32_t dest_len = strlen(dest_dir) + 1 + strlen(dircontent->d_name) + 1;
-        char dest[dest_len];
-        sprintf(dest, "%s/%s", dest_dir, dircontent->d_name);
+        uint32_t dest_len = strlen(dest_dir) + 1 + strlen(dircontent->d_name);
+        char dest[dest_len + 1];
+        snprintf(dest, dest_len + 1, "%s/%s", dest_dir, dircontent->d_name);
 
 
         /* if dest already exists, skip */
@@ -190,14 +190,15 @@ int copy_dir_r(char *src_dir, char const *dest_dir) {
         /* Get dir name */
         size_t srclen = strlen(clean_src);
         char src[srclen + 1]; /* Otherwise strtok_r will SEGV */
-        snprintf(src, srclen, "%s", clean_src);
+        snprintf(src, srclen + 1, "%s", clean_src);
         char *rest, *token, *pretok;
         rest = src;
         while((token = strtok_r(rest, "/", &rest)))
             pretok = token;
 
-        char *new_dest =(char *)calloc(strlen(dest_dir) + strlen(pretok) + 1, sizeof(char));
-        sprintf(new_dest, "%s%s", dest_dir, pretok);
+        size_t new_dest_len = strlen(dest_dir) + strlen(pretok);
+        char *new_dest =(char *)calloc(new_dest_len + 1, sizeof(char));
+        snprintf(new_dest, new_dest_len + 1, "%s%s", dest_dir, pretok);
         actual_dest = new_dest;
 
         /* Check if new dest exists */

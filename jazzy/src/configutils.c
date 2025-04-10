@@ -85,8 +85,9 @@ char *config_tostr(config *system) {
     "    \"Distro\": \"%s\",\n"
     "}";
 
-  char *system_str = malloc(strlen(distro) + strlen(wm) + strlen(transfer) + strlen(dsp) + strlen(format) + 1);
-  sprintf (system_str,
+  size_t systemlen = strlen(distro) + strlen(wm) + strlen(transfer) + strlen(dsp) + strlen(format);
+  char *system_str = malloc(systemlen + 1);
+  snprintf (system_str, systemlen + 1,
     "{\n"
     "    \"Displaymanager\": \"%s\",\n"
     "    \"Windowmanager\": \"%s\",\n"

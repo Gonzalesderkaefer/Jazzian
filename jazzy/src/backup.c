@@ -8,15 +8,15 @@
 
 static void _create_backup(const char *srcfile, const char *destfile) {
     /* Build src */
-    size_t srclen = strlen(srcfile) + strlen(HOME) + 1;
-    char src[srclen];
-    sprintf(src, "%s%s", HOME, srcfile);
+    size_t srclen = strlen(srcfile) + strlen(HOME);
+    char src[srclen + 1];
+    snprintf(src, srclen + 1, "%s%s", HOME, srcfile);
 
 
     /* Build dest */
-    size_t destlen = strlen(destfile) + strlen(HOME) + 1;
-    char dest[destlen];
-    sprintf(dest, "%s%s", HOME, destfile);
+    size_t destlen = strlen(destfile) + strlen(HOME);
+    char dest[destlen + 1];
+    snprintf(dest, destlen + 1, "%s%s", HOME, destfile);
 
     /* Determine filetype */
     struct stat srcstat;

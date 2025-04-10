@@ -38,7 +38,7 @@ Ignored *ignored_init(const char *name, const char *src, const char *dest) {
             return NULL;
         }
         /* Copy string into buffer */
-        snprintf(ignored_name, strlen(name), "%s", name);
+        snprintf(ignored_name, ignored_namelen + 1, "%s", name);
 
         /* Assign string to struct */
         new_ignored->name = ignored_name;
@@ -61,7 +61,7 @@ Ignored *ignored_init(const char *name, const char *src, const char *dest) {
             return NULL;
         }
         /* Copy string into buffer */
-        snprintf(ignored_src, ignored_srclen , "%s%s", getenv("HOME"), src);
+        snprintf(ignored_src, ignored_srclen + 1, "%s%s", getenv("HOME"), src);
 
         /* Assign string to struct */
         new_ignored->src = ignored_src;
@@ -89,7 +89,7 @@ Ignored *ignored_init(const char *name, const char *src, const char *dest) {
             return NULL;
         }
         /* Copy string into buffer */
-        snprintf(ignored_dest, ignored_destlen , "%s%s", getenv("HOME"), dest);
+        snprintf(ignored_dest, ignored_destlen + 1, "%s%s", getenv("HOME"), dest);
 
         /* Assign string to struct */
         new_ignored->dest = ignored_dest;
@@ -115,7 +115,6 @@ void ignored_apply(Ignored *to_apply, TRANSFER method) {
                 symlink(to_apply->src, to_apply->dest);
             break;
     }
-
 }
 
 

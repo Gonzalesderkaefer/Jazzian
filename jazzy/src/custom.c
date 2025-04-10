@@ -103,102 +103,6 @@ void create_customized(config *system) {
     edit_files(system);
 }
 
-void devicespecific_cfg(config *system) {
-    /* Define config dest directory */
-    int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config");
-    char cfg_dest[cfg_dest_len + 1];
-    snprintf(cfg_dest,cfg_dest_len,"%s/.config", getenv("HOME"));
-
-    char *wm[] = {"i3", "bspwm", "awesome", "hypr", "sway", "river", "vim", NULL};
-
-    for (int i = 0; wm[i] != NULL; ++i) {
-        int devspc_len =
-                cfg_dest_len + strlen(wm[i]) + strlen("devicespecific") + 3;
-        char devspc[devspc_len];
-        sprintf(devspc, "%s/%s/devicespecific", cfg_dest, wm[i]);
-        printf("Created Directory: %s\n", devspc);
-        mkdir(devspc, 0755);
-
-        if (strcmp(wm[i], "awesome") == 0) {
-            /* Create cfg file for awesome */
-            int cfg_len = devspc_len + strlen("devicespecific.lua") + 2;
-            char cfg[cfg_len];
-            sprintf(cfg, "%s/devicespecific.lua", devspc);
-            printf("Created file: %s\n", cfg);
-            write_to_file("", 0,cfg , "a+", 0644);
-            continue;
-        }
-        /* Create cfg file */
-        int cfg_len = devspc_len + strlen("devicespecific") + 2;
-        char cfg[cfg_len];
-        sprintf(cfg, "%s/devicespecific", devspc);
-        printf("Created file: %s\n", cfg);
-        write_to_file("", 0,cfg , "a+", 0644);
-    }
-
-    /* .zprofile eqivalent */
-    int dev_sh_len = strlen(getenv("HOME")) + strlen(".devicespecific.sh") + 2;
-    char dev_sh_path[dev_sh_len];
-    sprintf(dev_sh_path, "%s/.devicespecific.sh", getenv("HOME"));
-    if (!file_exists(dev_sh_path))
-        write_to_file(devicespecific_sh, strlen(devicespecific_sh), dev_sh_path,
-                                    "w", 0777);
-
-    /* .zshrc eqivalent */
-    int sh_len = strlen(getenv("HOME")) + strlen(".devicerc") + 2;
-    char sh_path[sh_len];
-    sprintf(sh_path, "%s/.devicerc", getenv("HOME"));
-    if (!file_exists(sh_path))
-        write_to_file("", strlen(""), sh_path, "w", 0777);
-
-    /* myterm */
-    int myterm_len = strlen(getenv("HOME")) + strlen(".local/bin/myterm") + 2;
-    char myterm[myterm_len];
-    sprintf(myterm, "%s/.local/bin/myterm", getenv("HOME"));
-    if (!file_exists(myterm))
-        write_to_file(myterm_content, strlen(myterm_content), myterm, "w", 0777);
-
-    /* mdrun */
-    int mdrunlen = strlen(getenv("HOME")) + strlen(".local/bin/mdrun") + 2;
-    char mdrun[mdrunlen];
-    sprintf(mdrun, "%s/.local/bin/mdrun", getenv("HOME"));
-
-    int mdmenulen = strlen(getenv("HOME")) + strlen(".local/bin/mdmenu") + 2;
-    char mdmenu[mdmenulen];
-    sprintf(mdmenu, "%s/.local/bin/mdmenu", getenv("HOME"));
-
-    /* xinitrc */
-    int xinitlen = strlen(getenv("HOME")) + strlen(".xinitrc") + 2;
-    char xinit[xinitlen];
-    sprintf(xinit, "%s/.xinitrc", getenv("HOME"));
-    if (!file_exists(xinit))
-        write_to_file(startx_content, strlen(startx_content), xinit, "w", 0644);
-
-    /* x11startup */
-    int x11start_len = strlen(getenv("HOME")) + strlen(".local/bin/x11startup") + 2;
-    char x11start[x11start_len];
-    sprintf(x11start, "%s/.local/bin/x11startup", getenv("HOME"));
-    if (!file_exists(x11start))
-        write_to_file(x11start, strlen(x11startup), x11start, "w", 0755);
-
-
-    switch (system->distro) {
-    case DEBIAN:
-        if (!file_exists(mdmenu))
-            write_to_file(debmdmenu, strlen(debmdmenu), mdmenu, "w", 0777);
-        if (!file_exists(mdrun))
-            write_to_file(debmdrun, strlen(debmdrun), mdrun, "w", 0777);
-        break;
-
-    default:
-        if (!file_exists(mdmenu))
-            write_to_file(mdmenu_content, strlen(mdmenu_content), mdmenu, "w", 0777);
-        if (!file_exists(mdrun))
-            write_to_file(mdrun_content, strlen(mdrun_content), mdrun, "w", 0777);
-    }
-    edit_files(system);
-}
-
 int edit_files(config *system) {
   /* Deterimine new window manager */
   char *windowmanager;
@@ -230,9 +134,9 @@ int edit_files(config *system) {
 
   if (!skip_xinit) {
     /* xinitrc filename */
-    int xinitlen = strlen(getenv("HOME")) + strlen(".xinitrc") + 2;
-    char xinit[xinitlen];
-    sprintf(xinit, "%s/.xinitrc", getenv("HOME"));
+    int xinitlen = strlen(getenv("HOME")) + strlen(".xinitrc") + 1;
+    char xinit[xinitlen + 1];
+    snprintf(xinit,xinitlen + 1, "%s/.xinitrc", getenv("HOME"));
 
     /* Open file */
     FILE *startx = fopen(xinit, "r");
@@ -264,9 +168,9 @@ int edit_files(config *system) {
   }
 
   /* devicespecific filename */
-  int devspclen = strlen(getenv("HOME")) + strlen(".devicespecific.sh") + 2;
-  char devspc[devspclen];
-  sprintf(devspc, "%s/.devicespecific.sh", getenv("HOME"));
+  int devspclen = strlen(getenv("HOME")) + strlen(".devicespecific.sh") + 1;
+  char devspc[devspclen + 1];
+  snprintf(devspc, devspclen + 1, "%s/.devicespecific.sh", getenv("HOME"));
 
   /* Open file */
   FILE *device = fopen(devspc, "r");

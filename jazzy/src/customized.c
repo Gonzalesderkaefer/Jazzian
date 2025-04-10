@@ -16,8 +16,9 @@
 
 void customized(char *relpath, char *contents, mode_t mode, bool customperm) {
     /* Build absolute file path */
-    char filepath[strlen(getenv("HOME")) + strlen(relpath) + 1];
-    sprintf(filepath, "%s%s", getenv("HOME"), relpath);
+    size_t file_path_len = strlen(getenv("HOME")) + strlen(relpath);
+    char filepath[file_path_len + 1];
+    snprintf(filepath, file_path_len + 1, "%s%s", getenv("HOME"), relpath);
 
     /* Check if filepath exists */
     if (file_exists(filepath)) 
@@ -31,7 +32,7 @@ void customized(char *relpath, char *contents, mode_t mode, bool customperm) {
         /* Get last component */
         size_t fullpathlen = strlen(filepath);
         char fullpath[strlen(filepath) + 1];
-        snprintf(fullpath, fullpathlen, "%s", filepath);
+        snprintf(fullpath, fullpathlen + 1, "%s", filepath);
 
         char *pretok, *token, *rest;
         rest = fullpath;
