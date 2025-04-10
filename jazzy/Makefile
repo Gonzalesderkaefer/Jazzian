@@ -2,11 +2,16 @@
 
 # Compiler stuff
 CC=gcc
-CFLAGS= -Wall -Wno-unused-function -Wno-unused-variable
+CFLAGS= -Wall 
+# -Wno-unused-function -Wno-unused-variable
 
 default: build/main.o build/pacinst.o build/searep.o build/fileutils.o build/backup.o build/config.o build/configutils.o \
 		 build/custom.o build/move.o build/pkgutils.o build/menu.o build/customized.o build/dict.o build/ignored.o
+	[ -d ./build ] || mkdir build
 	${CC} ${CFLAGS} $^ -o build/jazzy
+
+clean: 
+	rm build/*
 
 install: default
 	cp build/jazzy ${HOME}/.local/bin/jazzy

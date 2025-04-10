@@ -17,7 +17,10 @@ static int _move_cfg(const char *src_par, const char *dest_par, Dict *ignored, T
     struct dirent *cfg_content;
     while ((cfg_content = readdir(directory)) != NULL) {
         /* Check if file is supposed to be ignored */
-        if (dict_get(ignored, cfg_content->d_name)) continue;
+        Ignored *ig;
+        if ((ig = dict_get(ignored, cfg_content->d_name))) {
+            ignored_apply(ig, mode_of_transfer);
+        }
 
         /* Build src */
         size_t srclen = strlen(src_par) + 1 + strlen(cfg_content->d_name) + 1;

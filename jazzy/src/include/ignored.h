@@ -25,7 +25,7 @@ typedef struct _ignored Ignored;
  *         to be cleaned up with ignored_free()
  *         returns NULL on failure
  */
-Ignored *ignored_init(char *name, char *src, char *dest);
+Ignored *ignored_init(const char *name, const char *src, const char *dest);
 
 
 /**

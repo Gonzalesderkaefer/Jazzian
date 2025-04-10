@@ -1,4 +1,5 @@
 /* Libraries */
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -17,50 +18,41 @@ typedef struct _ignored {
     char *dest;
 } Ignored;
 
+typedef struct _IgnoredString{
+    const char *string;
+    const size_t len;
+} IgnoredString;
 
-Ignored *ignored_init(char *name, char *src, char *dest) {
+
+Ignored *ignored_init(const char *name, const char *src, const char *dest) {
     /* Allocate struct */
-    Ignored *newignored = (Ignored *)malloc(sizeof(Ignored));
-    if (!newignored)
-        return NULL;
+    Ignored *new_ignored = (Ignored *)malloc(sizeof(Ignored));
+    if (!new_ignored) return NULL;
 
-    /* Name */
-    if(name) {
-        newignored->name = (char *)calloc(strlen(name) + 1, sizeof(char));
-        if(!newignored->name) {
-            free(newignored);
+    /* Allocate name */
+    if (name) {
+        char *ignored_name = (char *)calloc(strlen(name) + 1, sizeof(char));
+        if (!ignored_name) {
+            free(new_ignored);
             return NULL;
         }
+        /* Copy string into buffer */
+        snprintf(ignored_name, strlen(name), "%s", name);
+
+        /* Assign string to struct */
+        new_ignored->name = ignored_name;
+
     } else {
-        newignored->name = NULL;
+        new_ignored->name = NULL;
     }
 
-    /* src */
-    if(src) {
-        newignored->src = (char *)calloc(strlen(src) + 1, sizeof(char));
-        if(!newignored->src) {
-            free(newignored->name);
-            free(newignored);
-            return NULL;
-        }
-    } else {
-        newignored->src = NULL;
-    }
+    /* Allocate src */
 
-    /* dest */
-    if(dest) {
-        newignored->dest = (char *)calloc(strlen(dest) + 1, sizeof(char));
-        if(!newignored->dest) {
-            free(newignored->src);
-            free(newignored->name);
-            free(newignored);
-            return NULL;
-        }
-    } else {
-        newignored->dest = NULL;
-    }
 
-    return newignored;
+
+
+
+    return new_ignored;
 }
 
 
