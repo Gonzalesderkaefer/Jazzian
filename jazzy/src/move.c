@@ -74,10 +74,6 @@ static int _move_cfg(const char *src_par, const char *dest_par, Dict *ignored, T
 }
 
 
-static void _local_i_free(void *ptr) {
-    ignored_free(ptr);
-}
-
 
 int move_cfg(TRANSFER mode_of_transfer) {
   /* Define config src directory */

@@ -30,11 +30,6 @@ extern int flush_CHAR;
 #define F_WHITE "\e[0;37m"
 #define F_END "\e[0m"
 
-
-
-/* Other files */
-#include "packages.h"
-
 /* Display server */
 typedef enum DISPLAYSERVER { XORG = 0, WAYLAND } DISPLAYSERVER;
 

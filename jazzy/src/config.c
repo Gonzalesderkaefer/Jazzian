@@ -47,7 +47,7 @@ enum WINDOWMANAGER get_window_manager(enum DISPLAYSERVER display_server) {
     }
 
     break;
-  case WAYLAND:
+  default:
     printf("\033[0;32m[s]way (default)\033[0m\n");
     printf("\033[0;32m[h]yprland \033[0m\n");
     printf("\033[0;32m[r]iver \033[0m\n");
@@ -110,7 +110,7 @@ enum DISTRO get_distro() {
   int archStat =
       regexec(&arch, release, arch.re_nsub + 1, arch_pmatch, REG_NOTEOL);
   int debStat =
-      regexec(&debian, release, debian.re_nsub + 1, arch_pmatch, REG_NOTEOL);
+      regexec(&debian, release, debian.re_nsub + 1, debian_pmatch, REG_NOTEOL);
   int fedStat =
       regexec(&fedora, release, fedora.re_nsub + 1, fedora_pmatch, REG_NOTEOL);
 

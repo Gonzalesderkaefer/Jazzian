@@ -31,7 +31,8 @@ Ignored *ignored_init(const char *name, const char *src, const char *dest) {
 
     /* Allocate name */
     if (name) {
-        char *ignored_name = (char *)calloc(strlen(name) + 1, sizeof(char));
+        size_t ignored_namelen = strlen(name);
+        char *ignored_name = (char *)calloc(ignored_namelen + 1, sizeof(char));
         if (!ignored_name) {
             free(new_ignored);
             return NULL;
@@ -41,16 +42,60 @@ Ignored *ignored_init(const char *name, const char *src, const char *dest) {
 
         /* Assign string to struct */
         new_ignored->name = ignored_name;
-
     } else {
         new_ignored->name = NULL;
     }
 
     /* Allocate src */
+    if (src && *src == '/') {
+        size_t ignored_srclen = strlen(getenv("HOME")) + strlen(src);
+        char *ignored_src = (char *)calloc(ignored_srclen + 1, sizeof(char));
+        if (!ignored_src) {
+            /* free name */
+            if (new_ignored->name)
+                free(new_ignored->name);
+
+            /* free Ignored struct */
+            free(new_ignored);
+
+            return NULL;
+        }
+        /* Copy string into buffer */
+        snprintf(ignored_src, ignored_srclen , "%s%s", getenv("HOME"), src);
+
+        /* Assign string to struct */
+        new_ignored->src = ignored_src;
+    } else {
+        new_ignored->src = NULL;
+    }
+
+    /* Allocate dest */
+    if (dest && *dest == '/') {
+        size_t ignored_destlen = strlen(getenv("HOME")) + strlen(dest);
+        char *ignored_dest = (char *)calloc(ignored_destlen + 1, sizeof(char));
+        if (!ignored_dest) {
+            /* free name */
+            if (new_ignored->name)
+                free(new_ignored->name);
+
+            /* free src */
+            if (new_ignored->src)
+                free(new_ignored->src);
 
 
+            /* free Ignored struct */
+            free(new_ignored);
 
+            return NULL;
+        }
+        /* Copy string into buffer */
+        snprintf(ignored_dest, ignored_destlen , "%s%s", getenv("HOME"), dest);
 
+        /* Assign string to struct */
+        new_ignored->dest = ignored_dest;
+    } else {
+        new_ignored->dest = NULL;
+    }
 
     return new_ignored;
 }

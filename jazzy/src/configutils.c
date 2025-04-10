@@ -20,6 +20,8 @@ char *wm_tostr(WINDOWMANAGER wm) {
   case RIVER:
     return "river";
     break;
+  default:
+    return "i3";
   }
 }
 
@@ -29,6 +31,8 @@ char *dsp_tostr(DISPLAYSERVER dsp) {
     return "xorg";
   case WAYLAND:
     return "wayland";
+  default:
+    return "xorg";
   }
 }
 
@@ -40,7 +44,7 @@ char *transfer_tostr(TRANSFER transfer) {
     case COPY:
       return "copy";
       break;
-    case NOTHING:
+    default:
       return "nothing";
       break;
   }
@@ -57,7 +61,7 @@ char *distro_tostr(DISTRO distro) {
     case DEBIAN:
       return "debian";
       break;
-    case UNKNOWN:
+    default:
       return "unknown";
       break;
   }

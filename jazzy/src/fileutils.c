@@ -12,20 +12,35 @@
 
 int mkdir_r(char const *pathname, mode_t mode) {
     /* Copy String to array */
-    char path[strlen(pathname) + 1];
-    strcpy(path,pathname);
+    size_t pathlen = strlen(pathname);
+    char path[pathlen + 1];
+    snprintf(path, pathlen, "%s", pathname);
 
 
     /* tokenize */
     char *curPath = (char *)calloc(strlen("/") + 1, sizeof(char));
-    strcpy(curPath, "/");
+    if (!curPath)
+        return -1;
+    curPath[0] = '/';
+
 
     char *token , *rest;
     rest = path;
     while ((token = strtok_r(rest, "/", &rest))) {
-        curPath = (char *)realloc(curPath, strlen(curPath) + strlen(token) + 2);
-        strcat(curPath, token);
-        strcat(curPath, "/");
+        size_t newpathlen = strlen(curPath) + strlen(token) + 1;
+        /* Allocate new path */
+        char *newpath = (char *)calloc(newpathlen + 1, sizeof(char));
+        if (!newpath) {
+            free(curPath);
+            return -1;
+        }
+        /* Copy to new string */
+        snprintf(newpath, newpathlen, "%s%s/", curPath, token);
+
+        /* free curpath */
+        free(curPath);
+        curPath = newpath;
+
         mkdir(curPath, mode);
     }
 
@@ -73,143 +88,6 @@ void write_to_file(char *data, int length, const char *file_path,
   chmod(file_path, mode);
 }
 
-int copy_dir(char *src_dir, char *dest_parent, char **ill_cfg, bool hide) {
-  DIR *directory = opendir(src_dir);
-  struct dirent *cfg_content;
-  while ((cfg_content = readdir(directory)) != NULL) {
-    bool skip = false;
-    /* Check if dir name is in ill_cfg */
-    for (int i = 0; ill_cfg[i] != NULL; ++i) {
-      if (!strcmp(ill_cfg[i], cfg_content->d_name)) {
-        skip = true;
-        break;
-      }
-    }
-    if (skip)
-      continue;
-
-    /* Define full path of file in directory */
-    char src[strlen(src_dir) + strlen(cfg_content->d_name) + 2];
-    strcpy(src, src_dir);
-    strcat(src, "/");
-    strcat(src, cfg_content->d_name);
-
-    /* Define full path of dest file */
-    char dest[strlen(dest_parent) + strlen(cfg_content->d_name) + 3];
-    if (hide) {
-      strcpy(dest, dest_parent);
-      strcat(dest, "/.");
-      strcat(dest, cfg_content->d_name);
-    } else {
-      strcpy(dest, dest_parent);
-      strcat(dest, "/");
-      strcat(dest, cfg_content->d_name);
-    }
-
-    /* Get Stat of src file */
-    struct stat src_stat;
-    lstat(src, &src_stat);
-
-    /* Get Stat for dest file */
-    struct stat dest_stat;
-    lstat(dest, &dest_stat);
-
-    /* Check if destination file exists */
-    if (file_exists(dest)) {
-      printf("%s exists already\n", dest);
-      printf("going to remove %s \n", dest);
-      if (S_ISLNK(dest_stat.st_mode) || S_ISREG(dest_stat.st_mode)) {
-        unlink(dest);
-      } else if (S_ISDIR(dest_stat.st_mode)) {
-        rm_dir(dest);
-      } else {
-        printf("File type unexpected. Not doing anything\n");
-        continue;
-      }
-    }
-
-    /* Check whether file is directory */
-    if (S_ISDIR(src_stat.st_mode)) {
-      mkdir(dest, src_stat.st_mode);
-      printf("Created new Dir in %s with mode %d\n", dest, src_stat.st_mode);
-      if (access(src, R_OK) == -1)
-        printf("NO ACCESS");
-      copy_dir(src, dest, ill_cfg, false);
-    } else {
-      printf("Copy %s to %s\n", src, dest);
-      if (access(src, R_OK) == -1)
-        printf("NO ACCESS");
-      copy_file(src, dest, src_stat.st_mode);
-    }
-  }
-  closedir(directory);
-  return 0;
-}
-
-int link_dir(char *src_dir, char *dest_dir, char **ill_cfg, bool hide) {
-  DIR *directory = opendir(src_dir);
-  struct dirent *cfg_content;
-  while ((cfg_content = readdir(directory)) != NULL) {
-    bool skip = false;
-
-    /* Check if dir name is in ill_cfg */
-    for (int i = 0; ill_cfg[i] != NULL; ++i) {
-      if (!strcmp(ill_cfg[i], cfg_content->d_name)) {
-        skip = true;
-        break;
-      }
-    }
-    if (skip)
-      continue;
-
-    unsigned int direlem_len = strlen(cfg_content->d_name);
-    unsigned int src_len = strlen(src_dir);
-    unsigned int dest_len = strlen(dest_dir);
-
-    /* Define src file path */
-    char src[src_len + 1 + direlem_len + 1];
-    strcpy(src, src_dir);
-    strcat(src, "/");
-    strcat(src, cfg_content->d_name);
-    src[src_len + 1 + direlem_len] = '\0';
-
-    char dest[dest_len + 2 + direlem_len + 1];
-    if (hide) {
-      /* Define dest hidden file path */
-      strcpy(dest, dest_dir);
-      strcat(dest, "/.");
-      strcat(dest, cfg_content->d_name);
-      printf("linking %s to %s\n", src, dest);
-    } else {
-      /* Define dest file path */
-      strcpy(dest, dest_dir);
-      strcat(dest, "/");
-      strcat(dest, cfg_content->d_name);
-      printf("linking %s to %s\n", src, dest);
-    }
-
-    /* Get Stat for dest file */
-    struct stat dest_stat;
-    lstat(dest, &dest_stat);
-
-    /* Check if destination file exists */
-    if (file_exists(dest)) {
-      printf("%s exists already\n", dest);
-      printf("going to remove %s \n", dest);
-      if (S_ISLNK(dest_stat.st_mode) || S_ISREG(dest_stat.st_mode)) {
-        unlink(dest);
-      } else if (S_ISDIR(dest_stat.st_mode)) {
-        rm_dir(dest);
-      } else {
-        printf("File type unexpected. Not doing anything\n");
-        continue;
-      }
-    }
-    symlink(src, dest);
-  }
-  closedir(directory);
-  return 0;
-}
 
 int rmfile(const char *fpath, const struct stat *s, int typeflag,
            struct FTW *ftwbuf) {
@@ -310,8 +188,9 @@ int copy_dir_r(char *src_dir, char const *dest_dir) {
     /* Check if dest_dir is a parent */
     if (dest_dir[strlen(dest_dir) - 1] == '/') {
         /* Get dir name */
-        char src[strlen(clean_src)]; /* Otherwise strtok_r will SEGV */
-        strcpy(src, clean_src);
+        size_t srclen = strlen(clean_src);
+        char src[srclen + 1]; /* Otherwise strtok_r will SEGV */
+        snprintf(src, srclen, "%s", clean_src);
         char *rest, *token, *pretok;
         rest = src;
         while((token = strtok_r(rest, "/", &rest)))

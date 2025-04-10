@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -28,10 +29,11 @@ void customized(char *relpath, char *contents, mode_t mode, bool customperm) {
         mkdir_r(filepath, 0755);
     } else {
         /* Get last component */
+        size_t fullpathlen = strlen(filepath);
         char fullpath[strlen(filepath) + 1];
-        strcpy(fullpath, filepath);
+        snprintf(fullpath, fullpathlen, "%s", filepath);
 
-        char *pretok, *token, *rest, *svptr;
+        char *pretok, *token, *rest;
         rest = fullpath;
         while((token = strtok_r(rest, "/", &rest)))
             pretok = token;

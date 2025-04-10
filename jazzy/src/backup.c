@@ -55,25 +55,3 @@ int backup_cfgs(char *backup_name) {
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-int restore_cfgs(char *backup_name) {
-}
-
-
-
-
-
-
-
-
-
-
-

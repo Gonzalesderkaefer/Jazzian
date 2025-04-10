@@ -38,7 +38,6 @@ int main() {
     backup_cfgs("myBackup");
     break;
   case 'r':
-    restore_cfgs("myBackup");
     break;
   case 's':
     init_system();

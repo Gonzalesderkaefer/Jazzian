@@ -1,6 +1,7 @@
 #include "include/custom.h"
 #include "include/customized.h"
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h> 
 
@@ -104,10 +105,9 @@ void create_customized(config *system) {
 
 void devicespecific_cfg(config *system) {
     /* Define config dest directory */
-    int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config") + 1;
-    char cfg_dest[cfg_dest_len];
-    strcpy(cfg_dest, getenv("HOME"));
-    strcat(cfg_dest, "/.config");
+    int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config");
+    char cfg_dest[cfg_dest_len + 1];
+    snprintf(cfg_dest,cfg_dest_len,"%s/.config", getenv("HOME"));
 
     char *wm[] = {"i3", "bspwm", "awesome", "hypr", "sway", "river", "vim", NULL};
 

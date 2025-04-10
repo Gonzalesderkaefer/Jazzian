@@ -1,6 +1,8 @@
 /* Other files */
 #include "include/pacinst.h"
 #include "include/def.h"
+#include "include/utils/pkgutils.h"
+#include "include/packages.h"
 #include <stdio.h>
 
 static int install_packages(const char **base, const char **dsp,
