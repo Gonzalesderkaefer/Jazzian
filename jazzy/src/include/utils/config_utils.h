@@ -1,3 +1,5 @@
+#ifndef J_CONFIG_UTILS_H
+#define J_CONFIG_UTILS_H
 #include "../def.h"
 
 
@@ -8,5 +10,5 @@ char *distro_tostr(DISTRO distro);
 
 
 
-[[nodiscard("Heap allocated return value must be free'd")]]
 char *config_tostr(config *system);
+#endif /* J_CONFIG_UTILS_H */

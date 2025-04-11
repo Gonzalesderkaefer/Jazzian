@@ -1,3 +1,5 @@
+#ifndef J_PACKAGES_H
+#define J_PACKAGES_H
 /* Other files */
 #include <stdio.h>
 
@@ -406,3 +408,4 @@ static const char *arch_suffix[] = {
   "--needed",
   NULL
 };
+#endif /* J_PACKAGES_H */

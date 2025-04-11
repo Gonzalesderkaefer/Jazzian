@@ -1,3 +1,5 @@
+#ifndef J_DICT_H
+#define J_DICT_H
 /* Other headers */
 #include <stddef.h>
 #include <stdbool.h>
@@ -54,3 +56,4 @@ void dict_free(Dict *dictionary);
  */
 void dict_action(Dict *dictionary, void (*action) (void *));
 
+#endif /* J_DICT_H */

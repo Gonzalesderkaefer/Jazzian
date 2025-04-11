@@ -12,4 +12,4 @@ char *rep_interval(char *freeable, int start, int end, char *insertion);
 char *search_replace(char *freeable, char *regexp, char *substitute);
 
 
-#endif
+#endif /* SEAREP_C */
