@@ -103,18 +103,19 @@ Ignored *ignored_init(const char *name, const char *src, const char *dest) {
 
 
 void ignored_apply(Ignored *to_apply, TRANSFER method) {
-    switch(method) {
-        case NOTHING:
-            return;
-        case COPY:
-            if (file_exists(to_apply->src) && !file_exists(to_apply->dest))
-                copy_dir_r(to_apply->src, to_apply->dest);
-            break;
-        case LINK:
-            if (file_exists(to_apply->src) && !file_exists(to_apply->dest))
-                symlink(to_apply->src, to_apply->dest);
-            break;
-    }
+    if (to_apply && to_apply->src && to_apply->dest)
+        switch(method) {
+            case NOTHING:
+                return;
+            case COPY:
+                if (file_exists(to_apply->src) && !file_exists(to_apply->dest))
+                    copy_dir_r(to_apply->src, to_apply->dest);
+                break;
+            case LINK:
+                if (file_exists(to_apply->src) && !file_exists(to_apply->dest))
+                    symlink(to_apply->src, to_apply->dest);
+                break;
+        }
 }
 
 
