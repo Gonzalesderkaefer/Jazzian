@@ -2,7 +2,7 @@
 
 # Compiler stuff
 CC=gcc
-CFLAGS= -Wall  -Werror
+CFLAGS= -Wall  -Werror -std=c99 -D_XOPEN_SOURCE=500 -D_DEFAULT_SOURCE
 # -Wno-unused-variable -Wno-unused-function
 
 
@@ -57,7 +57,7 @@ build/custom.o : src/custom.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
 build/move.o : src/move.c
-	${CC} ${CFLAGS} -c $^ -o $@
+	${CC} ${CFLAGS}  -c $^ -o $@
 
 build/pkgutils.o : src/pkgutils.c
 	${CC} ${CFLAGS} -c $^ -o $@
@@ -66,5 +66,9 @@ build/menu.o : src/menu.c
 	${CC} ${CFLAGS} -c $^ -o $@
 
 build/customized.o : src/customized.c
-	${CC} ${CFLAGS} -c $^ -o $@
+	${CC} ${CFLAGS}  -c $^ -o $@
+
+
+
+
 

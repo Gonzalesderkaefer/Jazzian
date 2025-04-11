@@ -43,4 +43,5 @@ int main() {
     init_system();
     break;
   }
+  return 0;
 }
