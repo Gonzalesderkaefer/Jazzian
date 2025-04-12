@@ -13,22 +13,25 @@ end="\033[0m";
 if [[ "$1" == "" ]] || [[ "$2" == "" ]]; then
     echo "${red}This script requires 2 arguments${end}";
 fi
-
-
-
-
-
-
 # setting the time and timezone
-# TODO: check if Input is valid
-echo -ne "${green}Please enter the region:${end} ";
-read region;
+region="NULL"
+city="NULL"
+until [[ -e "/usr/share/zoneinfo/${region}/${city}" ]]; do
 
-echo -ne "${green}Please enter the city:${end} ";
-read city;
 
-ln -sf /usr/share/zoneinfo/$region/$city /etc/localtime;
-hwclock --systohc;
+    echo -ne "${green}Please enter the region:${end} ";
+    read region;
+
+    echo -ne "${green}Please enter the city:${end} ";
+    read city;
+
+    if ! [[ -e "/usr/share/zoneinfo/${region}/${city}" ]]; then
+        echo "${red}Invalid region or city use '_' instead of spaces${end}"
+    fi
+
+    ln -sf /usr/share/zoneinfo/${region}/${city} /etc/localtime;
+    hwclock --systohc;
+done
 
 # 'uncomment' en_US.UTF-8 UTF-8 from /etc/locale.gen
 echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen;
