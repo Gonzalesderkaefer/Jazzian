@@ -35,9 +35,10 @@ int main() {
   flush_stdin();
   switch (choice) {
   case 'b':
-    backup_cfgs("myBackup");
+    backup_cfgs();
     break;
   case 'r':
+    restore_cfgs();
     break;
   case 's':
     init_system();

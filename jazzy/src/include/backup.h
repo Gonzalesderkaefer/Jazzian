@@ -2,7 +2,7 @@
 #define J_BACKUP_H
 #include "def.h"
 
-int backup_cfgs(char *backup_name);
+void backup_cfgs();
 
-int restore_cfgs(char *backup_name);
+void restore_cfgs();
 #endif /* J_BACKUP_H */
