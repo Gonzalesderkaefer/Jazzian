@@ -8,6 +8,8 @@
 
 /* Other files */
 #include "include/move.h"
+#include "include/custom.h"
+#include "include/customized.h"
 #include "include/def.h"
 #include "include/utils/dict.h"
 #include "include/ignored.h"
@@ -100,6 +102,8 @@ int move_cfg(TRANSFER mode_of_transfer) {
   int cfg_dest_len = strlen(getenv("HOME")) + strlen("/.config");
   char cfg_dest[cfg_dest_len + 1];
   snprintf(cfg_dest, cfg_src_len + 1, "%s/.config", getenv("HOME"));
+  if(!file_exists(cfg_dest))
+      mkdir(cfg_dest, 0755);
 
 
   /* Define local dest directory */
@@ -112,6 +116,8 @@ int move_cfg(TRANSFER mode_of_transfer) {
   int localbin_len = strlen(getenv("HOME")) + strlen("/.local/bin");
   char localbin[localbin_len + 1];
   snprintf(localbin, localbin_len + 1, "%s/.local/bin", getenv("HOME"));
+  if(!file_exists(localbin))
+      mkdir_r(localbin, 0755);
 
 
   /* Define ignored files */
