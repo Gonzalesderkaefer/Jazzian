@@ -220,6 +220,13 @@ local memory_module = wibox.widget({
     widget = wibox.container.background
 })
 
+-- Battery percentage module (see: https://awesomewm.org/doc/api/classes/awful.widget.watch.html)
+local battery_module = wibox.widget({
+    awful.widget.watch(gears.filesystem.get_xdg_config_home().. "awesome/modules/battery.sh 1",10),
+    fg     = '#fc6885',
+    widget = wibox.container.background
+})
+
 
 
 -- Audio module 
@@ -442,6 +449,8 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             seperator,
             audio_widget,
+            seperator,
+            battery_module,
             seperator,
             memory_module,
             seperator,
