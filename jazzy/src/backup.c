@@ -1,5 +1,6 @@
 #include "include/backup.h"
 #include "include/utils/file_utils.h"
+#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 
@@ -16,24 +17,6 @@ static void _move_backup(const char *srcfile, const char *destfile) {
     size_t destlen = strlen(destfile) + strlen(HOME);
     char dest[destlen + 1];
     snprintf(dest, destlen + 1, "%s%s", HOME, destfile);
-
-    /* Copy destfile to buffer */
-    size_t pathlen = strlen(destfile);
-    char path[pathlen + 1];
-    snprintf(path, pathlen + 1, "%s", destfile); 
-
-    /* Remove basename */
-    char dir[pathlen + 1];
-    memset(dir, '\0', pathlen + 1);
-
-    char *token, *pretoken, *rest;
-    rest = path;
-    pretoken = "";
-    while ((token = strtok_r(rest, "/", &rest))) {
-        strncat(dir, pretoken, pathlen - strlen(dir) - 1);
-        strncat(dir, "/", pathlen - strlen(dir) - 1);
-        pretoken = token;
-    }
 
 
     /* Determine filetype */
