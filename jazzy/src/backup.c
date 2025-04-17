@@ -73,6 +73,13 @@ void backup_cfgs() {
 }
 
 void restore_cfgs() {
+    /* Backup dir */
+    size_t backuplen = strlen(HOME) + strlen("/myBackup");
+    char backupdir[backuplen];
+    snprintf(backupdir, backuplen + 1, "%s/myBackup", HOME);
+    if (!file_exists(backupdir)) return;
+
+
     /* Customized files for window managers/compositors */
     _move_backup("/myBackup/sway", "/.config/sway/devicespecific");
     _move_backup("/myBackup/hypr", "/.config/hypr/devicespecific");
