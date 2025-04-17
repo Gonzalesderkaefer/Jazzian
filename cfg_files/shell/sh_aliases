@@ -54,6 +54,7 @@ alias "s"="sudo"
 alias ":wq"="exit"
 alias ":q"="exit"
 alias "clr"="clear"
+alias "su"="su -c cd"
 
 
 ## Navigation
