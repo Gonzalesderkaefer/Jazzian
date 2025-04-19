@@ -222,7 +222,7 @@ int set_theme() {
         "\'Jetbrains Mono\'",
         NULL
     };
-    
+
     char *iconcmd[] = { 
         "gsettings",
         "set",
@@ -230,6 +230,14 @@ int set_theme() {
         "icon-theme",
         "\'Papirus-Dark\'",
         NULL
+    };
+
+    char *colorcmd[] = {
+    "gsettings", 
+    "set org.gnome.desktop.interface",
+    "color-scheme",
+    "\'prefer-dark\'",
+    NULL
     };
 
 
@@ -268,6 +276,22 @@ int set_theme() {
     switch (pidfont) {
     case 0:
         execvp("gsettings", (char **)fontcmd);
+        break;
+    case -1:
+        fprintf(stderr, "fork failed\n");
+        return -1;
+        break;
+    default:
+        wait(NULL);
+        break;
+    }
+
+
+    pid_t pidcolor = fork();
+
+    switch (pidcolor) {
+    case 0:
+        execvp("gsettings", (char **)colorcmd);
         break;
     case -1:
         fprintf(stderr, "fork failed\n");
