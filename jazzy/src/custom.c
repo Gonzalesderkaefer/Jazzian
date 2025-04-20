@@ -233,8 +233,9 @@ int set_theme() {
     };
 
     char *colorcmd[] = {
-    "gsettings", 
-    "set org.gnome.desktop.interface",
+    "gsettings",
+    "set",
+    "org.gnome.desktop.interface",
     "color-scheme",
     "\'prefer-dark\'",
     NULL

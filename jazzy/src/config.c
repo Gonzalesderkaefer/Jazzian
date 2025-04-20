@@ -161,11 +161,11 @@ config *get_config() {
   /* Config struct */
   static config this_config;
   /* get display manager from user */
-  this_config.display_manager = get_display_server();
+  this_config.display_server = get_display_server();
   /* getchar won't work otherwise */
   flush_stdin();
   /* get window manager */
-  this_config.window_manager = get_window_manager(this_config.display_manager);
+  this_config.window_manager = get_window_manager(this_config.display_server);
   /* getchar won't work otherwise */
   flush_stdin();
   /* Get Distro */

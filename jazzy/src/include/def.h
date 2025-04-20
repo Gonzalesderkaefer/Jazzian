@@ -51,7 +51,7 @@ typedef enum TRANSFER { NOTHING = 0, LINK, COPY } TRANSFER;
 
 /* Config */
 typedef struct setup_config {
-  DISPLAYSERVER display_manager;
+  DISPLAYSERVER display_server;
   WINDOWMANAGER window_manager;
   DISTRO distro;
   TRANSFER file_transfer;

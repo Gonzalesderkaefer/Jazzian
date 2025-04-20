@@ -75,7 +75,7 @@ char *config_tostr(config *system) {
   char *distro = distro_tostr(system->distro);
   char *wm = wm_tostr(system->window_manager);
   char *transfer = transfer_tostr(system->file_transfer);
-  char *dsp = dsp_tostr(system->display_manager);
+  char *dsp = dsp_tostr(system->display_server);
 
   const char *format =
     "{\n"

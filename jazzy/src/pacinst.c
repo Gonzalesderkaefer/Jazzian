@@ -79,7 +79,7 @@ int inst_pac(config *system) {
   case DEBIAN:
     base = debian_base;
     /* Display server */
-    switch (system->display_manager) {
+    switch (system->display_server) {
     case WAYLAND:
       dsp_server = debian_wayland;
       /* Window manager */
@@ -115,7 +115,7 @@ int inst_pac(config *system) {
   case FEDORA:
     base = fedora_base;
     /* Display server */
-    switch (system->display_manager) {
+    switch (system->display_server) {
     case WAYLAND:
       dsp_server = fedora_wayland;
       /* Window manager */
@@ -151,7 +151,7 @@ int inst_pac(config *system) {
   case ARCH:
     base = arch_base;
     /* Display server */
-    switch (system->display_manager) {
+    switch (system->display_server) {
     case WAYLAND:
       dsp_server = arch_wayland;
       /* Window manager */
