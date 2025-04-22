@@ -32,6 +32,7 @@ case $BLOCK_BUTTON in
                 echo "$BAT_PERCENTAGE  "
                 ;;
             *)
+                echo "No Batt"
         esac
         ;;
 
