@@ -21,8 +21,8 @@ selection() {
         # Files that are displayed
         current_files=$()
         current_files+=$(echo "..")
-        current_files+=$(find ${selection} -maxdepth 1 -mindepth 1 \! -type d -printf "\n%f")
-        current_files+=$(find ${selection} -maxdepth 1 -mindepth 1 -type d -printf "\n%f/")
+        current_files+=$(find ${selection} -not -path '*/.*' -maxdepth 1 -mindepth 1 \! -type d -printf "\n%f")
+        current_files+=$(find ${selection} -not -path '*/.*' -maxdepth 1 -mindepth 1 -type d -printf "\n%f/")
 
         # Set selection to one of its 'sub-files'
         selection="${selection}/$(printf "%s\n" ${current_files[*]} | mdmenu)"
