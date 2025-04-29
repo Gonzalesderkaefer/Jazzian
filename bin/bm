@@ -3,6 +3,9 @@
 # Set bookmarks directory
 selection="${HOME}/Documents/bookmarks"
 
+# save cwd
+cur_directory=$(pwd)
+
 
 selection() {
     # Sanity check
@@ -47,6 +50,8 @@ insert() {
     # sanity check
     if [[ -z ${2} ]] || [[ -z ${3} ]]; then
         echo "[insert] :: not enough args"
+        echo "Usage: bm insert [NAME] [URI]"
+        exit 1;
     fi
 
 
