@@ -32,4 +32,4 @@ vim.keymap.set("n", "dm", vim.diagnostic.open_float, { desc = "LSP: [D]iagnostic
 
 
 -- Command key
-vim.keymap.set("n", "<leader>x", ":!", { desc = "Enter command" })
+vim.keymap.set("n", "<leader>x", ":term ", { desc = "Enter command" })
