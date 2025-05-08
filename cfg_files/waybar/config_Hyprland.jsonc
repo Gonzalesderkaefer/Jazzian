@@ -22,12 +22,12 @@
         "spacing": 10
     },
     "hyprland/window": {
-	"max-length": 100,
-	"icon": true
+        "max-length": 100,
+        "icon": true
     },
 
     "clock": {
-    	"format": "{:%d.%m   | %R  }",
+        "format": "{:%d.%m   | %R  }",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
@@ -41,7 +41,7 @@
     "custom/home": {
         "interval": 3600,
         "exec": "$HOME/.config/waybar/modules/waybardr.sh home",
-	"format":"{}"
+        "format":"{}"
     },
 
     "cpu": {
