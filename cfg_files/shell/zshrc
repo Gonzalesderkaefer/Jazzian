@@ -116,8 +116,7 @@ bindkey -M menuselect 'l' vi-forward-char
 
 
 ## Extract files
-extract()
-{
+extract() {
     case $1 in
         *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $1;;
         *.tar.gz|*.tgz) tar xzvf $1;;
@@ -129,16 +128,14 @@ extract()
 }
 
 ## Open files in a GUI program
-open()
-{
+open() {
     printf "Program (GUI): ";
     read prog;
     nohup $prog $1 >/dev/null 2>&1 &
 }
 
 ## nf with cd 
-nfcd ()
-{
+nfcd () {
     nnn -d;
     #newcd=$(cat $NNN_TMPFILE | sed -E "s/'|\"//g");
     newcd=$(cat $NNN_TMPFILE);
@@ -146,8 +143,7 @@ nfcd ()
     rm $NNN_TMPFILE
 }
 
-vicd()
-{
+vicd() {
     local dst="$(command vifm --choose-dir - "$@")"
     if [ -z "$dst" ]; then
         echo 'Directory picking cancelled/failed'
@@ -157,11 +153,37 @@ vicd()
 }
 
 
-revert ()
-{
+revert() {
     commit=$(git log --oneline | fzf | awk '{print $1}');
     echo $commit;
     git revert $commit
+}
+
+
+trash_move() { # $1: wholepath, $2: basename
+    if ! [ -e "${HOME}/.trash/${2}" ]; then
+        mv "${1}" "${HOME}/.trash/${2}";
+        return 0;
+    fi
+    newfilename="${2}.bac";
+    trash_move ${1} ${newfilename};
+}
+
+trashrm() {
+    if [[ -z ${1} ]]; then
+        echo "${red}No args supplied${end}";
+        return;
+    fi
+    echo "${blue}Not actually deleting${end}";
+    wholepath="${1}";
+    # get base name
+    filename="$(echo ${wholepath} | grep -E -oi "[^\/]*$")";
+
+
+    # Create trash directory if it does not exist
+    ! [ -d $HOME/.trash ] && mkdir $HOME/.trash;
+
+    trash_move() ${wholepath} ${filename};
 }
 
 
