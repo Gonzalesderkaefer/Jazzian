@@ -1,6 +1,8 @@
 #!/usr/bin/sh
 
-selection="$HOME/.password-store";
+
+
+selection="$HOME/.password-store/${1}";
 
 while [ -d $selection ]; do
     selection="$selection/$(ls $selection | mdmenu)";
