@@ -36,10 +36,10 @@ char *mdrun_content = "#!/usr/bin/sh\n"
 char *myterm_content = "#!/bin/sh\n"
                        "case $XDG_SESSION_TYPE in\n"
                        "    \"wayland\")\n"
-                       "        exec alacritty -o font.size=12\n"
+                       "        exec alacritty -o font.size=12 $@\n"
                        "        ;;\n"
                        "    *)\n"
-                       "        exec alacritty -o font.size=12\n"
+                       "        exec alacritty -o font.size=12 $@\n"
                        "        ;;\n"
                        "esac\n";
 
