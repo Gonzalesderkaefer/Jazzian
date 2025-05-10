@@ -162,6 +162,7 @@ revert() {
 
 trash_move() { # $1: wholepath, $2: basename
     if ! [ -e "${HOME}/.trash/${2}" ]; then
+        echo "moving ${1}" to "${HOME}/.trash/${2}";
         mv "${1}" "${HOME}/.trash/${2}";
         return 0;
     fi
@@ -172,7 +173,6 @@ trash_move() { # $1: wholepath, $2: basename
 trashrm() {
     if [[ -z ${1} ]]; then
         echo "${red}No args supplied${end}";
-        return;
     fi
     echo "${blue}Not actually deleting${end}";
     wholepath="${1}";
@@ -183,7 +183,7 @@ trashrm() {
     # Create trash directory if it does not exist
     ! [ -d $HOME/.trash ] && mkdir $HOME/.trash;
 
-    trash_move() ${wholepath} ${filename};
+    trash_move ${wholepath} ${filename};
 }
 
 
