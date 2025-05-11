@@ -140,7 +140,7 @@ nfcd () {
     #newcd=$(cat $NNN_TMPFILE | sed -E "s/'|\"//g");
     newcd=$(cat $NNN_TMPFILE);
     eval $newcd
-    rm $NNN_TMPFILE
+    /usr/bin/rm $NNN_TMPFILE
 }
 
 vicd() {
