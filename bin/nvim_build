@@ -1,12 +1,13 @@
 #!/bin/bash
 
 ## If Apps dir does not exist, create it
-if ! [ -d $HOME/Applications ]; then
-    mkdir  $HOME/Applications;
+if ! [ -d $HOME/Apps ]; then
+    mkdir  $HOME/Apps;
 fi
 
-if [ -d $HOME/Applications/neovim ]; then
-    rm -r $HOME/Applications/neovim
+if [ -d $HOME/Apps/neovim ]; then
+    rm -r $HOME/Apps/neovim
+    rm $HOME/.local/bin/nvim
 fi
 
 ## Install build prerequisites 
@@ -22,13 +23,13 @@ git checkout stable;
 ## Build
 make CMAKE_BUILD_TYPE=Release;
 rm -r build/;
-make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/Applications/neovim";
+make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/Apps/neovim";
 make install;
 
 
 ## Link binary
-ln -sf $HOME/Applications/neovim/bin/nvim $HOME/.local/bin/nvim;
+ln -sf $HOME/Apps/neovim/bin/nvim $HOME/.local/bin/nvim;
 
 ## Cleanup
 cd $HOME
-rm -r $HOME/neovim;
+rm -rf $HOME/neovim;
