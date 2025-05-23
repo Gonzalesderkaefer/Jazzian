@@ -5,6 +5,7 @@ return {
         config = function()
             -- This is mostly the default config for clangd
             require("lspconfig").clangd.setup {}
+            require("lspconfig").rust_analyzer.setup {}
         end,
     },
 
