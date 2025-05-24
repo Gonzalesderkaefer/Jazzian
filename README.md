@@ -2,6 +2,8 @@
 
 ## Instructions
 
+[see](##Suported-Distros)
+
 ```
 git clone https://github.com/Gonzalesderkaefer/Jazzian
 cd Jazzian
