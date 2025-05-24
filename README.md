@@ -2,7 +2,7 @@
 
 ## Instructions
 
-[see](##Suported-Distros)
+[see](#Suported_Distros)
 
 ```
 git clone https://github.com/Gonzalesderkaefer/Jazzian
