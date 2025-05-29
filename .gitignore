@@ -1,0 +1,33 @@
+# Devicespecific stuff
+*devicespecific*
+devicerc
+x11startup
+*myterm*
+*vifminfo.json*
+
+# Anything in qutebrowser except config
+/cfg_files/qutebrowser/*
+!/cfg_files/qutebrowser/config.py
+
+# I don't know what this is
+*__pycache__*
+
+# Anything in newsboat except config
+newsboat*
+*!newsboat/config
+
+# All hidden files except gitignore
+.*
+*!/.gitignore
+
+# Lazy nvim stuff
+*lazy-lock.json*
+
+# NNN-File manager files
+/cfg_files/nnn/*
+!/cfg_files/nnn/plugins
+
+# (Shared) Libraries
+*.so
+*.o
+/jazzy/build/jazzy
