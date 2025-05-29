@@ -1,0 +1,9 @@
+[submodule "submodules/installer"]
+	path = submodules/installer
+	url = https://github.com/Gonzalesderkaefer/installer
+[submodule "submodules/saferm"]
+	path = submodules/saferm
+	url = https://github.com/Gonzalesderkaefer/saferm
+[submodule "submodules/jazzy"]
+	path = submodules/jazzy
+	url = git@github.com:Gonzalesderkaefer/jazzy
