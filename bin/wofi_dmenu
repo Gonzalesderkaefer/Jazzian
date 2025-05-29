@@ -1,2 +1,0 @@
-#!/usr/bin/sh
-wofi --show dmenu -i -p ""

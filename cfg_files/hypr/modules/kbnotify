@@ -1,2 +1,0 @@
-#!/bin/sh
-notify-send -t 1000 "$(hyprctl -j devices | awk '/active_keymap/ {print $2 " " $3}' | sed -n 5p | tr -d '"(.,)')"

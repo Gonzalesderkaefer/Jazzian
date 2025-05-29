@@ -1,6 +1,0 @@
-#!/bin/sh
-
-search=$(wofi --dmenu);
-search_formated=$(echo $search | sed "s/\s/+/g");
-
-firefox "www.google.com/search?q=$search_formated"
