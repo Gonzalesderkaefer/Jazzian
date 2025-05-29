@@ -1,0 +1,35 @@
+#!/bin/bash
+
+## If Apps dir does not exist, create it
+if ! [ -d $HOME/Apps ]; then
+    mkdir  $HOME/Apps;
+fi
+
+if [ -d $HOME/Apps/neovim ]; then
+    rm -r $HOME/Apps/neovim
+    rm $HOME/.local/bin/nvim
+fi
+
+## Install build prerequisites 
+sudo apt-get install ninja-build gettext cmake unzip curl build-essential;
+
+## Clone git repo
+git clone https://github.com/neovim/neovim
+
+## Switch to stable branch
+cd neovim;
+git checkout stable;
+
+## Build
+make CMAKE_BUILD_TYPE=Release;
+rm -r build/;
+make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/Apps/neovim";
+make install;
+
+
+## Link binary
+ln -sf $HOME/Apps/neovim/bin/nvim $HOME/.local/bin/nvim;
+
+## Cleanup
+cd $HOME
+rm -rf $HOME/neovim;

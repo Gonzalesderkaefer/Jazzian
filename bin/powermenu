@@ -1,0 +1,18 @@
+#!/bin/sh
+
+menu="$(printf " Poweroff \n Reboot \n󰍃 Logout \n Suspend \n󰒲 Hibernate \n Lock" | mdmenu)"
+
+
+case $menu in
+    *Poweroff*) systemctl poweroff;;
+    *Reboot*) systemctl reboot;;
+    *Logout*) loginctl terminate-user $USER;;
+    *Suspend* ) lock & (sleep 1 && systemctl suspend);;
+    *Lock*) lock;;
+    *Hibernate* ) systemctl hibernate;;
+esac
+
+# MOPTIONS="$(echo $MENTRIES | awk '{print$2}' |tr '[:upper:]' '[:lower:]')"
+# echo $MOPTIONS
+# 
+# systemctl $MOPTIONS || ([ "$MOPTIONS" = "lock" ] && swaylock -f -c 000000)  || ([ "$MOPTIONS" = "logout" ] && hyprctl dispatch exit)

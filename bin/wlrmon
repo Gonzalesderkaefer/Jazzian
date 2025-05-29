@@ -1,0 +1,16 @@
+!#/bin/sh
+
+## Getting Ouptpus
+outputs="$(wlr-randr --json | grep name | awk '{print $2}' | tr -d '",')"
+
+output="$(echo $outputs | wofi --dmenu)"
+
+options="$(echo 'enable 
+disable' | wofi --dmenu)"
+
+case $options in
+    "disable")
+        wlr-randr --output $output --off;; 
+    "enable")
+        wlr-randr --output $output --on;;
+esac
