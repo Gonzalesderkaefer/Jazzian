@@ -15,8 +15,9 @@ git clone https://github.com/Gonzalesderkaefer/Jazzian
 
 
 ## Run the installer
-To run the installer
+CD into the Repo
 ```
+cd Jazzian
 ./installer
 ```
 
