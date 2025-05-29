@@ -1,0 +1,193 @@
+# Lines configured by zsh-newuser-install
+#
+
+# If not interactive don't do anything
+[[ "$-" != *i* ]] && return
+
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+bindkey -v
+export KEYTIMEOUT=1
+
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '~/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+
+# Define colors 
+red="\033[0;31m"
+green="\033[0;32m"
+blue="\033[0;34m"
+reset="\033[0m"
+
+# Bold and normal
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+
+# Get Current git branch
+function git_branch() {
+    branch=$(git branch --show-current 2> /dev/null);
+
+    if [[ $branch == "" ]]; then
+        :
+    else
+        echo "($branch) ";
+    fi
+}
+
+precmd(){
+    PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
+}
+
+
+
+# Prompt
+setopt prompt_subst
+newline=$'\n'
+workingdir=$'\W';
+# PROMPT="[%F{green}% %B%n%b%f@%F{red}%m%f]:$(git_branch)> "
+PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
+
+
+# Source aliases
+if [ -f ~/.sh_aliases ]; then
+    source ~/.sh_aliases
+fi
+
+# CTRL-R to resource ~/.zshrc
+bindkey -s "^R" 'source ~/.zshrc^M';
+
+# CTRL-T to start tmux
+bindkey -s "^T" 'tmux^M';
+
+zle-keymap-select()
+{
+    if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]] ; then
+        echo -ne '\e[1 q'
+    # PROMPT="   [%F{blue}%~%f] > "
+        PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}%F{blue}[N]%f%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
+    zle reset-prompt
+    elif [[ ${KEYMAP} == main ]] ||
+         [[ ${KEYMAP} == viins ]] ||
+         [[ ${KEYMAP} = '' ]] ||
+         [[ $1 = 'beam' ]]; then
+        echo -ne '\e[1 q'
+    # PROMPT="%F{green}[I]%f[%F{blue}%~%f] > "
+        PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
+    zle reset-prompt
+    fi
+}
+
+zle-line-init()
+{
+    echo -ne '\e[1 q'
+    # PROMPT="%F{green}[I]%f[%F{blue}%~%f] > "
+    zle reset-prompt
+    PS1='[%F{green}% $USER%f@%F{red}% $HOST%f] %B%F{cyan}$(git_branch)%f%b${newline}%F{green}[I]%f[%F{yellow}$(dirs)%f]%F{blue} > %f'
+}
+
+zle -N zle-keymap-select
+zle -N zle-line-init
+
+
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
+
+
+# Highlight selection
+zstyle ':completion:*' menu select
+zmodload -i zsh/complist
+
+# Use vim keys in tab complete menu
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+
+
+
+
+## Extract files
+extract() {
+    case $1 in
+        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $1;;
+        *.tar.gz|*.tgz) tar xzvf $1;;
+        *.tar.xz|*.txz) tar xJvf $1;;
+        *.zip) unzip $1;;
+        *.rar) unrar x $1;;
+        *.7z) 7z x $1;;
+    esac
+}
+
+## Open files in a GUI program
+open() {
+    printf "Program (GUI): ";
+    read prog;
+    nohup $prog $@ >/dev/null 2>&1 &
+}
+
+## nf with cd 
+nfcd () {
+    nnn -d;
+    #newcd=$(cat $NNN_TMPFILE | sed -E "s/'|\"//g");
+    newcd=$(cat $NNN_TMPFILE);
+    eval $newcd
+    /usr/bin/rm $NNN_TMPFILE
+}
+
+vicd() {
+    local dst="$(command vifm --choose-dir - "$@")"
+    if [ -z "$dst" ]; then
+        echo 'Directory picking cancelled/failed'
+        return 1
+    fi
+    cd "$dst"
+}
+
+
+revert() {
+    commit=$(git log --oneline | fzf | awk '{print $1}');
+    echo $commit;
+    git revert $commit
+}
+
+
+trash_move() { # $1: wholepath, $2: basename
+    if ! [ -e "${HOME}/.trash/${2}" ]; then
+        echo "moving ${1}" to "${HOME}/.trash/${2}";
+        mv "${1}" "${HOME}/.trash/${2}";
+        return 0;
+    fi
+    newfilename="${2}.bac";
+    trash_move ${1} ${newfilename};
+}
+
+trashrm() {
+    if [[ -z ${1} ]]; then
+        echo "${red}No args supplied${end}";
+    fi
+    echo "${blue}Not actually deleting${end}";
+    wholepath="${1}";
+    # get base name
+    filename="$(echo ${wholepath} | grep -E -oi "[^\/]*$")";
+
+
+    # Create trash directory if it does not exist
+    ! [ -d $HOME/.trash ] && mkdir $HOME/.trash;
+
+    trash_move ${wholepath} ${filename};
+}
+
+
+## devicerc
+if [ -f $HOME/.devicerc ]; then
+    source $HOME/.devicerc
+fi

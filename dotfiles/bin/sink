@@ -1,0 +1,25 @@
+#!/bin/bash
+
+sinks=$(wpctl status | grep -n -m 1 "├─ Sinks:" | tr -d ":, ├─[A-Za-z]");
+sinks=$((sinks + 1));
+sources=$(wpctl status | grep -n -m 1 "├─ Sources:" | tr -d ":, ├─[A-Za-z]");
+
+
+(wpctl status | tr -d "├,─,│") > /tmp/wpstattemp.tmp
+
+tempfile="/tmp/wpstattemp.tmp"
+sinkfile="/tmp/sinkfile.tmp"
+
+
+while [ $sinks -lt $sources ]; do
+    line=$(sed -n "$sinks p" $tempfile)
+    echo "$line" >> $sinkfile;
+    sinks=$(($sinks + 1));
+done
+default_sink="$(sed -E "s/^\s*\*\s*|^\s*//g" $sinkfile | mdmenu)";
+
+default_sink_id=$(echo "$default_sink" | awk '{print $1}');
+wpctl set-default $default_sink_id;
+
+rm $tempfile;
+rm $sinkfile;

@@ -1,0 +1,83 @@
+#!/usr/bin/bash
+
+# Set bookmarks directory
+selection="${HOME}/Documents/bookmarks"
+
+# save cwd
+cur_directory=$(pwd)
+
+
+selection() {
+    # Sanity check
+    if ! [[ -d ${selection} ]]; then
+        echo "${selection} does not yet exist please create it" | mdmenu
+        exit 1
+    fi
+
+    if [[ -z ${BROWSER_PREFIX} ]]; then
+        echo "\${BROWSER_PREFIX} is not set please set it to a prefix that can be used to open sites" | mdmenu
+        exit 1
+    fi
+
+    # Let user select bookmark
+    while [[ -d ${selection} ]]; do
+        # Files that are displayed
+        current_files=$()
+        current_files+=$(echo "..")
+        current_files+=$(find ${selection} -not -path '*/.*' -maxdepth 1 -mindepth 1 \! -type d -printf "\n%f")
+        current_files+=$(find ${selection} -not -path '*/.*' -maxdepth 1 -mindepth 1 -type d -printf "\n%f/")
+
+        # Set selection to one of its 'sub-files'
+        selection="${selection}/$(printf "%s\n" ${current_files[*]} | mdmenu)"
+
+        # If user pressed ESC then exit
+        exit=${?}
+        if [[ ${exit} == 1 ]]; then
+            exit 1
+        fi
+    done
+
+
+    #Save site
+    site=$(head -n1 ${selection})
+
+    #Open site
+    exec ${BROWSER_PREFIX} ${site}
+}
+
+
+insert() {
+    # sanity check
+    if [[ -z ${2} ]] || [[ -z ${3} ]]; then
+        echo "[insert] :: not enough args"
+        echo "Usage: bm insert [NAME] [URI]"
+        exit 1;
+    fi
+
+
+    # compose full path
+    if [[ ${2:0:1} != "/" ]]; then
+        full_path=${selection}/${2}
+    else
+        full_path=${selection}${2}
+    fi
+
+    # remove basename
+    base_dir=$(echo ${full_path} | sed -E "s/\/[^\/]*$|\/[^\/]*\/$//g")
+    mkdir -p ${base_dir}
+
+    echo ${3} > ${full_path}
+}
+
+
+
+
+
+case ${1} in
+    "insert")
+        insert $@
+        ;;
+    *)
+        selection
+        ;;
+esac

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+wholepath="${1}";
+filename="$(echo ${wholepath} | grep -E -oi "[^\/]*$")";
+
+
+# Create trash directory if it does not exist
+! [ -d $HOME/.trash ] && mkdir $HOME/.trash;
+
+
+
+
+# $1 wholepath
+# $2 filename
+move()
+{
+    if ! [ -e "$HOME/.trash/${2}" ]; then
+        mv "${1}" "$HOME/.trash/${2}";
+        return 0;
+    fi
+    newfilename="${2}.bac";
+    move "${1}" "${newfilename}";
+}
+
+
+move "${wholepath}" "${filename}";

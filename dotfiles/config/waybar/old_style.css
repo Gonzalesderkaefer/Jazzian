@@ -1,0 +1,214 @@
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: JetbrainsMono Nerd Font;
+    font-size: 13px;
+    font-weight: Bold;
+}
+
+
+window#waybar {
+    background-color:#24273a;
+    color: #C5C8C6;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+button {
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each button name */
+    border: none;
+    border-radius: 0;
+    color: #ffffff;
+}
+
+/* Workspaces for sway and hyprland */
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    color: #ffffff;
+}
+
+#workspaces button:hover {
+    box-shadow: inherit;
+    text-shadow: inherit;
+}
+
+#workspaces button.active {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid #4287f5;
+}
+
+#workspaces button.focused {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid #4287f5;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+
+/* tags for river */
+#tags button {
+    padding: 0 5px;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    color: #ffffff;
+}
+
+#tags button:hover {
+    box-shadow: inherit;
+    text-shadow: inherit;
+}
+
+#tags button.active {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid #4287f5;
+}
+
+#tags button.focused {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid #4287f5;
+}
+
+#tags button.urgent {
+    background-color: #eb4d4b;
+}
+
+
+#custom-drivespace,
+#clock,
+#battery,
+#cpu,
+#memory,
+#temperature,
+#pulseaudio,
+#tray,
+#idle_inhibitor,
+
+
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left {
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right {
+}
+
+
+
+/* Space in HOME */
+#custom-home {
+    color: #cc5f7f;
+    border-bottom: 2px solid #cc5f7f;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+
+/* Root drive space */
+#custom-drivespace {
+    color: #fc9877;
+    border-bottom: 2px solid #fc9877;
+    padding-right: 7px;
+    padding-left: 10px;
+}
+
+/* Idle */
+#idle_inhibitor {
+    color: #ecc2fc;
+    border-bottom: 2px solid #ecc2fc;
+}
+
+#idle_inhibitor.activated {
+    color: #f56464;
+    border-bottom: 2px solid #f56464;
+
+}
+
+
+
+/* Audio widget */
+#pulseaudio {
+    color: #987ae6;
+    border-bottom: 2px solid #987ae6;
+    padding-right: 7px;
+}
+
+#pulseaudio.muted {
+    background-color: #90b1b1;
+    color: #2a5c45;
+    padding-right: 7px;
+}
+
+/* Battery widget */
+#battery.charging {
+    color: #eed49f;
+    border-bottom: 2px solid #eed49f;
+    padding-right: 15px;
+}
+
+#battery.plugged {
+    color: #fff;
+    border-bottom: 2px solid #fff;
+    padding-right: 10px;
+    padding-left: 7px;
+}
+
+#battery {
+    color: #fff;
+    border-bottom: 2px solid #fff;
+    padding-right: 15px;
+}
+
+/* CPU Usage */
+#cpu {
+    color: #2ecc71;
+    border-bottom: 2px solid #2ecc71;
+}
+
+/* Memory Usage */
+#memory {
+    color: #fc6885;
+    border-bottom: 2px solid #fc6885;
+}
+
+/* 'System' temperature */
+#temperature {
+    color: #9083fc;
+    border-bottom: 2px solid #9083fc;
+}
+
+#temperature.critical {
+    color: #000;
+    background-color: #fa7f7a;
+}
+
+
+/* Clock widget */
+#clock {
+    color: #f5d0ac;
+    border-bottom: 2px solid #f5d0ac;
+}
+
+
+/* Tray */
+#tray {
+    background-color: #24273a;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #000000;
+}

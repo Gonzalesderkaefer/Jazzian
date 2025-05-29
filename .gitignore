@@ -1,13 +1,14 @@
 # Devicespecific stuff
-*devicespecific*
-devicerc
+*customized*
+*customrc*
+*customenv*
 x11startup
 *myterm*
 *vifminfo.json*
 
 # Anything in qutebrowser except config
-/cfg_files/qutebrowser/*
-!/cfg_files/qutebrowser/config.py
+/dotfiles/config/qutebrowser/*
+!/dotfiles/config/qutebrowser/config.py
 
 # I don't know what this is
 *__pycache__*
@@ -24,10 +25,5 @@ newsboat*
 *lazy-lock.json*
 
 # NNN-File manager files
-/cfg_files/nnn/*
-!/cfg_files/nnn/plugins
-
-# (Shared) Libraries
-*.so
-*.o
-/jazzy/build/jazzy
+/dotfiles/config/nnn/*
+!/dotfiles/config/nnn/plugins
