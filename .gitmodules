@@ -6,4 +6,4 @@
 	url = https://github.com/Gonzalesderkaefer/saferm
 [submodule "submodules/jazzy"]
 	path = submodules/jazzy
-	url = https://github.com/Gonzalesderkaefer/Jazzian
+	url = https://github.com/Gonzalesderkaefer/jazzy
