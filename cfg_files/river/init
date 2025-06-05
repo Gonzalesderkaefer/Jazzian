@@ -47,13 +47,16 @@ riverctl map normal Super Q close
 riverctl map normal Super+Shift Q exit
 
 # Alt+Space to run w-rofi
-riverctl map normal Super D spawn 'mdrun'
+riverctl map normal Super P spawn 'mdrun'
 
 # Alt+F4 to run powermenu
 riverctl map normal Alt F4 spawn powermenu
 
 # Take screenshot with super + P
-riverctl map normal Super P spawn screenshot
+riverctl map normal Super S spawn screenshot
+
+# Take screenshot region with super + shift + P
+riverctl map normal Super+Shift S spawn 'screenshot select'
 
 # Super+J and Super+K to focus the next/previous view in the layout stack
 riverctl map normal Super L focus-view right

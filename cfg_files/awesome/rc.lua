@@ -627,15 +627,11 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    -- Prompt
-    -- awful.key({ "Mod1" },            "space",     function () awful.spawn("rofi -show drun") end,
-              -- {description = "Rofi in Drun mode", group = "launcher"}),
-
-    awful.key({ modkey },            "d",     function () awful.spawn("rofi -show drun") end,
-              {description = "Rofi in Drun mode", group = "launcher"}),
+    awful.key({ modkey },            "p",     function () awful.spawn("mdrun") end,
+              {description = "Run Launcher", group = "launcher"}),
     -- Powermenu
     awful.key({ "Mod1" },            "F4",     function () awful.spawn("powermenu") end,
-              {description = "Rofi in Drun mode", group = "launcher"}),
+              {description = "Powermenu", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
@@ -648,7 +644,7 @@ globalkeys = gears.table.join(
               end,
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
-    awful.key({ modkey }, "p", function() awful.spawn.with_shell("screenshot") end,
+    awful.key({ modkey }, "s", function() awful.spawn.with_shell("screenshot") end,
               {description = "Take a screenshot", group = "misc"})
 )
 

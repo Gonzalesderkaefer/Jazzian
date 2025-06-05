@@ -10,7 +10,7 @@ super + Return
 #alt + @space
 #    rofi -show drun -config $HOME/.config/rofi/config.rasi
 
-super + d
+super + p
     rofi -show drun -config $HOME/.config/rofi/config.rasi
 
 super + Escape
@@ -111,7 +111,7 @@ alt + F4
     powermenu
 
 ### Take screenshot
-super + p
+super + s
     screenshot
 
 
