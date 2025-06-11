@@ -33,3 +33,6 @@ vim.keymap.set("n", "dm", vim.diagnostic.open_float, { desc = "LSP: [D]iagnostic
 
 -- Command key
 vim.keymap.set("n", "<leader>x", ":term ", { desc = "Enter command" })
+
+-- fold C-Style function or scope
+vim.keymap.set("n", "<leader>fo", "vi{:fold<CR>", { desc = "Fold function" })
