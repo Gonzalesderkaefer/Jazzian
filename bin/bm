@@ -47,26 +47,29 @@ selection() {
 
 
 insert() {
-    # sanity check
-    if [[ -z ${2} ]] || [[ -z ${3} ]]; then
-        echo "[insert] :: not enough args"
-        echo "Usage: bm insert [NAME] [URI]"
-        exit 1;
+    # Get parent directory
+    directory=$(find ${selection} -not -path '*/[@.]*' -type d | fzf --prompt="Choose a parent directory: ")
+
+    # Get bookmark name
+    printf "Choose name for bookmark: "
+    read bookmark_name
+
+    full_path="${directory}/${bookmark_name}"
+
+    # Get URI
+    printf "Insert URI: "
+    read uri
+
+    # check if parent dir to full_path has to be created
+    if ! [ -d $(dirname ${full_path}) ]; then
+        mkdir -p $(dirname ${full_path})
     fi
 
-
-    # compose full path
-    if [[ ${2:0:1} != "/" ]]; then
-        full_path=${selection}/${2}
-    else
-        full_path=${selection}${2}
+    # Write uri to file if file does not exist
+    if ! [ -f ${full_path} ]; then
+        echo ${uri} > ${full_path}
     fi
 
-    # remove basename
-    base_dir=$(echo ${full_path} | sed -E "s/\/[^\/]*$|\/[^\/]*\/$//g")
-    mkdir -p ${base_dir}
-
-    echo ${3} > ${full_path}
 }
 
 
