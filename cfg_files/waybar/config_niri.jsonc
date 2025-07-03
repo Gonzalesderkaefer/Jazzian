@@ -5,7 +5,7 @@
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["river/tags","river/window"],
+    "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": [],
     "modules-right": ["custom/home", "custom/drivespace", "idle_inhibitor" ,"pulseaudio", "battery", "cpu", "memory", "temperature", "clock", "tray"],
 
@@ -21,13 +21,13 @@
     "tray": {
         "spacing": 10
     },
-    "river/window": {
-	"max-length": 100,
-	"icon": true
+    "hyprland/window": {
+        "max-length": 100,
+        "icon": true
     },
 
     "clock": {
-    	"format": "{:%d.%m   | %R  }",
+        "format": "{:%d.%m   | %R  }",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
@@ -41,7 +41,7 @@
     "custom/home": {
         "interval": 3600,
         "exec": "$HOME/.config/waybar/modules/waybardr.sh home",
-	"format":"{}"
+        "format":"{}"
     },
 
     "cpu": {
