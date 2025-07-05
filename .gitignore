@@ -27,3 +27,6 @@ newsboat*
 # NNN-File manager files
 /dotfiles/config/nnn/*
 !/dotfiles/config/nnn/plugins
+
+# Default niri config
+/dotfiles/config/niri/config.kdl
