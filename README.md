@@ -30,7 +30,6 @@ It currently supports following distros and window managers
         - Bspwm
     - Wayland
         - Sway
-        - Hyprland (perhaps in Debian 13 will need to do some testing)
 
 
 - Fedora
@@ -42,6 +41,7 @@ It currently supports following distros and window managers
         - Sway
         - Hyprland
         - River
+        - Niri
 
 - Arch Linux
     - Xorg
@@ -52,3 +52,4 @@ It currently supports following distros and window managers
         - Sway
         - Hyprland
         - River
+        - Niri
