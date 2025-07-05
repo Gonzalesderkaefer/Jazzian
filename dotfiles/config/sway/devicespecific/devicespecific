@@ -1,8 +1,0 @@
-input 1133:49291:Logitech_G502_HERO_Gaming_Mouse {
-    accel_profile "flat"
-    pointer_accel -0.8
-}
-
-## Setting wallpaper
-exec swaybg  -o LVDS-2 -m fill -i $HOME/Pictures/wallpapers/Neighborhood.png
-exec swaybg  -o LVDS-1 -m fill -i $HOME/Pictures/wallpapers/Neighborhood.png
