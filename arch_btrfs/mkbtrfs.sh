@@ -19,6 +19,10 @@ DRIVES=$(lsblk -p --json | jq -r '.blockdevices[].name');
 arr=();
 drive_index=1;
 
+# Print all drives
+clear;
+printf "${green}These are the drives in your System${end}"
+lsblk;
 for drive in $DRIVES; do
     arr+=($drive);
     echo "[$drive_index] $drive";

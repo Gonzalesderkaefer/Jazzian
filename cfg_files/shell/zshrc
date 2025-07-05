@@ -160,6 +160,10 @@ revert() {
 }
 
 
+fedit() {
+    nvim $(fzf)
+}
+
 trash_move() { # $1: wholepath, $2: basename
     if ! [ -e "${HOME}/.trash/${2}" ]; then
         echo "moving ${1}" to "${HOME}/.trash/${2}";
@@ -186,6 +190,10 @@ trashrm() {
     trash_move ${wholepath} ${filename};
 }
 
+gd() {
+    dir=$(find . -type d | fzf)
+    cd ${dir}
+}
 
 ## devicerc
 if [ -f $HOME/.devicerc ]; then
