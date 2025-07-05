@@ -21,7 +21,7 @@ drive_index=1;
 
 # Print all drives
 clear;
-printf "${green}These are the drives in your System${end}"
+printf "${green}These are the drives in your System${end}\n"
 lsblk;
 for drive in $DRIVES; do
     arr+=($drive);
