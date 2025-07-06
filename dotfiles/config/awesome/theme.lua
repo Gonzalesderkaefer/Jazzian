@@ -66,7 +66,7 @@ theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
 
 -- theme.wallpaper = "~/Pictures/circle.png"
--- theme.wallpaper = require("devicespecific_theme")
+-- theme.wallpaper = require("cusomized_theme")
 
 
 

@@ -9,6 +9,6 @@ nm-applet &
 xrdb $HOME/.Xresources
 
 ## launch devicepecific stuff
-if [ -f $HOME/.config/qtile/devicespecific/devicespecific.sh ]; then
-    bash $HOME/.config/qtile/devicespecific/devicespecific.sh
+if [ -f $HOME/.config/qtile/customized/customized.sh ]; then
+    bash $HOME/.config/qtile/customized/customized.sh
 fi

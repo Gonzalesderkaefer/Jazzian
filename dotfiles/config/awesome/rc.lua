@@ -896,5 +896,5 @@ awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("xrdb $HOME/.Xresources")
 -- awful.spawn.with_shell("x11startup")
 
--- Devicespecific
-require("devicespecific.devicespecific")
+-- customized
+require("customized.customized")

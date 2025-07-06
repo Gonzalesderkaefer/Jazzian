@@ -9,6 +9,6 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 # Startup
- if [ -f "$HOME/.devicespecific.sh" ]; then
-     sh "$HOME/.devicespecific.sh"
+ if [ -f "$HOME/.customized.sh" ]; then
+     sh "$HOME/.customized.sh.sh"
  fi

@@ -207,5 +207,5 @@ riverctl rule-add -app-id "bar" csd
 # Set split to 50%
 riverctl send-layout-cmd rivertile "main-ratio 0.5"
 
-# Loading devicespecific config
-sh $HOME/.config/river/devicespecific/devicespecific
+# Loading customized config
+sh $HOME/.config/river/customized/customized
