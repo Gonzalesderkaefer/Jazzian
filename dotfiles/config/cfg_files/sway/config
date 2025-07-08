@@ -1,0 +1,253 @@
+#   ____
+#  / ___|_      ____ _ _   _
+#  \___ \ \ /\ / / _` | | | |
+#   ___) \ V  V / (_| | |_| |
+#  |____/ \_/\_/ \__,_|\__, |
+#                     |___/
+
+
+
+
+## Setting colors
+set $bg #222222
+set $fg #eff1f5
+set $in #ff5500
+set $br #8e60f7 
+
+
+## Window decoration
+
+### colors              border  backgr. text    indicator child_border
+client.focused          $br     $br     $fg     $in       $br
+client.focused_inactive $br     $bg     $fg     $bg       $bg
+client.unfocused        $br     $bg     $fg     $bg       $bg
+
+### Borders and gaps
+default_border pixel 2
+default_floating_border pixel 1
+gaps inner 6
+gaps outer 4
+
+### Configuring titlebar in tabbed mode
+font 'Jetbrains Mono Nerd Font ExtraBold' 10
+
+## Keyboard configuration
+
+input type:keyboard {
+    xkb_layout "us(altgr-intl)"
+}
+
+## Variables
+
+### Direction keys to vim keys
+set $left h
+set $down j
+set $up k
+set $right l
+
+### Setting SUPER as main modifyer key
+set $mod Mod4
+
+### Setting preffered Terminal Emulator
+set $term myterm 
+
+### Setting the run menu
+set $menu mdrun
+
+
+## Idle configuration
+
+exec swayidle -w \
+  timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+  before-sleep 'swaylock -f -c 1e1e2e'
+
+
+## Startup Programs
+
+### Launching bar
+# exec waybar -c $HOME/.config/waybar/config_sway
+bar {
+    position top
+    status_command i3blocks
+    colors {
+    	background #24273a
+    }
+    tray {
+    	icon_theme Papirus-Dark
+    }
+    
+    colors {
+                background #24273A
+                statusline #1ABC9C
+                separator #8E60F7 
+                # colorclass       <border> <background> <text>
+                focused_workspace  #8E60F7  #8E60F7     #1F2D3A
+                inactive_workspace #1F2D3A  #1F2D3A     #8E60F7
+
+    }
+}
+
+### Launching Tray elements
+exec nm-applet
+
+### Launching Pokit
+exec /lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+
+### This needs to be put in so that waybar does not take 2 minutes to launch (not entirely sure what it does)
+exec dbus-update-activation-environment --systemd DISPLAY
+
+### starting mako
+exec mako -c $HOME/.config/mako/mako.conf
+
+## Keybindings 
+
+### Reload Config
+bindsym $mod+Shift+c reload
+
+### Moving Focus between Windows
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+### Alt+tab
+bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
+
+### Moving Windows
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+
+### Switch to different Workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+### Move window to Workspace
+bindsym $mod+Shift+1 move container to workspace number 1, workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2, workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3, workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4, workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5, workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6, workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7, workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8, workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9, workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10, workspace number 10
+
+### Resize windows
+
+#### Go into resize mode
+bindsym $mod+r mode "resize"
+
+mode "resize" {
+    #### left will shrink the containers width
+    #### right will grow the containers width
+    #### up will shrink the containers height
+    #### down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $right resize grow  width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink  height 10px
+
+    #### Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+### Spliting direction
+bindsym $mod+Alt+l splith
+bindsym $mod+Alt+j splitv
+
+### Make the current window Fullscreen
+bindsym $mod+f fullscreen
+
+### Make currnt window floating
+bindsym $mod+t floating toggle
+
+### Switch to tabbed layout
+bindsym $mod+w layout toggle split tabbed
+
+### Kill current window
+bindsym $mod+q kill
+
+### Take screenshot 
+bindsym $mod+s exec screenshot
+
+### Take screenshot region
+bindsym $mod+Shift+s exec screenshot select
+
+### Media and Display Controls
+bindsym XF86MonBrightnessUp exec brightnessctl -e s +30 
+bindsym XF86MonBrightnessDown exec brightnessctl -e s 30-
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_SINK@ 5%- && pkill -RTMIN+3 i3blocks
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_SINK@ 5%+ && pkill -RTMIN+3 i3blocks
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+3 i3blocks
+
+### Change Keyboard Layout
+bindsym $mod+space exec $HOME/.config/sway/scripts/kbnotify
+
+
+
+### Launchers
+
+#### Toggling idle 
+bindsym $mod+i exec $HOME/.config/sway/modules/idle_toggle.sh
+
+#### Lauching a Calculator
+bindsym XF86Calculator exec qalculate-gtk
+
+#### Killing bar
+bindsym $mod+a exec $HOME/.config/sway/modules/killbar.sh
+
+#### Start a terminal
+bindsym $mod+Return exec $term
+
+#### Start a Powermenu
+bindsym Alt+F4 exec powermenu
+
+#### Start a Launcher
+# bindsym Alt+space exec $menu
+bindsym $mod+p exec $menu
+
+#### Start a browser
+bindsym $mod+b exec firefox -p
+
+
+
+## Include devicespecifc configuration
+include devicespecific/devicespecific
+
+
+
+# Mini Documentation
+# 
+# Mouse settings
+# 
+# input "<swaymsg -t get_inputs Identifyer field>" {
+#     tap enabled
+#     sensitvity -0.4
+#     accel_profile flat
+# }
+
+
+
+
+    
+
+
+
+
+
+
+

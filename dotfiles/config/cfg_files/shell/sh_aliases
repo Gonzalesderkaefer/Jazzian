@@ -1,0 +1,83 @@
+#!/usr/bin/sh
+
+# Determining what distro is running 
+release="$(cat /etc/os-release)";
+
+case $release in
+    *"Debian"* | *"debian"* | *"DEBIAN"*) 
+        ### nala
+        alias "inst"="sudo nala install"
+        alias "upgrade"="sudo nala upgrade"
+        alias "remove"="sudo nala remove"
+        alias "search"="nala search"
+        ;;
+    *"Fedora"* | *"fedora"* | *"FEDORA"*) 
+        ### dnf
+        alias "inst"="sudo dnf install"
+        alias "upgrade"="sudo dnf update"
+        alias "remove"="sudo dnf remove"
+        alias "search"="dnf search"
+        ;;
+    *"Arch Linux"* | *"arch linux"* | *"ARCH LINUX"*) 
+        ### pacman
+        alias "inst"="sudo pacman -S"
+        alias "upgrade"="sudo pacman -Syu"
+        alias "remove"="sudo pacman -Rns"
+        alias "search"="pacman -Ss"
+        ;;
+esac
+
+
+## Power
+alias "shutdown"="systemctl poweroff"
+alias "reboot"="systemctl reboot"
+
+## Files
+alias "ls"="ls --color=auto"
+alias "nf"="nfcd"
+alias "vf"="vicd ."
+alias "ll"="ls -l"
+alias "lla"="ls -la"
+
+# Process management
+alias "fgs"="fg %"
+
+## Editor
+alias "v"="$EDITOR"
+alias "sv"="sudo $EDITOR"
+alias "vv"="$EDITOR ."
+alias "fv"='$EDITOR $(fzf)'
+# (command -v nvim > /dev/null) && alias "v"="nvim" || alias "v"="vim"
+# (command -v nvim > /dev/null) && alias "vv"="nvim ." || alias "vv"="vim ."
+
+
+## other aliases
+alias "grep"="grep --color=auto" 
+alias "s"="sudo"
+alias ":wq"="exit"
+alias ":q"="exit"
+alias "clr"="clear"
+
+## remove
+alias "rm"="trashrm"
+alias "rm -r"="trashrm"
+alias "rm -rf"="trashrm"
+
+
+## Navigation
+alias ".."="cd .."
+alias "..."="cd ../../"
+alias ".3"="cd ../../../"
+alias ".4"="cd ../../../../"
+alias ".5"="cd ../../../../../"
+
+## git alaiases
+alias "gts"="git status"
+alias "ga"="git add"
+alias "gc"="git commit" 
+alias "gps"="git push origin main"
+alias "gpl"="git pull origin main"
+alias "gl"="git log"
+alias "glog"="git log --graph --decorate --oneline"
+alias "gb"="git branch"
+alias "gco"="git checkout"

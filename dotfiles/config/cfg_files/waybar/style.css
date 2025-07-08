@@ -1,0 +1,254 @@
+/*
+:root {
+    black: "#0c0e15",
+    bg0: "#1a212e",
+    bg1: "#21283b",
+    bg2: "#283347",
+    bg3: "#2a324a",
+    bg_d: "#141b24",
+    bg_blue: "#54b0fd",
+    bg_yellow: "#f2cc81",
+    fg: "#93a4c3",
+    purple: "#c75ae8",
+    green: "#8bcd5b",
+    orange: "#dd9046",
+    blue: "#41a7fc",
+    yellow: "#efbd5d",
+    cyan: "#34bfd0",
+    red: "#f65866",
+    grey: "#455574",
+    light_grey: "#6c7d9c",
+    dark_cyan: "#1b6a73",
+    dark_red: "#992525",
+    dark_yellow: "#8f610d",
+    dark_purple: "#862aa1",
+}
+*/
+
+
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: JetbrainsMono Nerd Font;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+
+window#waybar {
+    background-color:#24273a;
+    color: #C5C8C6;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+button {
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each button name */
+    border: none;
+    border-radius: 0;
+    color: #ffffff;
+}
+
+/* Workspaces for sway and hyprland */
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    color: #ffffff;
+}
+
+#workspaces button:hover {
+    box-shadow: inherit;
+    text-shadow: inherit;
+}
+
+#workspaces button.active {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid #4287f5;
+}
+
+#workspaces button.focused {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid #4287f5;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+
+/* tags for river */
+#tags button {
+    padding: 0 5px;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    color: #ffffff;
+}
+
+#tags button:hover {
+    box-shadow: inherit;
+    text-shadow: inherit;
+}
+
+#tags button.active {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid #4287f5;
+}
+
+#tags button.focused {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid #4287f5;
+}
+
+#tags button.urgent {
+    background-color: #eb4d4b;
+}
+
+#custom-home
+#custom-drivespace,
+#clock,
+#battery,
+#cpu,
+#memory,
+#temperature,
+#pulseaudio,
+#tray,
+#idle_inhibitor {
+    padding: 0 10px;
+    border-radius: 0px;
+    margin: 0px;
+}
+
+
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left {
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right {
+}
+
+
+
+/* Space in HOME */
+#custom-home {
+    background-color: #ff5555;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-bottom: 2px solid #ff5555;
+    color:#24273a;
+}
+
+
+/* Root drive space */
+#custom-drivespace {
+    color:#24273a;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: #ff7777;
+    border-bottom: 2px solid #ff7777;
+}
+
+/* Idle */
+#idle_inhibitor {
+    color:#24273a;
+    background-color: #e78284;
+    border-bottom: 2px solid #e78284;
+    padding-right: 12px
+}
+
+#idle_inhibitor.activated {
+    color:#24273a;
+    background-color: #f56464;
+    border-bottom: 2px solid #f56464;
+
+}
+
+
+
+/* Audio widget */
+#pulseaudio {
+    color:#24273a;
+    background-color: #f38ba8;
+    border-bottom: 2px solid #f38ba8;
+}
+
+#pulseaudio.muted {
+    background-color: #90b1b1;
+    color:#24273a;
+}
+
+/* Battery widget */
+#battery.charging {
+    color:#24273a;
+    background-color: #eed49f;
+    border-bottom: 2px solid #eed49f;
+}
+
+#battery.plugged {
+    color:#24273a;
+    background-color: #BD93F9;
+    border-bottom: 2px solid #BD93F9;
+}
+
+#battery {
+    color:#24273a;
+    padding-right:15px;
+    background-color: #BD93F9;
+    border-bottom: 2px solid #BD93F9;
+}
+
+/* CPU Usage */
+#cpu {
+    color:#24273a;
+    background-color: #9083fc;
+    border-bottom: 2px solid #9083fc;
+}
+
+/* Memory Usage */
+#memory {
+    color:#24273a;
+    background-color: #89b4fa;
+    border-bottom: 2px solid #89b4fa;
+}
+
+/* 'System' temperature */
+#temperature {
+    color:#24273a;
+    background-color: #81c8be;
+    border-bottom: 2px solid #81c8be;
+}
+
+#temperature.critical {
+    color:#24273a;
+    background-color: #fa7f7a;
+}
+
+
+/* Clock widget */
+#clock {
+    color:#24273a;
+    background-color: #a6e3a1;
+    border-bottom: 2px solid #a6e3a1;
+}
+
+
+/* Tray */
+#tray {
+    background-color: #24273a;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #000000;
+}
