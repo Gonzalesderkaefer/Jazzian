@@ -38,6 +38,7 @@ return {
         vim.keymap.set('n', '<leader>fr', function() builtin.resume(themes.get_ivy()) end, { desc = '[S]earch [R]esume' })
         vim.keymap.set('n', '<leader>f.', function() builtin.oldfiles(themes.get_ivy()) end, { desc = '[S]earch Recent Files ("." for repeat)' })
         vim.keymap.set('n', '<leader><leader>', function() builtin.buffers(themes.get_ivy()) end, { desc = '[ ] Find existing buffers' })
+        vim.keymap.set('n', '<leader>gr',function() builtin.lsp_references(themes.get_ivy()) end, {desc = '[G]oto [R]eferences'})
 
 
 

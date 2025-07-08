@@ -1,3 +1,5 @@
+#!/usr/bin/sh
+
 # Determining what distro is running 
 release="$(cat /etc/os-release)";
 
@@ -44,6 +46,7 @@ alias "fgs"="fg %"
 alias "v"="$EDITOR"
 alias "sv"="sudo $EDITOR"
 alias "vv"="$EDITOR ."
+alias "fv"='$EDITOR $(fzf)'
 # (command -v nvim > /dev/null) && alias "v"="nvim" || alias "v"="vim"
 # (command -v nvim > /dev/null) && alias "vv"="nvim ." || alias "vv"="vim ."
 

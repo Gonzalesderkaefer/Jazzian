@@ -182,7 +182,10 @@ bindsym $mod+w layout toggle split tabbed
 bindsym $mod+q kill
 
 ### Take screenshot 
-bindsym $mod+p exec screenshot
+bindsym $mod+s exec screenshot
+
+### Take screenshot region
+bindsym $mod+Shift+s exec screenshot select
 
 ### Media and Display Controls
 bindsym XF86MonBrightnessUp exec brightnessctl -e s +30 
@@ -215,15 +218,15 @@ bindsym Alt+F4 exec powermenu
 
 #### Start a Launcher
 # bindsym Alt+space exec $menu
-bindsym $mod+d exec $menu
+bindsym $mod+p exec $menu
 
 #### Start a browser
 bindsym $mod+b exec firefox -p
 
 
 
-## Include customized configuration
-include customized/customized
+## Include devicespecifc configuration
+include devicespecific/devicespecific
 
 
 

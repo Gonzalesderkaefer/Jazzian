@@ -29,4 +29,4 @@ polybar &
 xrdb ~/.Xresources &
 xsetroot -cursor_name left_ptr &
 dunst &
-sh $HOME/.config/bspwm/customized/customized;
+sh $HOME/.config/bspwm/devicespecific/devicespecific;

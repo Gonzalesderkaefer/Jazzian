@@ -77,9 +77,42 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- Turn on virtual text
 vim.diagnostic.config({ virtual_text = true })
 
-
 -- Lazy plugin manager in lua/config/lazy.lua
 require("config.lazy")
 
 -- Load keybindings
 require("config.remap")
+
+
+-- Highlight LSP-References
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(event)
+        local highlight_group = vim.api.nvim_create_augroup('highlight', { clear = false })
+        -- Acutally highlight them
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+            buffer = event.buf,
+            group = highlight_group,
+            callback = vim.lsp.buf.document_highlight,
+        })
+
+        -- 'Unhighlight' them
+        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+            buffer = event.buf,
+            group = highlight_group,
+            callback = vim.lsp.buf.clear_references,
+        })
+
+        -- cleanup autocmds
+        vim.api.nvim_create_autocmd('LspDetach', {
+          callback = function(other_event)
+            vim.lsp.buf.clear_references()
+            vim.api.nvim_clear_autocmds { group = 'highlight', buffer = other_event.buf }
+          end,
+        })
+
+    end,
+})
+
+
+
+

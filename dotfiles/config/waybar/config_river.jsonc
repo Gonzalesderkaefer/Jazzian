@@ -21,7 +21,7 @@
     "tray": {
         "spacing": 10
     },
-    "hyprland/window": {
+    "river/window": {
 	"max-length": 100,
 	"icon": true
     },
