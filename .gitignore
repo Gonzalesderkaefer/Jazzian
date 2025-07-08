@@ -30,3 +30,6 @@ newsboat*
 
 # Default niri config
 /dotfiles/config/niri/config.kdl
+
+# Devicespecific files (temporary for transition)
+*devicespecific*

@@ -30,8 +30,8 @@ export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh;c:checksum.sh'
 (command -v nvim > /dev/null) && export EDITOR=nvim || export EDITOR=vim
 
 ## Startup
-if [ -f "$HOME/.devicespecific.sh" ]; then
-    sh "$HOME/.devicespecific.sh"
+if [ -f "$HOME/.customized.sh" ]; then
+    sh "$HOME/.customized.sh"
 fi
 
 #. "$HOME/.cargo/env"

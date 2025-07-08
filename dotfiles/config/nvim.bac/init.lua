@@ -108,8 +108,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 require("remap")
 
-if file_exsits(os.getenv("HOME") .. "/.config/nvim/lua/devicespecific.lua") then
-  require("devicespecific")
+if file_exsits(os.getenv("HOME") .. "/.config/nvim/lua/customized.lua") then
+  require("customized")
 end
 
 

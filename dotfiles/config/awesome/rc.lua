@@ -893,4 +893,4 @@ awful.spawn.with_shell("xrdb $HOME/.Xresources")
 -- awful.spawn.with_shell("x11startup")
 
 -- Devicespecific
-require("devicespecific.devicespecific")
+require("customized.customized")

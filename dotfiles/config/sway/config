@@ -226,7 +226,7 @@ bindsym $mod+b exec firefox -p
 
 
 ## Include devicespecifc configuration
-include devicespecific/devicespecific
+include customized/customized
 
 
 
