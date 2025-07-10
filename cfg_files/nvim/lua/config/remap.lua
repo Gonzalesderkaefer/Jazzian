@@ -36,3 +36,9 @@ vim.keymap.set("n", "<leader>x", ":term ", { desc = "Enter command" })
 
 -- fold C-Style function or scope
 vim.keymap.set("n", "<leader>fo", "vi{:fold<CR>", { desc = "Fold function" })
+
+-- Close quickfix list
+vim.keymap.set("n", "<leader>cc", ":cclose<CR>", { desc = "Close Quickfix" })
+
+-- Close loclist
+vim.keymap.set("n", "<leader>lc", ":cclose<CR>", { desc = "Close Quickfix" })
