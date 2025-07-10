@@ -15,5 +15,5 @@ fi
 
 # Startup
  if [ -f "$HOME/.customized.sh" ]; then
-     sh "$HOME/.customized.sh"
+     . "$HOME/.customized.sh"
  fi
