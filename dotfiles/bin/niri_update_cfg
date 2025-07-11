@@ -7,4 +7,4 @@ fi
 
 
 # rewrite everyting into the config file
-cat $HOME/.config/niri/*.kdl > rm "$HOME/.config/niri/config.kdl"
+cat $HOME/.config/niri/*.kdl > "$HOME/.config/niri/config.kdl"
