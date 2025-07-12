@@ -196,6 +196,6 @@ gd() {
 }
 
 ## devicerc
-if [ -f $HOME/.devicerc ]; then
-    source $HOME/.devicerc
+if [ -f $HOME/.customrc ]; then
+    source $HOME/.customrc
 fi
