@@ -15,7 +15,7 @@ homeused=$(echo ${homeentry} | awk '{print $4}')
 
 # NOTE: Might implement it to print json
 if [[ $1 == "home" ]]; then
-    if [[ ${rootfs} == ${homefs} ]]; then
+    if [[ ${rootfs} == ${homefs} ]] || [[ -z ${homefs} ]]; then
         printf "";
     else
         printf "${homeused}  \n";
