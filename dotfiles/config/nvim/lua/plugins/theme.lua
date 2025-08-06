@@ -10,4 +10,8 @@ return {
             vim.cmd.colorscheme 'tokyonight-moon'
         end,
     },
+    {
+        "rebelot/kanagawa.nvim",
+        priority = 1000
+    },
 }
