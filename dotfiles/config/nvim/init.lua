@@ -3,7 +3,7 @@ vim.g.mapleader = ' '
 vim.maplocalleader = ' '
 
 -- Tabbing
-vim.opt.tabstop = 4
+vim.opt.tabstop = 8
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true -- CTRL-V Tab to insert real tab
