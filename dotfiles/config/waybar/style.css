@@ -35,8 +35,8 @@
 
 
 window#waybar {
-    background-color:#24273a;
-    color: #C5C8C6;
+    background-color:#282c34;
+    color: #abb2bf;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -65,16 +65,16 @@ button {
 
 #workspaces button.active {
     background: rgba(255, 255, 255, 0.05);
-    border-bottom: 2px solid #4287f5;
+    border-bottom: 3px solid #61afef;
 }
 
 #workspaces button.focused {
     background: rgba(255, 255, 255, 0.05);
-    border-bottom: 2px solid #4287f5;
+    border-bottom: 3px solid #61afef;
 }
 
 #workspaces button.urgent {
-    background-color: #eb4d4b;
+    background-color: #e06c75;
 }
 
 
@@ -93,19 +93,19 @@ button {
 
 #tags button.active {
     background: rgba(255, 255, 255, 0.05);
-    border-bottom: 2px solid #4287f5;
+    border-bottom: 3px solid #61afef;
 }
 
 #tags button.focused {
     background: rgba(255, 255, 255, 0.05);
-    border-bottom: 2px solid #4287f5;
+    border-bottom: 3px solid #61afef;
 }
 
 #tags button.urgent {
-    background-color: #eb4d4b;
+    background-color: #e06c75;
 }
 
-#custom-home
+#custom-home,
 #custom-drivespace,
 #clock,
 #battery,
@@ -118,6 +118,7 @@ button {
     padding: 0 10px;
     border-radius: 0px;
     margin: 0px;
+    background-color:#282c34;
 }
 
 
@@ -138,28 +139,25 @@ button {
 
 /* Space in HOME */
 #custom-home {
-    background-color: #ff5555;
     padding-left: 8px;
     padding-right: 8px;
-    border-bottom: 2px solid #ff5555;
+    border-bottom: 2px solid #e5c07b;
     color:#24273a;
 }
 
 
 /* Root drive space */
 #custom-drivespace {
-    color:#24273a;
+    color:#e06c75;
     padding-left: 8px;
     padding-right: 8px;
-    background-color: #ff7777;
-    border-bottom: 2px solid #ff7777;
+    border-bottom: 2px solid #e06c75;
 }
 
 /* Idle */
 #idle_inhibitor {
-    color:#24273a;
-    background-color: #e78284;
-    border-bottom: 2px solid #e78284;
+    color:#98c379;
+    border-bottom: 2px solid #98c379;
     padding-right: 12px
 }
 
@@ -174,13 +172,12 @@ button {
 
 /* Audio widget */
 #pulseaudio {
-    color:#24273a;
-    background-color: #f38ba8;
-    border-bottom: 2px solid #f38ba8;
+    color:#e5c07b;
+    border-bottom: 2px solid #e5c07b;
 }
 
 #pulseaudio.muted {
-    background-color: #90b1b1;
+    background-color: #e5c07b;
     color:#24273a;
 }
 
@@ -192,37 +189,32 @@ button {
 }
 
 #battery.plugged {
-    color:#24273a;
-    background-color: #BD93F9;
+    color:#61afef;
     border-bottom: 2px solid #BD93F9;
 }
 
 #battery {
-    color:#24273a;
+    color:#61afef;
     padding-right:15px;
-    background-color: #BD93F9;
-    border-bottom: 2px solid #BD93F9;
+    border-bottom: 2px solid #61afef;
 }
 
 /* CPU Usage */
 #cpu {
-    color:#24273a;
-    background-color: #9083fc;
-    border-bottom: 2px solid #9083fc;
+    color:#c678dd;
+    border-bottom: 2px solid #c678dd;
 }
 
 /* Memory Usage */
 #memory {
-    color:#24273a;
-    background-color: #89b4fa;
-    border-bottom: 2px solid #89b4fa;
+    color:#56b6c2;
+    border-bottom: 2px solid #56b6c2;
 }
 
 /* 'System' temperature */
 #temperature {
-    color:#24273a;
-    background-color: #81c8be;
-    border-bottom: 2px solid #81c8be;
+    color:#98c379;
+    border-bottom: 2px solid #98c379;
 }
 
 #temperature.critical {
@@ -233,15 +225,14 @@ button {
 
 /* Clock widget */
 #clock {
-    color:#24273a;
-    background-color: #a6e3a1;
-    border-bottom: 2px solid #a6e3a1;
+    color:#e06c75;
+    border-bottom: 2px solid #e06c75;
 }
 
 
 /* Tray */
 #tray {
-    background-color: #24273a;
+    background-color: #282c34;
 }
 
 #tray > .passive {
