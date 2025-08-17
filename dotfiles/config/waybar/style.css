@@ -141,7 +141,7 @@ button {
 #custom-home {
     padding-left: 8px;
     padding-right: 8px;
-    border-bottom: 2px solid #e5c07b;
+    border-bottom: 3px solid #e5c07b;
     color:#24273a;
 }
 
@@ -151,20 +151,20 @@ button {
     color:#e06c75;
     padding-left: 8px;
     padding-right: 8px;
-    border-bottom: 2px solid #e06c75;
+    border-bottom: 3px solid #e06c75;
 }
 
 /* Idle */
 #idle_inhibitor {
     color:#98c379;
-    border-bottom: 2px solid #98c379;
+    border-bottom: 3px solid #98c379;
     padding-right: 12px
 }
 
 #idle_inhibitor.activated {
     color:#24273a;
     background-color: #f56464;
-    border-bottom: 2px solid #f56464;
+    border-bottom: 3px solid #f56464;
 
 }
 
@@ -173,7 +173,7 @@ button {
 /* Audio widget */
 #pulseaudio {
     color: #d19a66;
-    border-bottom: 2px solid #d19a66;
+    border-bottom: 3px solid #d19a66;
 }
 
 #pulseaudio.muted {
@@ -185,36 +185,36 @@ button {
 #battery.charging {
     color:#24273a;
     background-color: #eed49f;
-    border-bottom: 2px solid #eed49f;
+    border-bottom: 3px solid #eed49f;
 }
 
 #battery.plugged {
     color:#61afef;
-    border-bottom: 2px solid #BD93F9;
+    border-bottom: 3px solid #BD93F9;
 }
 
 #battery {
     color:#61afef;
     padding-right:15px;
-    border-bottom: 2px solid #61afef;
+    border-bottom: 3px solid #61afef;
 }
 
 /* CPU Usage */
 #cpu {
     color:#c678dd;
-    border-bottom: 2px solid #c678dd;
+    border-bottom: 3px solid #c678dd;
 }
 
 /* Memory Usage */
 #memory {
     color:#56b6c2;
-    border-bottom: 2px solid #56b6c2;
+    border-bottom: 3px solid #56b6c2;
 }
 
 /* 'System' temperature */
 #temperature {
     color:#98c379;
-    border-bottom: 2px solid #98c379;
+    border-bottom: 3px solid #98c379;
 }
 
 #temperature.critical {
@@ -226,7 +226,7 @@ button {
 /* Clock widget */
 #clock {
     color:#e06c75;
-    border-bottom: 2px solid #e06c75;
+    border-bottom: 3px solid #e06c75;
 }
 
 
