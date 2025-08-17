@@ -172,8 +172,8 @@ button {
 
 /* Audio widget */
 #pulseaudio {
-    color:#e5c07b;
-    border-bottom: 2px solid #e5c07b;
+    color: #d19a66;
+    border-bottom: 2px solid #d19a66;
 }
 
 #pulseaudio.muted {
@@ -232,7 +232,7 @@ button {
 
 /* Tray */
 #tray {
-    background-color: #282c34;
+    background-color: #24273a;
 }
 
 #tray > .passive {
