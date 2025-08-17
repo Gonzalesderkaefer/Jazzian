@@ -13,7 +13,7 @@ configuration {
 
 
     foreground: #e5e9f0;
-    background-color: #2a2e42;
+    background-color: #282c34;
     active-background: #b072d1;
     urgent-background: #b072d1;
     urgent-foreground: #e5e9f0;
@@ -29,7 +29,7 @@ configuration {
 
 #window {
     background-color: @background-color;
-    border:           4;
+    border:           2;
     border-radius:    10;
     border-color:     @bordercolor;
     padding:          10;
