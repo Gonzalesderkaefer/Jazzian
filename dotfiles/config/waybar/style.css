@@ -162,9 +162,9 @@ button {
 }
 
 #idle_inhibitor.activated {
-    color:#24273a;
-    background-color: #f56464;
-    border-bottom: 3px solid #f56464;
+    color: #282c34;
+    background-color: #98c379;
+    border-bottom: 3px solid #98c379;
 
 }
 
@@ -177,20 +177,20 @@ button {
 }
 
 #pulseaudio.muted {
-    background-color: #e5c07b;
-    color:#24273a;
+    background-color: #d19a66;
+    color: #282c34;
 }
 
 /* Battery widget */
 #battery.charging {
-    color:#24273a;
-    background-color: #eed49f;
+    color:#eed49f;
+    background-color: #24273a;
     border-bottom: 3px solid #eed49f;
 }
 
 #battery.plugged {
     color:#61afef;
-    border-bottom: 3px solid #BD93F9;
+    border-bottom: 3px solid #61afef;
 }
 
 #battery {
