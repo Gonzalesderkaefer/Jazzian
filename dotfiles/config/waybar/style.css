@@ -232,7 +232,7 @@ button {
 
 /* Tray */
 #tray {
-    background-color: #24273a;
+    background-color: #282c34;
 }
 
 #tray > .passive {
@@ -241,5 +241,5 @@ button {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: #000000;
+    background-color: #282c34;
 }
