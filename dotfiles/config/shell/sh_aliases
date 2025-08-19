@@ -59,9 +59,9 @@ alias ":q"="exit"
 alias "clr"="clear"
 
 ## remove
-alias "rm"="trashrm"
-alias "rm -r"="trashrm"
-alias "rm -rf"="trashrm"
+# alias "rm"="trashrm"
+# alias "rm -r"="trashrm"
+# alias "rm -rf"="trashrm"
 
 
 ## Navigation
