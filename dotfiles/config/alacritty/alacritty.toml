@@ -122,6 +122,12 @@ style = "Italic"
 family = "JetBrains Mono Nerd Font"
 style = "Regular"
 
+
+
+[window.padding]
+x = 5
+y = 5
+
 #[[keyboard.bindings]]
 #action = "Paste"
 #key = "P"
