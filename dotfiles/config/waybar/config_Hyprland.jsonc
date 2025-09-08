@@ -50,7 +50,7 @@
     },
 
     "memory": {
-        "format": "{}%  "
+        "format": "{used}GiB  "
     },
 
     "temperature": {
