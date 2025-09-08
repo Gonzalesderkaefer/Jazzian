@@ -59,7 +59,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 -- linelength indicator
-vim.opt.colorcolumn = "80"
+-- vim.opt.colorcolumn = "160"
 
 
 -- Set key timeout
