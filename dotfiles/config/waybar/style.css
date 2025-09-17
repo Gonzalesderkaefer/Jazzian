@@ -184,7 +184,6 @@ button {
 /* Battery widget */
 #battery.charging {
     color:#eed49f;
-    background-color: #24273a;
     border-bottom: 3px solid #eed49f;
 }
 
