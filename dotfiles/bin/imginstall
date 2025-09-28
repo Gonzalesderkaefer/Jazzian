@@ -53,7 +53,6 @@ case $desktopfile_choice in
 
         cat $HOME/.local/share/applications/$desktopfile;
         ;;
-        
 esac
 
 
