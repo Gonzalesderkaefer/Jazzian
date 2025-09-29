@@ -1,12 +1,12 @@
 #!/bin/sh
 
-menu="$(printf " Poweroff \n Reboot \n󰍃 Logout \n Suspend \n󰒲 Hibernate \n Lock" | mdmenu)"
+menu="$(printf " Poweroff \n Reboot \n Suspend \n󰒲 Hibernate \n Lock" | mdmenu)"
 
 
 case $menu in
     *Poweroff*) systemctl poweroff;;
     *Reboot*) systemctl reboot;;
-    *Logout*) loginctl terminate-user $USER;;
+    # *Logout*) loginctl terminate-user $USER;;
     *Suspend* ) lock & (sleep 1 && systemctl suspend);;
     *Lock*) lock;;
     *Hibernate* ) systemctl hibernate;;
