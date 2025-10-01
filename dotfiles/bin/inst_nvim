@@ -3,7 +3,7 @@
 (command -v curl) || (sudo apt install curl || sudo dnf install curl || sudo pacman -S curl)
 
 # Download the release
-curl -OL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_x64.tar.gz
+curl -OL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 
 # Create app dir if not exists
 if ! [ -d $HOME/Applications/other/ ]; then
@@ -13,7 +13,7 @@ fi
 # Extract to specified directory
 tar xzvf nvim-linux-x86_x64.tar.gz -C $HOME/Applications/other/
 
-rm nvim-linux64.tar.gz;
+rm nvim-linux-x86_64.tar.gz;
 
 if ! [ -f $HOME/.local/bin/nvim ]; then
     ln -s $HOME/Applications/other/nvim-linux64/bin/nvim $HOME/.local/bin/nvim
