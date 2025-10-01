@@ -11,7 +11,7 @@ if ! [ -d $HOME/Applications/other/ ]; then
 fi
 
 # Extract to specified directory
-tar xzvf nvim-linux-x86_x64.tar.gz -C $HOME/Applications/other/
+tar xzvf nvim-linux-x86_64.tar.gz -C $HOME/Applications/other/
 
 rm nvim-linux-x86_64.tar.gz;
 
