@@ -9,6 +9,15 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true -- CTRL-V Tab to insert real tab
 
 
+-- Helper functions
+-- This function checks if a file exists
+-- @param name File name to check
+function file_exsits(name)
+    local file = io.open(name,"r")
+    return file ~= nil and io.close(file)
+end
+
+
 -- Nerdfont exists
 vim.g.have_nerd_font = true
 
@@ -82,6 +91,11 @@ require("config.lazy")
 
 -- Load keybindings
 require("config.remap")
+
+-- Custom config
+if file_exsits(os.getenv("HOME") .. "/.config/nvim/lua/customized.lua") then
+  require("customized")
+end
 
 
 -- Highlight LSP-References
