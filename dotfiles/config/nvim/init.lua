@@ -114,5 +114,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 
-
+-- Settings for vimwiki
+vim.opt.compatible = false
 
