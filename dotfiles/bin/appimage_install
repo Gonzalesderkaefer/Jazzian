@@ -33,8 +33,22 @@ if ! [[ -e ${appimage_directory} ]]; then
 fi
 
 # Get the program name from user
-printf "Enter name of the program: "
+printf "Enter the name of the program: "
 read program_name
+
+
+# Get the executable name from user
+printf "Enter the name of the executable: "
+read exec_name
+
+# Check if the file already exists
+while [[ -e "$HOME/.local/bin/${exec_name}" ]]; do
+    printf "%s already exists Enter a different name: " ${exec_name}
+    read exec_name
+done
+
+# full path to executable
+full_exec_name="$HOME/.local/bin/${exec_name}"
 
 # Create new dir for the program
 if ! [[ -d ${appimage_directory}/${program_name} ]]; then
@@ -63,4 +77,5 @@ cp -R squashfs-root/usr/share/icons/* ~/.local/share/icons
 mkdir -p ${HOME}/.local/share/applications/
 mv ${program_name}.desktop ${HOME}/.local/share/applications/${program_name}.desktop
 
-
+# Create link to Appimage
+ln -s "${appimage_directory}/${program_name}/${appimage_name}" "$HOME/.local/bin/${exec_name}"
