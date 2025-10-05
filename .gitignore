@@ -30,3 +30,6 @@ newsboat*
 
 # Default niri config
 /dotfiles/config/niri/config.kdl
+
+# For the installer program
+/target
