@@ -2,11 +2,6 @@ return {
     -- nvim-lspconfig
     {
         "neovim/nvim-lspconfig",
-        config = function()
-            -- This is mostly the default config for clangd
-            --require("lspconfig").clangd.setup {}
-            --require("lspconfig").rust_analyzer.setup {}
-        end,
     },
 
 
@@ -30,7 +25,8 @@ return {
             -- Setup LSPs installed from Mason automatically
             require("mason-lspconfig").setup {
                 function(server_name)
-                    require("lspconfig")[server_name].setup {}
+                    --require("lspconfig")[server_name].setup {}
+                    vim.lsp.enable(server_name)
                 end,
 
             }
