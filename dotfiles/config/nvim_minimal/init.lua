@@ -1,59 +1,38 @@
---[[
--- This is just a modularized and version of kickstart.nvim
--- Here is the original: https://github.com/nvim-lua/kickstart.nvim
---]]
+-- Set leader to space
+vim.g.mapleader = ' '
+vim.maplocalleader = ' '
 
+-- Tabbing
+vim.opt.tabstop = 8
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true -- CTRL-V Tab to insert real tab
+
+
+-- Helper functions
 -- This function checks if a file exists
 -- @param name File name to check
 function file_exsits(name)
-  local file = io.open(name,"r")
-  return file ~= nil and io.close(file)
+    local file = io.open(name,"r")
+    return file ~= nil and io.close(file)
 end
 
 
-
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
--- Tab stuff
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-
--- Set to true if you have a Nerd Font installed and selected in the terminal
+-- Nerdfont exists
 vim.g.have_nerd_font = true
 
--- [[ Setting options ]]
--- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
 
--- Make line numbers default
+-- Enable number lines
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
 
--- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
-
--- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
-
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
+-- clipboard between OS and nvim is synced
 vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
+    vim.opt.clipboard = 'unnamedplus'
 end)
 
--- Enable break indent
+-- Make line wraps vertically aligned
 vim.opt.breakindent = true
+
 
 -- Save undo history
 vim.opt.undofile = true
@@ -75,13 +54,11 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
+-- How to display certain characters
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
--- Preview substitutions live, as you type!
+-- substitutions while typing
 vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
@@ -90,46 +67,73 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- linelength indicator
+-- vim.opt.colorcolumn = "160"
 
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
+-- Set key timeout
+vim.opt.timeoutlen = 2000
+
+
+-- Highlight when yanking
 vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
   end,
 })
 
 
-require("remap")
+-- Turn on virtual text
+vim.diagnostic.config({ virtual_text = true })
 
+-- Lazy plugin manager in lua/config/lazy.lua
+require("config.lazy")
+
+-- Load keybindings
+require("config.remap")
+
+-- Custom config
 if file_exsits(os.getenv("HOME") .. "/.config/nvim/lua/customized.lua") then
   require("customized")
 end
 
 
+-- Highlight LSP-References
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(event)
+        local highlight_group = vim.api.nvim_create_augroup('highlight', { clear = false })
+        -- Acutally highlight them
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+            buffer = event.buf,
+            group = highlight_group,
+            callback = vim.lsp.buf.document_highlight,
+        })
 
+        -- 'Unhighlight' them
+        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+            buffer = event.buf,
+            group = highlight_group,
+            callback = vim.lsp.buf.clear_references,
+        })
 
---[[ Install `lazy.nvim` plugin manager ]]
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    error("Error cloning lazy.nvim:\n" .. out)
-  end
-end ---@diagnostic disable-next-line: undefined-field
-vim.opt.rtp:prepend(lazypath)
+        -- cleanup autocmds
+        vim.api.nvim_create_autocmd('LspDetach', {
+          callback = function(other_event)
+            vim.lsp.buf.clear_references()
+            vim.api.nvim_clear_autocmds { group = 'highlight', buffer = other_event.buf }
+          end,
+        })
 
--- [[ Configure and install plugins ]]
-require("lazy").setup({
-  -- Custom plugins
-  spec = {
-    { import = "plugins" },
-  }
+    end,
 })
+
+
+-- Settings for vimwiki
+vim.opt.compatible = false
+
+
+require("lsp_config.clangd")
+require("lsp_config.lua_ls")
+
+vim.lsp.enable("clangd")
+vim.lsp.enable("lua_ls")
