@@ -1,0 +1,22 @@
+export TERMINAL="myterm"
+export TERM='xterm-256color'
+export WLR_NO_HARDWARE_CURSORS=1
+export MOZ_ENABLE_WAYLAND=1
+
+## NNN  Configuration
+export NNN_PLUG='D:mkdir.sh;x:extract.sh;d:trash.sh;c:checksum.sh'
+export NNN_TMPFILE=/tmp/.lastd
+
+# Nvim as manpager
+export MANPAGER='nvim +Man!'
+
+
+# Set editor
+if (command -v nvim) > /dev/null; then
+    export EDITOR=$(which nvim); 
+else
+    export EDITOR=$(which vim); 
+fi
+
+
+. "$HOME/.customenv"

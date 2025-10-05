@@ -1,0 +1,23 @@
+#!/bin/sh
+
+file="$HOME/Pictures/screenshots/"$(date | sed  "s/\s/_/g")".png"
+
+if ! [ -d $HOME/Pictures/screenshots ]; then
+    mkdir -p $HOME/Pictures/screenshots;
+fi
+
+case $XDG_SESSION_TYPE in
+    "wayland")
+        case $1 in
+            "select")
+                grim -g "$(slurp)" $file && notify-send "saved screenshot to $file"
+                ;;
+            *)
+                grim $file && notify-send "saved screenshot to $file"
+                ;;
+        esac
+        ;;
+    *)
+	maim $file && notify-send "saved screenshot to $file"
+        ;;
+esac

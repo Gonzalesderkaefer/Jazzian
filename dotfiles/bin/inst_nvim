@@ -1,0 +1,20 @@
+#!/usr/bin/sh
+
+(command -v curl) || (sudo apt install curl || sudo dnf install curl || sudo pacman -S curl)
+
+# Download the release
+curl -OL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+
+# Create app dir if not exists
+if ! [ -d $HOME/Apps/other ]; then
+    mkdir -p $HOME/Apps/other;
+fi
+
+# Extract to specified directory
+tar xzvf nvim-linux-x86_64.tar.gz -C $HOME/Apps/other/
+
+rm nvim-linux-x86_64.tar.gz;
+
+ln -sf $HOME/Apps/other/nvim-linux-x86_64/bin/nvim $HOME/.local/nvim
+
+
