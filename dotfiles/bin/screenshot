@@ -10,7 +10,9 @@ case $XDG_SESSION_TYPE in
     "wayland")
         case $1 in
             "select")
-                grim -g "$(slurp)" $file && notify-send "saved screenshot to $file"
+                dim=$(slurp)
+                grim -g "${dim}" $file && notify-send "saved screenshot to $file"
+                grim -g "${dim}" -t png - | wl-copy -t image/png
                 ;;
             *)
                 grim $file && notify-send "saved screenshot to $file"
