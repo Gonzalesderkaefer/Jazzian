@@ -63,6 +63,7 @@ pub const _DEB_XORG: &'static[&'static str] = &[
     "xwallpaper",
     "rxvt-unicode",
     "nitrogen",
+    "slop",
 ];
 
 pub const DEB_XORG: &'static[&'static str] = crate::concat_packages!(&[&str]: DEB_GUI, _DEB_XORG);
@@ -175,6 +176,7 @@ pub const _FED_XORG: &'static[&'static str] = &[
     "i3lock",
     "rxvt-unicode",
     "nitrogen",
+    "slop",
 ];
 pub const FED_XORG: &'static[&'static str] = crate::concat_packages!(&[&str]: FED_GUI, _FED_XORG);
 
@@ -297,6 +299,7 @@ pub const _ARCH_XORG: &'static[&'static str] = &[
     "i3lock",
     "rxvt-unicode",
     "nitrogen",
+    "slop",
 ];
 pub const ARCH_XORG: &'static[&'static str] = crate::concat_packages!(&[&str]: ARCH_GUI, _ARCH_XORG);
 

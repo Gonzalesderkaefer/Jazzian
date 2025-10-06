@@ -12,7 +12,7 @@ case $XDG_SESSION_TYPE in
             "select")
                 dim=$(slurp)
                 grim -g "${dim}" $file && notify-send "saved screenshot to $file"
-                grim -g "${dim}" -t png - | wl-copy -t image/png
+                grim -g "${dim}" -t png - | wl-copy
                 ;;
             *)
                 grim $file && notify-send "saved screenshot to $file"
@@ -20,6 +20,15 @@ case $XDG_SESSION_TYPE in
         esac
         ;;
     *)
-	maim $file && notify-send "saved screenshot to $file"
+        case $1 in
+            "select")
+                dim=$(slop)
+                maim -g "${dim}" $file && notify-send "saved screenshot to $file"
+                maim -g "${dim}" -t png - | wl-copy
+                ;;
+            *)
+                maim $file && notify-send "saved screenshot to $file"
+                ;;
+        esac
         ;;
 esac
