@@ -134,6 +134,6 @@ vim.opt.compatible = false
 
 require("lsp_config.clangd")
 require("lsp_config.lua_ls")
-
-vim.lsp.enable("clangd")
-vim.lsp.enable("lua_ls")
+-- 
+-- vim.lsp.enable("clangd")
+-- vim.lsp.enable("lua_ls")
