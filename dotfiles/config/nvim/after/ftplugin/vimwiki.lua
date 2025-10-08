@@ -5,9 +5,6 @@ function file_exsits(name)
     return file ~= nil and io.close(file)
 end
 
---print(file_exsits(vim.fn.expand('%:p:h') .. "/Makefile"))
-
-
 vim.api.nvim_create_autocmd({"BufWritePost"}, {
     pattern = {"*"},
     callback = function()
@@ -16,6 +13,4 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
             vim.cmd("!make")
         end
     end,
-
-
 })

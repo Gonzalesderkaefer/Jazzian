@@ -1,81 +1,143 @@
 #!/usr/bin/env bash
 
-
-# Save path to appimage
-appimage_path=$(pwd)/${1}
-
-# Path to appimage directory
-appimage_directory="${HOME}/Apps/AppImages"
-
-# Save name of appimage
-appimage_name=$(basename ${1})
-
-# Save current working directory
-cwd=$(pwd)
+# color variables
+green="\033[0;32m";
+red="\033[0;31m";
+end="\033[0m";
 
 
-# Check if the file exists
-if ! [[ -e ${appimage_path} ]]; then
-    printf "File \"%s\" not found.\n" ${appimage_path}
-    exit 1
-fi
+install() {
+    # Save path to appimage
+    appimage_path=$(pwd)/${1}
+
+    # Path to appimage directory
+    appimage_directory="${HOME}/Apps/AppImages"
+
+    # Save name of appimage
+    appimage_name=$(basename ${1})
+
+    # Save current working directory
+    cwd=$(pwd)
 
 
-# Check if the file exists
-if [[ -d ${appimage_path} ]]; then
-    printf "File \"%s\" is a directory.\n" ${appimage_path}
-    exit 1
-fi
-
-# Create appimage directory if necessary
-if ! [[ -e ${appimage_directory} ]]; then
-    mkdir -p ${appimage_directory}
-fi
-
-# Get the program name from user
-printf "Enter the name of the program: "
-read program_name
+    # Check if the file exists
+    if ! [[ -e ${appimage_path} ]]; then
+        printf "File \"%s\" not found.\n" ${appimage_path}
+        exit 1
+    fi
 
 
-# Get the executable name from user
-printf "Enter the name of the executable: "
-read exec_name
+    # Check if the file exists
+    if [[ -d ${appimage_path} ]]; then
+        printf "File \"%s\" is a directory.\n" ${appimage_path}
+        exit 1
+    fi
 
-# Check if the file already exists
-while [[ -e "$HOME/.local/bin/${exec_name}" ]]; do
-    printf "%s already exists Enter a different name: " ${exec_name}
+    # Create appimage directory if necessary
+    if ! [[ -e ${appimage_directory} ]]; then
+        mkdir -p ${appimage_directory}
+    fi
+
+    # Get the program name from user
+    printf "Enter the name of the program: "
+    read program_name
+
+
+    # Get the executable name from user
+    printf "Enter the name of the executable: "
     read exec_name
-done
 
-# full path to executable
-full_exec_name="$HOME/.local/bin/${exec_name}"
+    # Check if the file already exists
+    while [[ -e "$HOME/.local/bin/${exec_name}" ]]; do
+        printf "%s already exists Enter a different name: " ${exec_name}
+        read exec_name
+    done
 
-# Create new dir for the program
-if ! [[ -d ${appimage_directory}/${program_name} ]]; then
-    mkdir -p ${appimage_directory}/${program_name}
-fi
+    # full path to executable
+    full_exec_name="$HOME/.local/bin/${exec_name}"
 
-# Copy appimage to the new directory
-cp ${appimage_path} ${appimage_directory}/${program_name}
+    # Create new dir for the program
+    if ! [[ -d ${appimage_directory}/${program_name} ]]; then
+        mkdir -p ${appimage_directory}/${program_name}
+    fi
 
-# Change director to newly created directory
-cd ${appimage_directory}/${program_name}
+    # Copy appimage to the new directory
+    cp ${appimage_path} ${appimage_directory}/${program_name}
 
-# Extract AppImage
-chmod +x ${appimage_name}
-./${appimage_name} --appimage-extract
+    # Change director to newly created directory
+    cd ${appimage_directory}/${program_name}
 
-# Create new .desktop file
-replace=$(pwd | sed 's/\//\\\//g') 
-sed "s/Exec=.*/Exec=$replace\/$appimage_name/g" squashfs-root/*.desktop > ${program_name}.desktop
+    # Extract AppImage
+    chmod +x ${appimage_name}
+    ./${appimage_name} --appimage-extract
 
-# Copy icons
-cp -R squashfs-root/usr/share/icons/* ~/.local/share/icons 
+    # Create new .desktop file
+    replace=$(pwd | sed 's/\//\\\//g') 
+    sed "s/Exec=.*/Exec=$replace\/$appimage_name/g" squashfs-root/*.desktop > ${program_name}.desktop
+
+    # Copy icons
+    cp -R squashfs-root/usr/share/icons/* ~/.local/share/icons 
 
 
-# Move deskop file
-mkdir -p ${HOME}/.local/share/applications/
-mv ${program_name}.desktop ${HOME}/.local/share/applications/${program_name}.desktop
+    # Move deskop file
+    mkdir -p ${HOME}/.local/share/applications/
+    mv ${program_name}.desktop ${HOME}/.local/share/applications/${program_name}.desktop
 
-# Create link to Appimage
-ln -s "${appimage_directory}/${program_name}/${appimage_name}" "$HOME/.local/bin/${exec_name}"
+    # Create link to Appimage
+    ln -s "${appimage_directory}/${program_name}/${appimage_name}" "$HOME/.local/bin/${exec_name}"
+}
+
+update() {
+    # Save path to appimage
+    appimage_path=$(pwd)/${1}
+
+    # Path to appimage directory
+    appimage_directory="${HOME}/Apps/AppImages"
+
+    # Save name of appimage
+    appimage_name=$(basename ${1})
+
+    # Save current working directory
+    cwd=$(pwd)
+
+    # Collect all the Installed appimages
+    installed_appimages=()
+    appimage_counter=1
+
+    # Print the menu
+    for file in ${HOME}/Apps/AppImages/*; do
+        installed_appimages+=($file);
+        echo "[$appimage_counter] $(basename $file)";
+        appimage_counter=$((appimage_counter+1));
+    done
+
+    echo -ne "${green}Which drive would you like to use? ${end}";
+    read appimage_choice;
+
+
+    # Check input is valid
+    while [[ ! $appimage_choice =~ [[:digit:]]+ ]] || [[ ! $((appimage_choice-1)) < ${#installed_appimages[@]} ]] || (( $((appimage_choice-1)) < 0 )); do
+        echo -ne "${red}Not valid, enter valid index: ${end}";
+        read appimage_choice;
+    done
+
+    chosen_appimage_path=${installed_appimages[appimage_choice - 1]}
+
+
+    # Remove old AppImage
+    rm "${chosen_appimage_path}/*.Appimage"
+    rm "${chosen_appimage_path}/*.AppImage"
+
+    # Copy the appimage
+    chmod +x ${appimage_path}
+    cp ${appimage_path} ${chosen_appimage_path}
+}
+
+case $1 in
+    "update")
+        update $2
+        ;;
+    "install")
+        install $2
+        ;;
+esac
