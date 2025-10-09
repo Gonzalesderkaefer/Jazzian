@@ -39,6 +39,9 @@ return {
 
                 ['<C-Space>'] = cmp.mapping.complete {},
 
+                ['<Tab>'] = function()
+                    require("luasnip").jump(1)
+                end,
             },
             sources = {
                 { name = 'nvim_lsp' },
