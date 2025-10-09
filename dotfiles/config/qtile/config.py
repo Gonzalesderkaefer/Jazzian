@@ -40,7 +40,7 @@ powermenu = "powermenu"
 # Start picom
 @hook.subscribe.startup_once
 def autostart():
-    subprocess.call("picom &")
+    subprocess.run("x11startup")
 
 # Custom functions
 
@@ -131,7 +131,7 @@ keys = [
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "d", lazy.spawn(applauncher), desc="Spawn a Applauncher"),
+    Key([mod], "p", lazy.spawn(applauncher), desc="Spawn a Applauncher"),
     Key(["mod1"], "F4", lazy.spawn(powermenu), desc="Spawn a Powermenu"),
 
 
