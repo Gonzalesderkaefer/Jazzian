@@ -5,8 +5,8 @@ picom &
 
 ### Launching Tray elements
 nm-applet &
-### Load Xresources file
-xrdb $HOME/.Xresources
+
+nitrogen --restore
 
 ## launch devicepecific stuff
 if [ -f $HOME/.config/qtile/customized/customized.sh ]; then

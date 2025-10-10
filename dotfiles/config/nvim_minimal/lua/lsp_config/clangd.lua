@@ -5,6 +5,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.lsp.start({
       name = 'clangd',
       cmd = { 'clangd' },
+      capabilities = require("blink.cmp").get_lsp_capabilities(),
 
       -- Set the "root directory" to the parent directory of the file in the
       -- current buffer (`ev.buf`) that contains either a "setup.py" or a

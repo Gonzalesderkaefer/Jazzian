@@ -181,6 +181,10 @@ bindsym $mod+w layout toggle split tabbed
 ### Kill current window
 bindsym $mod+q kill
 
+
+### Kill current window
+bindsym $mod+Shift+q exit
+
 ### Take screenshot 
 bindsym $mod+s exec screenshot
 
