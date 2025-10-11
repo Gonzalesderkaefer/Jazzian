@@ -442,42 +442,42 @@ pub fn move_dir<P: AsRef<Path>>(src: P, dest: P, method: Transfer, hide: bool) -
         }
 
 
-        match method {
-            Transfer::Link => {
-                if dest_dir_path.as_path().exists() {
+        if dest_dir_path.as_path().exists() {
+            match method {
+                Transfer::Link => {
                     match std::os::unix::fs::symlink(source_dir_path, dest_dir_path) {
                         Ok(_) => {},
                         Err(error) => return Err(FileUtilErr::IO(error, line!(), file!()))
                     }
-                }
-            },
-            Transfer::Copy => {
-                // Check if source is directory
-                if opened_file_type.is_dir() {
-                    copy_dir(source_dir_path, dest_dir_path)?;
-                } else if opened_file_type.is_symlink() {
-                    // Get the target of the link
-                    let target_path = match fs::read_link(source_dir_path) {
-                        Ok(path) => path,
-                        Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
-                    };
+                },
+                Transfer::Copy => {
+                    // Check if source is directory
+                    if opened_file_type.is_dir() {
+                        copy_dir(source_dir_path, dest_dir_path)?;
+                    } else if opened_file_type.is_symlink() {
+                        // Get the target of the link
+                        let target_path = match fs::read_link(source_dir_path) {
+                            Ok(path) => path,
+                            Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
+                        };
 
-                    // Create the new symlink
-                    match std::os::unix::fs::symlink(target_path, dest_dir_path) {
-                        Ok(_) => {},
-                        Err(error) => return Err(FileUtilErr::IO(error, line!(), file!()))
+                        // Create the new symlink
+                        match std::os::unix::fs::symlink(target_path, dest_dir_path) {
+                            Ok(_) => {},
+                            Err(error) => return Err(FileUtilErr::IO(error, line!(), file!()))
+                        }
+
+
+
+                    }else if opened_file_type.is_file() {
+                        match fs::copy(&source_dir_path, dest_dir_path) {
+                            Ok(_) => {},
+                            Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
+                        };
                     }
-
-
-
-                }else if opened_file_type.is_file() {
-                    match fs::copy(&source_dir_path, dest_dir_path) {
-                        Ok(_) => {},
-                        Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
-                    };
-                }
-            },
-            Transfer::None => return Ok(())
+                },
+                Transfer::None => return Ok(())
+            }
         }
     }
     Ok(())
