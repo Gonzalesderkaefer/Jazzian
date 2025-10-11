@@ -442,7 +442,7 @@ pub fn move_dir<P: AsRef<Path>>(src: P, dest: P, method: Transfer, hide: bool) -
         }
 
 
-        if dest_dir_path.as_path().exists() {
+        if ! dest_dir_path.as_path().exists() {
             match method {
                 Transfer::Link => {
                     match std::os::unix::fs::symlink(source_dir_path, dest_dir_path) {
