@@ -18,5 +18,8 @@ else
     export EDITOR=$(which vim); 
 fi
 
+# So that lib adawita apps are dark
+export ADW_DISABLE_PORTAL=1
 
+# Custom environment variables
 . "$HOME/.customenv"
