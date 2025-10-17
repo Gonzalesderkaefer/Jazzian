@@ -1,8 +1,21 @@
-#!/bin/sh
-#
+#!/usr/bin/env bash
 
-ROOT_SPACE="$(df -H | grep -E "/$" | awk '{print $3}')"
-HOME_SPACE="$(df -H | grep -E "/home$" | awk '{print $3}')"
+# Get relevant df entries
+rootentry=$(df -TH | grep -E '/$')
+homeentry=$(df -TH | grep -E '/home$')
 
-[ -n "$HOME_SPACE" ] &&  echo "$ROOT_SPACE   $HOME_SPACE  " || echo "$ROOT_SPACE  "
+# Get Filesystems
+rootfs=$(echo ${rootentry} | awk '{print $1}')
+homefs=$(echo ${homeentry} | awk '{print $1}')
+
+# Get used space
+rootused=$(echo ${rootentry} | awk '{print $4}')
+homeused=$(echo ${homeentry} | awk '{print $4}')
+
+if [[ ${rootfs} == ${homefs} ]] || [[ -z ${homefs} ]]; then
+    printf "${rootused}  \n"
+else
+    printf "${rootused}  ${homeused}  \n";
+fi
+
 
