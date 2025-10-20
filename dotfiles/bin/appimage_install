@@ -78,6 +78,8 @@ install() {
     # Copy icons
     cp -R squashfs-root/usr/share/icons/* ~/.local/share/icons 
 
+    # Remove squashfs
+    rm -rf squashfs-root
 
     # Move deskop file
     mkdir -p ${HOME}/.local/share/applications/
@@ -85,6 +87,9 @@ install() {
 
     # Create link to Appimage
     ln -s "${appimage_directory}/${program_name}/${appimage_name}" "$HOME/.local/bin/${exec_name}"
+
+    # Go back
+    cd $cwd
 }
 
 update() {
@@ -125,8 +130,7 @@ update() {
 
 
     # Remove old AppImage
-    rm "${chosen_appimage_path}/*.Appimage"
-    rm "${chosen_appimage_path}/*.AppImage"
+    rm -rf "${chosen_appimage_path}/*"
 
     # Copy the appimage
     chmod +x ${appimage_path}
