@@ -70,6 +70,9 @@ vim.opt.scrolloff = 10
 -- linelength indicator
 -- vim.opt.colorcolumn = "160"
 
+-- status line
+vim.cmd("hi StatusLine guibg=NONE ctermbg=NONE guifg=#FFFFFF")
+
 
 -- Set key timeout
 vim.opt.timeoutlen = 2000
