@@ -131,7 +131,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- Settings for vimwiki
 vim.opt.compatible = false
 
-
 require("lsp_config.clangd")
 require("lsp_config.lua_ls")
 -- 
