@@ -195,6 +195,14 @@ gd() {
     cd ${dir}
 }
 
+
+tmux_fzf_window() {
+    window_list=$(tmux list-windows -F '#{window_index} #{window_name}')
+    window_index=$(echo "$window_list" | fzf | awk '{ print $1 }')
+    tmux select-window -t $window_index
+}
+
+
 ## devicerc
 if [ -f $HOME/.customrc ]; then
     source $HOME/.customrc
