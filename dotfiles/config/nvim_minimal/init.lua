@@ -74,6 +74,8 @@ vim.opt.scrolloff = 10
 -- Set key timeout
 vim.opt.timeoutlen = 2000
 
+-- status line
+vim.cmd("hi StatusLine guibg=NONE ctermbg=NONE guifg=#FFFFFF")
 
 -- Highlight when yanking
 vim.api.nvim_create_autocmd('TextYankPost', {
