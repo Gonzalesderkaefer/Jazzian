@@ -1,6 +1,6 @@
 vim.api.nvim_create_autocmd('FileType', {
   -- This handler will fire when the buffer's 'filetype' is "python"
-  pattern = 'c',
+  pattern = {'c'},
   callback = function(ev)
     vim.lsp.start({
       name = 'clangd',
