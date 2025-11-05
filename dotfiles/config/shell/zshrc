@@ -205,7 +205,7 @@ tmux_fzf_window() {
 tmux_new_window_with_name() {
     printf "Name: "
     read window_name
-    tmux new-window -n $window_name
+    [[ -z $window_name ]] && tmux new-window || tmux new-window -n $window_name
 }
 
 

@@ -1,38 +1,25 @@
--- This config is taken from 'nvim-lspconfig'
-vim.lsp.config['clangd'] = {
-    cmd = { 'clangd' },
-    filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
-    root_markers = {
-        '.clangd',
-        '.clang-tidy',
-        '.clang-format',
-        'compile_commands.json',
-        'compile_flags.txt',
-        'configure.ac', -- AutoTools
-        '.git',
-    },
-    capabilities = {
-        textDocument = {
-            completion = {
-                editsNearCursor = true,
-            },
-        },
-        offsetEncoding = { 'utf-8', 'utf-16' },
-    },
-    ---@param init_result ClangdInitializeResult
-    on_init = function(client, init_result)
-        if init_result.offsetEncoding then
-            client.offset_encoding = init_result.offsetEncoding
-        end
-    end,
+vim.api.nvim_create_autocmd('FileType', {
+  -- This handler will fire when the buffer's 'filetype' is "python"
+  pattern = {'c'},
+  callback = function(ev)
+    vim.lsp.start({
+      name = 'clangd',
+      cmd = { 'clangd' },
+      -- capabilities = require("blink.cmp").get_lsp_capabilities(),
 
-    on_attach = function(client, bufnr)
-        vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdSwitchSourceHeader', function()
-            switch_source_header(bufnr, client)
-        end, { desc = 'Switch between source/header' })
-
-        vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdShowSymbolInfo', function()
-            symbol_info(bufnr, client)
-        end, { desc = 'Show symbol info' })
-    end,
-}
+      -- Set the "root directory" to the parent directory of the file in the
+      -- current buffer (`ev.buf`) that contains either a "setup.py" or a
+      -- "pyproject.toml" file. Files that share a root directory will reuse
+      -- the connection to the same LSP server.
+      root_dir = vim.fs.root(ev.buf, {
+          '.clangd',
+          '.clang-tidy',
+          '.clang-format',
+          'compile_commands.json',
+          'compile_flags.txt',
+          'configure.ac', -- AutoTools
+          '.git',
+      }),
+    })
+  end,
+})
