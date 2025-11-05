@@ -202,6 +202,12 @@ tmux_fzf_window() {
     tmux select-window -t $window_index
 }
 
+tmux_new_window_with_name() {
+    printf "Name: "
+    read window_name
+    tmux new-window -n $window_name
+}
+
 
 ## devicerc
 if [ -f $HOME/.customrc ]; then
