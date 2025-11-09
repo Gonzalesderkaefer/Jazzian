@@ -386,8 +386,7 @@ pub fn move_dir<P: AsRef<Path>>(src: P, dest: P, method: Transfer, hide: bool) -
 
     // Open source_dir
     let source_dir = match fs::read_dir(&src) {
-        Ok(dir) => dir,
-        Err(e) => { 
+        Ok(dir) => dir, Err(e) => { 
             return Err(FileUtilErr::IO(e, line!(), file!())); 
         },
     };
@@ -473,3 +472,68 @@ pub fn move_dir<P: AsRef<Path>>(src: P, dest: P, method: Transfer, hide: bool) -
     }
     Ok(())
 }
+
+
+
+
+
+
+
+#[allow(dead_code)]
+pub fn find_file<P: AsRef<Path>>(search_string: &str, search_directory_path: P) -> bool {
+    // Check if search_directory exists
+    match fs::exists(&search_directory_path) {
+        Ok(false) => return false ,
+        Err(_) => return false,
+        _ => {},
+    }
+
+    // Open source_dir
+    let search_dir = match fs::read_dir(&search_directory_path) {
+        Ok(dir) => dir, Err(_) => {
+            return false; 
+        },
+    };
+
+    // Iterate through dir
+    for dir_element in search_dir {
+        let dirent = match dir_element {
+            Ok(element) => element,
+            Err(_) => continue,
+        };
+
+        // Get the name of the element
+        let elem_name_os_str = dirent.file_name();
+        let element_name = match elem_name_os_str.to_str() {
+            Some(name_of_elem) => name_of_elem,
+            None => continue,
+        };
+
+        // Check if search string is contained by the file_name
+        if let Some(_) = element_name.find(search_string) {
+            return true;
+        }
+
+
+        // Get the file_type of the opened_entry
+        let file_type = match dirent.file_type() {
+            Ok (file_type) => file_type,
+            Err(_) => continue,
+        };
+
+        // If the element is a directory search in that directory
+        if file_type.is_dir() {
+            let mut sub_path = PathBuf::new();
+            sub_path.push(&search_directory_path);
+            sub_path.push(element_name);
+            if find_file(search_string, sub_path) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
+
+

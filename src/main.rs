@@ -174,6 +174,3 @@ fn create_and_write_user<P: AsRef<Path> + Clone, C: AsRef<[u8]>>(new_file: P, co
 
 }
 */
-
-
-
