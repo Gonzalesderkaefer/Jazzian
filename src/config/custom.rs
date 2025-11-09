@@ -35,6 +35,8 @@ pub static MYTERM_CONTENT: &'static str = "#!/bin/sh\n\
 
 pub static X11STARTUP: &'static str = "#!/usr/bin/bash\n";
 
+pub static WLSTARTUP: &'static str = "#!/usr/bin/bash\n";
+
 
 pub static GTK3_CONFIG: &'static str = "[Settings]\n\
                     gtk-theme-name=Adwaita-dark\n\
@@ -60,6 +62,9 @@ pub static CUSTOMIZED: &'static [(&str, &str, u32)] =
 
     // X11 Startup
     (".local/bin/x11startup", X11STARTUP, 0o755),
+
+    // Wayland Startup (window managers only)
+    (".local/bin/wlstartup", WLSTARTUP, 0o755),
 
     // Myterm
     (".local/bin/myterm", MYTERM_CONTENT, 0o755),
