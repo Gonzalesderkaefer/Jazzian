@@ -176,6 +176,9 @@ pub const DEBIAN: distro::Distro = distro::Distro {
                 if let Some(home_str) = home.to_str() {
                     cmd("tar", &["xJvf", "JetBrainsMono.tar.xz", "-C", home_str]);
                 }
+
+                // Delete the downloaded archive
+                let _ = fs::remove_file("JetBrainsMono.tar.xz");
             }
         }
     },
@@ -208,6 +211,9 @@ pub const FEDORA: distro::Distro = distro::Distro {
                 if let Some(home_str) = home.to_str() {
                     cmd("tar", &["xJvf", "JetBrainsMono.tar.xz", "-C", home_str]);
                 }
+
+                // Delete the downloaded archive
+                let _ = fs::remove_file("JetBrainsMono.tar.xz");
             }
         }
     },
