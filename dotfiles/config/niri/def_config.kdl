@@ -260,6 +260,7 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "barcmd"
+spawn-at-startup "wlstartup"
 
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -363,8 +364,8 @@ binds {
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
     // Brightness
-    XF86MonBrightnessUp                         { spawn "brightnessctl set 10%+"; }
-    XF86MonBrightnessDown                       { spawn "brightnessctl set 10%-"; }
+    XF86MonBrightnessUp                         { spawn "brightnessctl" "set" "10%+"; }
+    XF86MonBrightnessDown                       { spawn "brightnessctl" "set" "10%-"; }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
