@@ -5,11 +5,11 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.lsp.start({
             cmd = { 'rust-analyzer' },
             filetypes = { 'rust' },
-              root_dir = vim.fs.root(ev.buf, {
-                  'Cargo.toml',
-                  'Cargo.lock',
-                  '.git',
-              }),
+            root_dir = vim.fs.root(ev.buf, {
+                'Cargo.toml',
+                'Cargo.lock',
+                '.git',
+            }),
 
             capabilities = {
                 experimental = {
