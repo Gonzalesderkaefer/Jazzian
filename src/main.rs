@@ -30,6 +30,11 @@ fn run() -> Result<(), JazzyErr>{
         None => return Err(JazzyErr::NoHome(line!(), file!())),
     };
 
+    let shell = match std::env::var("SHELL") {
+        Ok(shell) => shell,
+        Err(_) => String::from("/usr/bin/bash"),
+    };
+
     let home_str = match home_dir.to_str() {
         Some(string) => string,
         None => return Err(JazzyErr::NoHome(line!(), file!())),
@@ -89,11 +94,12 @@ fn run() -> Result<(), JazzyErr>{
     print!("{}[2J", 27 as char);
 
 
-    // Change the shell
-    println!("{}Changing the shell to zsh. You will be prompted for your user password{}",
-        FgColor!(Green), FgColor!());
-    cmd("chsh", &["-s", "/usr/bin/zsh"]);
-
+    if let None = shell.find("zsh") {
+        // Change the shell
+        println!("{}Changing the shell to zsh. You will be prompted for your user password{}",
+            FgColor!(Green), FgColor!());
+        cmd("chsh", &["-s", "/usr/bin/zsh"]);
+    }
 
     // Enable display server
     match machine.display_server.id {

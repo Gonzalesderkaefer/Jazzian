@@ -60,3 +60,29 @@ pub fn cmd<S: AsRef<OsStr>>(command: S, args: &[S]) -> Result<(), CommandError> 
         },
     }
 }
+
+
+
+
+/// Execute a command. The parent proc waits until the Sub process has finished executing
+pub fn eval<S: AsRef<OsStr>>(command: S, args: &[S]) -> Result<String, CommandError> {
+    // Create the new command
+    let mut binding = Command::new(command);
+    let new_cmd = binding.args(args).output();
+
+
+    // Spawn the new process
+    match new_cmd {
+        Ok(output) => {
+            let stdout = output.stdout;
+            let out_as_string = match String::try_from(stdout) {
+                Ok(out) => out,
+                Err(_) => todo!(), // Not sure how to handle this
+            };
+            return Ok(out_as_string);
+
+        }
+        Err(err) => return Err(CommandError::IO(err, line!(), file!())),
+    }
+}
+
