@@ -65,6 +65,7 @@ pub fn cmd<S: AsRef<OsStr>>(command: S, args: &[S]) -> Result<(), CommandError> 
 
 
 /// Execute a command. The parent proc waits until the Sub process has finished executing
+#[allow(dead_code)]
 pub fn eval<S: AsRef<OsStr>>(command: S, args: &[S]) -> Result<String, CommandError> {
     // Create the new command
     let mut binding = Command::new(command);
