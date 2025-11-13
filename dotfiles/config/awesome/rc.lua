@@ -378,7 +378,7 @@ local decr_vol = function ()
 end
 
 local mute_vol = function ()
-    os.execute("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    os.execute("wpctl set-mute @DEFAULT_SINK@ toggle")
     get_output()
     audio_widget:emit_signal("widget::redraw_needed")
 end
