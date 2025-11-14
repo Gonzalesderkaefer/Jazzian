@@ -42,7 +42,7 @@ fn run() -> Result<(), JazzyErr>{
 
 
     // Get the machine
-    let machine = match computer::computer::Machine::get() {
+    let machine = match computer::computer::Computer::get() {
         Ok(mach) => mach,
         Err(error) => return Err(JazzyErr::MachineErr(error, line!(), file!())),
     };

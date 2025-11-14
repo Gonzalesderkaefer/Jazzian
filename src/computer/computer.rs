@@ -22,7 +22,7 @@ use super::transfer::Transfer;
 /// options from the user. This 'machine' is then 'applied' to the computer that it is running
 /// on. This type is built while this program runs.
 #[derive(Debug)]
-pub struct Machine {
+pub struct Computer {
     /// The distro of this machine.
     pub distro: &'static distro::Distro,
 
@@ -67,7 +67,7 @@ impl fmt::Display for MachineError {
 impl Error for MachineError{}
 
 
-impl Machine {
+impl Computer {
     /// Construct a [Machine] from user choices
     pub fn get() -> Result<Self, MachineError> {
         // Get the distro from the system
