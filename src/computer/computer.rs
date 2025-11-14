@@ -5,8 +5,8 @@ use std::{
 };
 
 use crate::config::config::{self, DspServerId, NOWM};
-use crate::machine::dsp_server;
-use crate::machine::window_manager::WindowManager;
+use crate::computer::dsp_server;
+use crate::computer::window_manager::WindowManager;
 use crate::menu;
 use crate::menu::menu::MenuErr;
 use crate::utils::command;

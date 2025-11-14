@@ -1,5 +1,5 @@
 #![allow(unused_imports)]
-mod machine;
+mod computer;
 mod menu;
 mod config;
 mod utils;
@@ -9,11 +9,11 @@ mod utils;
 
 use std::{env::home_dir, ffi::OsStr, io, path::{Path, PathBuf}, result};
 use utils::fileutils as fu;
-use machine::transfer;
+use computer::transfer;
 use config::config as cfg;
 use config::custom as cstm;
 
-use crate::{machine::dsp_server, utils::command as cmd};
+use crate::{computer::dsp_server, utils::command as cmd};
 
 fn main() {
     match run() {
@@ -42,7 +42,7 @@ fn run() -> Result<(), JazzyErr>{
 
 
     // Get the machine
-    let machine = match machine::machine::Machine::get() {
+    let machine = match computer::computer::Machine::get() {
         Ok(mach) => mach,
         Err(error) => return Err(JazzyErr::MachineErr(error, line!(), file!())),
     };
@@ -142,7 +142,7 @@ pub fn movedir<P: AsRef<Path>>(home_dir: &PathBuf, src: P, dest: P, method: &tra
 #[derive(Debug)]
 pub enum JazzyErr {
     IO (io::Error),
-    MachineErr (machine::machine::MachineError, u32, &'static str),
+    MachineErr (computer::computer::MachineError, u32, &'static str),
     FileUtil (fu::FileUtilErr, u32, &'static str),
     NoHome (u32, &'static str),
     Command (cmd::CommandError, u32, &'static str)

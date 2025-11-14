@@ -2,9 +2,9 @@ use std::ffi::OsStr;
 use std::fs;
 use std::path::Path;
 
-use crate::machine::distro;
-use crate::machine::window_manager as wm;
-use crate::machine::dsp_server as display;
+use crate::computer::distro;
+use crate::computer::window_manager as wm;
+use crate::computer::dsp_server as display;
 use super::packages as pkg;
 use super::custom as cstm;
 use crate::utils::fileutils as fu;
