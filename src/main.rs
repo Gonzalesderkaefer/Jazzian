@@ -101,13 +101,32 @@ fn run() -> Result<(), JazzyErr>{
         cmd("chsh", &["-s", "/usr/bin/zsh"]);
     }
 
-    // Enable display server
-    match machine.display_server.id {
-        cfg::DspServerId::Tty => {},
-        _ => {
-            cmd("sudo", &["systemctl", "enable", "sddm"]);
-        }
-    }
+
+    // Check if sddm is enabled if not enable it
+    match cmd::eval("systemctl", &["is-enabled", "sddm"]){
+        Ok(output) => {
+
+            // Compare the output from the eval with "enabled'
+            match output.cmp(&String::from("enabled")) {
+                std::cmp::Ordering::Less => {},
+                std::cmp::Ordering::Equal => {}
+                //  "enabled" is greater than "disabled"
+                std::cmp::Ordering::Greater => {
+                    // Enable display server
+                    match machine.display_server.id {
+                        cfg::DspServerId::Tty => {},
+                        _ => {
+                            cmd("sudo", &["systemctl", "enable", "sddm"]);
+                        }
+                    }
+                },
+            }
+
+
+        },
+        Err(_) => todo!(),
+    };
+
 
 
 
