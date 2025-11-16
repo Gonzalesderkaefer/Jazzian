@@ -1,15 +1,3 @@
--- This config is taken from 'nvim-lspconfig'
-local lua_lsp = {
-    cmd = { "lua-language-server" },
-    filetypes = { "lua" },
-    root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc",
-    ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git" }
-}
-
-
-
-
-
 vim.api.nvim_create_autocmd('FileType', {
     -- This handler will fire when the buffer's 'filetype' is "python"
     pattern = "lua",

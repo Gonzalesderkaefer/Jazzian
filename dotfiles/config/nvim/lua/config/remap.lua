@@ -1,4 +1,3 @@
-
 -- Basic Keymaps
 
 -- Escape to unhighlight
@@ -21,7 +20,6 @@ vim.keymap.set("n", "<leader>sh", vim.cmd.new,{ desc = '[s]plit [h]orizontal '})
 vim.keymap.set("n", "<leader>se", "<C-w>=",{ desc = '[s]plit [e]qual '})
 vim.keymap.set("n", "<leader>sx", vim.cmd.close,{ desc = 'close split'})
 
-
 -- LSP Keybinds
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP: [R]e[n]ame" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: [C]ode [A]ction" }, { "n", "x" })
@@ -34,10 +32,14 @@ vim.keymap.set("n", "dm", vim.diagnostic.open_float, { desc = "LSP: [D]iagnostic
 -- Command key
 vim.keymap.set("n", "<leader>x", ":term ", { desc = "Enter command" })
 
--- Close quickfix list
-vim.keymap.set("n", "<leader>cc", ":cclose<CR>", { desc = "Close Quickfix" })
-vim.keymap.set("n", "<C-n>", ":cnext<CR>", { desc = "Close Quickfix" })
-vim.keymap.set("n", "<C-p>", ":cprev<CR>", { desc = "Close Quickfix" })
 
--- Close loclist
-vim.keymap.set("n", "<leader>lc", ":cclose<CR>", { desc = "Close Quickfix" })
+-- quickfix list bindings
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {"qf"},
+    callback = function(env)
+        vim.keymap.set("n", "<leader>cc", ":cclose<CR>", { buffer = true, desc = "[C]lose Quickfix" })
+        vim.keymap.set("n", "<CR>", "<CR>:cclose<CR>", { buffer = true,  desc = "Quickfix [P]rev" })
+        vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR><cmd>wincmd j<CR>", { buffer = true,  desc = "Quickfix [N]ext" })
+        vim.keymap.set("n", "<C-p>", "<cmd>cprev<CR><cmd>wincmd j<CR>", { buffer = true,  desc = "Quickfix [N]ext" })
+    end,
+})
