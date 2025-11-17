@@ -222,9 +222,9 @@ status_bar = top=bar.Bar([
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 # widget.CurrentLayout(font="Jetbrains Mono Nerd Font"),
-                widget.Clock(format="%a %d.%m.%Y", font="JetBrains Mono Nerd Font"),
+                widget.Clock(format="%a %d.%m.%Y", font="Jetbrains Mono Nerd Font"),
                 widget.Sep(linewidth=2),
-                widget.Clock(format="%I:%M %p", font="JetBrains Mono Nerd Font"),
+                widget.Clock(format="%I:%M %p", font="Jetbrains Mono Nerd Font"),
                 widget.Sep(linewidth=2),
                 # This is just for experimentation
                 widget.GenPollText(
