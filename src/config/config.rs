@@ -210,17 +210,26 @@ pub const FEDORA: distro::Distro = distro::Distro {
         if let Some(mut home) = std::env::home_dir() {
             // Create the full dir to font dir
             home.push(".local/share/fonts");
-            if let Ok(_) = fs::create_dir_all(&home) {
-                // Download the nerdfont
-                cmd("curl", &["-OL", "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"]);
 
-                // extract the archives
-                if let Some(home_str) = home.to_str() {
-                    cmd("tar", &["xJvf", "JetBrainsMono.tar.xz", "-C", home_str]);
+
+            // Path to check whether directory exists
+            let mut check_dir = home.clone();
+            check_dir.push("JetBrainsMonoNerdFont-Regular.ttf");
+            if let Ok(false) = fs::exists(check_dir.as_path()) {
+
+                if let Ok(_) = fs::create_dir_all(&home) {
+                    // Download the nerdfont
+                    cmd("curl", &["-OL", "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"]);
+
+                    // extract the archives
+                    if let Some(home_str) = home.to_str() {
+                        cmd("tar", &["xJvf", "JetBrainsMono.tar.xz", "-C", home_str]);
+                    }
+
+                    // Delete the downloaded archive
+                    let _ = fs::remove_file("JetBrainsMono.tar.xz");
                 }
 
-                // Delete the downloaded archive
-                let _ = fs::remove_file("JetBrainsMono.tar.xz");
             }
         }
     },
