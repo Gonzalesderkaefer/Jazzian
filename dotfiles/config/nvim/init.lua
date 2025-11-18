@@ -129,9 +129,9 @@ end
 --     end,
 -- })
 
-
--- Settings for vimwiki
-vim.opt.compatible = false
+-- This is for omni-func so that it does not
+-- open the window with a description
+vim.cmd("set completeopt-=preview")
 
 require("lsp_config.clangd")
 require("lsp_config.lua_ls")
