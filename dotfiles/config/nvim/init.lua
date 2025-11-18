@@ -68,14 +68,14 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 -- linelength indicator
--- vim.opt.colorcolumn = "160"
+vim.opt.colorcolumn = "80"
 
 
 -- Set key timeout
 vim.opt.timeoutlen = 2000
 
--- status line
-vim.cmd("hi StatusLine guibg=NONE ctermbg=NONE guifg=#FFFFFF")
+-- colorscheme
+vim.cmd("colorscheme retrobox")
 
 -- Highlight when yanking
 vim.api.nvim_create_autocmd('TextYankPost', {
