@@ -298,7 +298,7 @@ pub const _ARCH_XORG: &'static[&'static str] = &[
     "xclip",
     "i3lock",
     "rxvt-unicode",
-    "nitrogen",
+    //"nitrogen",
     "slop",
 ];
 pub const ARCH_XORG: &'static[&'static str] = crate::concat_packages!(&[&str]: ARCH_GUI, _ARCH_XORG);
