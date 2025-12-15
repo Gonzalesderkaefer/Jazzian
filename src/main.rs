@@ -4,9 +4,6 @@ mod menu;
 mod config;
 mod utils;
 
-
-
-
 use std::{env::home_dir, ffi::OsStr, io, path::{Path, PathBuf}, result};
 use utils::fileutils as fu;
 use computer::transfer;
