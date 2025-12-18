@@ -31,9 +31,9 @@ return {
         local themes = require('telescope.themes')
 
         vim.keymap.set('n', '<leader>ff', function() builtin.find_files(themes.get_ivy()) end, { desc = '[F]ind [F]iles' })
-        vim.keymap.set('n', '<leader>fd', function() builtin.diagnostics(themes.get_ivy()) end, { desc = '[F]ind [D]iagnostics' })
-        vim.keymap.set('n', '<leader>fr', function() builtin.resume(themes.get_ivy()) end, { desc = '[R]esume' })
-        vim.keymap.set('n', '<leader>gr',function() builtin.lsp_references(themes.get_ivy()) end, {desc = '[G]oto [R]eferences'})
+        vim.keymap.set('n', '<leader>fd', function() vim.cmd(":w") builtin.diagnostics(themes.get_ivy()) end, { desc = '[F]ind [D]iagnostics' })
+        vim.keymap.set('n', '<leader>fr',function() builtin.lsp_references(themes.get_ivy()) end, {desc = '[G]oto [R]eferences'})
         vim.keymap.set('n', '<leader><leader>', function() builtin.buffers(themes.get_ivy()) end, { desc = '[ ] Find existing buffers' })
+        --vim.keymap.set('n', '<leader>fr', function() builtin.resume(themes.get_ivy()) end, { desc = '[R]esume' })
     end
 }

@@ -4,10 +4,10 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>Q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>Q', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next,{ desc = '[d]iagnostic message [n]ext' })
 vim.keymap.set("n", "<leader>dm", vim.diagnostic.open_float,{ desc = '[d]iagnostic [m]essage' })
-vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_prev,{ desc = '[d]iagnostic message [p]previous' })
+vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev,{ desc = '[d]iagnostic message [p]previous' })
 
 -- Buffer management
 vim.keymap.set("n", "<leader>nn", vim.cmd.bn, { desc = 'Next Buffer'})
@@ -26,12 +26,9 @@ vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: [C]ode
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [G]oto [D]eclaration" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP: [G]oto [D]efinition" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "LSP: Open diagnostic [Q]uickfix list" })
-vim.keymap.set("n", "dm", vim.diagnostic.open_float, { desc = "LSP: [D]iagnostic [M]essage" })
-
 
 -- Command key
 vim.keymap.set("n", "<leader>x", ":term ", { desc = "Enter command" })
-
 
 -- quickfix list bindings
 vim.api.nvim_create_autocmd('FileType', {
