@@ -6,7 +6,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>Q', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next,{ desc = '[d]iagnostic message [n]ext' })
-vim.keymap.set("n", "<leader>dm", vim.diagnostic.open_float,{ desc = '[d]iagnostic [m]essage' })
+vim.keymap.set("n", "dm", vim.diagnostic.open_float,{ desc = '[d]iagnostic [m]essage' })
 vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev,{ desc = '[d]iagnostic message [p]previous' })
 
 -- Buffer management
