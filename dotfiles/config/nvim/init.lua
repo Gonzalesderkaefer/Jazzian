@@ -75,7 +75,7 @@ vim.opt.colorcolumn = "80"
 vim.opt.timeoutlen = 2000
 
 -- colorscheme
-vim.cmd("colorscheme retrobox")
+vim.cmd("colorscheme habamax")
 
 -- Highlight when yanking
 vim.api.nvim_create_autocmd('TextYankPost', {
