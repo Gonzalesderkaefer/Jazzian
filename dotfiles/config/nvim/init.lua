@@ -84,10 +84,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-
--- Turn on virtual text
-vim.diagnostic.config({ virtual_text = true })
-
 -- Lazy plugin manager in lua/config/lazy.lua
 require("config.lazy")
 
