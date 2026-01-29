@@ -114,7 +114,7 @@ bindkey -M menuselect 'l' vi-forward-char
 
 
 _tmux() {
-    tmux new-session -n "edit" \; neww -n "compile/run"
+    tmux new-session -n "edit" \; neww -n "compile/run" \; selectw -p
 }
 
 
