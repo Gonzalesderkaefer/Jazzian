@@ -64,7 +64,7 @@ fi
 bindkey -s "^R" 'source ~/.zshrc^M';
 
 # CTRL-T to start tmux
-bindkey -s "^T" 'tmux^M';
+bindkey -s "^T" '_tmux^M';
 
 zle-keymap-select()
 {
@@ -113,6 +113,9 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 
 
+_tmux() {
+    tmux new-session -n "edit" \; neww -n "compile/run"
+}
 
 
 ## Extract files
