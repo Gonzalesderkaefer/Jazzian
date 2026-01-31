@@ -38,32 +38,32 @@ fn run() -> Result<(), JazzyErr>{
     };
 
 
-    // Get the machine
-    let machine = match computer::computer::Computer::get() {
+    // Get the computer
+    let computer = match computer::computer::Computer::get() {
         Ok(mach) => mach,
-        Err(error) => return Err(JazzyErr::MachineErr(error, line!(), file!())),
+        Err(error) => return Err(JazzyErr::ComputerErr(error, line!(), file!())),
     };
 
-    // Update the machine
-    match machine.update() {
+    // Update the computer
+    match computer.update() {
         Ok(_) => {}
-        Err(error) => return Err(JazzyErr::MachineErr(error, line!(), file!())),
+        Err(error) => return Err(JazzyErr::ComputerErr(error, line!(), file!())),
     }
 
     // Install the packages
-    match machine.install() {
+    match computer.install() {
         Ok(_) => {},
-        Err(error) => return Err(JazzyErr::MachineErr(error, line!(), file!())),
+        Err(error) => return Err(JazzyErr::ComputerErr(error, line!(), file!())),
     }
 
     // move the config files
-    movedir(&home_dir, cfg::CFGSRC, cfg::CFGDEST, &machine.transfer, false)?;
+    movedir(&home_dir, cfg::CFGSRC, cfg::CFGDEST, &computer.transfer, false)?;
 
     // move the scripts
-    movedir(&home_dir, cfg::BINSRC, cfg::BINDEST, &machine.transfer, false)?;
+    movedir(&home_dir, cfg::BINSRC, cfg::BINDEST, &computer.transfer, false)?;
 
     // move the shell configuratons
-    movedir(&home_dir, cfg::SHELLCFG, home_str, &machine.transfer, true)?;
+    movedir(&home_dir, cfg::SHELLCFG, home_str, &computer.transfer, true)?;
 
 
     // Create files
@@ -74,10 +74,10 @@ fn run() -> Result<(), JazzyErr>{
         }
     }
 
-    // Setup the machine
-    (machine.display_server.setup_callback)();
-    (machine.distro.setup_callback)();
-    (machine.gui.setup_callback)();
+    // Setup the computer
+    (computer.display_server.setup_callback)();
+    (computer.distro.setup_callback)();
+    (computer.gui.setup_callback)();
 
     // Run final commands
 
@@ -110,7 +110,7 @@ fn run() -> Result<(), JazzyErr>{
                 //  "enabled" is greater than "disabled"
                 std::cmp::Ordering::Greater => {
                     // Enable display server
-                    match machine.display_server.id {
+                    match computer.display_server.id {
                         cfg::DspServerId::Tty => {},
                         _ => {
                             cmd("sudo", &["systemctl", "enable", "sddm"]);
@@ -154,11 +154,11 @@ pub fn movedir<P: AsRef<Path>>(home_dir: &PathBuf, src: P, dest: P, method: &tra
 
 
 /// The main error type for this program. Functions in this module and setup_callback functions
-/// for the machine-sub types will return this error.
+/// for the computer-sub types will return this error.
 #[derive(Debug)]
 pub enum JazzyErr {
     IO (io::Error),
-    MachineErr (computer::computer::MachineError, u32, &'static str),
+    ComputerErr (computer::computer::ComputerError, u32, &'static str),
     FileUtil (fu::FileUtilErr, u32, &'static str),
     NoHome (u32, &'static str),
     Command (cmd::CommandError, u32, &'static str)
@@ -169,7 +169,7 @@ impl std::fmt::Display for JazzyErr {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match &self {
             JazzyErr::IO(error) => return write!(f, "Internal IO Error at: {error}"),
-            JazzyErr::MachineErr(error, line, file) => return write!(f, "Machine Error at {line} in {file} :{error}"),
+            JazzyErr::ComputerErr(error, line, file) => return write!(f, "computer Error at {line} in {file} :{error}"),
             JazzyErr::FileUtil(error, line, file) => return write!(f, "File Error at {line} in {file} : {error}"),
             JazzyErr::NoHome(line, file) => return write!(f, "No $HOME found at: {line}, {file}"),
             JazzyErr::Command(error, line, file) => return write!(f, "Error running command at {line}, {file}: {error}"),

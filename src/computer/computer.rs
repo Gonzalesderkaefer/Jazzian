@@ -18,12 +18,12 @@ use super::transfer::Transfer;
 
 
 
-/// This struct represents a Machine. An instance of this type is built when getting the
-/// options from the user. This 'machine' is then 'applied' to the computer that it is running
+/// This struct represents a computer. An instance of this type is built when getting the
+/// options from the user. This 'computer' is then 'applied' to the computer that it is running
 /// on. This type is built while this program runs.
 #[derive(Debug)]
 pub struct Computer {
-    /// The distro of this machine.
+    /// The distro of this computer.
     pub distro: &'static distro::Distro,
 
     /// The display server that is intened to be used.
@@ -42,14 +42,14 @@ pub struct Computer {
 
 /// This is an error type for a Distro
 #[derive(Debug)]
-pub enum MachineError {
+pub enum ComputerError {
     DistroErr (distro::DistroError, u32, &'static str),
     MenuError (MenuErr, u32, &'static str),
     CmdError (command::CommandError, u32, &'static str),
 }
 
 /// Implementation of [fmt::Display] for [DistroError]
-impl fmt::Display for MachineError {
+impl fmt::Display for ComputerError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             Self::DistroErr(error, line, file) => {
@@ -64,12 +64,12 @@ impl fmt::Display for MachineError {
         }
     }
 }
-impl Error for MachineError{}
+impl Error for ComputerError{}
 
 
 impl Computer {
-    /// Construct a [Machine] from user choices
-    pub fn get() -> Result<Self, MachineError> {
+    /// Construct a [computer] from user choices
+    pub fn get() -> Result<Self, ComputerError> {
         // Get the distro from the system
         // Check if there was an error
         let distro = match distro::Distro::get() {
@@ -79,7 +79,7 @@ impl Computer {
                 match error {
                     // This can be returned as is.
                     distro::DistroError::FileReadError(..) => {
-                        return Err(MachineError::DistroErr(error, line!(), file!()));
+                        return Err(ComputerError::DistroErr(error, line!(), file!()));
                     }
                     // This needs to be handeled sepereately
                     distro::DistroError::NotSupported => {
@@ -93,13 +93,13 @@ impl Computer {
                                     final_result = transfer_option.expect("The list of transfer methods was empty")
                                 }
                                 Err(error) => {
-                                    return Err(MachineError::MenuError(error, line!(), file!()));
+                                    return Err(ComputerError::MenuError(error, line!(), file!()));
                                 },
                             }
                             final_result
                         };
 
-                        // Return 'empty' machine
+                        // Return 'empty' computer
                         return Ok(Self {
                             distro: &config::OTHER_DISTRO,
                             display_server: &config::TTY,
@@ -116,7 +116,7 @@ impl Computer {
         // This is an [Option]
         let display_serv = match menu::menu::print_menu(" Choose a display server ", distro.supported_dsp_serv.to_vec()) {
             Ok(server) => server,
-            Err(error) => return Err(MachineError::MenuError(error, line!(), file!()))
+            Err(error) => return Err(ComputerError::MenuError(error, line!(), file!()))
         };
 
         // Check if list was empty
@@ -137,7 +137,7 @@ impl Computer {
         // Get window manager from user
         let window_manager_opt = match menu::menu::print_menu(" Choose a window manager ", supported_wms) {
             Ok(wm) => wm,
-            Err(error) => return Err(MachineError::MenuError(error, line!(), file!()))
+            Err(error) => return Err(ComputerError::MenuError(error, line!(), file!()))
         };
 
         // Check if list was empty
@@ -152,7 +152,7 @@ impl Computer {
         let transfer = match menu::menu::print_menu(" Choose a method of transfer ", vec![Transfer::None, Transfer::Link, Transfer::Copy]) {
             // This cannot ever panic because the list is not empty
             Ok(transfer_option) => transfer_option.expect("The list of transfer methods was empty"),
-            Err(error) => return Err(MachineError::MenuError(error, line!(), file!())),
+            Err(error) => return Err(ComputerError::MenuError(error, line!(), file!())),
         };
 
 
@@ -210,13 +210,13 @@ impl Computer {
         });
     }
 
-    /// Update all packages on a machine
-    pub fn update(&self) -> Result<(), MachineError> {
+    /// Update all packages on a computer
+    pub fn update(&self) -> Result<(), ComputerError> {
         // Run the update command
         match command::cmd("sudo", self.distro.update) {
             Ok(_) => {},
             Err(error) => {
-                return Err(MachineError::CmdError(error, line!(), file!()));
+                return Err(ComputerError::CmdError(error, line!(), file!()));
             },
         }
 
@@ -224,19 +224,19 @@ impl Computer {
         match command::cmd("sudo", self.distro.upgrade) {
             Ok(_) => {},
             Err(error) => {
-                return Err(MachineError::CmdError(error, line!(), file!()));
+                return Err(ComputerError::CmdError(error, line!(), file!()));
             },
         }
 
         return Ok(());
     }
 
-    pub fn install(&self) -> Result<(), MachineError> {
+    pub fn install(&self) -> Result<(), ComputerError> {
         // Install all packages
         match command::cmd("sudo", self.all_packages.as_slice()) {
             Ok(_) => {},
             Err(error) => {
-                return Err(MachineError::CmdError(error, line!(), file!()));
+                return Err(ComputerError::CmdError(error, line!(), file!()));
             },
         }
 
