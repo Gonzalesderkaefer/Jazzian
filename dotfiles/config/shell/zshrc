@@ -137,6 +137,12 @@ open() {
     nohup $prog $@ >/dev/null 2>&1 &
 }
 
+### Open guis in the background
+obg() {
+    nohup $@ >/dev/null 2>&1 &
+}
+
+
 ## nf with cd 
 nfcd () {
     nnn -d;

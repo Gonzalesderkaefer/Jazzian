@@ -44,6 +44,19 @@ fn run() -> Result<(), JazzyErr>{
         Err(error) => return Err(JazzyErr::ComputerErr(error, line!(), file!())),
     };
 
+    // Patch for now need to make this 'cleaner'
+    if computer.distro.id == cfg::DistroId::Other {
+        // move the config files
+        movedir(&home_dir, cfg::CFGSRC, cfg::CFGDEST, &computer.transfer, false)?;
+
+        // move the scripts
+        movedir(&home_dir, cfg::BINSRC, cfg::BINDEST, &computer.transfer, false)?;
+
+        // move the shell configuratons
+        movedir(&home_dir, cfg::SHELLCFG, home_str, &computer.transfer, true)?;
+        return Ok(());
+    }
+
     // Update the computer
     match computer.update() {
         Ok(_) => {}
@@ -55,16 +68,6 @@ fn run() -> Result<(), JazzyErr>{
         Ok(_) => {},
         Err(error) => return Err(JazzyErr::ComputerErr(error, line!(), file!())),
     }
-
-    // move the config files
-    movedir(&home_dir, cfg::CFGSRC, cfg::CFGDEST, &computer.transfer, false)?;
-
-    // move the scripts
-    movedir(&home_dir, cfg::BINSRC, cfg::BINDEST, &computer.transfer, false)?;
-
-    // move the shell configuratons
-    movedir(&home_dir, cfg::SHELLCFG, home_str, &computer.transfer, true)?;
-
 
     // Create files
     for file in cstm::CUSTOMIZED {
