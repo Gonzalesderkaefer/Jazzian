@@ -259,9 +259,10 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "barcmd"
+spawn-sh-at-startup "exec waybar -c $HOME/.config/waybar/config_niri.jsonc"
+spawn-sh-at-startup "exec mako -c ~/.config/mako/mako.conf"
+spawn-sh-at-startup "exec swayidle -w timeout 300 'niri msg action power-off-monitors' resume 'niri msg action power-on-monitors' before-sleep 'lock' &"
 spawn-at-startup "wlstartup"
-spawn-at-startup "notification_daemon"
 
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -351,7 +352,7 @@ binds {
     Mod+Return hotkey-overlay-title="Open a Terminal: myterm" { spawn "myterm"; }
     Mod+P hotkey-overlay-title="Run an Application: rofi" { spawn "mdrun"; }
     Alt+F4 hotkey-overlay-title="Powermenu" { spawn "powermenu"; }
-    Super+Escape hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Super+Escape hotkey-overlay-title="Lock the Screen: swaylock" { spawn "lock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
