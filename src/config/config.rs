@@ -18,17 +18,12 @@ use crate::utils::command as cmd;
 pub static CFGSRC: &'static str = "Jazzian/dotfiles/config/";
 pub static CFGDEST: &'static str = ".config/";
 
-
 /// Custom scripts
 pub static BINSRC: &'static str = "Jazzian/dotfiles/bin/";
 pub static BINDEST: &'static str = ".local/bin/";
 
-
 /// Shell configurations
 pub static SHELLCFG: &'static str = "Jazzian/dotfiles/config/shell/";
-
-
-
 
 /// Enum for the distroid
 #[derive(Debug, Clone, PartialEq)]
@@ -205,7 +200,7 @@ pub const DEBIAN: distro::Distro = distro::Distro {
 pub const FEDORA: distro::Distro = distro::Distro {
     id: DistroId::Fedora,
     supported_dsp_serv: &[&XORG,&WAYLAND, &TTY],
-    supported_wms: &[&AWESOME_WM, &BSPWM, &I3, &SWAY, &NIRI, &RIVER, &HYPRLAND],
+    supported_wms: &[&AWESOME_WM, &BSPWM, &I3, &SWAY, &NIRI, &RIVER],
     install: &["dnf", "install", "-y"],
     install_suffix: None,
     update: &["dnf", "upgrade", "--refresh"],
