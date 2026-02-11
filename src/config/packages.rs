@@ -34,6 +34,7 @@ pub const DEB_GUI: &'static[&'static str] = &[
 
 
 pub const DEB_BASE: &'static[&'static str] = &[
+    "make",
     "xz-utils",
     "curl",
     "git",
@@ -147,6 +148,7 @@ pub const FED_GUI: &'static[&'static str] = &[
 
 
 pub const FED_BASE: &'static[&'static str] = &[
+    "make",
     "xz",
     "curl",
     "git",
@@ -268,6 +270,7 @@ pub const ARCH_GUI: &'static[&'static str] = &[
 ];
 
 pub const ARCH_BASE: &'static[&'static str] = &[
+    "make",
     "xz",
     "curl",
     "git",
