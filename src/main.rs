@@ -89,12 +89,10 @@ fn run() -> Result<(), JazzyErr>{
     cmd("gsettings", &["set", "org.gnome.desktop.interface", "color-scheme", "\'prefer-dark\'"]);
     cmd("gsettings", &["set", "org.gnome.desktop.interface", "icon-theme", "\'Papirus-Dark\'"]);
 
-
-    // Clear the screen
-    print!("{}[2J", 27 as char);
-
-
     if let None = shell.find("zsh") {
+        // Clear the screen
+        print!("{}[2J", 27 as char);
+
         // Change the shell
         println!("{}Changing the shell to zsh. You will be prompted for your user password{}",
             FgColor!(Green), FgColor!());

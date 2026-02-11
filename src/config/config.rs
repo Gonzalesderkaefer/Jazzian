@@ -100,7 +100,18 @@ pub const NIRI: wm::WindowManager = wm::WindowManager {
     id: WindowManagerId::Niri,  // Id
 //             Debian Fedora               Arch Linux
     packages: [None,  Some(pkg::FED_NIR), Some(pkg::ARCH_NIR)], // Packages
-    setup_callback: || {} // callback
+    setup_callback: || {
+        // create the font directory
+        if let Some(mut home) = std::env::home_dir() {
+            // Create the full dir to font dir
+            home.push(".config/niri");
+            match home.to_str() {
+                Some(string) => cmd("make", &["-C", string]),
+                None => return,
+            }
+        }
+
+    }, // callback
 };
 
 
@@ -287,7 +298,10 @@ fn cmd<S: AsRef<OsStr> + Clone>(command: S, args: &[S]) {
 fn create_and_write_user<P: AsRef<Path> + Clone, C: AsRef<[u8]>>(new_file: P, contents: C, mode: u32) {
     match fu::create_and_write_user(new_file.clone(), contents, mode) {
         Ok(_) => {}
-        Err(error) => println!("Failed to create file {}: {error}", new_file.as_ref().display()),
+        Err(error) => {
+            println!("Failed to create file {}: {error}", new_file.as_ref().display());
+            panic!();
+        }
     }
 
 }
