@@ -88,6 +88,7 @@ fn run() -> Result<(), JazzyErr>{
     cmd("gsettings", &["set", "org.gnome.desktop.interface", "gtk-theme", "\'Adwaita-dark\'"]);
     cmd("gsettings", &["set", "org.gnome.desktop.interface", "color-scheme", "\'prefer-dark\'"]);
     cmd("gsettings", &["set", "org.gnome.desktop.interface", "icon-theme", "\'Papirus-Dark\'"]);
+    cmd("gsettings", &["set", "org.gnome.desktop.interface", "font-name", "\'Jetbrains Mono\'"]);
 
     if let None = shell.find("zsh") {
         // Clear the screen
