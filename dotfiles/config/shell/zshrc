@@ -141,6 +141,7 @@ open() {
 obg() {
     nohup $@ >/dev/null 2>&1 &
 }
+compdef _precommand obg
 
 
 ## nf with cd 
