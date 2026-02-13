@@ -21,5 +21,10 @@ fi
 # So that lib adawita apps are dark
 export ADW_DISABLE_PORTAL=1
 
+# Niri sometimes does not set $DISPLAY
+if [[ -z "${DISPLAY+x}" ]]; then
+    export DISPLAY=:1
+fi
+
 # Custom environment variables
 . "$HOME/.customenv"
