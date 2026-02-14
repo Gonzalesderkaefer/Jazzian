@@ -1,4 +1,4 @@
-pub const DEB_GUI: &'static[&'static str] = &[
+pub const DEB_GUI: &'static [&'static str] = &[
     "evince",
     "network-manager",
     "fonts-jetbrains-mono",
@@ -32,25 +32,12 @@ pub const DEB_GUI: &'static[&'static str] = &[
     "rtkit",
 ];
 
-
-pub const DEB_BASE: &'static[&'static str] = &[
-    "make",
-    "xz-utils",
-    "curl",
-    "git",
-    "tmux",
-    "vifm",
-    "zsh",
-    "flatpak",
-    "git",
-    "nala",
-    "nnn",
-    "fzf",
-    "jq",
+pub const DEB_BASE: &'static [&'static str] = &[
+    "make", "xz-utils", "curl", "git", "tmux", "vifm", "zsh", "flatpak", "git", "nala", "nnn",
+    "fzf", "jq",
 ];
 
-
-pub const _DEB_XORG: &'static[&'static str] = &[
+pub const _DEB_XORG: &'static [&'static str] = &[
     "lxappearance",
     "maim",
     "arandr",
@@ -67,10 +54,7 @@ pub const _DEB_XORG: &'static[&'static str] = &[
     "slop",
 ];
 
-pub const DEB_XORG: &'static[&'static str] = crate::concat_packages!(&[&str]: DEB_GUI, _DEB_XORG);
-
-
-pub const _DEB_WAY: &'static[&'static str] = &[
+pub const _DEB_WAY: &'static [&'static str] = &[
     "grim",
     "swaylock",
     "wofi",
@@ -82,37 +66,27 @@ pub const _DEB_WAY: &'static[&'static str] = &[
     "slurp",
 ];
 
-
-
-pub const DEB_WAY: &'static[&'static str] = crate::concat_packages!(&[&str]: DEB_GUI, _DEB_WAY);
-
-pub const DEB_I3: &'static[&'static str] = &[
-    "i3",
-    "i3blocks",
+pub const DEB_SDDM: &'static [&'static str] = &[
+    "libqt6svg6",
+    "qt6-virtualkeyboard-plugin",
+    "libqt6multimedia6",
+    "qml6-module-qtquick-controls",
+    "qml6-module-qtquick-effects", "libxcb-cursor0"
 ];
 
-pub const DEB_BSP: &'static[&'static str] = &[
-    "bspwm",
-    "sxhkd",
-    "polybar",
-];
+pub const DEB_XORG: &'static [&'static str] = crate::concat_packages!(&[&str]: DEB_GUI, _DEB_XORG);
 
-/* Debian awesome packages */
-pub const DEB_AWE: &'static[&'static str] = &[
-    "awesome",
-];
+pub const DEB_WAY: &'static [&'static str] = crate::concat_packages!(&[&str]: DEB_GUI, _DEB_WAY);
 
+pub const DEB_I3: &'static [&'static str] = &["i3", "i3blocks"];
 
-pub const DEB_SWAY: &'static[&'static str] = &[
-    "sway",
-    "i3blocks",
-];
+pub const DEB_BSP: &'static [&'static str] = &["bspwm", "sxhkd", "polybar"];
 
+pub const DEB_AWE: &'static [&'static str] = &["awesome"];
 
+pub const DEB_SWAY: &'static [&'static str] = &["sway", "i3blocks"];
 
-
-
-pub const FED_GUI: &'static[&'static str] = &[
+pub const FED_GUI: &'static [&'static str] = &[
     "flatpak",
     "pinentry",
     "alacritty",
@@ -144,27 +118,11 @@ pub const FED_GUI: &'static[&'static str] = &[
     "sddm",
 ];
 
-
-
-
-pub const FED_BASE: &'static[&'static str] = &[
-    "make",
-    "xz",
-    "curl",
-    "git",
-    "vifm",
-    "tmux",
-    "zsh",
-    "nnn",
-    "neovim",
-    "git",
-    "fzf",
-    "jq",
+pub const FED_BASE: &'static [&'static str] = &[
+    "make", "xz", "curl", "git", "vifm", "tmux", "zsh", "nnn", "neovim", "git", "fzf", "jq",
 ];
 
-
-
-pub const _FED_XORG: &'static[&'static str] = &[
+pub const _FED_XORG: &'static [&'static str] = &[
     "xclip",
     "@base-x",
     "maim",
@@ -180,10 +138,8 @@ pub const _FED_XORG: &'static[&'static str] = &[
     "nitrogen",
     "slop",
 ];
-pub const FED_XORG: &'static[&'static str] = crate::concat_packages!(&[&str]: FED_GUI, _FED_XORG);
 
-
-pub const _FED_WAY: &'static[&'static str] = &[
+pub const _FED_WAY: &'static [&'static str] = &[
     "grim",
     "swaybg",
     "swayidle",
@@ -193,50 +149,32 @@ pub const _FED_WAY: &'static[&'static str] = &[
     "mako",
     "slurp",
 ];
-pub const FED_WAY: &'static[&'static str] = crate::concat_packages!(&[&str]: FED_GUI, _FED_WAY);
 
-
-
-pub const FED_AWE: &'static[&'static str] = &[
-    "awesome",
+pub const FED_SDDM: &'static [&'static str] = &[
+    "qt6-qtsvg",
+    "qt6-qtvirtualkeyboard",
+    "qt6-qtmultimedia"
 ];
 
-pub const FED_BSP: &'static[&'static str] = &[
-    "bspwm",
-    "polybar",
-    "sxhkd",
-];
+pub const FED_XORG: &'static [&'static str] = crate::concat_packages!(&[&str]: FED_GUI, _FED_XORG);
 
-pub const FED_I3: &'static[&'static str] = &[
-    "i3",
-    "i3blocks",
-];
+pub const FED_WAY: &'static [&'static str] = crate::concat_packages!(&[&str]: FED_GUI, _FED_WAY);
 
+pub const FED_AWE: &'static [&'static str] = &["awesome"];
 
-pub const FED_HYPR: &'static[&'static str] = &[
-    "hyprland",
-    "waybar",
-];
+pub const FED_BSP: &'static [&'static str] = &["bspwm", "polybar", "sxhkd"];
 
-pub const FED_RIV: &'static[&'static str] = &[
-    "river",
-    "waybar",
-];
+pub const FED_I3: &'static [&'static str] = &["i3", "i3blocks"];
 
-pub const FED_SWAY: &'static[&'static str] = &[
-    "sway",
-    "i3blocks",
-];
+pub const FED_HYPR: &'static [&'static str] = &["hyprland", "waybar"];
 
-pub const FED_NIR: &'static[&'static str] = &[
-    "niri",
-    "waybar",
-];
+pub const FED_RIV: &'static [&'static str] = &["river", "waybar"];
 
+pub const FED_SWAY: &'static [&'static str] = &["sway", "i3blocks"];
 
+pub const FED_NIR: &'static [&'static str] = &["niri", "waybar"];
 
-
-pub const ARCH_GUI: &'static[&'static str] = &[
+pub const ARCH_GUI: &'static [&'static str] = &[
     "rofi-wayland",
     "zathura-pdf-poppler",
     "tlp",
@@ -269,7 +207,7 @@ pub const ARCH_GUI: &'static[&'static str] = &[
     "sddm",
 ];
 
-pub const ARCH_BASE: &'static[&'static str] = &[
+pub const ARCH_BASE: &'static [&'static str] = &[
     "make",
     "xz",
     "curl",
@@ -288,9 +226,7 @@ pub const ARCH_BASE: &'static[&'static str] = &[
     "jq",
 ];
 
-
-
-pub const _ARCH_XORG: &'static[&'static str] = &[
+pub const _ARCH_XORG: &'static [&'static str] = &[
     "xorg",
     "lxappearance",
     "xwallpaper",
@@ -304,10 +240,8 @@ pub const _ARCH_XORG: &'static[&'static str] = &[
     //"nitrogen",
     "slop",
 ];
-pub const ARCH_XORG: &'static[&'static str] = crate::concat_packages!(&[&str]: ARCH_GUI, _ARCH_XORG);
 
-
-pub const _ARCH_WAY: &'static[&'static str] = &[
+pub const _ARCH_WAY: &'static [&'static str] = &[
     "grim",
     "swaybg",
     "waybar",
@@ -317,42 +251,27 @@ pub const _ARCH_WAY: &'static[&'static str] = &[
     "mako",
     "slurp",
 ];
-pub const ARCH_WAY: &'static[&'static str] = crate::concat_packages!(&[&str]: ARCH_GUI, _ARCH_WAY);
 
-
-
-pub const ARCH_AWE: &'static[&'static str] = &[
-    "awesome",
+pub const ARCH_SDDM: &'static [&'static str] = &[
+    "qt6-svg",
+    "qt6-virtualkeyboard",
+    "qt6-multimedia-ffmpeg"
 ];
 
-pub const ARCH_BSP: &'static[&'static str] = &[
-    "bspwm",
-    "polybar",
-    "sxhkd",
-];
+pub const ARCH_XORG: &'static [&'static str] = crate::concat_packages!(&[&str]: ARCH_GUI, _ARCH_XORG);
 
-pub const ARCH_I3: &'static[&'static str] = &[
-    "i3",
-    "i3blocks",
-];
+pub const ARCH_WAY: &'static [&'static str] = crate::concat_packages!(&[&str]: ARCH_GUI, _ARCH_WAY);
 
+pub const ARCH_AWE: &'static [&'static str] = &["awesome"];
 
-pub const ARCH_HYPR: &'static[&'static str] = &[
-    "hyprland",
-    "waybar",
-];
+pub const ARCH_BSP: &'static [&'static str] = &["bspwm", "polybar", "sxhkd"];
 
-pub const ARCH_RIV: &'static[&'static str] = &[
-    "river",
-    "waybar",
-];
+pub const ARCH_I3: &'static [&'static str] = &["i3", "i3blocks"];
 
-pub const ARCH_SWAY: &'static[&'static str] = &[
-    "sway",
-    "i3blocks",
-];
+pub const ARCH_HYPR: &'static [&'static str] = &["hyprland", "waybar"];
 
-pub const ARCH_NIR: &'static[&'static str] = &[
-    "niri",
-    "waybar",
-];
+pub const ARCH_RIV: &'static [&'static str] = &["river", "waybar"];
+
+pub const ARCH_SWAY: &'static [&'static str] = &["sway", "i3blocks"];
+
+pub const ARCH_NIR: &'static [&'static str] = &["niri", "waybar"];

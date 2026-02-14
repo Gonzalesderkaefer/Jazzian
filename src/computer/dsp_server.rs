@@ -1,11 +1,9 @@
-use crate::config::config;
 use super::window_manager as wm;
+use crate::config::config;
 use crate::menu::menu;
 
-
+use ratatui::widgets::ListItem;
 use std::fmt;
-use ratatui::widgets::{ ListItem };
-
 
 /// Implement display for DisplayServerId
 impl fmt::Display for config::DspServerId {
@@ -28,7 +26,6 @@ pub struct DspServer {
 
     /// Setup callback
     pub setup_callback: fn(),
-
 }
 
 /// This is for ratatui

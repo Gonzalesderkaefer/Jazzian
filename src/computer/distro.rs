@@ -1,14 +1,10 @@
-use super::window_manager::WindowManager;
 use super::dsp_server::DspServer;
+use super::login_manager::LoginManager;
+use super::window_manager::WindowManager;
 use crate::config::config;
 use crate::utils::fileutils as fu;
 
-use std::{
-    fmt,
-    fs,
-    io,
-    error::Error,
-};
+use std::{error::Error, fmt, fs, io};
 
 /// The distro this program is running on.
 ///
@@ -19,7 +15,10 @@ pub struct Distro {
     pub id: config::DistroId,
 
     /// List of display servers supported by this distro.
-    pub supported_dsp_serv: &'static[&'static DspServer],
+    pub supported_dsp_serv: &'static [&'static DspServer],
+
+    /// List of supported login managers.
+    pub supported_login_man: &'static [&'static LoginManager],
 
     /// List of List of supported window managers. There are as many lists as there are
     /// display servers. If there's a display server that has no window manager (unlikely)
@@ -45,13 +44,13 @@ pub struct Distro {
     pub packages: &'static [&'static str],
 
     /// Setup function to setup things up specific to this distro
-    pub setup_callback: fn (),
+    pub setup_callback: fn(),
 }
 
 /// This is an error type for a Distro
 #[derive(Debug)]
 pub enum DistroError {
-    FileReadError (io::Error, u32, &'static str),
+    FileReadError(io::Error, u32, &'static str),
     NotSupported,
 }
 
@@ -61,17 +60,14 @@ impl fmt::Display for DistroError {
         match &self {
             DistroError::FileReadError(file_util_err, line, file) => {
                 return write!(f, "File read error at {line} in {file}: {}", file_util_err);
-            },
+            }
             DistroError::NotSupported => {
                 return write!(f, "No supported distro found");
-            },
+            }
         }
     }
 }
-impl Error for DistroError{}
-
-
-
+impl Error for DistroError {}
 
 impl Distro {
     pub fn get() -> Result<&'static Distro, DistroError> {
@@ -80,20 +76,16 @@ impl Distro {
             Ok(file_contents) => file_contents,
             Err(error) => {
                 return Err(DistroError::FileReadError(error, line!(), file!()));
-            },
+            }
         };
-
 
         // Search for the distros
         for distro in config::DISTRO_ASSOC {
             if release_file.find(distro.1).is_some() {
                 return Ok(distro.0);
             }
-        };
+        }
 
         return Err(DistroError::NotSupported);
     }
 }
-
-
-

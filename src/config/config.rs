@@ -2,14 +2,14 @@ use std::ffi::OsStr;
 use std::fs;
 use std::path::Path;
 
-use crate::computer::distro;
-use crate::computer::window_manager as wm;
-use crate::computer::dsp_server as display;
-use super::packages as pkg;
 use super::custom as cstm;
-use crate::utils::fileutils as fu;
+use super::packages as pkg;
+use crate::computer::distro;
+use crate::computer::dsp_server as display;
+use crate::computer::window_manager as wm;
+use crate::computer::login_manager as lm;
 use crate::utils::command as cmd;
-
+use crate::utils::fileutils as fu;
 
 /// This file defines all constants that are useful for main.rs
 /// If file paths are used make then relative to $HOME
@@ -34,6 +34,11 @@ pub enum DistroId {
     Other,
 }
 
+#[derive(Debug, Clone, PartialEq)]
+pub enum LoginManagerId {
+    Sddm,
+    None,
+}
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum DspServerId {
@@ -55,46 +60,57 @@ pub enum WindowManagerId {
     NoWM,
 }
 
-/// Window managers
+/// Login managers
+pub const NO_LM: lm::LoginManager = lm::LoginManager {
+    id: LoginManagerId::None,
+    packages: [None, None, None],
+    setup_callback: || {},
+};
+
+pub const SDDM: lm::LoginManager = lm::LoginManager {
+    id: LoginManagerId::Sddm,
+    packages: [Some(pkg::DEB_SDDM), Some(pkg::FED_SDDM), Some(pkg::ARCH_SDDM)],
+    setup_callback: || {},
+};
 
 /// XORG
 pub const AWESOME_WM: wm::WindowManager = wm::WindowManager {
-    id: WindowManagerId::Awesome,  // Id
-//             Debian              Fedora              Arch Linux
+    id: WindowManagerId::Awesome, // Id
+    //             Debian              Fedora              Arch Linux
     packages: [Some(pkg::DEB_AWE), Some(pkg::FED_AWE), Some(pkg::ARCH_AWE)], // Packages
-    setup_callback: || {} // callback
+    setup_callback: || {},                                                   // callback
 };
-
 
 pub const BSPWM: wm::WindowManager = wm::WindowManager {
-    id: WindowManagerId::Bspwm,  // Id
-//             Debian              Fedora              Arch Linux
+    id: WindowManagerId::Bspwm, // Id
+    //             Debian              Fedora              Arch Linux
     packages: [Some(pkg::DEB_BSP), Some(pkg::FED_BSP), Some(pkg::ARCH_BSP)], // Packages
-    setup_callback: || {} // callback
+    setup_callback: || {},                                                   // callback
 };
-
 
 pub const I3: wm::WindowManager = wm::WindowManager {
-    id: WindowManagerId::I3,  // Id
-//             Debian             Fedora             Arch Linux
+    id: WindowManagerId::I3, // Id
+    //             Debian             Fedora             Arch Linux
     packages: [Some(pkg::DEB_I3), Some(pkg::FED_I3), Some(pkg::ARCH_I3)], // Packages
-    setup_callback: || {} // callback
+    setup_callback: || {},                                                // callback
 };
-
 
 /// WAYLAND
 pub const SWAY: wm::WindowManager = wm::WindowManager {
-    id: WindowManagerId::Sway,  // Id
-//             Debian               Fedora               Arch Linux
-    packages: [Some(pkg::DEB_SWAY), Some(pkg::FED_SWAY), Some(pkg::ARCH_SWAY)], // Packages
-    setup_callback: || {} // callback
+    id: WindowManagerId::Sway, // Id
+    //             Debian               Fedora               Arch Linux
+    packages: [
+        Some(pkg::DEB_SWAY),
+        Some(pkg::FED_SWAY),
+        Some(pkg::ARCH_SWAY),
+    ], // Packages
+    setup_callback: || {}, // callback
 };
 
-
 pub const NIRI: wm::WindowManager = wm::WindowManager {
-    id: WindowManagerId::Niri,  // Id
-//             Debian Fedora               Arch Linux
-    packages: [None,  Some(pkg::FED_NIR), Some(pkg::ARCH_NIR)], // Packages
+    id: WindowManagerId::Niri, // Id
+    //             Debian Fedora               Arch Linux
+    packages: [None, Some(pkg::FED_NIR), Some(pkg::ARCH_NIR)], // Packages
     setup_callback: || {
         // create the font directory
         if let Some(mut home) = std::env::home_dir() {
@@ -105,31 +121,28 @@ pub const NIRI: wm::WindowManager = wm::WindowManager {
                 None => return,
             }
         }
-
     }, // callback
 };
 
-
 pub const RIVER: wm::WindowManager = wm::WindowManager {
-    id: WindowManagerId::River,  // Id
-//             Debian Fedora              Arch Linux
-    packages: [None,  Some(pkg::FED_RIV), Some(pkg::ARCH_RIV)], // Packages
-    setup_callback: || {} // callback
+    id: WindowManagerId::River, // Id
+    //             Debian Fedora              Arch Linux
+    packages: [None, Some(pkg::FED_RIV), Some(pkg::ARCH_RIV)], // Packages
+    setup_callback: || {},                                     // callback
 };
 
-
 pub const HYPRLAND: wm::WindowManager = wm::WindowManager {
-    id: WindowManagerId::Hyprland,  // Id
-//             Debian Fedora               Arch Linux
-    packages: [None,  Some(pkg::FED_HYPR), Some(pkg::ARCH_HYPR)], // Packages
-    setup_callback: || {} // callback
+    id: WindowManagerId::Hyprland, // Id
+    //             Debian Fedora               Arch Linux
+    packages: [None, Some(pkg::FED_HYPR), Some(pkg::ARCH_HYPR)], // Packages
+    setup_callback: || {},                                       // callback
 };
 
 pub const NOWM: wm::WindowManager = wm::WindowManager {
-    id: WindowManagerId::NoWM,  // Id
-//             Debian     Fedora     Arch Linux
+    id: WindowManagerId::NoWM, // Id
+    //             Debian     Fedora     Arch Linux
     packages: [Some(&[]), Some(&[]), Some(&[])], // Packages
-    setup_callback: || {} // callback
+    setup_callback: || {},                       // callback
 };
 
 /// Display servers
@@ -137,7 +150,11 @@ pub const XORG: display::DspServer = display::DspServer {
     id: DspServerId::Xorg,
     supported_wms: &[&AWESOME_WM, &BSPWM, &I3],
     setup_callback: || {},
-    packages: [Some(pkg::DEB_XORG), Some(pkg::FED_XORG), Some(pkg::ARCH_XORG)],
+    packages: [
+        Some(pkg::DEB_XORG),
+        Some(pkg::FED_XORG),
+        Some(pkg::ARCH_XORG),
+    ],
 };
 
 pub const WAYLAND: display::DspServer = display::DspServer {
@@ -154,10 +171,10 @@ pub const TTY: display::DspServer = display::DspServer {
     packages: [None, None, None],
 };
 
-
 /// Distros
 pub const DEBIAN: distro::Distro = distro::Distro {
     id: DistroId::Debian,
+    supported_login_man: &[&SDDM],
     supported_dsp_serv: &[&XORG, &WAYLAND, &TTY],
     supported_wms: &[&AWESOME_WM, &BSPWM, &I3, &SWAY],
     install: &["apt", "install", "-y", "--no-install-recommends"],
@@ -182,7 +199,13 @@ pub const DEBIAN: distro::Distro = distro::Distro {
             if let Ok(false) = fs::exists(check_dir.as_path()) {
                 if let Ok(_) = fs::create_dir_all(&home) {
                     // Download the nerdfont
-                    cmd("curl", &["-OL", "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"]);
+                    cmd(
+                        "curl",
+                        &[
+                            "-OL",
+                            "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz",
+                        ],
+                    );
 
                     // extract the archives
                     if let Some(home_str) = home.to_str() {
@@ -199,7 +222,8 @@ pub const DEBIAN: distro::Distro = distro::Distro {
 
 pub const FEDORA: distro::Distro = distro::Distro {
     id: DistroId::Fedora,
-    supported_dsp_serv: &[&XORG,&WAYLAND, &TTY],
+    supported_login_man: &[&SDDM],
+    supported_dsp_serv: &[&XORG, &WAYLAND, &TTY],
     supported_wms: &[&AWESOME_WM, &BSPWM, &I3, &SWAY, &NIRI, &RIVER],
     install: &["dnf", "install", "-y"],
     install_suffix: None,
@@ -211,21 +235,24 @@ pub const FEDORA: distro::Distro = distro::Distro {
         create_and_write_user(".local/bin/mdrun", cstm::MDRUN_CONTENT, 0o755);
         create_and_write_user(".local/bin/mdmenu", cstm::MDMENU_CONTENT, 0o755);
 
-
         // Create the font directory
         if let Some(mut home) = std::env::home_dir() {
             // Create the full dir to font dir
             home.push(".local/share/fonts");
 
-
             // Path to check whether directory exists
             let mut check_dir = home.clone();
             check_dir.push("JetBrainsMonoNerdFont-Regular.ttf");
             if let Ok(false) = fs::exists(check_dir.as_path()) {
-
                 if let Ok(_) = fs::create_dir_all(&home) {
                     // Download the nerdfont
-                    cmd("curl", &["-OL", "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"]);
+                    cmd(
+                        "curl",
+                        &[
+                            "-OL",
+                            "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz",
+                        ],
+                    );
 
                     // extract the archives
                     if let Some(home_str) = home.to_str() {
@@ -235,7 +262,6 @@ pub const FEDORA: distro::Distro = distro::Distro {
                     // Delete the downloaded archive
                     let _ = fs::remove_file("JetBrainsMono.tar.xz");
                 }
-
             }
         }
     },
@@ -243,6 +269,7 @@ pub const FEDORA: distro::Distro = distro::Distro {
 
 pub const ARCH_LINUX: distro::Distro = distro::Distro {
     id: DistroId::ArchLinux,
+    supported_login_man: &[&SDDM],
     supported_dsp_serv: &[&XORG, &WAYLAND, &TTY],
     supported_wms: &[&AWESOME_WM, &BSPWM, &I3, &SWAY, &NIRI, &RIVER, &HYPRLAND],
     install: &["pacman", "-Syu"],
@@ -254,13 +281,12 @@ pub const ARCH_LINUX: distro::Distro = distro::Distro {
         // for Rofi
         create_and_write_user(".local/bin/mdrun", cstm::MDRUN_CONTENT, 0o755);
         create_and_write_user(".local/bin/mdmenu", cstm::MDMENU_CONTENT, 0o755);
-
     },
 };
 
-
 pub const OTHER_DISTRO: distro::Distro = distro::Distro {
     id: DistroId::Other,
+    supported_login_man: &[],
     supported_dsp_serv: &[],
     supported_wms: &[],
     install: &[],
@@ -271,33 +297,41 @@ pub const OTHER_DISTRO: distro::Distro = distro::Distro {
     setup_callback: || {},
 };
 
-
-pub const DISTRO_ASSOC: &'static [(&distro::Distro /* Distro */, &'static str /* string in '/etc/os-release' */)] = &[
+pub const DISTRO_ASSOC: &'static [(
+    &distro::Distro, /* Distro */
+    &'static str,    /* string in '/etc/os-release' */
+)] = &[
     (&DEBIAN, "Debian"),
     (&FEDORA, "Fedora"),
     (&ARCH_LINUX, "Arch Linux"),
 ];
 
-
-
-
 // Helper functions.
 // These will just print an error to stdout and return nothing
 fn cmd<S: AsRef<OsStr> + Clone>(command: S, args: &[S]) {
     match cmd::cmd(command.clone(), args) {
-        Ok(_) => {},
-        Err(error) => println!("Failed to run {} in {} : {error}", command.as_ref().display(), file!())
+        Ok(_) => {}
+        Err(error) => println!(
+            "Failed to run {} in {} : {error}",
+            command.as_ref().display(),
+            file!()
+        ),
     }
 }
 
-fn create_and_write_user<P: AsRef<Path> + Clone, C: AsRef<[u8]>>(new_file: P, contents: C, mode: u32) {
+fn create_and_write_user<P: AsRef<Path> + Clone, C: AsRef<[u8]>>(
+    new_file: P,
+    contents: C,
+    mode: u32,
+) {
     match fu::create_and_write_user(new_file.clone(), contents, mode) {
         Ok(_) => {}
         Err(error) => {
-            println!("Failed to create file {}: {error}", new_file.as_ref().display());
+            println!(
+                "Failed to create file {}: {error}",
+                new_file.as_ref().display()
+            );
             panic!();
         }
     }
-
 }
-

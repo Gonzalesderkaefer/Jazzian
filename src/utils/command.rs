@@ -1,17 +1,9 @@
-use std::{
-    ffi::OsStr, fmt, io,
-    process::Command,
-    error::Error,
-};
-
-
-
-
+use std::{error::Error, ffi::OsStr, fmt, io, process::Command};
 
 /// This enum represesnts an error for this module
 #[derive(Debug)]
 pub enum CommandError {
-    IO (io::Error, u32, &'static str),
+    IO(io::Error, u32, &'static str),
     CmdFail,
 }
 
@@ -19,12 +11,12 @@ pub enum CommandError {
 impl fmt::Display for CommandError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
         match &self {
-            Self::IO (err, line, file) => {
+            Self::IO(err, line, file) => {
                 return write!(f, "Internal IO Error at {line} in {file}: {}", err);
-            },
+            }
             CommandError::CmdFail => {
                 return write!(f, "Command failed to execute.");
-            },
+            }
         }
     }
 }
@@ -35,7 +27,6 @@ pub fn cmd<S: AsRef<OsStr>>(command: S, args: &[S]) -> Result<(), CommandError> 
     // Create the new command
     let mut binding = Command::new(command);
     let new_cmd = binding.args(args);
-
 
     // Spawn the new process
     match new_cmd.spawn() {
@@ -54,15 +45,12 @@ pub fn cmd<S: AsRef<OsStr>>(command: S, args: &[S]) -> Result<(), CommandError> 
                     return Err(CommandError::IO(e, line!(), file!()));
                 }
             }
-        },
+        }
         Err(e) => {
             return Err(CommandError::IO(e, line!(), file!()));
-        },
+        }
     }
 }
-
-
-
 
 /// Execute a command. The parent proc waits until the Sub process has finished executing
 #[allow(dead_code)]
@@ -70,7 +58,6 @@ pub fn eval<S: AsRef<OsStr>>(command: S, args: &[S]) -> Result<String, CommandEr
     // Create the new command
     let mut binding = Command::new(command);
     let new_cmd = binding.args(args).output();
-
 
     // Spawn the new process
     match new_cmd {
@@ -81,9 +68,7 @@ pub fn eval<S: AsRef<OsStr>>(command: S, args: &[S]) -> Result<String, CommandEr
                 Err(_) => todo!(), // Not sure how to handle this
             };
             return Ok(out_as_string);
-
         }
         Err(err) => return Err(CommandError::IO(err, line!(), file!())),
     }
 }
-

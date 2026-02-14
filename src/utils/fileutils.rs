@@ -1,57 +1,55 @@
-use std::ffi::OsString;
-use std::os::unix::fs::PermissionsExt;
-use std::fs::File;
-use std::{path::{Path, PathBuf}};
 use std::error::Error;
-use std::{fs, io, fmt};
+use std::ffi::OsString;
+use std::fs::File;
+use std::os::unix::fs::PermissionsExt;
+use std::path::{Path, PathBuf};
+use std::{fmt, fs, io};
 
 use crate::computer::transfer::Transfer;
-
-
 
 /// This module's Error type
 #[derive(Debug)]
 pub enum FileUtilErr {
     // copy_dir
-    IO (io::Error, u32, &'static str),
-    RootSrc (u32, &'static str),
-    NoSource (String, u32, &'static str),
-    InvalidSrc (u32, &'static str),
+    IO(io::Error, u32, &'static str),
+    RootSrc(u32, &'static str),
+    NoSource(String, u32, &'static str),
+    InvalidSrc(u32, &'static str),
 
     // create_file_and_write
-    WriteToDir (u32, &'static str),
+    WriteToDir(u32, &'static str),
 
     // create_file_and_write_user
-    NoHome (u32, &'static str),
-
-
+    NoHome(u32, &'static str),
 }
 impl fmt::Display for FileUtilErr {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
         match &self {
-            Self::IO (err, line, file) => {
+            Self::IO(err, line, file) => {
                 return write!(f, "Internal IO Error at {line} in {file}: {}", err);
-            },
+            }
             Self::RootSrc(line, file) => {
-                return write!(f, "Root cannot be the source when copying directories at {line} in {file}");
-            },
-            Self::NoSource (source, line, file) => {
+                return write!(
+                    f,
+                    "Root cannot be the source when copying directories at {line} in {file}"
+                );
+            }
+            Self::NoSource(source, line, file) => {
                 return write!(f, "No source: \"{source}\" at {line} in {file}");
-            },
-            Self::InvalidSrc (line, file) => {
+            }
+            Self::InvalidSrc(line, file) => {
                 return write!(f, "Source is not valid unicode at {line} in {file}");
-            },
-            Self::WriteToDir (line, file) => {
+            }
+            Self::WriteToDir(line, file) => {
                 return write!(f, "Can't write to a directory at {line} in {file}");
-            },
-            Self::NoHome (line, file) => {
+            }
+            Self::NoHome(line, file) => {
                 return write!(f, "No home directory found at {line} in {file}");
-            },
+            }
         }
     }
 }
 impl Error for FileUtilErr {}
-
 
 /// Copy a directory from `from` to `to`.
 ///
@@ -69,13 +67,17 @@ pub fn copy_dir<P: AsRef<Path>, Q: AsRef<Path>>(source: P, dest: Q) -> Result<()
     let dest_buffer: std::path::PathBuf;
 
     // Check if from exists
-    if ! source_path.exists() {
+    if !source_path.exists() {
         // Get source path as &str
         let source_path_str = match source_path.to_str() {
             Some(str) => str,
             None => return Err(FileUtilErr::InvalidSrc(line!(), file!())),
         };
-        return Err(FileUtilErr::NoSource(String::from(source_path_str), line!(), file!()));
+        return Err(FileUtilErr::NoSource(
+            String::from(source_path_str),
+            line!(),
+            file!(),
+        ));
     }
 
     // Check if to exists
@@ -98,19 +100,18 @@ pub fn copy_dir<P: AsRef<Path>, Q: AsRef<Path>>(source: P, dest: Q) -> Result<()
     let create_dir_result = fs::create_dir_all(dest_path);
     // Check its result, and return if it failed
     match create_dir_result {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(e) => {
-            return Err(FileUtilErr::IO(e, line!(), file!())); 
-        },
+            return Err(FileUtilErr::IO(e, line!(), file!()));
+        }
     }
-
 
     // Open source_dir
     let from_dir = match fs::read_dir(source_path) {
         Ok(dir) => dir,
-        Err(e) => { 
-            return Err(FileUtilErr::IO(e, line!(), file!())); 
-        },
+        Err(e) => {
+            return Err(FileUtilErr::IO(e, line!(), file!()));
+        }
     };
 
     // Iterate through source_dir
@@ -118,17 +119,17 @@ pub fn copy_dir<P: AsRef<Path>, Q: AsRef<Path>>(source: P, dest: Q) -> Result<()
         // Open directory entry as entry
         let opened_entry = match from_entries {
             Ok(entry) => entry,
-            Err(e) => { 
-                return Err(FileUtilErr::IO(e, line!(), file!())); 
-            },
+            Err(e) => {
+                return Err(FileUtilErr::IO(e, line!(), file!()));
+            }
         };
 
         // Get the file_type of the opened_entry
         let opened_file_type = match opened_entry.file_type() {
-            Ok (file_type) => file_type,
+            Ok(file_type) => file_type,
             Err(e) => {
                 return Err(FileUtilErr::IO(e, line!(), file!()));
-            },
+            }
         };
 
         // Get the basename of the opened entry
@@ -146,10 +147,10 @@ pub fn copy_dir<P: AsRef<Path>, Q: AsRef<Path>>(source: P, dest: Q) -> Result<()
         if opened_file_type.is_dir() {
             // Call the function recursively
             match copy_dir(source_dir_path.as_path(), dest_dir_path.as_path()) {
-                Ok(()) => {},
+                Ok(()) => {}
                 Err(e) => {
                     return Err(e);
-                },
+                }
             }
         } else if opened_file_type.is_symlink() {
             // Get the target of the link
@@ -160,33 +161,31 @@ pub fn copy_dir<P: AsRef<Path>, Q: AsRef<Path>>(source: P, dest: Q) -> Result<()
 
             // Create the new symlink
             match std::os::unix::fs::symlink(target_path, dest_dir_path) {
-                Ok(_) => {},
-                Err(error) => return Err(FileUtilErr::IO(error, line!(), file!()))
+                Ok(_) => {}
+                Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
             }
-
-
-
         } else if opened_file_type.is_file() {
             match fs::copy(source_dir_path.as_path(), dest_dir_path.as_path()) {
-                Ok(_) => {},
+                Ok(_) => {}
                 Err(e) => {
                     return Err(FileUtilErr::IO(e, line!(), file!()));
-                },
+                }
             }
         }
     }
     return Ok(());
 }
 
-
-
-
 /// Create a file and write `contents` to it.
 ///
 /// This fucntion creates a file including its parent directory structure writes `contents` to the
 /// file. If the file already exists, no action is taken.
 #[allow(unused)]
-pub fn create_and_write<P: AsRef<Path>, C: AsRef<[u8]>>(new_file: P, contents: C, mode: u32) -> Result<(), FileUtilErr> {
+pub fn create_and_write<P: AsRef<Path>, C: AsRef<[u8]>>(
+    new_file: P,
+    contents: C,
+    mode: u32,
+) -> Result<(), FileUtilErr> {
     // Check if new_file already exists
     if new_file.as_ref().exists() {
         return Ok(());
@@ -194,7 +193,7 @@ pub fn create_and_write<P: AsRef<Path>, C: AsRef<[u8]>>(new_file: P, contents: C
 
     // Check if path is a directory
     if new_file.as_ref().is_dir() {
-         return Err(FileUtilErr::WriteToDir(line!(), file!()));
+        return Err(FileUtilErr::WriteToDir(line!(), file!()));
     }
 
     // Get the parent of the new file
@@ -204,44 +203,39 @@ pub fn create_and_write<P: AsRef<Path>, C: AsRef<[u8]>>(new_file: P, contents: C
     };
 
     // Create the parent if necessary
-    if ! parent_of_new_file.exists() {
+    if !parent_of_new_file.exists() {
         match fs::create_dir_all(parent_of_new_file) {
-            Ok(()) => {},
-            Err(e) => { return Err(FileUtilErr::IO(e, line!(), file!())); },
+            Ok(()) => {}
+            Err(e) => {
+                return Err(FileUtilErr::IO(e, line!(), file!()));
+            }
         }
     }
 
     // finally write the file
     match fs::write(&new_file, contents) {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(e) => return Err(FileUtilErr::IO(e, line!(), file!())),
     }
 
     // Set permissions for the file
     match fs::set_permissions(new_file, fs::Permissions::from_mode(mode)) {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
     }
 
-
-
     return Ok(());
 }
-
-
-
-
-
-
-
-
 
 /// Create a file and write `contents` to it.
 ///
 /// This fucntion does what [create_and_write] does but `new_file` is relative to
 /// `/home/<username>`
-pub fn create_and_write_user<P: AsRef<Path>, C: AsRef<[u8]>>(new_file: P, contents: C, mode: u32) -> Result<(), FileUtilErr> {
-
+pub fn create_and_write_user<P: AsRef<Path>, C: AsRef<[u8]>>(
+    new_file: P,
+    contents: C,
+    mode: u32,
+) -> Result<(), FileUtilErr> {
     // Get the home directory
     let mut home_dir = match std::env::home_dir() {
         Some(home) => home,
@@ -254,7 +248,6 @@ pub fn create_and_write_user<P: AsRef<Path>, C: AsRef<[u8]>>(new_file: P, conten
         home_dir
     };
 
-
     // Check if new_file already exists
     if full_path.as_path().exists() {
         return Ok(());
@@ -262,7 +255,7 @@ pub fn create_and_write_user<P: AsRef<Path>, C: AsRef<[u8]>>(new_file: P, conten
 
     // Check if path is a directory
     if full_path.as_path().is_dir() {
-         return Err(FileUtilErr::WriteToDir(line!(), file!()));
+        return Err(FileUtilErr::WriteToDir(line!(), file!()));
     }
 
     // Get the parent of the new file
@@ -272,43 +265,43 @@ pub fn create_and_write_user<P: AsRef<Path>, C: AsRef<[u8]>>(new_file: P, conten
     };
 
     // Create the parent if necessary
-    if ! parent_of_new_file.exists() {
+    if !parent_of_new_file.exists() {
         match fs::create_dir_all(parent_of_new_file) {
-            Ok(()) => {},
-            Err(e) => { return Err(FileUtilErr::IO(e, line!(), file!())); },
+            Ok(()) => {}
+            Err(e) => {
+                return Err(FileUtilErr::IO(e, line!(), file!()));
+            }
         }
     }
 
     // finally write the file
     match fs::write(&full_path, contents) {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(e) => return Err(FileUtilErr::IO(e, line!(), file!())),
     }
 
     // Set permissions for the file
     match fs::set_permissions(full_path, fs::Permissions::from_mode(mode)) {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
     }
-
-
 
     return Ok(());
 }
 
-
-
-
-
-
-
 /// Get all files that are in this directory
 #[allow(dead_code)]
-pub fn sub_paths<P: AsRef<Path>>(directory: P, paths: &mut Vec<String>) -> Result<(), FileUtilErr>{
+pub fn sub_paths<P: AsRef<Path>>(directory: P, paths: &mut Vec<String>) -> Result<(), FileUtilErr> {
     // Check if the directory exists
-    if ! directory.as_ref().exists() {
+    if !directory.as_ref().exists() {
         match directory.as_ref().to_str() {
-            Some(directory_name) => return Err(FileUtilErr::NoSource(String::from(directory_name), line!(), file!())),
+            Some(directory_name) => {
+                return Err(FileUtilErr::NoSource(
+                    String::from(directory_name),
+                    line!(),
+                    file!(),
+                ));
+            }
             None => todo!(), // I don't know, what to do here
         }
     }
@@ -323,29 +316,29 @@ pub fn sub_paths<P: AsRef<Path>>(directory: P, paths: &mut Vec<String>) -> Resul
         // Open directory entry as entry
         let opened_entry = match entry {
             Ok(entry) => entry,
-            Err(e) => { 
-                return Err(FileUtilErr::IO(e, line!(), file!())); 
-            },
+            Err(e) => {
+                return Err(FileUtilErr::IO(e, line!(), file!()));
+            }
         };
 
         // Add entry to paths
         match opened_entry.path().to_str() {
             Some(full_path) => paths.push(String::from(full_path)),
-            None => {},
+            None => {}
         }
 
         // Get the file_type of the opened_entry
         let opened_file_type = match opened_entry.file_type() {
-            Ok (file_type) => file_type,
+            Ok(file_type) => file_type,
             Err(e) => {
                 return Err(FileUtilErr::IO(e, line!(), file!()));
-            },
+            }
         };
 
         // See if opened element is a directory then call recursively
         if opened_file_type.is_dir() {
             match sub_paths(opened_entry.path(), paths) {
-                Ok(_) => {},
+                Ok(_) => {}
                 Err(error) => return Err(error),
             }
         };
@@ -353,18 +346,14 @@ pub fn sub_paths<P: AsRef<Path>>(directory: P, paths: &mut Vec<String>) -> Resul
     return Ok(());
 }
 
-
-
-
-
-
-
-
-
-
 /// for each item in `src/` move them to `dest/` where `src/` and `dest/` are directories
 /// if `dest/` does not exist it will be created
-pub fn move_dir<P: AsRef<Path>>(src: P, dest: P, method: Transfer, hide: bool) -> Result<(), FileUtilErr> {
+pub fn move_dir<P: AsRef<Path>>(
+    src: P,
+    dest: P,
+    method: Transfer,
+    hide: bool,
+) -> Result<(), FileUtilErr> {
     // Check if nothing needs to be done
     if let Transfer::None = method {
         return Ok(());
@@ -372,43 +361,42 @@ pub fn move_dir<P: AsRef<Path>>(src: P, dest: P, method: Transfer, hide: bool) -
 
     // Check if dest exists
     match fs::exists(&dest) {
-        Ok(value) => if !value {
-            // Create and check for error
-            match fs::create_dir_all(&dest) {
-                Ok(_) => {},
-                Err(error) => return Err(FileUtilErr::IO(error, line!(), file!()))
-            };
+        Ok(value) => {
+            if !value {
+                // Create and check for error
+                match fs::create_dir_all(&dest) {
+                    Ok(_) => {}
+                    Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
+                };
+            }
         }
         Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
     };
 
-
-
     // Open source_dir
     let source_dir = match fs::read_dir(&src) {
-        Ok(dir) => dir, Err(e) => { 
-            return Err(FileUtilErr::IO(e, line!(), file!())); 
-        },
+        Ok(dir) => dir,
+        Err(e) => {
+            return Err(FileUtilErr::IO(e, line!(), file!()));
+        }
     };
-
-
 
     // Iterate through source_dir
     for src_entries in source_dir {
         // Open directory entry as entry
         let opened_entry = match src_entries {
             Ok(entry) => entry,
-            Err(e) => { 
-                return Err(FileUtilErr::IO(e, line!(), file!())); 
-            },
+            Err(e) => {
+                return Err(FileUtilErr::IO(e, line!(), file!()));
+            }
         };
 
         // Get the file_type of the opened_entry
         let opened_file_type = match opened_entry.file_type() {
-            Ok (file_type) => file_type,
+            Ok(file_type) => file_type,
             Err(e) => {
                 return Err(FileUtilErr::IO(e, line!(), file!()));
-            },
+            }
         };
 
         // Get the basename of the opened entry
@@ -431,15 +419,14 @@ pub fn move_dir<P: AsRef<Path>>(src: P, dest: P, method: Transfer, hide: bool) -
             dest_dir_path.push(opened_basename);
         }
 
-
-        if ! dest_dir_path.as_path().exists() {
+        if !dest_dir_path.as_path().exists() {
             match method {
                 Transfer::Link => {
                     match std::os::unix::fs::symlink(source_dir_path, dest_dir_path) {
-                        Ok(_) => {},
-                        Err(error) => return Err(FileUtilErr::IO(error, line!(), file!()))
+                        Ok(_) => {}
+                        Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
                     }
-                },
+                }
                 Transfer::Copy => {
                     // Check if source is directory
                     if opened_file_type.is_dir() {
@@ -453,46 +440,38 @@ pub fn move_dir<P: AsRef<Path>>(src: P, dest: P, method: Transfer, hide: bool) -
 
                         // Create the new symlink
                         match std::os::unix::fs::symlink(target_path, dest_dir_path) {
-                            Ok(_) => {},
-                            Err(error) => return Err(FileUtilErr::IO(error, line!(), file!()))
+                            Ok(_) => {}
+                            Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
                         }
-
-
-
-                    }else if opened_file_type.is_file() {
+                    } else if opened_file_type.is_file() {
                         match fs::copy(&source_dir_path, dest_dir_path) {
-                            Ok(_) => {},
+                            Ok(_) => {}
                             Err(error) => return Err(FileUtilErr::IO(error, line!(), file!())),
                         };
                     }
-                },
-                Transfer::None => return Ok(())
+                }
+                Transfer::None => return Ok(()),
             }
         }
     }
     Ok(())
 }
 
-
-
-
-
-
-
 #[allow(dead_code)]
 pub fn find_file<P: AsRef<Path>>(search_string: &str, search_directory_path: P) -> bool {
     // Check if search_directory exists
     match fs::exists(&search_directory_path) {
-        Ok(false) => return false ,
+        Ok(false) => return false,
         Err(_) => return false,
-        _ => {},
+        _ => {}
     }
 
     // Open source_dir
     let search_dir = match fs::read_dir(&search_directory_path) {
-        Ok(dir) => dir, Err(_) => {
-            return false; 
-        },
+        Ok(dir) => dir,
+        Err(_) => {
+            return false;
+        }
     };
 
     // Iterate through dir
@@ -514,10 +493,9 @@ pub fn find_file<P: AsRef<Path>>(search_string: &str, search_directory_path: P) 
             return true;
         }
 
-
         // Get the file_type of the opened_entry
         let file_type = match dirent.file_type() {
-            Ok (file_type) => file_type,
+            Ok(file_type) => file_type,
             Err(_) => continue,
         };
 
@@ -533,7 +511,3 @@ pub fn find_file<P: AsRef<Path>>(search_string: &str, search_directory_path: P) 
     }
     return false;
 }
-
-
-
-

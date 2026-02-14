@@ -1,22 +1,18 @@
 use std::io;
-use std::{
-    fmt,
-    error::Error,
-};
+use std::{error::Error, fmt};
 
-use crate::config::config::{self, DspServerId, NOWM};
+use super::distro;
+use super::dsp_server::DspServer;
+use super::login_manager::LoginManager;
+use super::transfer::Transfer;
+use super::window_manager as wm;
+use crate::JazzyErr;
 use crate::computer::dsp_server;
 use crate::computer::window_manager::WindowManager;
+use crate::config::config::{self, DspServerId, NOWM};
 use crate::menu;
 use crate::menu::menu::MenuErr;
 use crate::utils::command;
-use crate::JazzyErr;
-use super::distro;
-use super::dsp_server::DspServer;
-use super::window_manager as wm;
-use super::transfer::Transfer;
-
-
 
 /// This struct represents a computer. An instance of this type is built when getting the
 /// options from the user. This 'computer' is then 'applied' to the computer that it is running
@@ -25,6 +21,9 @@ use super::transfer::Transfer;
 pub struct Computer {
     /// The distro of this computer.
     pub distro: &'static distro::Distro,
+
+    /// The login manager used to login into the system
+    pub login_manager: &'static LoginManager,
 
     /// The display server that is intened to be used.
     pub display_server: &'static DspServer,
@@ -39,13 +38,12 @@ pub struct Computer {
     pub all_packages: Vec<&'static str>,
 }
 
-
 /// This is an error type for a Distro
 #[derive(Debug)]
 pub enum ComputerError {
-    DistroErr (distro::DistroError, u32, &'static str),
-    MenuError (MenuErr, u32, &'static str),
-    CmdError (command::CommandError, u32, &'static str),
+    DistroErr(distro::DistroError, u32, &'static str),
+    MenuError(MenuErr, u32, &'static str),
+    CmdError(command::CommandError, u32, &'static str),
 }
 
 /// Implementation of [fmt::Display] for [DistroError]
@@ -64,8 +62,7 @@ impl fmt::Display for ComputerError {
         }
     }
 }
-impl Error for ComputerError{}
-
+impl Error for ComputerError {}
 
 impl Computer {
     /// Construct a [computer] from user choices
@@ -87,14 +84,18 @@ impl Computer {
                         let transfer_method = {
                             let final_result: Transfer;
                             // Check for error
-                            match menu::menu::print_menu(" Choose a method of transfer ", vec![Transfer::None, Transfer::Link, Transfer::Copy]) {
+                            match menu::menu::print_menu(
+                                " Choose a method of transfer ",
+                                vec![Transfer::None, Transfer::Link, Transfer::Copy],
+                            ) {
                                 Ok(transfer_option) => {
                                     // This cannot ever panic because the list is not empty
-                                    final_result = transfer_option.expect("The list of transfer methods was empty")
+                                    final_result = transfer_option
+                                        .expect("The list of transfer methods was empty")
                                 }
                                 Err(error) => {
                                     return Err(ComputerError::MenuError(error, line!(), file!()));
-                                },
+                                }
                             }
                             final_result
                         };
@@ -102,6 +103,7 @@ impl Computer {
                         // Return 'empty' computer
                         return Ok(Self {
                             distro: &config::OTHER_DISTRO,
+                            login_manager: &config::NO_LM,
                             display_server: &config::TTY,
                             gui: &config::NOWM,
                             transfer: transfer_method,
@@ -109,14 +111,32 @@ impl Computer {
                         });
                     }
                 }
-            },
+            }
+        };
+
+        // Get login manager from user
+        // This is an [Option]
+        let login_man = match menu::menu::print_menu(
+            " Choose a login manager ",
+            distro.supported_login_man.to_vec(),
+        ) {
+            Ok(login) => login,
+            Err(error) => return Err(ComputerError::MenuError(error, line!(), file!())),
+        };
+        // Check if list was empty
+        let login_manager = match login_man {
+            Some(login) => login,
+            None => &config::NO_LM
         };
 
         // Get display server from user
         // This is an [Option]
-        let display_serv = match menu::menu::print_menu(" Choose a display server ", distro.supported_dsp_serv.to_vec()) {
+        let display_serv = match menu::menu::print_menu(
+            " Choose a display server ",
+            distro.supported_dsp_serv.to_vec(),
+        ) {
             Ok(server) => server,
-            Err(error) => return Err(ComputerError::MenuError(error, line!(), file!()))
+            Err(error) => return Err(ComputerError::MenuError(error, line!(), file!())),
         };
 
         // Check if list was empty
@@ -124,7 +144,6 @@ impl Computer {
             Some(server) => server,
             None => &config::TTY,
         };
-
 
         // Get supported window managers
         let mut supported_wms: Vec<&WindowManager> = Vec::new();
@@ -135,10 +154,11 @@ impl Computer {
         }
 
         // Get window manager from user
-        let window_manager_opt = match menu::menu::print_menu(" Choose a window manager ", supported_wms) {
-            Ok(wm) => wm,
-            Err(error) => return Err(ComputerError::MenuError(error, line!(), file!()))
-        };
+        let window_manager_opt =
+            match menu::menu::print_menu(" Choose a window manager ", supported_wms) {
+                Ok(wm) => wm,
+                Err(error) => return Err(ComputerError::MenuError(error, line!(), file!())),
+            };
 
         // Check if list was empty
         let window_manager = match window_manager_opt {
@@ -146,15 +166,15 @@ impl Computer {
             None => &NOWM,
         };
 
-
-
         // Get window manager from user
-        let transfer = match menu::menu::print_menu(" Choose a method of transfer ", vec![Transfer::None, Transfer::Link, Transfer::Copy]) {
+        let transfer = match menu::menu::print_menu(
+            " Choose a method of transfer ",
+            vec![Transfer::None, Transfer::Link, Transfer::Copy],
+        ) {
             // This cannot ever panic because the list is not empty
             Ok(transfer_option) => transfer_option.expect("The list of transfer methods was empty"),
             Err(error) => return Err(ComputerError::MenuError(error, line!(), file!())),
         };
-
 
         // All packages that need to be installed
         let mut all_packages: Vec<&str> = Vec::new();
@@ -169,6 +189,17 @@ impl Computer {
             all_packages.push(base_package);
         }
 
+        // Check if there are login manager packages for the distro
+        match login_manager.packages[distro.id.clone() as usize] {
+            Some(lm_packages) => {
+                // append all packages
+                for lm_package in lm_packages {
+                    all_packages.push(lm_package);
+                }
+            }
+            None => {}
+        }
+
         // Check if there are packages for the distro
         match display_server.packages[distro.id.clone() as usize] {
             Some(dsp_server_pkgs) => {
@@ -176,8 +207,8 @@ impl Computer {
                 for display_package in dsp_server_pkgs {
                     all_packages.push(display_package);
                 }
-            },
-            None => {},
+            }
+            None => {}
         }
 
         // Check if there are packages for the distro
@@ -187,22 +218,22 @@ impl Computer {
                 for wm_package in wm_pkgs {
                     all_packages.push(wm_package);
                 }
-            },
-            None => {},
-        }
-
-
-        match distro.install_suffix {
-            Some(suffixes) => for suffix in suffixes  {
-                all_packages.push(suffix);
-            },
+            }
             None => {}
         }
 
-
+        match distro.install_suffix {
+            Some(suffixes) => {
+                for suffix in suffixes {
+                    all_packages.push(suffix);
+                }
+            }
+            None => {}
+        }
 
         return Ok(Self {
             distro: distro,
+            login_manager: login_manager,
             display_server: display_server,
             gui: window_manager,
             transfer: transfer,
@@ -214,18 +245,18 @@ impl Computer {
     pub fn update(&self) -> Result<(), ComputerError> {
         // Run the update command
         match command::cmd("sudo", self.distro.update) {
-            Ok(_) => {},
+            Ok(_) => {}
             Err(error) => {
                 return Err(ComputerError::CmdError(error, line!(), file!()));
-            },
+            }
         }
 
         // Run the upgrade command
         match command::cmd("sudo", self.distro.upgrade) {
-            Ok(_) => {},
+            Ok(_) => {}
             Err(error) => {
                 return Err(ComputerError::CmdError(error, line!(), file!()));
-            },
+            }
         }
 
         return Ok(());
@@ -234,13 +265,12 @@ impl Computer {
     pub fn install(&self) -> Result<(), ComputerError> {
         // Install all packages
         match command::cmd("sudo", self.all_packages.as_slice()) {
-            Ok(_) => {},
+            Ok(_) => {}
             Err(error) => {
                 return Err(ComputerError::CmdError(error, line!(), file!()));
-            },
+            }
         }
 
         return Ok(());
     }
-
 }

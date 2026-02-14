@@ -4,13 +4,13 @@ use crate::menu::menu;
 use ratatui::widgets::ListItem;
 use std::fmt;
 
-/// Window manager that runs on xorg
+/// Login manager like sddm or gdm
 ///
-/// `WindowManager` is used to define a window manager. These are defined in 'src/config/config.rs'
+/// `LoginManager` is used to define a login manager. These are defined in 'src/config/config.rs'
 #[derive(Debug)]
-pub struct WindowManager {
+pub struct LoginManager {
     /// Name of this window manager. It's an enum so that is defined in 'src/config/config.rs'
-    pub id: config::WindowManagerId,
+    pub id: config::LoginManagerId,
 
     /// Packages needed for this Compositor, the index is the DistroId if
     /// an entry is [None] It means the Compositor is not supported for that [Distro]
@@ -20,22 +20,22 @@ pub struct WindowManager {
     pub setup_callback: fn(),
 }
 
-/// Implementation of Display for [CompositorId] to get `to_string()` for free
-impl fmt::Display for config::WindowManagerId {
+/// Implementation of Display for [LoginManagerId] to get `to_string()` for free
+impl fmt::Display for config::LoginManagerId {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         return write!(f, "{:?}", self);
     }
 }
 
-impl PartialEq for WindowManager {
+impl PartialEq for LoginManager {
     fn eq(&self, other: &Self) -> bool {
         return self.id == other.id;
     }
 }
 
 /// To convert a [WindowManager] to an [ListItem]
-impl<'a> From<&WindowManager> for ListItem<'a> {
-    fn from(value: &WindowManager) -> Self {
+impl<'a> From<&LoginManager> for ListItem<'a> {
+    fn from(value: &LoginManager) -> Self {
         return Self::new(value.id.to_string());
     }
 }

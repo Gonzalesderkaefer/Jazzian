@@ -32,11 +32,9 @@ pub static MYTERM_CONTENT: &'static str = "#!/bin/sh\n\
                                ;;\n\
                        esac\n";
 
-
 pub static X11STARTUP: &'static str = "#!/usr/bin/bash\n";
 
 pub static WLSTARTUP: &'static str = "#!/usr/bin/bash\n";
-
 
 pub static GTK3_CONFIG: &'static str = "[Settings]\n\
                     gtk-theme-name=Adwaita-dark\n\
@@ -44,8 +42,7 @@ pub static GTK3_CONFIG: &'static str = "[Settings]\n\
                     gtk-font-name=JetBrains Mono Light 12\n\
                     gtk-cursor-theme-size=0";
 // Customized files
-pub static CUSTOMIZED: &'static [(&str, &str, u32)] =
-&[
+pub static CUSTOMIZED: &'static [(&str, &str, u32)] = &[
     // Customized files for window managers/compositors
     (".config/i3/customized/customized", "", 0o644),
     (".config/bspwm/customized/customized", "", 0o644),
@@ -54,21 +51,16 @@ pub static CUSTOMIZED: &'static [(&str, &str, u32)] =
     (".config/hypr/customized/customized", "", 0o644),
     (".config/river/customized/customized", "", 0o644),
     (".config/niri/customized/customized.kdl", "", 0o644),
-
     // Customized shell files
     (".customized.sh", "", 0o644),
     (".customrc", "", 0o644),
-    (".customenv",  "export BROWSER_PREFIX=\"firefox\"", 0o644),
-
+    (".customenv", "export BROWSER_PREFIX=\"firefox\"", 0o644),
     // X11 Startup
     (".local/bin/x11startup", X11STARTUP, 0o755),
-
     // Wayland Startup (window managers only)
     (".local/bin/wlstartup", WLSTARTUP, 0o755),
-
     // Myterm
     (".local/bin/myterm", MYTERM_CONTENT, 0o755),
-
     // GTK3
     (".config/gtk-3.0/settings.ini", GTK3_CONFIG, 0o644),
 ];

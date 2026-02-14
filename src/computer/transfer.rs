@@ -1,8 +1,7 @@
 use crate::menu::menu;
 
+use ratatui::widgets::ListItem;
 use std::fmt;
-use ratatui::widgets::{ ListItem };
-
 
 /// Represents method of transfer
 #[derive(Debug, Clone)]
