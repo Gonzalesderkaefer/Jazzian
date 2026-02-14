@@ -286,38 +286,16 @@ impl Computer {
                 return Err(ComputerError::CmdError(error, line!(), file!()));
             }
         };
-
         // Don't do anything if there is no service to enable
         if self.login_manager.service_name.is_empty() {
             return Ok(());
         }
-        // Check if login manager is enabled if not enable it
-        match command::eval("systemctl", &["is-enabled", self.login_manager.service_name]) {
-            Ok(output) => {
-                // Compare the output from the eval with "enabled'
-                match output.cmp(&String::from("enabled")) {
-                    std::cmp::Ordering::Less => {}
-                    std::cmp::Ordering::Equal => {}
-                    //  "enabled" is greater than "disabled"
-                    std::cmp::Ordering::Greater => {
-                        // Enable display server
-                        match self.display_server.id {
-                            config::DspServerId::Tty => {}
-                            _ => {
-                                match command::cmd("sudo", &["systemctl", "enable", self.login_manager.service_name]) {
-                                    Ok(_) => {}
-                                    Err(error) => {
-                                        return Err(ComputerError::CmdError(error, line!(), file!()));
-                                    }
-                                };
-                            }
-                        }
-                    }
-                }
+        match command::cmd("sudo", &["systemctl", "enable", "-f", self.login_manager.service_name]) {
+            Ok(_) => {}
+            Err(error) => {
+                return Err(ComputerError::CmdError(error, line!(), file!()));
             }
-            Err(_) => todo!(),
-    };
-
+        };
         return Ok(());
     }
 }
