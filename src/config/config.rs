@@ -61,14 +61,16 @@ pub enum WindowManagerId {
 }
 
 /// Login managers
-pub const NO_LM: lm::LoginManager = lm::LoginManager {
+pub const NOLM: lm::LoginManager = lm::LoginManager {
     id: LoginManagerId::None,
+    service_name: "",
     packages: [None, None, None],
     setup_callback: || {},
 };
 
 pub const SDDM: lm::LoginManager = lm::LoginManager {
     id: LoginManagerId::Sddm,
+    service_name: "sddm.service",
     packages: [Some(pkg::DEB_SDDM), Some(pkg::FED_SDDM), Some(pkg::ARCH_SDDM)],
     setup_callback: || {},
 };
@@ -174,7 +176,7 @@ pub const TTY: display::DspServer = display::DspServer {
 /// Distros
 pub const DEBIAN: distro::Distro = distro::Distro {
     id: DistroId::Debian,
-    supported_login_man: &[&SDDM],
+    supported_login_man: &[&SDDM, &NOLM],
     supported_dsp_serv: &[&XORG, &WAYLAND, &TTY],
     supported_wms: &[&AWESOME_WM, &BSPWM, &I3, &SWAY],
     install: &["apt", "install", "-y", "--no-install-recommends"],
@@ -222,7 +224,7 @@ pub const DEBIAN: distro::Distro = distro::Distro {
 
 pub const FEDORA: distro::Distro = distro::Distro {
     id: DistroId::Fedora,
-    supported_login_man: &[&SDDM],
+    supported_login_man: &[&SDDM, &NOLM],
     supported_dsp_serv: &[&XORG, &WAYLAND, &TTY],
     supported_wms: &[&AWESOME_WM, &BSPWM, &I3, &SWAY, &NIRI, &RIVER],
     install: &["dnf", "install", "-y"],
@@ -269,7 +271,7 @@ pub const FEDORA: distro::Distro = distro::Distro {
 
 pub const ARCH_LINUX: distro::Distro = distro::Distro {
     id: DistroId::ArchLinux,
-    supported_login_man: &[&SDDM],
+    supported_login_man: &[&SDDM, &NOLM],
     supported_dsp_serv: &[&XORG, &WAYLAND, &TTY],
     supported_wms: &[&AWESOME_WM, &BSPWM, &I3, &SWAY, &NIRI, &RIVER, &HYPRLAND],
     install: &["pacman", "-Syu"],

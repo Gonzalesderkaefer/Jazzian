@@ -16,6 +16,9 @@ pub struct LoginManager {
     /// an entry is [None] It means the Compositor is not supported for that [Distro]
     pub packages: [Option<&'static [&'static str]>; config::DistroId::Other as usize],
 
+    /// This is the service that needs to be activated
+    pub service_name: &'static str,
+
     /// Function that is called after installing this window manager
     pub setup_callback: fn(),
 }
