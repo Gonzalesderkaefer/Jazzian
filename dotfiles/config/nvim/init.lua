@@ -131,6 +131,7 @@ vim.cmd("set completeopt-=preview")
 
 require("lsp_config.clangd")
 require("lsp_config.lua_ls")
+require("lsp_config.pyright")
 require("lsp_config.rust_analyzer")
 -- 
 -- vim.lsp.enable("clangd")
