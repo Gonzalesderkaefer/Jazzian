@@ -1,25 +1,27 @@
-return {
-    'nvim-telescope/telescope.nvim', tag = '0.1.8',
-    dependencies = {
-        'nvim-lua/plenary.nvim',
-        {   -- This 
-            'nvim-telescope/telescope-fzf-native.nvim',
-            build = 'make',
-            cond = function()
-                return vim.fn.executable 'make' == 1
-            end,
-        }
+return
+{
+    'nvim-telescope/telescope.nvim',
+    dependencies =
+    {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
+        config = function()
+            require("telescope").load_extension("fzf")
+        end,
     },
 
     config = function()
-        defaults = {
+        defaults =
+        {
             previewer = true,
             file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
             grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
             qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
         }
-        require("telescope").setup {
-            extensions = {
+        require("telescope").setup
+        {
+            extensions =
+            {
                 fzf = {}
             },
         }
