@@ -123,15 +123,6 @@ end
 --     end,
 -- })
 
-vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("tree-sitter-enable", { clear = true }),
-    callback = function(args)
-        local lang = vim.treesitter.language.get_lang(args.match)
-        if not lang then return end
-
-        if vim.treesitter.query.get(lang, "highlights") then vim.treesitter.start(args.buf) end
-    end,
-})
 
 -- This is for omni-func so that it does not
 -- open the window with a description
