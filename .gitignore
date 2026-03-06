@@ -29,8 +29,5 @@ newsboat*
 /dotfiles/config/nnn/*
 !/dotfiles/config/nnn/plugins
 
-# Default niri config
-/dotfiles/config/niri/config.kdl
-
 # For the installer program
 /target
