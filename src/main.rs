@@ -48,41 +48,40 @@ fn run() -> Result<(), JazzyErr> {
         Err(error) => return Err(JazzyErr::ComputerErr(error, line!(), file!())),
     };
 
+    // move the config files
+    movedir(
+        &home_dir,
+        cfg::CFGSRC,
+        cfg::CFGDEST,
+        &computer.transfer,
+        false,
+    )?;
+
+    // move the scripts
+    movedir(
+        &home_dir,
+        cfg::BINSRC,
+        cfg::BINDEST,
+        &computer.transfer,
+        false,
+    )?;
+
+    // move the shell configuratons
+    movedir(&home_dir, cfg::SHELLCFG, home_str, &computer.transfer, true)?;
+
     // Patch for now need to make this 'cleaner'
-    if computer.distro.id == cfg::DistroId::Other {
-        // move the config files
-        movedir(
-            &home_dir,
-            cfg::CFGSRC,
-            cfg::CFGDEST,
-            &computer.transfer,
-            false,
-        )?;
+    if computer.distro.id != cfg::DistroId::Other {
+        // Update the computer
+        match computer.update() {
+            Ok(_) => {}
+            Err(error) => return Err(JazzyErr::ComputerErr(error, line!(), file!())),
+        }
 
-        // move the scripts
-        movedir(
-            &home_dir,
-            cfg::BINSRC,
-            cfg::BINDEST,
-            &computer.transfer,
-            false,
-        )?;
-
-        // move the shell configuratons
-        movedir(&home_dir, cfg::SHELLCFG, home_str, &computer.transfer, true)?;
-        return Ok(());
-    }
-
-    // Update the computer
-    match computer.update() {
-        Ok(_) => {}
-        Err(error) => return Err(JazzyErr::ComputerErr(error, line!(), file!())),
-    }
-
-    // Install the packages
-    match computer.install() {
-        Ok(_) => {}
-        Err(error) => return Err(JazzyErr::ComputerErr(error, line!(), file!())),
+        // Install the packages
+        match computer.install() {
+            Ok(_) => {}
+            Err(error) => return Err(JazzyErr::ComputerErr(error, line!(), file!())),
+        }
     }
 
     // Create files

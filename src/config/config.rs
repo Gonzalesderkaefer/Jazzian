@@ -6,8 +6,8 @@ use super::custom as cstm;
 use super::packages as pkg;
 use crate::computer::distro;
 use crate::computer::dsp_server as display;
-use crate::computer::window_manager as wm;
 use crate::computer::login_manager as lm;
+use crate::computer::window_manager as wm;
 use crate::utils::command as cmd;
 use crate::utils::fileutils as fu;
 
@@ -71,7 +71,11 @@ pub const NOLM: lm::LoginManager = lm::LoginManager {
 pub const SDDM: lm::LoginManager = lm::LoginManager {
     id: LoginManagerId::Sddm,
     service_name: "sddm.service",
-    packages: [Some(pkg::DEB_SDDM), Some(pkg::FED_SDDM), Some(pkg::ARCH_SDDM)],
+    packages: [
+        Some(pkg::DEB_SDDM),
+        Some(pkg::FED_SDDM),
+        Some(pkg::ARCH_SDDM),
+    ],
     setup_callback: || {},
 };
 

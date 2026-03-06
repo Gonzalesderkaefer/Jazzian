@@ -6,13 +6,13 @@ use super::dsp_server::DspServer;
 use super::login_manager::LoginManager;
 use super::transfer::Transfer;
 use super::window_manager as wm;
-use crate::JazzyErr;
 use crate::computer::dsp_server;
 use crate::computer::window_manager::WindowManager;
 use crate::config::config::{self, DspServerId, NOWM};
 use crate::menu;
 use crate::menu::menu::MenuErr;
 use crate::utils::command;
+use crate::JazzyErr;
 
 /// This struct represents a computer. An instance of this type is built when getting the
 /// options from the user. This 'computer' is then 'applied' to the computer that it is running
@@ -126,7 +126,7 @@ impl Computer {
         // Check if list was empty
         let login_manager = match login_man {
             Some(login) => login,
-            None => &config::NOLM
+            None => &config::NOLM,
         };
 
         // Get display server from user
@@ -279,7 +279,6 @@ impl Computer {
     }
 
     pub fn enable_gui(&self) -> Result<(), ComputerError> {
-
         match command::cmd("sudo", &["systemctl", "set-default", "graphical.target"]) {
             Ok(_) => {}
             Err(error) => {
@@ -290,7 +289,10 @@ impl Computer {
         if self.login_manager.service_name.is_empty() {
             return Ok(());
         }
-        match command::cmd("sudo", &["systemctl", "enable", "-f", self.login_manager.service_name]) {
+        match command::cmd(
+            "sudo",
+            &["systemctl", "enable", "-f", self.login_manager.service_name],
+        ) {
             Ok(_) => {}
             Err(error) => {
                 return Err(ComputerError::CmdError(error, line!(), file!()));

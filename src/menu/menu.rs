@@ -1,19 +1,19 @@
-use crate::FgColor;
 use crate::config::config;
+use crate::FgColor;
 
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
 use crossterm::terminal;
-use ratatui::Terminal;
 use ratatui::style::{self, Color, Modifier};
 use ratatui::widgets::{List, ListItem, ListState, StatefulWidget};
+use ratatui::Terminal;
 use ratatui::{
-    DefaultTerminal, Frame,
     buffer::Buffer,
     layout::Rect,
     style::Stylize,
     symbols::border,
     text::{Line, Text},
     widgets::{Block, Paragraph, Widget},
+    DefaultTerminal, Frame,
 };
 use std::fmt::Display;
 use std::io;
