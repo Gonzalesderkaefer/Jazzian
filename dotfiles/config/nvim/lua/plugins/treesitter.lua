@@ -12,6 +12,8 @@ return
                 local ok, query = pcall(vim.treesitter.query.get, lang, "highlights")
                 if ok and query then
                     vim.treesitter.start()
+                else
+                    vim.cmd("TSInstall " .. lang)
                 end
             end,
         })
